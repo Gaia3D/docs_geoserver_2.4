@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WFS Service Settings &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Configuration" href="configuration.html" />
+      <link rel="prev" title="Installation" href="installation.html" />
+</head>
+<body class="data/app-schema/wfs-service-settings">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>WFS Service Settings</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="configuration.html" title="Configuration"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="installation.html" title="Installation"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wfs-service-settings">
+<span id="app-schema-wfs-service-settings"></span><h1>WFS Service Settings<a class="headerlink" href="#wfs-service-settings" title="Permalink to this headline">¶</a></h1>
+<p>호환 가능한 복잡 피처 서비스를 위해 강력히 권장하는 GeoServer WFS 서비스 설정 방법이 2가지 있습니다.
+GeoServer 웹 인터페이스의 <em class="menuselection">Services ‣ WFS</em> 페이지에서 활성화하거나,
+데이터 디렉터리의 <tt class="file docutils literal"><span class="pre">wfs.xml</span></tt> 파일을 직접 편집하는 방법입니다.</p>
+<div class="section" id="canonical-schema-location">
+<h2>Canonical schema location<a class="headerlink" href="#canonical-schema-location" title="Permalink to this headline">¶</a></h2>
+<p>기본적인 GeoServer의 반응은 GeoServer 인스턴스에 위치한 WFS 스키마를 위한
+<tt class="docutils literal"><span class="pre">schemaLocation</span></tt> 파라미터를 포함하는 WFS 응답을 코드화하는 것입니다.
+클라이언트는 스키마를 직접 받아오지 않고서야 <tt class="docutils literal"><span class="pre">schemas.opengis.net</span></tt>
+에서 배포하고 있는 공식 스키마와 동일한지 알 수 없습니다.
+이 문제를 해결하려면 기준(canonical) 위치인 WFS 스키마 위치를 나타내는 <tt class="docutils literal"><span class="pre">schemaLocation</span></tt> 파라미터값을
+<tt class="docutils literal"><span class="pre">schemas.opengis.net</span></tt> 으로 설정해야 합니다.</p>
+<p>이 옵션을 활성화하려면 다음 가운데 <em>하나</em>를 수행하십시오.</p>
+<ol class="arabic">
+<li><p class="first">첫째: <em class="menuselection">Service ‣ WFS</em> 페이지의 <em>Conformance</em> 섹션 아래 있는 <em>Encode canonical WFS schema location</em>을 체크하십시오.</p>
+</li>
+<li><p class="first">둘째: 다음 내용을 <tt class="file docutils literal"><span class="pre">wfs.xml</span></tt> 파일 안의 종료 태그(closing tag) 이전에 삽입하십시오.</p>
+<div class="highlight-python"><pre>&lt;canonicalSchemaLocation&gt;true&lt;/canonicalSchemaLocation&gt;</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="encode-using-featuremember">
+<h2>Encode using featureMember<a class="headerlink" href="#encode-using-featuremember" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 기본적으로 복수의 피처를 가진 WFS 1.1 응답을 <tt class="docutils literal"><span class="pre">gml:featureMembers</span></tt> 요소 하나에 코드화할 것입니다.
+만약 이 응답의 최상위에 이전 피처에 내포된 속성으로 코드화되었던 피처가 포함되어 있을 경우
+이 피처를 참조해서 코드화할 수 있는 요소가 하나도 없기 때문에 사용할 수 없는(invalid) 산출물이 나오게 됩니다.
+이 문제를 해결하려면 <tt class="docutils literal"><span class="pre">gml:featureMember</span></tt> 요소를 써서 응답을 코드화해야 합니다.</p>
+<p>이 옵션을 활성화하려면 다음 가운데 <em>하나</em>를 수행하십시오.</p>
+<ol class="arabic">
+<li><p class="first">첫째: <em class="menuselection">Service ‣ WFS</em> 페이지의 <em>Encode response with</em> 섹션에서 <em>Multiple &#8220;featureMember&#8221; elements</em>를 선택하십시오.</p>
+</li>
+<li><p class="first">둘째: 다음 내용을 <tt class="file docutils literal"><span class="pre">wfs.xml</span></tt> 파일 안의 종료 태그(closing tag) 이전에 삽입하십시오.</p>
+<div class="highlight-python"><pre>&lt;encodeFeatureMember&gt;true&lt;/encodeFeatureMember&gt;</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="installation.html" title="previous chapter">Installation</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="configuration.html" title="next chapter">Configuration</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WFS Service Settings</a><ul>
+<li><a class="reference internal" href="#canonical-schema-location">Canonical schema location</a></li>
+<li><a class="reference internal" href="#encode-using-featuremember">Encode using featureMember</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="installation.html" title="previous chapter">Installation</a></li>
+            <li>다음: <a href="configuration.html" title="next chapter">Configuration</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/wfs-service-settings.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

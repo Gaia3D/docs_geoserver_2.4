@@ -1,0 +1,550 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Using the ImageMosaic plugin for raster time-series data &mdash; GeoServer 2.4.0 User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
+      <link rel="up" title="Tutorials" href="../index.html" />
+      <link rel="next" title="Using the ImageMosaic plugin for raster with time and elevation data" href="imagemosaic_time-elevationseries.html" />
+      <link rel="prev" title="Using the ImageMosaic plugin" href="../image_mosaic_plugin/imagemosaic.html" />
+</head>
+<body class="tutorials/imagemosaic_timeseries/imagemosaic_timeseries">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Tutorials</a> &raquo;</li>
+  <li>Using the ImageMosaic plugin for raster time-series data</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="imagemosaic_time-elevationseries.html" title="Using the ImageMosaic plugin for raster with time and elevation data"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../image_mosaic_plugin/imagemosaic.html" title="Using the ImageMosaic plugin"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="using-the-imagemosaic-plugin-for-raster-time-series-data">
+<span id="tutorial-imagemosaic-timeseries"></span><h1>Using the ImageMosaic plugin for raster time-series data<a class="headerlink" href="#using-the-imagemosaic-plugin-for-raster-time-series-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This step-by-step tutorial describes all the steps for building a time-series coverage using the new ImageMosaic plugin. The ImageMosaic plugin allows the creation of a time-series layer of a raster dataset. The single images are hold in a queryable structure in order to access to a specific dataset with a temporal filter.</p>
+<p>The concepts explained in <a class="reference internal" href="../image_mosaic_plugin/imagemosaic.html#tutorial-imagemosaic-extension"><em>Using the ImageMosaic plugin</em></a> are required in order to properly understand the steps shown here.</p>
+<p>This tutorial is organized in 4 chapter:</p>
+<ul class="simple">
+<li>The first chapter, <strong>Configuration</strong>, describes the environment configurations needed before load an Imagemosaic store from geoserver</li>
+<li>The second chapter, <strong>Configuration examples</strong>, describes the details, providing examples, of the configurations files needed.</li>
+<li>The last 2 chapters, <strong>Coverage based on filestore</strong> and <strong>Coverage based on database</strong> describe, once the previous configurations steps are done, how to create and configure an Imagemosaic store using the geoserver GUI.</li>
+</ul>
+<p>The dataset used in the tutorial can be downloaded <a class="reference download internal" href="../../_downloads/snowLZWdataset.zip"><tt class="xref download docutils literal"><span class="pre">Here</span></tt></a>. It contains 3 image files and a .tld file representing a style needed for correctly render the images.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>In order to load a new CoverageStore from the GeoServer GUI two steps are needed:</p>
+<ol class="arabic simple">
+<li>Create a new directory in which you store all your tif files (the mosaic granules) and three configuration files. This directory rerpresents the <strong>MOSAIC_DIR</strong>.</li>
+<li>Install and setup a DBMS instance, this DB is that one where the mosaic indexes will be stored.</li>
+<li>Another important thing is that the web container where geoserver is deployed must have the <strong>timezone properly configured</strong>.</li>
+</ol>
+<p>In order to set the time in Coordinated Universal Time (UTC) add this switch when launching the java process:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">-</span><span class="n">Duser</span><span class="o">.</span><span class="n">timezone</span><span class="o">=</span><span class="n">GMT</span>
+</pre></div>
+</div>
+<p>If a shapefile is used (see next chapter) also this switch is needed in order to manage properly the timezone:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">-</span><span class="n">Dorg</span><span class="o">.</span><span class="n">geotools</span><span class="o">.</span><span class="n">shapefile</span><span class="o">.</span><span class="n">datetime</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The above properties enables support for timestamp (date and time) data in Shapefile stores. Support for timestamp is not part of the DBF standard, which only supports Date instead, and only few applications understand it. As long as shapefiles are only used for GeoServer input that is not a problem, but the above setting will cause issues if you have WFS enabled and users also download shapefiles as GetFeature output: if the feature type extracted has timestamps the generated shapefile will have as well, making it difficult to use the generated shapefile in desktop applications. As a rule of thumb, if you also need WFS support it is advisable to use an external store (PostGIS, Oracle) instead. Of course, if all that&#8217;s needed is a date, using shapefile as an index without the above property is fine as well.</p>
+</div>
+<div class="section" id="mosaic-dir-and-the-configuration-files">
+<h3>MOSAIC_DIR and the Configuration Files<a class="headerlink" href="#mosaic-dir-and-the-configuration-files" title="Permalink to this headline">¶</a></h3>
+<p>The user can name the and place the <strong>MOSAIC_DIR</strong> as and where he wants.</p>
+<p>The <strong>MOSAIC_DIR</strong> contains all mosaic granules files and the 3 needed configuration files. The files are in <tt class="docutils literal"><span class="pre">.properties</span></tt> format.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Every tif file must follow the same naming convention. In this tutorial will be used {coveragename}_{timestamp}.tif</p>
+</div>
+<p>In a properties file you specify your properties in a  key-value manner: e.g. <cite>myproperty=myvalue</cite></p>
+<p>The configuration files needed are:</p>
+<ol class="arabic simple">
+<li><strong>datastore.properties</strong>: contains all relevant information responsible for connecting to the database in which the spatial indexes of the mosaic will be stored</li>
+<li><strong>indexer.properties</strong>: specifies the name of the time-variant attribute, the elevation attribute and the type of the attributes</li>
+<li><strong>timeregex.properties</strong>: specifies the regular expression used to extract the time information from the filename.</li>
+</ol>
+<p>All the configuration files must be placed in the root of the <strong>MOSAIC_DIR</strong>. The granule images could be placed also in <strong>MOSAIC_DIR</strong> subfolders.</p>
+<p>Please note that <strong>datastore.properties</strong> isn&#8217;t mandatory. The plugin provides two possibilities to access to time series data:</p>
+<ul class="simple">
+<li><strong>Using a shapefile</strong> in order to store the granules indexes. That&#8217;s the default behavior without providing the <em>datastore.properties</em> file.</li>
+<li><strong>Using a DBMS</strong>, which maps the timestamp to the corresponding raster source. The former uses the <strong>time</strong> attribute for access to the granule from the mapping table.</li>
+</ul>
+<p>For production installation is strong reccomended the usage of a DBMS instead of shapefile in order to improve performances.</p>
+<p>Otherwise the usage of a shapefile could be useful in development and test environments due to less configurations are needed.</p>
+<div class="section" id="datastore-properties">
+<h4>datastore.properties<a class="headerlink" href="#datastore-properties" title="Permalink to this headline">¶</a></h4>
+<p>Here is shown an example of datastore.properties suitable for Postgis.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="18%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Parameter</strong></td>
+<td><strong>Mandatory</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><em>SPI</em></td>
+<td><strong>Y</strong></td>
+<td>The factory class used for the datastore e.g. org.geotools.data.postgis.PostgisNGDataStoreFactory</td>
+</tr>
+<tr class="row-odd"><td><em>host</em></td>
+<td><strong>Y</strong></td>
+<td>The host name of the database.</td>
+</tr>
+<tr class="row-even"><td><em>port</em></td>
+<td><strong>Y</strong></td>
+<td>The port of the database</td>
+</tr>
+<tr class="row-odd"><td><em>database</em></td>
+<td><strong>Y</strong></td>
+<td>The name/instance of the database.</td>
+</tr>
+<tr class="row-even"><td><em>schema</em></td>
+<td><strong>Y</strong></td>
+<td>The name of the database schema.</td>
+</tr>
+<tr class="row-odd"><td><em>user</em></td>
+<td><strong>Y</strong></td>
+<td>The database user.</td>
+</tr>
+<tr class="row-even"><td><em>passwd</em></td>
+<td><strong>Y</strong></td>
+<td>The database password.</td>
+</tr>
+<tr class="row-odd"><td><em>Loose bbox</em></td>
+<td><strong>N</strong> default &#8216;false&#8217;</td>
+<td>Boolean value to specify if loosing the bounding box.</td>
+</tr>
+<tr class="row-even"><td><em>Estimated extend</em></td>
+<td><strong>N</strong> default &#8216;true&#8217;</td>
+<td>Boolean values to specify if the extent of the data should be estimated.</td>
+</tr>
+<tr class="row-odd"><td><em>validate connections</em></td>
+<td><strong>N</strong> default &#8216;true&#8217;</td>
+<td>Boolean value to specify if the connection should be validated.</td>
+</tr>
+<tr class="row-even"><td><em>Connection timeout</em></td>
+<td><strong>N</strong> default &#8216;20&#8217;</td>
+<td>Specifies the timeout in minutes.</td>
+</tr>
+<tr class="row-odd"><td><em>preparedStatements</em></td>
+<td><strong>N</strong> default &#8216;false&#8217;</td>
+<td>Boolean flag that specifies if for the database queries prepared statements should be used. This improves performant, because the database query parser has to parse the query only once</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The first 8 parameters are valid for each DBMS used, the last 4 may vary from different DBMS. for more informations see <a class="reference external" href="http://docs.geotools.org/latest/userguide/library/jdbc/index.html">GeoTools JDBC documentation</a></p>
+</div>
+</div>
+<div class="section" id="indexer-properties">
+<h4>indexer.properties<a class="headerlink" href="#indexer-properties" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="5%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Parameter</strong></td>
+<td><strong>Mandatory</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><em>TimeAttribute</em></td>
+<td>N</td>
+<td>Specifies the name of the time-variant attribute</td>
+</tr>
+<tr class="row-odd"><td><em>ElevationAttribute</em></td>
+<td>N</td>
+<td>Specifies the name of the elevation attribute.</td>
+</tr>
+<tr class="row-even"><td><em>Schema</em></td>
+<td>Y</td>
+<td>A coma separed sequence that describes the mapping between attribute and the data type.</td>
+</tr>
+<tr class="row-odd"><td><em>PropertyCollectors</em></td>
+<td>Y</td>
+<td>Specifies the extractor classes.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><strong>TimeAttribute</strong> is not a mandatory param but for the purpose of this tutorial is needed.</p>
+</div>
+</div>
+<div class="section" id="timeregex-properties">
+<h4>timeregex.properties<a class="headerlink" href="#timeregex-properties" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="5%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Parameter</strong></td>
+<td><strong>Mandatory</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><em>regex</em></td>
+<td>Y</td>
+<td>Specifies the pattern used for extracting the information from the file</td>
+</tr>
+</tbody>
+</table>
+<p>After this you can create a new imagemosaic datastore.</p>
+</div>
+</div>
+<div class="section" id="install-and-setup-a-dbms-instance">
+<h3>Install and setup a DBMS instance<a class="headerlink" href="#install-and-setup-a-dbms-instance" title="Permalink to this headline">¶</a></h3>
+<p>First of all note that the usage of a DBMS to store the mosaic indexes <strong>isn&#8217;t mandatory</strong>. If the user don&#8217;t place in the MOSAIC_DIR the datastore.properties file the plugin uses a <strong>shapefile</strong>. The shapefile will be created into the MOSAIC_DIR.</p>
+<p>Anyway, especially for large dataset, <strong>the usage of a DBMS is strong recommended</strong>. The ImageMosaic plugin supports all the most used DBMS.</p>
+<p>The configuration needed are the basics: create a new empty DB with geospatial extensions, a new schema and configure the user with W/R grants.</p>
+<p>In this tutorial will be used PostgreSQL 9.1 together with PostGIS 2.0 .</p>
+</div>
+</div>
+<div class="section" id="configuration-examples">
+<h2>Configuration examples<a class="headerlink" href="#configuration-examples" title="Permalink to this headline">¶</a></h2>
+<p>As example is used a set of data that represents hydrological data in a certain area in South Tyrol, a region in northern Italy. The origin data were converted from asc format to tiff using the gdal utility <strong>gdal translate</strong>.</p>
+<p>For this running example we will create a layer named snow.</p>
+<p>As mentioned before the files could located in any part of the file system.</p>
+<p>In this tutorial the chosen MOSAIC_DIR direcory is called <tt class="docutils literal"><span class="pre">hydroalp</span></tt> and is placed under the root of the GEOSERVER_DATA_DIR.</p>
+<div class="section" id="configure-the-mosaic-dir">
+<h3>Configure the MOSAIC_DIR:<a class="headerlink" href="#configure-the-mosaic-dir" title="Permalink to this headline">¶</a></h3>
+<p>In this part is shown an entire MOSAIC_DIR configuration.</p>
+<div class="section" id="id1">
+<h4>datastore.properties:<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><pre>SPI=org.geotools.data.postgis.PostgisNGDataStoreFactory
+host=localhost
+port=5432
+database=db
+schema=public
+user=dbuser
+passwd=dbpasswd
+Loose\ bbox=true
+Estimated\ extends=false
+validate\ connections=true
+Connection\ timeout=10
+preparedStatements=true
+</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In case of a missing datastore.properties file a shape file is created for the use of the indexes.</p>
+</div>
+</div>
+<div class="section" id="granules-naming-convenction">
+<h4>Granules Naming Convenction<a class="headerlink" href="#granules-naming-convenction" title="Permalink to this headline">¶</a></h4>
+<p>Here an example of the granules naming that satisfy the rule shown before:</p>
+<div class="highlight-python"><pre>$ls hydroalp/snow/*.tif
+
+snow/snow_20091001.tif
+snow/snow_20091101.tif
+snow/snow_20091201.tif
+snow/snow_20100101.tif
+snow/snow_20100201.tif
+snow/snow_20100301.tif
+snow/snow_20100401.tif
+snow/snow_20100501.tif
+snow/snow_20100601.tif
+snow/snow_20100701.tif
+snow/snow_20100801.tif
+snow/snow_20100901.tif
+</pre>
+</div>
+</div>
+<div class="section" id="id2">
+<h4>timeregex.properties:<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>In the timeregex property file you specify the pattern how the date(time) in the file looks like. In this example it consists simply of 8 digits as specified below.</p>
+<div class="highlight-python"><pre>regex=[0-9]{8}</pre>
+</div>
+</div>
+<div class="section" id="id3">
+<h4>indexer.properties:<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>Here the user can specify the information that needs Geoserver for creating the table in the database. In this table the time values are stored in the column ingestion.</p>
+<div class="highlight-python"><pre>TimeAttribute=ingestion
+ElevationAttribute=elevation
+Schema=*the_geom:Polygon,location:String,ingestion:java.util.Date,elevation:Integer
+PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion)</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="create-and-publish-an-imagemosaic-store">
+<h2>Create and Publish an Imagemosaic store:<a class="headerlink" href="#create-and-publish-an-imagemosaic-store" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-1-create-new-imagemosaic-data-store">
+<h3>Step 1: create new imagemosaic data store<a class="headerlink" href="#step-1-create-new-imagemosaic-data-store" title="Permalink to this headline">¶</a></h3>
+<p>We create a new data store of type raster data and choose ImageMosaic.</p>
+<div class="figure align-center">
+<img alt="../../_images/step_1_1.png" src="../../_images/step_1_1.png" />
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Be aware that Geoserver creates a table which is identical with the name of your layer. If the table already exists, it will not be dropped from the DB and the following error message appear. The same message appear, if the generated property file already exists in the directory or there are wrong connection parameters in datastore.properties file.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/errormessage.png" src="../../_images/errormessage.png" />
+</div>
+</div>
+<div class="section" id="step-2-specify-layer">
+<h3>Step 2: Specify layer<a class="headerlink" href="#step-2-specify-layer" title="Permalink to this headline">¶</a></h3>
+<p>We specify the directory in which the property and tif files are located (path must end with a slash) and add the layer.</p>
+<div class="figure align-center">
+<img alt="../../_images/step_1_2.png" src="../../_images/step_1_2.png" />
+</div>
+</div>
+<div class="section" id="step-3-set-coverage-parameter">
+<h3>Step 3: set Coverage Parameter<a class="headerlink" href="#step-3-set-coverage-parameter" title="Permalink to this headline">¶</a></h3>
+<p>The relevant parameters are AllowMultithreading and USE_JAI_IMAGEREAD. Do not forget to specify the background value according to your the value in your tif file.</p>
+<div class="figure align-center">
+<img alt="../../_images/step_2_1.png" src="../../_images/step_2_1.png" />
+</div>
+<p>Remember that for display correctly the images contained in the provided dataset a custom style is needed.</p>
+<p>Set as default style the <em>snow_style.tld</em> contained in the dataset archive.</p>
+<p>More information about raster styling can be found at chapter <a class="reference internal" href="../../styling/sld-cookbook/rasters.html#sld-cookbook-rasters"><em>Rasters</em></a></p>
+</div>
+<div class="section" id="step-4-set-temporal-properties">
+<h3>Step 4: set temporal properties<a class="headerlink" href="#step-4-set-temporal-properties" title="Permalink to this headline">¶</a></h3>
+<p>In the tab Dimensions you can specify how the time attributes are represented.</p>
+<p>By enabling the Time or Elevation checkbox you can specify the way of presentation.
+In this example query is performed just only over the time attribute.</p>
+<p>Below is shown a snippet of the Capabilities document for each presentation case:</p>
+<p>Setting the presentation to <strong>List</strong>, all mosaic times are listed:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Dimension</span> <span class="na">name=</span><span class="s">&quot;time&quot;</span> <span class="na">default=</span><span class="s">&quot;current&quot;</span> <span class="na">units=</span><span class="s">&quot;ISO8601&quot;</span><span class="nt">&gt;</span>
+        2009-10-01T00:00:00.000Z,2009-11-01T00:00:00.000Z,2009-12-01T00:00:00.000Z,2010-01-01T00:00:00.000Z,2010-02-01T00:00:00.000Z,2010-03-01T00:00:00.000Z,2010-04-01T00:00:00.000Z,2010-05-01T00:00:00.000Z,2010-06-01T00:00:00.000Z,2010-07-01T00:00:00.000Z,2010-08-01T00:00:00.000Z,2010-09-01T00:00:00.000Z,2010-10-01T00:00:00.000Z,2010-11-01T00:00:00.000Z,2010-12-01T00:00:00.000Z,2011-01-01T00:00:00.000Z,2011-02-01T00:00:00.000Z,2011-03-01T00:00:00.000Z,2011-04-01T00:00:00.000Z,2011-05-01T00:00:00.000Z,2011-06-01T00:00:00.000Z,2011-07-01T00:00:00.000Z,2011-08-01T00:00:00.000Z,2011-09-01T00:00:00.000Z
+<span class="nt">&lt;/Dimension&gt;</span>
+</pre></div>
+</div>
+<p>Setting the presentation to <strong>Continuos interval</strong> only the start, end and interval extent times are listed:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Dimension</span> <span class="na">name=</span><span class="s">&quot;time&quot;</span> <span class="na">default=</span><span class="s">&quot;current&quot;</span> <span class="na">units=</span><span class="s">&quot;ISO8601&quot;</span><span class="nt">&gt;</span>
+        2009-10-01T00:00:00.000Z/2011-09-01T00:00:00.000Z/P1Y11MT10H
+<span class="nt">&lt;/Dimension&gt;</span>
+</pre></div>
+</div>
+<p>Setting the presentation to <strong>Interval and resolutions</strong> gives to user the possibility to specify the resolutions of the interval:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Dimension</span> <span class="na">name=</span><span class="s">&quot;time&quot;</span> <span class="na">default=</span><span class="s">&quot;current&quot;</span> <span class="na">units=</span><span class="s">&quot;ISO8601&quot;</span><span class="nt">&gt;</span>
+        2009-10-01T00:00:00.000Z/2011-09-01T00:00:00.000Z/P1DT12H
+<span class="nt">&lt;/Dimension&gt;</span>
+</pre></div>
+</div>
+<p>In this case the resolution is set to one day and half</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For visualize the getCapabilities document go to geoserver homepage, under the rigt tab called <strong>Service Capabilities</strong> click on the WMS 1.3.0 link.</p>
+</div>
+<p>For this tutorial the Presentation attribute is set to <strong>List</strong></p>
+<div class="figure align-center">
+<img alt="../../_images/step_2_2.png" src="../../_images/step_2_2.png" />
+</div>
+<p>After this steps the new layer is available in Geoserver. Additionally Geoserver has created in the source directory a property file and on the database he has created a table named with the name of the layer.</p>
+<div class="section" id="generated-property-file">
+<h4>Generated property file:<a class="headerlink" href="#generated-property-file" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#-Automagically created from GeoTools-</span>
+<span class="c">#Sat Oct 13 10:47:08 CEST 2012</span>
+<span class="n">Levels</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span>
+<span class="n">Heterogeneous</span><span class="o">=</span><span class="n">false</span>
+<span class="n">ElevationAttribute</span><span class="o">=</span><span class="n">elevation</span>
+<span class="n">TimeAttribute</span><span class="o">=</span><span class="n">ingestion</span>
+<span class="n">AbsolutePath</span><span class="o">=</span><span class="n">false</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">snow</span>
+<span class="n">Caching</span><span class="o">=</span><span class="n">false</span>
+<span class="n">ExpandToRGB</span><span class="o">=</span><span class="n">false</span>
+<span class="n">LocationAttribute</span><span class="o">=</span><span class="n">location</span>
+<span class="n">SuggestedSPI</span><span class="o">=</span><span class="n">it</span><span class="o">.</span><span class="n">geosolutions</span><span class="o">.</span><span class="n">imageioimpl</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">tiff</span><span class="o">.</span><span class="n">TIFFImageReaderSpi</span>
+<span class="n">LevelsNum</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The parameter <strong>Caching=false</strong> is important because in this way GeoServer doesn&#8217;t cache any data. So the user is able to update manually the mosaic adding and removing granules to MOSAIC_DIR and update the relative entry on DB.</p>
+</div>
+</div>
+<div class="section" id="generated-table">
+<h4>Generated table:<a class="headerlink" href="#generated-table" title="Permalink to this headline">¶</a></h4>
+<div class="figure align-center">
+<img alt="../../_images/step_2_3.png" src="../../_images/step_2_3.png" />
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The user must create manually the index on the table in order to speed up the search by attribute.</p>
+</div>
+</div>
+</div>
+<div class="section" id="step-5-query-layer-on-timestamp">
+<h3>Step 5: query layer on timestamp:<a class="headerlink" href="#step-5-query-layer-on-timestamp" title="Permalink to this headline">¶</a></h3>
+<p>In order to display a snapshot of the map at a specific time instant you have to pass in the request an addtional time parameter with a specific notation
+<strong>&amp;time=</strong> &lt; <strong>pattern</strong> &gt; where you pass a value that corresponds to them in the filestore. The only thing is the pattern of the time value is slightly different.</p>
+<p>For example if an user wants to obtain the snow coverage images from the months <strong>Oct,Nov,Dec 2009</strong> I pass in each request <strong>&amp;time=2009-10-01</strong>, <strong>&amp;time=2009-11-01</strong> and <strong>&amp;time=2009-12-01</strong>. You can recognize in the three images how the snow coverage changes. Here the color blue means a lot of snow.</p>
+<div class="figure align-center">
+<img alt="../../_images/step_3.png" src="../../_images/step_3.png" />
+</div>
+</div>
+</div>
+<div class="section" id="create-and-publish-a-layer-from-mosaic-indexes">
+<h2>Create and publish a Layer from mosaic indexes:<a class="headerlink" href="#create-and-publish-a-layer-from-mosaic-indexes" title="Permalink to this headline">¶</a></h2>
+<p>After the previous steps it is also be possible to create a layer that represents the spatial indexes of the mosaic. This is an useful features when is required to handle large dataset of Mosaics with High Resolutions granules, the user can easilly get the footprints of the Images. In this case will be rendered only the geometries stored on the indexes tables.</p>
+<div class="section" id="step-1-add-a-postgis-datastore">
+<h3>Step 1: add a postgis datastore:<a class="headerlink" href="#step-1-add-a-postgis-datastore" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center">
+<img alt="../../_images/choose_datasource.png" src="../../_images/choose_datasource.png" />
+</div>
+<p>and specify the connection parameters</p>
+<div class="figure align-center">
+<img alt="../../_images/create_postgis_store.png" src="../../_images/create_postgis_store.png" />
+</div>
+</div>
+<div class="section" id="step-2-add-database-layer">
+<h3>Step 2: add database layer:<a class="headerlink" href="#step-2-add-database-layer" title="Permalink to this headline">¶</a></h3>
+<p>Choose from the created datastore the table that you want to publish as a layer.</p>
+<div class="figure align-center">
+<img alt="../../_images/step_4_1.png" src="../../_images/step_4_1.png" />
+</div>
+</div>
+<div class="section" id="step-3-specify-dimension">
+<h3>Step 3: specify dimension:<a class="headerlink" href="#step-3-specify-dimension" title="Permalink to this headline">¶</a></h3>
+<p>In the tab Dimension specify the time-variant attribute and the form of presentation.</p>
+<div class="figure align-center">
+<img alt="../../_images/step_4_2.png" src="../../_images/step_4_2.png" />
+</div>
+<p>That&#8217;s it. Now is possible query this layer too.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../image_mosaic_plugin/imagemosaic.html" title="previous chapter">Using the ImageMosaic plugin</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="imagemosaic_time-elevationseries.html" title="next chapter">Using the ImageMosaic plugin for raster with time and elevation data</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Using the ImageMosaic plugin for raster time-series data</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#mosaic-dir-and-the-configuration-files">MOSAIC_DIR and the Configuration Files</a><ul>
+<li><a class="reference internal" href="#datastore-properties">datastore.properties</a></li>
+<li><a class="reference internal" href="#indexer-properties">indexer.properties</a></li>
+<li><a class="reference internal" href="#timeregex-properties">timeregex.properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-and-setup-a-dbms-instance">Install and setup a DBMS instance</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-examples">Configuration examples</a><ul>
+<li><a class="reference internal" href="#configure-the-mosaic-dir">Configure the MOSAIC_DIR:</a><ul>
+<li><a class="reference internal" href="#id1">datastore.properties:</a></li>
+<li><a class="reference internal" href="#granules-naming-convenction">Granules Naming Convenction</a></li>
+<li><a class="reference internal" href="#id2">timeregex.properties:</a></li>
+<li><a class="reference internal" href="#id3">indexer.properties:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-and-publish-an-imagemosaic-store">Create and Publish an Imagemosaic store:</a><ul>
+<li><a class="reference internal" href="#step-1-create-new-imagemosaic-data-store">Step 1: create new imagemosaic data store</a></li>
+<li><a class="reference internal" href="#step-2-specify-layer">Step 2: Specify layer</a></li>
+<li><a class="reference internal" href="#step-3-set-coverage-parameter">Step 3: set Coverage Parameter</a></li>
+<li><a class="reference internal" href="#step-4-set-temporal-properties">Step 4: set temporal properties</a><ul>
+<li><a class="reference internal" href="#generated-property-file">Generated property file:</a></li>
+<li><a class="reference internal" href="#generated-table">Generated table:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#step-5-query-layer-on-timestamp">Step 5: query layer on timestamp:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-and-publish-a-layer-from-mosaic-indexes">Create and publish a Layer from mosaic indexes:</a><ul>
+<li><a class="reference internal" href="#step-1-add-a-postgis-datastore">Step 1: add a postgis datastore:</a></li>
+<li><a class="reference internal" href="#step-2-add-database-layer">Step 2: add database layer:</a></li>
+<li><a class="reference internal" href="#step-3-specify-dimension">Step 3: specify dimension:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../image_mosaic_plugin/imagemosaic.html" title="previous chapter">Using the ImageMosaic plugin</a></li>
+            <li>Next: <a href="imagemosaic_time-elevationseries.html" title="next chapter">Using the ImageMosaic plugin for raster with time and elevation data</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/tutorials/imagemosaic_timeseries/imagemosaic_timeseries.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WCS reference &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Coverage Service" href="index.html" />
+      <link rel="next" title="WCS output formats" href="outputformats.html" />
+      <link rel="prev" title="WCS basics" href="basics.html" />
+</head>
+<body class="services/wcs/reference">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Coverage Service</a> &raquo;</li>
+  <li>WCS reference</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="outputformats.html" title="WCS output formats"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="basics.html" title="WCS basics"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wcs-reference">
+<span id="id1"></span><h1>WCS reference<a class="headerlink" href="#wcs-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://www.opengeospatial.org/standards/wcs">WCS(Web Coverage Service)</a>는 OGC가 제정한 표준으로 &#8216;커버리지(coverage)&#8217;로 지리공간 정보를 받아오는 메커니즘을 정의합니다.
+여기서 커버리지란 공간에 따라 변화하는(space-varying) 현상을 나타내는 디지털 지리공간 정보를 말합니다.
+쉽게 말하자면 <em>래스터</em> 데이터를 처리하는 <a class="reference internal" href="../wfs/index.html#wfs"><em>WFS</em></a>라고도 볼 수 있습니다.
+즉 맵의 &#8216;소스 코드(source code)&#8217;를 받아오지만, WCS의 경우 벡터가 아니라 기초(raw) 화상을 받아오는 것입니다.</p>
+<p>WCS와 <a class="reference internal" href="../wms/index.html#wms"><em>WMS</em></a> 사이에는 매우 중요한 차이점이 있습니다.
+서로 기능도 비슷하고 유사한 형식들을 반환하지만, WCS가 중요한 메타데이터 및 더 많은 형식을 포함하는 더 많은 정보를 반환할 수 있습니다.
+따라서 다차원의 백엔드(backend) 형식에 대해 더 정밀한 쿼리를 할 수도 있습니다.</p>
+</div>
+<div class="section" id="benefits-of-wcs">
+<h2>Benefits of WCS<a class="headerlink" href="#benefits-of-wcs" title="Permalink to this headline">¶</a></h2>
+<p>WCS는 지리공간 이미지의 래스터 소스를 요청하는 방법에 대한 표준 인터페이스를 제공합니다.
+WMS도 이미지를 반환할 수 있지만 일반적으로 이미지로 활용할 수밖에 없습니다.
+WCS가 반환하는 이미지는 보통 더 많은 정보를 담고 있기 때문에 복잡 모델링 및 분석에 쓰일 수 있습니다.
+또 더 복잡한 쿼리도 가능하므로, 클라이언트가 커버리지에서 필요한 부분만 추출할 수 있습니다.</p>
+</div>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<p>WCS는 다음 작업들을 수행할 수 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>작업</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">GetCapabilities</span></tt></td>
+<td>서버의 데이터 목록은 물론 유효한 WCS 작업과 파라미터들을 받아옵니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">DescribeCoverage</span></tt></td>
+<td>요청한 커버리지에 대한 전체 설명을 담고 있는 XML 문서를 받아옵니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">GetCoverage</span></tt></td>
+<td>잘 알려진 형식으로 커버리지를 반환합니다. WMS의 GetMap 요청과 유사하지만, 몇몇 확장 모듈이 커버리지를 받아오는 작업을 지원합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getcapabilities">
+<span id="wcs-getcap"></span><h2>GetCapabilities<a class="headerlink" href="#getcapabilities" title="Permalink to this headline">¶</a></h2>
+<p><strong>GetCapabilities</strong> 작업을 통해 WCS 서버가 제공하고 있는 모든 작업과 서비스(&#8220;역량(capabilities)&#8221;)의 목록을 서버에 요청합니다.</p>
+<p>WCS 서버의 URL을 <tt class="docutils literal"><span class="pre">http://www.example.com/wcs</span></tt> 라고 하면, 일반적인 <tt class="docutils literal"><span class="pre">GetCapabilities</span></tt> 요청은 다음과 같습니다.</p>
+<p>표준 HTTP GET 요청을 사용합니다.</p>
+<div class="highlight-xml"><pre>http://www.example.com/wcs?
+service=wcs&amp;
+AcceptVersions=1.1.0&amp;
+request=GetCapabilities</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">service=wcs</span></tt>, <tt class="docutils literal"><span class="pre">AcceptVersions=1.1.0</span></tt>,
+<tt class="docutils literal"><span class="pre">request=GetCapabilities</span></tt> 3가지 파라미터를 WCS 서버에 전송하고 있습니다.
+WCS 요청은 최소한 서비스와 요청 파라미터를 갖추어야 합니다.
+GeoServer가 (<tt class="docutils literal"><span class="pre">AcceptVersion</span></tt> 파라미터가 없을 경우) 기본 버전을 설정해주기는 하지만, &#8220;공식적으로&#8221;는 필수 파라미터이므로 항상 포함시켜야 합니다.
+<em>service</em> 키(key)는 WCS 서버에 WCS 요청을 전송한다고 알려줍니다.
+<em>AcceptsVersion</em> 키는 어느 버전의 WCS를 요청하고 있는지 알려줍니다.
+<em>request</em> 키로 <tt class="docutils literal"><span class="pre">GetCapabilities</span></tt> 작업을 실제로 설정합니다.</p>
+<p>WCS는 또 클라이언트가 역량 문서의 특정 섹션만 요청할 수 있는 <tt class="docutils literal"><span class="pre">Sections</span></tt> 파라미터도 지원합니다.</p>
+</div>
+<div class="section" id="describecoverage">
+<span id="wcs-describecoverage"></span><h2>DescribeCoverage<a class="headerlink" href="#describecoverage" title="Permalink to this headline">¶</a></h2>
+<p><strong>DescribeCoverage</strong> 요청의 목적은 클라이언트가 쿼리하고자 하는 커버리지에 대한 추가 정보를 받아오는 것입니다.
+이 요청으로 해당 커버리지가 지원하는 CRS, 메타데이터, 영역(domain), 범위(range), 형식(format)에 대한 정보를 반환합니다.
+일반적으로 클라이언트가 적합한 <tt class="docutils literal"><span class="pre">GetCoverage</span></tt> 요청을 작성하기 위해
+먼저 <tt class="docutils literal"><span class="pre">DescribeCoverage</span></tt> 요청을 실행해야 하는 경우가 많습니다.</p>
+</div>
+<div class="section" id="getcoverage">
+<span id="wcs-getcoverage"></span><h2>GetCoverage<a class="headerlink" href="#getcoverage" title="Permalink to this headline">¶</a></h2>
+<p><strong>GetCoverage</strong> 작업을 통해 실제 공간 데이터를 요청합니다.
+커버리지의 서브셋(subset)을 받아올 수 있고, 커버리지 자체 또는 커버리지를 참조하는 정보를 반환받을 수 있습니다.
+<tt class="docutils literal"><span class="pre">GetCoverage</span></tt>의 가장 강력한 장점은 영역(높이 및 시간)과 범위에 따라 커버리지를 부분적으로(subset) 받아올 수 있다는 점입니다.
+또 요청 결과를 리샘플링하거나, 다른 데이터 형식으로 인코딩해서 나온 파일을 서로 다른 방식들로 반환할 수 있습니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="basics.html" title="previous chapter">WCS basics</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="outputformats.html" title="next chapter">WCS output formats</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WCS reference</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#benefits-of-wcs">Benefits of WCS</a></li>
+<li><a class="reference internal" href="#operations">Operations</a></li>
+<li><a class="reference internal" href="#getcapabilities">GetCapabilities</a></li>
+<li><a class="reference internal" href="#describecoverage">DescribeCoverage</a></li>
+<li><a class="reference internal" href="#getcoverage">GetCoverage</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="basics.html" title="previous chapter">WCS basics</a></li>
+            <li>다음: <a href="outputformats.html" title="next chapter">WCS output formats</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wcs/reference.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

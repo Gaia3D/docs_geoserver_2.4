@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Global Settings &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Server" href="index.html" />
+      <link rel="next" title="Coverage Access settings" href="coverageaccess.html" />
+      <link rel="prev" title="Contact Information" href="contact.html" />
+</head>
+<body class="webadmin/server/globalsettings">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Server</a> &raquo;</li>
+  <li>Global Settings</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="coverageaccess.html" title="Coverage Access settings"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="contact.html" title="Contact Information"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="global-settings">
+<span id="globalsettings"></span><h1>Global Settings<a class="headerlink" href="#global-settings" title="Permalink to this headline">¶</a></h1>
+<p>Global Setting 페이지에서 서버 전체의 메시지 수준, 로그 수준, 캐릭터셋과 캐릭터 인코딩, 프록시 등을 설정할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/server_globalsettings1.png" src="../../_images/server_globalsettings1.png" />
+<p class="caption"><em>Global Setting 페이지</em></p>
+</div>
+<div class="section" id="verbose-messages">
+<h2>Verbose Messages<a class="headerlink" href="#verbose-messages" title="Permalink to this headline">¶</a></h2>
+<p>세부 정보 메시지(Verbose Messages) 옵션을 켜면 GeoServer가 행가름 및 들여쓰기를 한 XML 파일을 반환하게 됩니다.
+이때 XML 응답이 대용량 데이터를 담기 때문에 더 많은 대역폭을 필요로 합니다. 따라서 테스트 작업 시에만 이 옵션을 사용할 것을 추천합니다.</p>
+</div>
+<div class="section" id="verbose-exception-reporting">
+<h2>Verbose Exception Reporting<a class="headerlink" href="#verbose-exception-reporting" title="Permalink to this headline">¶</a></h2>
+<p>예외 세부 정보 보고(Verbose Exception Reporting) 옵션을 켜면 서비스 예외 발생 시 Java의 전체 누적 스택(full Java stack traces)을 반환합니다.
+이 내용은 GeoServer의 로그 파일에 쓰여지며, 디버그 작업 시 가장 유용한 설정 옵션 가운데 하나입니다.
+이 옵션을 끄면 GeoServer는 한 줄짜리 오류 메시지만을 반환합니다.</p>
+</div>
+<div class="section" id="enable-global-services">
+<h2>Enable Global Services<a class="headerlink" href="#enable-global-services" title="Permalink to this headline">¶</a></h2>
+<p>이 옵션을 켜면 global services 및 <a class="reference internal" href="../../services/virtual-services.html#virtual-services"><em>virtual services</em></a>에 모두 접속할 수 있게 됩니다.
+이 옵션을 끄면 클라이언트가 virtual services에만 접속할 수 있습니다.
+GeoServer가 레이어를 대량으로 들고 있고 클라이언트에게 언제나 제한된 레이어 목록을 보여주고 싶을 때, 이 옵션을 끄는 것이 좋습니다.
+또 보안에 있어서도 이 옵션을 꺼두는 것이 좋습니다.</p>
+</div>
+<div class="section" id="resource-error-handling">
+<h2>Resource Error Handling<a class="headerlink" href="#resource-error-handling" title="Permalink to this headline">¶</a></h2>
+<p>이 설정으로, 어떤 이유 때문에 레이어에 접근할 수 없을 때 GeoServer가 어떻게 응답할지 제어할 수 있습니다.
+기본적으로는 레이어에 에러가 발생했을 때 (예를 들어 해당 레이어의 기본 스타일이 삭제됐을 경우) 이 서비스 예외 사항은 역량 문서(capabilities document)의 일부로서 추가되어, 역량 문서를 인식 불가능하게 만듭니다.
+클라이언트가 인식 가능한 역량 문서를 필요로 할 경우, 이런 문제 때문에 GeoServer가 &#8220;offline&#8221;으로 보이게 만들 수도 있습니다.</p>
+<p>관리자(administrator)로서는 단순하게 GeoServer가 문제가 되는 레이어를 역량 문서에서 제외해서 문서의 완전성을 유지하고, 클라이언트는 다른 레이어에 접속할 수 있도록 설정하는 것이 좋을 수도 있습니다.</p>
+<p>이런 경우 2가지 옵션이 있습니다.</p>
+<p><strong>OGC_EXCEPTION_REPORT</strong>: 기본으로 설정된 옵션입니다. 레이어에 에러가 발생하면 서비스 예외 사항(service exception)으로 역량 문서에 추가되어 역량 문서를 인식 불가능하게 만듭니다.</p>
+<p><strong>SKIP_MISCONFIGURED_LAYERS</strong>: 이 옵션으로 설정하면, GeoServer는 간단하게 문제가 된 레이어에 대해 언급하지 않은 채 역량 문서에서 해당 레이어를 제거하여, 나머지 문서의 완전성을 유지합니다.
+이 경우 레이어가 &#8220;사라지면&#8221; 클라이언트 쪽의 기능에 다른 에러가 발생할 수도 있다는 점을 주의하십시오.</p>
+</div>
+<div class="section" id="number-of-decimals">
+<h2>Number of Decimals<a class="headerlink" href="#number-of-decimals" title="Permalink to this headline">¶</a></h2>
+<p>GetFeature 응답 시 반환되는 (소수점 포함) 숫자의 개수를 설정합니다. 대역폭을 최적화하는 데에도 유용합니다. 기본값은 <strong>8</strong>로 설정돼 있습니다.</p>
+</div>
+<div class="section" id="character-set">
+<h2>Character Set<a class="headerlink" href="#character-set" title="Permalink to this headline">¶</a></h2>
+<p>XML 응답 시 사용할 일반적인 캐릭터 인코딩을 설정합니다. 기본값은 <strong>UTF-8</strong>로, 사용자 대부분에게 추천합니다.
+GeoServer가 지원하는 캐릭터셋의 전체 목록은 <a class="reference external" href="http://www.iana.org/assignments/character-sets">IANA Charset Registry</a> 페이지를 참조하십시오.</p>
+</div>
+<div class="section" id="proxy-base-url">
+<h2>Proxy Base URL<a class="headerlink" href="#proxy-base-url" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 역량 문서가 프록시(proxy)를 올바르게 보고하도록 할 수 있습니다. Proxy Base URL 값은 리버스 프록시(reverse proxy) 너머의 기저 URL(base URL)을 뜻합니다.</p>
+</div>
+<div class="section" id="logging-profile">
+<h2>Logging Profile<a class="headerlink" href="#logging-profile" title="Permalink to this headline">¶</a></h2>
+<p>Logging Profile은 GeoServer 데이터 디렉터리 안의 log4j 설정 파일을 따릅니다.
+(Apache <a class="reference external" href="http://logging.apache.org/log4j/1.2/index.html">log4j</a>는 Java 기반 로그 작업 유틸리티입니다.)
+GeoServer는 로그 작업 프로파일(Logging Profile) 5개를 기본값으로 가지고 있습니다. 사용자 지정 프로파일을 추가적으로 사용하려면 log4j 파일을 편집해야 합니다.</p>
+<p>로그 작업 시에 6개의 로그 작업 수준을 사용합니다.
+가장 일반적인 TRACE 수준에서 DEBUG, INFO, WARN, ERROR 수준을 거쳐 마지막으로 가장 심각한 FATAL 수준이 있습니다.
+GeoServer 로그 작업 프로파일은 해당하는 서버 작업에 따라 로그 작업 수준을 섞어 사용합니다.
+Global Setting 페이지에서 볼 수 있는 준비된(pre-built) 5개 로그 작업 프로파일은 다음과 같습니다.</p>
+<ol class="arabic simple">
+<li><strong>Default Logging</strong> (<tt class="docutils literal"><span class="pre">DEFAULT_LOGGING</span></tt>)—세부 정보(verbose)가 아닌 한도 내에서 최대한의 세부 사항을 제공합니다. Default Logging은 모든 수준의 GeoTools 및 GeoServer 작업에 대해 INFO 수준을 제공하지만, WARN 수준을 필요로 하는 특정 (정보 용량이 큰) GeoTools 패키지들은 예외입니다.</li>
+<li><strong>GeoServer Developer Logging</strong> (<tt class="docutils literal"><span class="pre">GEOSERVER_DEVELOPER_LOGGING</span></tt>)-GeoServer 및 VFNY에 대해 DEBUG 수준의 정보를 제공하는 세부 정보(verbose) 로그 작업 프로파일입니다. 적극적인 GeoServer 디버그 작업 시 이 개발자 프로파일을 사용하도록 추천합니다.</li>
+<li><strong>GeoTools Developer Logging</strong> (<tt class="docutils literal"><span class="pre">GEOTOOLS_DEVELOPER_LOGGING</span></tt>)—GeoTools에 대해서만 DEBUG 수준의 정보를 제공하는 세부 정보(verbose) 로그 작업 프로파일입니다. 적극적인 GeoTools 디버그 작업 시 이 개발자 프로파일을 사용하도록 추천합니다.</li>
+<li><strong>Production Logging</strong> (<tt class="docutils literal"><span class="pre">PRODUCTION_LOGGING</span></tt>)—모든 GeoTools 및 GeoServer 작업에 대해 WARN 수준만을 제공하는 가장 가벼운 로그 작업 프로파일입니다. 이 프로파일은 오직 문제가 발생했을 경우에만 로그 파일을 작성합니다.</li>
+<li><strong>Verbose Logging</strong>  (<tt class="docutils literal"><span class="pre">VERBOSE_LOGGING</span></tt>)—GeoTools, GeoServer, VFNY에 대해 DEBUG 수준을 적용하여 더욱 자세한 정보를 제공합니다.</li>
+</ol>
+</div>
+<div class="section" id="log-to-stdout">
+<h2>Log to StdOut<a class="headerlink" href="#log-to-stdout" title="Permalink to this headline">¶</a></h2>
+<p>표준 산출물(StdOut) 옵션은 프로그램이 어디에 산출물 데이터를 작성하는지 결정합니다.
+GeoServer에서 Log to StdOut 설정을 켜면 프로그램을 실행한 텍스트 기반 터미널창에 로그가 출력됩니다.
+대용량 J2EE 컨테이너에서 GeoServer를 실행할 경우, 전체 컨테이너 로그를 GeoServer 관련 정보로 채우게 될 수도 있으므로 주의하십시오.
+이 옵션을 끌 경우 GeoServer 로그 작업이 대부분 제한되어 FATAL 수준의 예외(exception)만 콘솔 로그에 출력됩니다.</p>
+</div>
+<div class="section" id="log-location">
+<h2>Log Location<a class="headerlink" href="#log-location" title="Permalink to this headline">¶</a></h2>
+<p>로그 파일을 저장할 위치를 설정합니다. Log Location은 디렉터리가 될 수도 파일이 될 수도 있으며,
+절대 경로(absolute path) (예를 들어 <tt class="file docutils literal"><span class="pre">C:\GeoServer\GeoServer.log</span></tt>) 또는 상대 경로(relative path)
+(예를 들어 <tt class="file docutils literal"><span class="pre">GeoServer.log</span></tt>) 로 결정할 수도 있습니다.
+상대 경로는 GeoServer 데이터 디렉터리에 따라 달라집니다. 기본값은 <tt class="file docutils literal"><span class="pre">logs/geoserver.log</span></tt> 입니다.</p>
+</div>
+<div class="section" id="xml-post-request-log-buffer">
+<h2>XML POST request log buffer<a class="headerlink" href="#xml-post-request-log-buffer" title="Permalink to this headline">¶</a></h2>
+<p>세부 정보 수준이 높은 로그 작업 수준의 경우, GeoServer는 XML 형식(및 다른 포맷)의 POST 요청을 통째로 로그에 기록합니다.
+이때 이 요청을 일반적으로 사용하는 GeoServer의 일부에서 사용하려고 로그에 기록되는 모든 내용을 버퍼(buffer)에 저장하기 때문에, 해당 요청의 초기 부분(initial part)만 로그에 기록될 것입니다.
+이 설정에서 그 버퍼의 용량을 글자수로 설정합니다. <strong>0</strong>으로 설정하면 로그 버퍼를 사용할 수 없게 됩니다.</p>
+</div>
+<div class="section" id="feature-type-cache-size">
+<h2>Feature type cache size<a class="headerlink" href="#feature-type-cache-size" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 작업 수준 향상을 위해 데이터 저장소 접속 정보(datastore connection) 및 스키마(schema)를 메모리에 캐시(cache)할 수 있습니다.
+캐시 용량은 일반적으로 동시 접속할 것으로 기대되는 개별 피처 형식(featuretypes)의 개수보다 커야 합니다.
+가능하다면 서버에 존재하는 모든 피처 형식 개수보다 큰 수로 설정하십시오. 다만 너무 큰 값은 메모리 부족(out-of-memory) 오류를 발생시킬 수 있습니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="contact.html" title="previous chapter">Contact Information</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="coverageaccess.html" title="next chapter">Coverage Access settings</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Global Settings</a><ul>
+<li><a class="reference internal" href="#verbose-messages">Verbose Messages</a></li>
+<li><a class="reference internal" href="#verbose-exception-reporting">Verbose Exception Reporting</a></li>
+<li><a class="reference internal" href="#enable-global-services">Enable Global Services</a></li>
+<li><a class="reference internal" href="#resource-error-handling">Resource Error Handling</a></li>
+<li><a class="reference internal" href="#number-of-decimals">Number of Decimals</a></li>
+<li><a class="reference internal" href="#character-set">Character Set</a></li>
+<li><a class="reference internal" href="#proxy-base-url">Proxy Base URL</a></li>
+<li><a class="reference internal" href="#logging-profile">Logging Profile</a></li>
+<li><a class="reference internal" href="#log-to-stdout">Log to StdOut</a></li>
+<li><a class="reference internal" href="#log-location">Log Location</a></li>
+<li><a class="reference internal" href="#xml-post-request-log-buffer">XML POST request log buffer</a></li>
+<li><a class="reference internal" href="#feature-type-cache-size">Feature type cache size</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="contact.html" title="previous chapter">Contact Information</a></li>
+            <li>다음: <a href="coverageaccess.html" title="next chapter">Coverage Access settings</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/server/globalsettings.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Resource reset &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="REST configuration API reference" href="index.html" />
+      <link rel="next" title="Manifests" href="manifests.html" />
+      <link rel="prev" title="Reloading configuration" href="reload.html" />
+</head>
+<body class="rest/api/reset">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">REST configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">REST configuration API reference</a> &raquo;</li>
+  <li>Resource reset</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="manifests.html" title="Manifests"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="reload.html" title="Reloading configuration"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="resource-reset">
+<span id="rest-api-reset"></span><h1>Resource reset<a class="headerlink" href="#resource-reset" title="Permalink to this headline">¶</a></h1>
+<p>모든 저장소, 래스터, 스키마 캐시를 리셋합니다. GeoServer가 모든 캐시를 비우고 모든 저장소 접속을 끊고, 요청이 있을 때 필요한 저장소에 다시 접속하도록 하는 데 쓰입니다.
+저장소가 관리하는, 곧 변경될 수도 있는 데이터 구조에 대한 일부 정보를 저장소 스스로 캐시하고 있는 경우 유용합니다.</p>
+<div class="section" id="reset">
+<h2><tt class="docutils literal"><span class="pre">/reset</span></tt><a class="headerlink" href="#reset" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>디스크에서 설정을 다시 읽어옵니다.</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>디스크에서 설정을 다시 읽어옵니다.</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="reload.html" title="previous chapter">Reloading configuration</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="manifests.html" title="next chapter">Manifests</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Resource reset</a><ul>
+<li><a class="reference internal" href="#reset"><tt class="docutils literal"><span class="pre">/reset</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="reload.html" title="previous chapter">Reloading configuration</a></li>
+            <li>다음: <a href="manifests.html" title="next chapter">Manifests</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/rest/api/reset.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

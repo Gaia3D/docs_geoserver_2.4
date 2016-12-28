@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Configuring Digest Authentication &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../../index.html" />
+      <link rel="up" title="Tutorials" href="../index.html" />
+      <link rel="next" title="Configuring X.509 Certificate Authentication" href="../cert/index.html" />
+      <link rel="prev" title="Authentication with LDAP against ActiveDirectory" href="../activedirectory/index.html" />
+</head>
+<body class="security/tutorials/digest/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Tutorials</a> &raquo;</li>
+  <li>Configuring Digest Authentication</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../cert/index.html" title="Configuring X.509 Certificate Authentication"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../activedirectory/index.html" title="Authentication with LDAP against ActiveDirectory"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="configuring-digest-authentication">
+<span id="sec-tutorials-digest"></span><h1>Configuring Digest Authentication<a class="headerlink" href="#configuring-digest-authentication" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer의 REST 및 OGC 서비스는 설치한 순간부터 <a class="reference external" href="http://en.wikipedia.org/wiki/Basic_access_authentication">HTTP 기본 인증(Basic authentication)</a>을 통한 인증 작업을 지원합니다.
+HTTP 기본 인증의 가장 큰 단점 가운데 하나는 사용자 비밀번호를 일반 텍스트로 전송한다는 것입니다.
+<a class="reference external" href="Digestaccessauthentication">HTTP 소화 인증(Digest authentication)</a>이 비밀번호를 네트워크로 전송하기 전에
+해당 비밀번호에 암호화 해시(cryptographic hash) 기능을 적용하는 좀 더 안전한 대체 방식을 제공합니다.</p>
+<p>이 예제에서 소화 인증 작업을 설정하는 과정을 단계별로 설명합니다.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>이 예제에서 인증 방법 테스트 용 HTTP 요청을 발송하는 <a class="reference external" href="http://curl.haxx.se/">curl</a> 유틸리티를 사용합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">기본 및 소화 인증 작업을 모두 지원하는 유틸리티라면 어떤 것이든 curl 대신 사용할 수 있습니다. 대부분의 최신 웹브라우저가 이 2가지 인증 방식을 모두 지원하고 있습니다.</p>
+</div>
+</div>
+<div class="section" id="configure-the-digest-authentication-filter">
+<h2>Configure the Digest authentication filter<a class="headerlink" href="#configure-the-digest-authentication-filter" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">GeoServer를 실행하고 <tt class="docutils literal"><span class="pre">admin</span></tt> 사용자로 웹 관리자 인터페이스에 로그인합니다.</p>
+</li>
+<li><p class="first">사이드 메뉴의 <tt class="docutils literal"><span class="pre">Security</span></tt> 섹션 아래 있는 <tt class="docutils literal"><span class="pre">Authentication</span></tt> 링크를 클릭하십시오.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/digest1.jpg" src="../../../_images/digest1.jpg" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Authentication Providers</span></tt> 패널로 스크롤해서 <tt class="docutils literal"><span class="pre">Add new</span></tt> 링크를 클릭하십시오.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/digest2.jpg" src="../../../_images/digest2.jpg" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Digest</span></tt> 링크를 클릭하십시오.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/digest3.jpg" src="../../../_images/digest3.jpg" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">설정 서식의 항목에 다음과 같이 입력하십시오.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Name</span></tt>에 &#8220;digest&#8221;를 입력합니다.</li>
+<li><tt class="docutils literal"><span class="pre">User group service</span></tt>에 &#8220;default&#8221;를 입력합니다.</li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/digest4.jpg" src="../../../_images/digest4.jpg" />
+</div>
+</li>
+<li><p class="first">저장하십시오.</p>
+</li>
+<li><p class="first">다시 <tt class="docutils literal"><span class="pre">Authentication</span></tt> 페이지로 돌아와 <tt class="docutils literal"><span class="pre">Provider Chain</span></tt> 패널로 스크롤합니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Request type</span></tt> 드롭다운 메뉴에서 &#8220;Default&#8221;를 선택합니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">basic</span></tt> 필터를 선택 해제한 다음 <tt class="docutils literal"><span class="pre">digest</span></tt> 필터를 선택합니다.
+<tt class="docutils literal"><span class="pre">digest</span></tt> 필터를 <tt class="docutils literal"><span class="pre">anonymous</span></tt> 필터 앞으로 옮깁니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/digest5.jpg" src="../../../_images/digest5.jpg" />
+</div>
+</li>
+<li><p class="first">저장하십시오.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="secure-ogc-service-requests">
+<h2>Secure OGC service requests<a class="headerlink" href="#secure-ogc-service-requests" title="Permalink to this headline">¶</a></h2>
+<p>앞 섹션에서 설정한 인증 작업 설정을 테스트하려면 먼저 서비스 또는 리소스에 보안을 적용해야 합니다.
+<tt class="docutils literal"><span class="pre">Default</span></tt> 필터 사슬이 모든 OGC 서비스 요청에 적용되는 사슬이기 때문에 서비스 보안 규칙을 설정해야 합니다.</p>
+<ol class="arabic">
+<li><p class="first">GeoServer 홈페이지로 이동해서 사이드 메뉴의 <tt class="docutils literal"><span class="pre">Security</span></tt> 섹션 아래 있는
+<tt class="docutils literal"><span class="pre">Services</span></tt> 링크를 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../../_images/digest6.jpg" src="../../../_images/digest6.jpg" />
+</div>
+</li>
+<li><p class="first">서비스 보안 페이지에서 <tt class="docutils literal"><span class="pre">Add new rule</span></tt> 링크를 클릭하고
+<tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> 롤이 필요한 모든 OGC 서비스 요청에 보안을 적용하는 모든 규칙을 추가합니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/digest7.jpg" src="../../../_images/digest7.jpg" />
+</div>
+</li>
+<li><p class="first">저장하십시오.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="test-a-digest-authentication-login">
+<h2>Test a digest authentication login<a class="headerlink" href="#test-a-digest-authentication-login" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">다음 curl 명령어를 실행해서 기본 인증이 비활성화되었는지 확인합니다.</p>
+<div class="highlight-python"><pre>curl -v -u admin:geoserver -G "http://localhost:8080/geoserve/wfs?request=getcapabilities"</pre>
+</div>
+<p>인증을 해야 한다고 알려주는 401 응답이 다음과 같이 화면에 표출되어야 합니다.</p>
+<div class="highlight-python"><pre>* About to connect() to localhost port 8080 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to localhost (127.0.0.1) port 8080 (#0)
+* Server auth using Basic with user 'admin'
+&gt; GET /geoserver/wfs?request=getcapabilities HTTP/1.1
+&gt; Authorization: Basic YWRtaW46Z2Vvc2VydmVy
+&gt; User-Agent: curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8r zlib/1.2.3
+&gt; Host: localhost:8080
+&gt; Accept: */*
+&gt;
+&lt; HTTP/1.1 401 Full authentication is required to access this resource
+&lt; Set-Cookie: JSESSIONID=1dn2bi8qqu5qc;Path=/geoserver
+&lt; WWW-Authenticate: Digest realm="GeoServer Realm", qop="auth", nonce="MTMzMzQzMDkxMTU3MjphZGIwMWE4MTc1NmRiMzI3YmFiODhmY2NmZGQ2MzEwZg=="
+&lt; Content-Type: text/html; charset=iso-8859-1
+&lt; Content-Length: 1491
+&lt; Server: Jetty(6.1.8)
+&lt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/&gt;
+&lt;title&gt;Error 401 Full authentication is required to access this resource&lt;/title&gt;
+&lt;/head&gt;
+...</pre>
+</div>
+</li>
+<li><p class="first">curl이 기본 인증 대신 소화 인증을 이용하도록 하는 <tt class="docutils literal"><span class="pre">--digest</span></tt> 옵션을 추가하여 다음 명령어를 실행합니다.</p>
+<div class="highlight-python"><pre>curl --digest -v -u admin:geoserver -G "http://localhost:8080/geoserve/wfs?request=getcapabilities"</pre>
+</div>
+<p>인증이 성공하고, WFS 역량 요청이 일반적으로 전송될 것입니다.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../activedirectory/index.html" title="previous chapter">Authentication with LDAP against ActiveDirectory</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../cert/index.html" title="next chapter">Configuring X.509 Certificate Authentication</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Configuring Digest Authentication</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#configure-the-digest-authentication-filter">Configure the Digest authentication filter</a></li>
+<li><a class="reference internal" href="#secure-ogc-service-requests">Secure OGC service requests</a></li>
+<li><a class="reference internal" href="#test-a-digest-authentication-login">Test a digest authentication login</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="../activedirectory/index.html" title="previous chapter">Authentication with LDAP against ActiveDirectory</a></li>
+            <li>다음: <a href="../cert/index.html" title="next chapter">Configuring X.509 Certificate Authentication</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/security/tutorials/digest/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

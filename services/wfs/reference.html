@@ -1,0 +1,672 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WFS reference &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Feature Service" href="index.html" />
+      <link rel="next" title="WFS output formats" href="outputformats.html" />
+      <link rel="prev" title="WFS basics" href="basics.html" />
+</head>
+<body class="services/wfs/reference">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Feature Service</a> &raquo;</li>
+  <li>WFS reference</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="outputformats.html" title="WFS output formats"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="basics.html" title="WFS basics"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wfs-reference">
+<span id="id1"></span><h1>WFS reference<a class="headerlink" href="#wfs-reference" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://www.opengeospatial.org/standards/wfs">WFS(Web Feature Service)</a>는 OGC(Open Geospatial Consortium)가
+인터넷 상에서 HTTP를 통해 벡터 형식 지리 정보를 생성, 변경, 교환하기 위해 제정한 표준입니다. WFS는 XML 문법을 따르는 GML(Geography Markup Language)로 정보를 코드화하고 전송합니다.</p>
+<p>최신 WFS 버전은 <strong>2.0.0</strong>입니다. GeoServer는 2.0.0, 1.1.0, 1.0.0 버전을 모두 지원합니다. 버전마다 몇몇 중요한 차이점이 있지만 요청 문법(request syntax)은 대개 동일합니다.</p>
+<p>관련 OGC 사양인 <a class="reference internal" href="../wms/index.html#wms"><em>WMS(Web Map Service)</em></a>는 디지털 이미지 형식으로 지리 정보를 교환하기 위한 표준을 정의합니다.</p>
+<div class="section" id="benefits-of-wfs">
+<h2>Benefits of WFS<a class="headerlink" href="#benefits-of-wfs" title="Permalink to this headline">¶</a></h2>
+<p>WFS 표준은 기저(underlying) 데이터 소스와 독립적인 방식으로 개별 지리 피처에 접근 및 트랜잭션 작업을 할 수 있는 프레임워크를 정의합니다.
+발견(discovery), 쿼리(query), 잠금(locking), 트랜잭션(transaction) 작업을 통해 사용자가 개별 피처의 정보를 얻고 스타일을 적용하고
+편집(생성, 업데이트, 삭제)하고 다운로드할 수 있는 방식으로 공간 속성 데이터 소스에 접근할 수 있습니다.
+WFS의 트랜잭션 기능은 공동(collaborative) 매핑 응용 프로그램의 개발 및 전개(deployment)도 지원합니다.</p>
+</div>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<p>모든 WFS 버전은 다음 작업들을 지원합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">작업</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">GetCapabilities</span></tt></td>
+<td>서버가 제공하는 WFS 서비스는 물론 유효한 WFS 작업 및 파라미터들을 설명하는 메타데이터 문서를 생성합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">DescribeFeatureType</span></tt></td>
+<td>WFS 서비스가 지원하는 피처형의 설명을 반환합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">GetFeature</span></tt></td>
+<td>데이터 소스에서 도형 및 속성값을 포함한 피처 집합을 반환합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">LockFeature</span></tt></td>
+<td>지속적인 피처 잠금을 통해 피처가 편집되는 일이 없도록 막습니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Transaction</span></tt></td>
+<td>생성, 업데이트, 삭제 작업 등 기존 피처형을 편집합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>다음은 <strong>2.0.0 버전에서만</strong> 할 수 있는 작업들입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">작업</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">GetPropertyValue</span></tt></td>
+<td>피처의 속성값을, 또는 쿼리 연산식을 통해 식별된 피처 집합이 속한 데이터 저장소에서 복잡 피처 속성값의 일부를 받아옵니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">GetFeatureWithLock</span></tt></td>
+<td>피처 집합을 반환하고, 또 해당 피처들을 잠급니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">CreateStoredQuery</span></tt></td>
+<td>WFS 서버 상에 저장 쿼리(stored query)를 생성합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">DropStoredQuery</span></tt></td>
+<td>WFA 서버에서 저장 쿼리를 삭제합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">ListStoredQueries</span></tt></td>
+<td>WFS 서버 상에 있는 저장 쿼리의 목록을 반환합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">DescribeStoredQueries</span></tt></td>
+<td>WFS 서버 상에 있는 저장 쿼리를 설명하는 메타데이터 문서를 반환합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>다음은 <strong>1.1.0 버전에서만</strong> 할 수 있는 작업들입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">작업</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">GetGMLObject</span></tt></td>
+<td>ID를 통해 WFS에서 피처와 요소를 받아옵니다.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음에 나오는 예시에 가짜 URL <tt class="docutils literal"><span class="pre">http://example.com/geoserver/wfs</span></tt> 이 쓰였습니다.
+이 예시를 테스트하려면 유효한 WFS의 주소로 대체하십시오. 또, 요청은 보통 줄바꿈 없이 한 줄로 정의되지만 다음 예시들에서는 가독성을 위해 줄바꿈을 추가했습니다.</p>
+</div>
+</div>
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<p>WFS는 예외를 보고하는 데 몇 가지 형식을 지원합니다. 예외 보고에 쓰이는 형식은 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="35%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">형식</th>
+<th class="head">문법(syntax)</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>XML</td>
+<td><tt class="docutils literal"><span class="pre">exceptions=text/xml</span></tt></td>
+<td><em>(기본값)</em> XML 산출물</td>
+</tr>
+<tr class="row-odd"><td>JSON</td>
+<td><tt class="docutils literal"><span class="pre">exceptions=application/json</span></tt></td>
+<td>단순(simple) JSON</td>
+</tr>
+<tr class="row-even"><td>JSONP</td>
+<td><tt class="docutils literal"><span class="pre">exceptions=text/javascript</span></tt></td>
+<td>JSONP를 parseResponse(...jsonp...) 형태로 반환합니다. 콜백(callback) 명칭을 변경하려면 <a class="reference internal" href="../wms/vendor.html#wms-vendor-parameters"><em>WMS vendor parameters</em></a>를 참조하십시오.
+이 형식은 기본적으로 비활성화되어 있으므로 주의하십시오. (<a class="reference internal" href="../wms/global.html#wms-global-variables"><em>Global variables affecting WMS</em></a> 참조)</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="getcapabilities">
+<span id="wfs-getcap"></span><h3>GetCapabilities<a class="headerlink" href="#getcapabilities" title="Permalink to this headline">¶</a></h3>
+<p><strong>GetCapabilities</strong> 작업은 WFS 서버가 지원하는 작업 및 서비스, 혹은 <em>역량(capabilities)</em>의 목록을 해당 서버에 요청합니다.</p>
+<p>HTTP를 써서 다음과 같이 GET 요청을 전송합니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=1.1.0&amp;
+  request=GetCapabilities</pre>
+</div>
+<p>동일한 요청을 POST로 하면 다음과 같습니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;GetCapabilities</span>
+ <span class="na">service=</span><span class="s">&quot;WFS&quot;</span>
+ <span class="na">xmlns=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+ <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+ <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfs</span>
+<span class="s"> http://schemas.opengis.net/wfs/1.1.0/wfs.xsd&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>해석하기엔 GET 요청이 가장 단순하지만, POST 요청도 동일한 내용입니다.</p>
+<p>GetCapabilities에 쓰이는 파라미터는 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">파라미터</th>
+<th class="head">필수 여부</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">service</span></tt></td>
+<td>○</td>
+<td>서비스명 &mdash;값은 <tt class="docutils literal"><span class="pre">WFS</span></tt>입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">version</span></tt></td>
+<td>○</td>
+<td>서비스 버전 &mdash;값은 현재 버전 번호입니다. &#8220;1.1.0&#8221;, &#8220;1.0.0&#8221; 등 전체 버전 번호를 입력해야 합니다. &#8220;1&#8221; 또는 &#8220;1.1&#8221; 등 축약된 형태는 안 됩니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">request</span></tt></td>
+<td>○</td>
+<td>작업명 &mdash;값은 <tt class="docutils literal"><span class="pre">GetCapabilities</span></tt>입니다.</td>
+</tr>
+</tbody>
+</table>
+<p>각 작업마다 기술적으로는 이 파라미터들이 모두 필요하지만, 요청에서 빠진 파라미터가 있어도 GeoServer가 기본값을 제공할 것입니다.</p>
+<p>GetCapabilities 응답은 긴 XML 문서로, 지원 버전마다 그 서식이 다릅니다. GetCapabilities 문서는 다음 5가지 주요 요소를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">요소(component)</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">ServiceIdentification</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">Title</span></tt> 및 <tt class="docutils literal"><span class="pre">ServiceType</span></tt> 등 요청에 대한 기본 헤더 정보를 담고 있습니다.
+<tt class="docutils literal"><span class="pre">ServiceType</span></tt>은 지원하는 WFS 버전(들)을 가리킵니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">ServiceProvider</span></tt></td>
+<td>전화번호, 웹사이트, 이메일 주소 등 WFS 서비스를 제공하는 회사에 대한 연락처 정보를 제공합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">OperationsMetadata</span></tt></td>
+<td>WFS 서버가 지원하는 작업 및 각 작업에 대한 파라미터를 설명합니다. 앞에 나온 작업들에 응답하지 않도록 WFS 서버를 설정할 수도 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">FeatureTypeList</span></tt></td>
+<td>WFS 서버가 생산한 피처형의 목록을 제공합니다. <tt class="docutils literal"><span class="pre">namespace:featuretype</span></tt> 형태로 피처형을 나열합니다.
+피처형의 기본 투영체 및 해당 투영체에서 데이터의 범위(bounding box)도 함께 나열합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Filter_Capabilities</span></tt></td>
+<td>쿼리 술어(predicate)를 형성할 수 있는 필터나 연산식의 목록을 나열합니다.
+예를 들면 <tt class="docutils literal"><span class="pre">Equals</span></tt>, <tt class="docutils literal"><span class="pre">Touches</span></tt> 같은 <tt class="docutils literal"><span class="pre">SpatialOperators</span></tt>와
+<tt class="docutils literal"><span class="pre">LessThan</span></tt>, <tt class="docutils literal"><span class="pre">GreaterThan</span></tt> 같은 <tt class="docutils literal"><span class="pre">ComparisonOperators</span></tt>가 있습니다.
+필터 자체는 GetCapabilities 문서에 포함되지 않습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="describefeaturetype">
+<span id="wfs-dft"></span><h3>DescribeFeatureType<a class="headerlink" href="#describefeaturetype" title="Permalink to this headline">¶</a></h3>
+<p><strong>DescribeFeatureType</strong>은 실제 데이터를 요청하기 전에 개별 피처형에 대한 정보를 요청합니다.
+이 작업은 해당 피처형에 대해 피처 및 속성 목록 또는 사용할 수 있는 피처형의 목록을 요청합니다.</p>
+<p>DescribeFeatureType에 쓰이는 파라미터는 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">파라미터</th>
+<th class="head">필수 여부</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">service</span></tt></td>
+<td>○</td>
+<td>서비스명 &mdash;값은 <tt class="docutils literal"><span class="pre">WFS</span></tt>입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">version</span></tt></td>
+<td>○</td>
+<td>서비스 버전 &mdash;값은 현재 버전 번호입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">request</span></tt></td>
+<td>○</td>
+<td>작업명 &mdash;값은 <tt class="docutils literal"><span class="pre">DescribeFeatureType</span></tt>입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">typeNames</span></tt></td>
+<td>○</td>
+<td>설명할 피처형 명칭입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">exceptions</span></tt></td>
+<td>Χ</td>
+<td>예외 보고 형식 &mdash;기본값은 <tt class="docutils literal"><span class="pre">application/vnd.ogc.se_xml</span></tt> 입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">outputFormat</span></tt></td>
+<td>Χ</td>
+<td>피처형을 설명하는 데 쓰이는 체계 기술 언어(scheme description language)를 정의합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>피처형 목록을 반환받는 GET 요청은 다음과 같습니다. 이 요청으로 명칭공간에 따라 정렬된 피처형 목록이 반환됩니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=DescribeFeatureType</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">namespace:featuretype</span></tt>이라는 특정 피처형에 대한 정보를 나열하는 GET 요청은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=DescribeFeatureType&amp;
+  typeName=namespace:featuretype</pre>
+</div>
+</div>
+<div class="section" id="getfeature">
+<span id="wfs-getfeature"></span><h3>GetFeature<a class="headerlink" href="#getfeature" title="Permalink to this headline">¶</a></h3>
+<p><strong>GetFeature</strong> 작업은 데이터 소스에서 선정된 피처들을 반환합니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">namespace:featuretype</span></tt> 레이어에 대해 GetFeature 요청을 실행하는 예시입니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=GetFeature&amp;
+  typeName=namespace:featuretype</pre>
+</div>
+<p>이 명령을 실행하면 해당 피처형의 모든 피처에 대한 도형을 반환하는데, 대용량 데이터일 수도 있습니다.
+산출물의 용량을 제한하려면 추가 파라미터 <tt class="docutils literal"><span class="pre">featureID</span></tt>를 포함시켜 특정 피처의 ID를 제공하여 단일 피처만 반환하도록 GetFeature 요청을 제한할 수 있습니다.
+이렇게 할 경우 다음과 같은 GET 요청이 됩니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=GetFeature&amp;
+  typeName=namespace:featuretype&amp;
+  featureID=feature</pre>
+</div>
+<p>피처 ID를 몰라도 반환되는 피처의 용량을 제한하고 싶을 경우, <tt class="docutils literal"><span class="pre">maxFeatures</span></tt> 파라미터를 이용하십시오.
+다음 예시에서 <tt class="docutils literal"><span class="pre">N</span></tt>은 반환할 피처 개수를 의미합니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=GetFeature&amp;
+  typeName=namespace:featuretype&amp;
+  maxFeatures=N</pre>
+</div>
+<p>정확히 어떤 N개의 피처를 반환할지는 데이터의 내부 구조에 달려 있습니다. 그러나 속성값을 기반으로 반환되는 선정 집합을 정렬할 수는 있습니다.
+다음은 <tt class="docutils literal"><span class="pre">sortBy=attribute</span></tt> 파라미터를 통해 요청에 속성을 담는 예시입니다.
+(정렬의 기준이 될 속성을 <tt class="docutils literal"><span class="pre">attribute</span></tt> 자리에 입력하십시오.)</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+   service=wfs&amp;
+   version=2.0.0&amp;
+   request=GetFeature&amp;
+   typeName=namespace:featuretype&amp;
+   maxFeatures=N&amp;
+   sortBy=attribute</pre>
+</div>
+<p>기본 정렬 작업은 오름차순 정렬입니다. 몇몇 WFS 서버는 &mdash; 오름차순 정렬을 해야 할 경우에도 &mdash; 정렬 순서를 설정해야 합니다.
+이럴 경우 요청에 <tt class="docutils literal"><span class="pre">+A</span></tt>를 붙이면 됩니다.
+반대로 다음과 같이 요청에 <tt class="docutils literal"><span class="pre">+D</span></tt>를 붙이면 내림차순으로 정렬하게 됩니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=GetFeature&amp;
+  typeName=namespace:featuretype&amp;
+  maxFeatures=N&amp;
+  sortBy=attribute+D</pre>
+</div>
+<p>GetFeature 요청에 꼭 <tt class="docutils literal"><span class="pre">maxFeatures</span></tt>와 함께 <tt class="docutils literal"><span class="pre">sortBy</span></tt>를 써야 할 이유는 없지만,
+반환되는 피처 선정 집합을 더 효율적으로 관리하려면 함께 사용하는 편이 좋습니다.</p>
+<p>GetFeature 요청을 피처보다 속성을 통해 제한하려면 <tt class="docutils literal"><span class="pre">propertyName=attribute</span></tt> 형식으로 <tt class="docutils literal"><span class="pre">propertyName</span></tt> 키(key)를 사용하십시오.
+단일 속성을 설정할 수도 있고, 쉼표로 구분된 복수의 속성을 설정할 수도 있습니다. 모든 피처에서 단일 속성을 검색하려면 다음과 같은 요청이 필요합니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=GetFeature&amp;
+  typeName=namespace:featuretype&amp;
+  propertyName=attribute</pre>
+</div>
+<p>단 하나의 피처에서 단일 속성을 찾으려면 다음과 같이 <tt class="docutils literal"><span class="pre">featureID</span></tt>와 <tt class="docutils literal"><span class="pre">propertyName</span></tt> 둘 다 이용하십시오.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=GetFeature&amp;
+  typeName=namespace:featuretype&amp;
+  featureID=feature&amp;
+  propertyName=attribute</pre>
+</div>
+<p>단일 피처에서 하나 이상의 속성을 찾으려면 다음과 같이 <tt class="docutils literal"><span class="pre">propertyName</span></tt>에 쉼표로 값을 구분해서 나열하십시오.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=GetFeature&amp;
+  typeName=namespace:featuretype&amp;
+  featureID=feature&amp;
+  propertyName=attribute1,attribute2</pre>
+</div>
+<p>이런 GetFeature 요청의 변환들이 비공간 파라미터에 집중되어 있는 반면, 도형을 기준으로 피처를 쿼리할 수도 있습니다.
+GET 요청에 쓸 수 있는 공간 쿼리 옵션은 제한되어 있지만 (POST 요청에 필터를 이용한 더 많은 옵션이 있습니다) 범위(BBOX)를 기준으로 한 필터 작업을 지원합니다.</p>
+<p><tt class="docutils literal"><span class="pre">BBOX</span></tt> 파라미터를 쓰면 사용자 지정 좌표로 이루어진 사각형 안에 담겨 있는 (또는 부분적으로 걸쳐 있는) 피처를 검색할 수 있습니다.
+BBOX 파라미터의 문법은 <tt class="docutils literal"><span class="pre">bbox=a1,b1,a2,b2</span></tt>로 <tt class="docutils literal"><span class="pre">a1, b1, a2, b2</span></tt>는 좌표값을 나타냅니다.
+BBOX 파라미터로 전송되는 좌표 순서는 사용되는 좌표 시스템을 따릅니다.
+(좌표 문법에서 <tt class="docutils literal"><span class="pre">x</span></tt>나 <tt class="docutils literal"><span class="pre">y</span></tt>를 쓰지 않는 이유이기도 합니다.)
+좌표 시스템을 설정하려면 WFS 요청에 <tt class="docutils literal"><span class="pre">srsName=CRS</span></tt>를 추가합니다.
+이때 <tt class="docutils literal"><span class="pre">CRS</span></tt> 자리에 사용하고자 하는 좌표 참조 시스템(Coordinate Reference System)을 대입합니다.</p>
+<p>범위(bounding box)의 어떤 모서리를 설정하느냐에 대해서는, 하단(좌하단 혹은 우하단)을 먼저 설정하면 됩니다. 예를 들어 좌하단과 우상단, 또는 우하단과 좌상단이라는 식입니다.</p>
+<p>범위를 기준으로 피처를 반환하는 요청의 서식 예시는 다음과 같습니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=GetFeature&amp;
+  typeName=namespace:featuretype&amp;
+  srsName=CRS
+  bbox=a1,b1,a2,b2</pre>
+</div>
+</div>
+<div class="section" id="lockfeature">
+<h3>LockFeature<a class="headerlink" href="#lockfeature" title="Permalink to this headline">¶</a></h3>
+<p><strong>LockFeature</strong> 작업은 편집 트랜잭션 작업 중 일관성을 확보하기 위해 장기간 피처를 잠그는 메커니즘을 제공합니다.
+어떤 클라이언트가 피처를 불러와 WFS에 다시 제출하기 전에 몇 가지를 변경할 경우, 피처를 잠가두면 다른 클라이언트가 동일한 피처를 변경하지 못 하게 되므로 트랜잭션 작업을 시계열화할 수 있습니다.
+WFS 서버가 이 작업을 지원하는 경우 서버의 GetCapabilities 응답에서 그 내용을 찾아볼 수 있습니다.</p>
+<p>실제로 이 작업을 지원하는 클라이언트는 거의 없습니다.</p>
+</div>
+<div class="section" id="transaction">
+<span id="wfs-wfst"></span><h3>Transaction<a class="headerlink" href="#transaction" title="Permalink to this headline">¶</a></h3>
+<p><strong>Transaction</strong> 작업으로 WFS가 생산한 피처를 생성, 변경, 삭제할 수 있습니다.
+각 트랜잭션은 0개 이상의 Insert, Update, Delete 요소로 이루어지며, 각 트랜잭션 요소는 순서대로 실행됩니다.
+모든 GeoServer 트랜잭션은 <em>극히 섬세(atomic)</em>합니다. 즉 요소 가운데 하나라도 문제가 생기면 트랜잭션 작업은 중단되고 데이터는 변경되지 않습니다.
+<strong>트랜잭션</strong>을 지원하는 WFS 서버를 때로 WFS-T 서버라고도 합니다. <strong>GeoServer는 트랜잭션을 완전하게 지원합니다</strong>.</p>
+<p>트랜잭션 작업의 문법에 대해 더 자세히 알고 싶다면 <a class="reference external" href="http://www.opengeospatial.org/standards/wfs">WFS specification</a> 및
+<a class="reference internal" href="../../webadmin/demos/index.html#webadmin-demos"><em>GeoServer sample requests</em></a>를 참조하십시오.</p>
+</div>
+<div class="section" id="getgmlobject">
+<h3>GetGMLObject<a class="headerlink" href="#getgmlobject" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>WFS 1.1.0 버전에서만</strong> 이 작업을 할 수 있습니다.</p>
+</div>
+<p><strong>GetGMLObject</strong> 작업은 GML 오브젝트(피처 또는 도형)의 식별자를 받아 해당 오브젝트를 반환합니다.
+클라이언트가 복잡 피처에 내재된 속성의 일부만을 추출할 수 있는 <a class="reference internal" href="../../data/app-schema/complex-features.html#app-schema-complex-features"><em>복잡 피처</em></a>가 필요한 경우에만
+이 작업을 적절히 할 수 있습니다. 따라서 클라이언트 응용 프로그램에서 이 작업이 널리 쓰이지는 않습니다.</p>
+</div>
+<div class="section" id="getpropertyvalue">
+<h3>GetPropertyValue<a class="headerlink" href="#getpropertyvalue" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>WFS 2.0.0 버전에서만</strong> 이 작업을 할 수 있습니다.</p>
+</div>
+<p><strong>GetPropertyValue</strong> 작업으로 쿼리를 통해 식별된 해당 피처 집합이 속한 데이터 소스에서 피처 속성값, 또는 복잡 피처 속성값의 일부를 받아옵니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어에 속한 피처의 지리적 내용만을 요청하는 예시입니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  service=wfs&amp;
+  version=2.0.0&amp;
+  request=GetPropertyValue&amp;
+  typeNames=topp:states&amp;
+  valueReference=the_geom</pre>
+</div>
+<p>다음은 동일한 내용의 POST 요청 예시입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:GetPropertyValue</span> <span class="na">service=</span><span class="s">&#39;WFS&#39;</span> <span class="na">version=</span><span class="s">&#39;2.0.0&#39;</span>
+ <span class="na">xmlns:topp=</span><span class="s">&#39;http://www.openplans.org/topp&#39;</span>
+ <span class="na">xmlns:fes=</span><span class="s">&#39;http://www.opengis.net/fes/2.0&#39;</span>
+ <span class="na">xmlns:wfs=</span><span class="s">&#39;http://www.opengis.net/wfs/2.0&#39;</span>
+ <span class="na">valueReference=</span><span class="s">&#39;the_geom&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:Query</span> <span class="na">typeNames=</span><span class="s">&#39;topp:states&#39;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/wfs:GetPropertyValue&gt;</span>
+</pre></div>
+</div>
+<p>다른 속성값을 받아오려면 <tt class="docutils literal"><span class="pre">valueReference</span></tt> 파라미터를 변경하십시오.</p>
+</div>
+<div class="section" id="getfeaturewithlock">
+<h3>GetFeatureWithLock<a class="headerlink" href="#getfeaturewithlock" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>WFS 2.0.0 버전에서만</strong> 이 작업을 할 수 있습니다.</p>
+</div>
+<p>WFS 서버가 피처 집합을 반환할 때 이후 이어질 트랜잭션 작업을 위해 피처들을 잠근다는 점만 제외하면 <strong>GetFeatureWithLock</strong> 작업은 <strong>GetFeature</strong> 작업과 유사합니다.</p>
+<p>다음 POST 요청 예시에서 <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어의 피처를 받아오지만, 추가적으로 5분동안 해당 피처들을 잠급니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:GetFeatureWithLock</span> <span class="na">service=</span><span class="s">&#39;WFS&#39;</span> <span class="na">version=</span><span class="s">&#39;2.0.0&#39;</span>
+ <span class="na">handle=</span><span class="s">&#39;GetFeatureWithLock-tc1&#39;</span> <span class="na">expiry=</span><span class="s">&#39;5&#39;</span> <span class="na">resultType=</span><span class="s">&#39;results&#39;</span>
+ <span class="na">xmlns:topp=</span><span class="s">&#39;http://www.openplans.org/topp&#39;</span>
+ <span class="na">xmlns:fes=</span><span class="s">&#39;http://www.opengis.net/fes/2.0&#39;</span>
+ <span class="na">xmlns:wfs=</span><span class="s">&#39;http://www.opengis.net/wfs/2.0&#39;</span>
+ <span class="na">valueReference=</span><span class="s">&#39;the_geom&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:Query</span> <span class="na">typeNames=</span><span class="s">&#39;topp:states&#39;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/wfs:GetFeatureWithLock&gt;</span>
+</pre></div>
+</div>
+<p>잠금 시간을 조정하려면 <tt class="docutils literal"><span class="pre">expiry</span></tt> 파라미터를 변경하십시오.</p>
+</div>
+<div class="section" id="createstoredquery">
+<h3>CreateStoredQuery<a class="headerlink" href="#createstoredquery" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>WFS 2.0.0 버전에서만</strong> 이 작업을 할 수 있습니다.</p>
+</div>
+<p><strong>CreateStoredQuery</strong> 작업으로 WFS 서버 상에 저장 쿼리를 생성합니다.
+저장 쿼리의 정의는 <tt class="docutils literal"><span class="pre">StoredQueryDefinition</span></tt> 파라미터에 코드화되어 참조를 위한 ID를 제공합니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어에서 설정된 AOI(<tt class="docutils literal"><span class="pre">${AreaOfInterest}</span></tt>) 안에 있는 피처들을 필터링하는
+&#8220;myStoredQuery&#8221;라는 새로운 저장 쿼리를 생성하는 POST 요청 예시입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:CreateStoredQuery</span> <span class="na">service=</span><span class="s">&#39;WFS&#39;</span> <span class="na">version=</span><span class="s">&#39;2.0.0&#39;</span>
+ <span class="na">xmlns:wfs=</span><span class="s">&#39;http://www.opengis.net/wfs/2.0&#39;</span>
+ <span class="na">xmlns:fes=</span><span class="s">&#39;http://www.opengis.org/fes/2.0&#39;</span>
+ <span class="na">xmlns:gml=</span><span class="s">&#39;http://www.opengis.net/gml/3.2&#39;</span>
+ <span class="na">xmlns:myns=</span><span class="s">&#39;http://www.someserver.com/myns&#39;</span>
+ <span class="na">xmlns:topp=</span><span class="s">&#39;http://www.openplans.org/topp&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:StoredQueryDefinition</span> <span class="na">id=</span><span class="s">&#39;myStoredQuery&#39;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;wfs:Parameter</span> <span class="na">name=</span><span class="s">&#39;AreaOfInterest&#39;</span> <span class="na">type=</span><span class="s">&#39;gml:Polygon&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;wfs:QueryExpressionText</span>
+     <span class="na">returnFeatureTypes=</span><span class="s">&#39;topp:states&#39;</span>
+     <span class="na">language=</span><span class="s">&#39;urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression&#39;</span>
+     <span class="na">isPrivate=</span><span class="s">&#39;false&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;wfs:Query</span> <span class="na">typeNames=</span><span class="s">&#39;topp:states&#39;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;fes:Filter&gt;</span>
+          <span class="nt">&lt;fes:Within&gt;</span>
+            <span class="nt">&lt;fes:ValueReference&gt;</span>the_geom<span class="nt">&lt;/fes:ValueReference&gt;</span>
+             ${AreaOfInterest}
+          <span class="nt">&lt;/fes:Within&gt;</span>
+        <span class="nt">&lt;/fes:Filter&gt;</span>
+      <span class="nt">&lt;/wfs:Query&gt;</span>
+    <span class="nt">&lt;/wfs:QueryExpressionText&gt;</span>
+  <span class="nt">&lt;/wfs:StoredQueryDefinition&gt;</span>
+<span class="nt">&lt;/wfs:CreateStoredQuery&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dropstoredquery">
+<h3>DropStoredQuery<a class="headerlink" href="#dropstoredquery" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>WFS 2.0.0 버전에서만</strong> 이 작업을 할 수 있습니다.
+</div>
+<p><strong>DropStoredQuery</strong> 작업으로 이전 CreateStoredQuery 작업으로 생성된 저장 쿼리를 삭제(drop)합니다. 이 요청은 삭제할 쿼리의 ID를 받습니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">myStoredQuery</span></tt>라는 ID를 가진 저장 쿼리를 삭제하는 예시입니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  request=DropStoredQuery&amp;
+  storedQuery_Id=myStoredQuery</pre>
+</div>
+<p>다음은 동일한 내용의 POST 요청 예시입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:DropStoredQuery</span>
+ <span class="na">xmlns:wfs=</span><span class="s">&#39;http://www.opengis.net/wfs/2.0&#39;</span>
+ <span class="na">service=</span><span class="s">&#39;WFS&#39;</span> <span class="na">id=</span><span class="s">&#39;myStoredQuery&#39;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="liststoredqueries">
+<h3>ListStoredQueries<a class="headerlink" href="#liststoredqueries" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>WFS 2.0.0 버전에서만</strong> 이 작업을 할 수 있습니다.
+</div>
+<p><strong>ListStoredQueries</strong> 작업은 현재 WFS 서버가 유지하고 있는 저장 쿼리 목록을 반환합니다.</p>
+<p>다음은 서버 상의 모든 저장 쿼리를 나열하는 요청의 예시입니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  request=ListStoredQueries&amp;
+  service=wfs&amp;
+  version=2.0.0</pre>
+</div>
+<p>다음은 동일한 내용의 POST 요청 예시입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:ListStoredQueries</span> <span class="na">service=</span><span class="s">&#39;WFS&#39;</span>
+ <span class="na">version=</span><span class="s">&#39;2.0.0&#39;</span>
+ <span class="na">xmlns:wfs=</span><span class="s">&#39;http://www.opengis.net/wfs/2.0&#39;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="describestoredqueries">
+<h3>DescribeStoredQueries<a class="headerlink" href="#describestoredqueries" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>WFS 2.0.0 버전에서만</strong> 이 작업을 할 수 있습니다.
+</div>
+<p><strong>DescribeStoredQuery</strong> 작업은 WFS 서버가 유지하고 있는 각 저장 쿼리에 대한 자세한 메타데이터를 반환합니다.
+특정 쿼리의 ID를 제공해서 개별 쿼리에 대한 설명을 요청할 수도 있습니다. ID를 제공하지 않으면 모든 쿼리에 대한 설명을 반환합니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">urn:ogc:def:query:OGC-WFS::GetFeatureById</span></tt>라는 ID를 가진 기존 저장 쿼리의 설명을 요청하는 예시입니다.</p>
+<div class="highlight-python"><pre>http://example.com/geoserver/wfs?
+  request=DescribeStoredQueries&amp;
+  storedQuery_Id=urn:ogc:def:query:OGC-WFS::GetFeatureById</pre>
+</div>
+<p>다음은 동일한 내용의 POST 요청 예시입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:DescribeStoredQueries</span>
+ <span class="na">xmlns:wfs=</span><span class="s">&#39;http://www.opengis.net/wfs/2.0&#39;</span>
+ <span class="na">service=</span><span class="s">&#39;WFS&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:StoredQueryId&gt;</span>urn:ogc:def:query:OGC-WFS::GetFeatureById<span class="nt">&lt;/wfs:StoredQueryId&gt;</span>
+<span class="nt">&lt;/wfs:DescribeStoredQueries&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="basics.html" title="previous chapter">WFS basics</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="outputformats.html" title="next chapter">WFS output formats</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WFS reference</a><ul>
+<li><a class="reference internal" href="#benefits-of-wfs">Benefits of WFS</a></li>
+<li><a class="reference internal" href="#operations">Operations</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a><ul>
+<li><a class="reference internal" href="#getcapabilities">GetCapabilities</a></li>
+<li><a class="reference internal" href="#describefeaturetype">DescribeFeatureType</a></li>
+<li><a class="reference internal" href="#getfeature">GetFeature</a></li>
+<li><a class="reference internal" href="#lockfeature">LockFeature</a></li>
+<li><a class="reference internal" href="#transaction">Transaction</a></li>
+<li><a class="reference internal" href="#getgmlobject">GetGMLObject</a></li>
+<li><a class="reference internal" href="#getpropertyvalue">GetPropertyValue</a></li>
+<li><a class="reference internal" href="#getfeaturewithlock">GetFeatureWithLock</a></li>
+<li><a class="reference internal" href="#createstoredquery">CreateStoredQuery</a></li>
+<li><a class="reference internal" href="#dropstoredquery">DropStoredQuery</a></li>
+<li><a class="reference internal" href="#liststoredqueries">ListStoredQueries</a></li>
+<li><a class="reference internal" href="#describestoredqueries">DescribeStoredQueries</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="basics.html" title="previous chapter">WFS basics</a></li>
+            <li>다음: <a href="outputformats.html" title="next chapter">WFS output formats</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wfs/reference.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

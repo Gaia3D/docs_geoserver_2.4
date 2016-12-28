@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>KML Placemark Templates &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../../index.html" />
+      <link rel="up" title="Tutorials" href="../index.html" />
+      <link rel="next" title="Heights Templates" href="../heights/heights.html" />
+      <link rel="prev" title="Tutorials" href="../index.html" />
+</head>
+<body class="googleearth/tutorials/kmlplacemark/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Google Earth</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Tutorials</a> &raquo;</li>
+  <li>KML Placemark Templates</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../heights/heights.html" title="Heights Templates"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../index.html" title="Tutorials"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="kml-placemark-templates">
+<span id="getutorial-kmlplacemark"></span><h1>KML Placemark Templates<a class="headerlink" href="#kml-placemark-templates" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>KML은 맵 상의 위치를 표시하기 위해 &#8220;위치표시(placemark)&#8221;를 사용하는데, 주로 노랑 압정으로 시각화합니다.
+위치표시에 해당 위치에 대한 정보인 &#8220;설명(description)&#8221;을 연결할 수 있습니다.
+위치표시 설명은 단순한 HTML 조각에 불과하며 원하는 것은 뭐든지 표출할 수 있습니다.</p>
+<p>GeoServer는 기본적으로 데이터셋의 특정 피처에 쓰일 수 있는 모든 속성을 설명하는 HTML 표를 위치표시 설명으로 생성합니다.
+다음은 아이다호(Idaho) 주를 표현하는 피처에 대한 위치표시 설명을 보여주는 그림입니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/default.jpg" src="../../../_images/default.jpg" />
+<p class="caption"><em>기본 위치표시 설명</em></p>
+</div>
+<p>이것만으로도 훌륭하지만, 이 설명을 통해 다른 종류의 정보를 전달하고자 하는 경우 어떻게 해야 할까요.
+또는 데이터셋의 모든 속성을 전부 보여주면 안 될 경우에는 어떻게 해야 할까요. 템플릿을 이용하면 됩니다!</p>
+<p>템플릿은 어떤 종류의 산출물을 생성하는 데 딱이니 말입니다.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>먼저 환경을 설정하십시오. 이 예제를 마치려면 다음 응용 프로그램이 필요합니다.</p>
+<ul class="simple">
+<li>GeoServer 설치</li>
+<li>텍스트 편집기</li>
+</ul>
+<p>이게 다입니다. 이 예제는 GeoServer가 기본 설치 시와 동일한 (데이터 디렉터리) 설정으로 운영되고 있다고 가정합니다.</p>
+</div>
+<div class="section" id="hello-world">
+<h2>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
+<p>그러면 첫번째 템플릿을 생성해보겠습니다. 벌써 짐작했겠지만 &#8220;Hello World!&#8221;라는 위치표시 설명을 생성하는 아주 단순한 템플릿부터 시작하겠습니다.</p>
+<ol class="arabic">
+<li><p class="first">사용자가 쓰고 싶은 텍스트 편집기로 <tt class="docutils literal"><span class="pre">description.ftl</span></tt>이라는 새로운 파일을 생성하십시오.</p>
+</li>
+<li><p class="first">다음 내용을 파일에 추가합니다.</p>
+<div class="highlight-python"><pre>Hello World!</pre>
+</div>
+</li>
+<li><p class="first">파일을 사용자 데이터 디렉터리의 <tt class="docutils literal"><span class="pre">workspaces/topp/states_shapefile/states</span></tt> 디렉터리에 저장합니다.
+모든 GeoServer 설정 파일이 데이터 디렉터리에 있습니다. 일반적으로 환경 변수 <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt>가 데이터 디렉터리를 가리킵니다.</p>
+</li>
+<li><p class="first">(실행중이 아니라면) GeoServer를 시작하십시오.</p>
+</li>
+</ol>
+<p>끝났습니다. 이제 Google 어스에 다음 네트워크 링크를 추가해서 이 템플릿을 테스트해볼 수 있습니다.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/kml?layers=states</pre>
+</div>
+<p>이 첫번째 템플릿이 다음과 같이 표출될 것입니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/helloworld.png" src="../../../_images/helloworld.png" />
+<p class="caption"><em>Hello World! 템플릿</em></p>
+</div>
+</div></blockquote>
+<p><strong>템플릿 새로고침</strong>: 템플릿의 장점 가운데 하나는 모든 요청을 받아들인다는 점입니다.
+따라서 그냥 그 자리에서 템플릿을 편집한 다음 파일을 저장하자마자 Geoserver가 변경된 내용을 인식하게 할 수 있습니다.
+또 템플릿을 편집하고 저장한 다음 Google 어스 안에서 네트워크 링크를 &#8220;새로고침(Refresh)&#8221;하기만 하면 새로운 내용을 표출합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/refresh.png" src="../../../_images/refresh.png" />
+<p class="caption"><em>템플릿 새로고침</em></p>
+</div>
+</div></blockquote>
+<p>앞서 말했듯이 템플릿 설명은 HTML일 뿐입니다.
+<tt class="docutils literal"><span class="pre">description.ftl</span></tt> 파일을 가지고 사용자 스스로 HTML을 추가해보십시오. 다음 예시들을 시험해보는 것도 좋습니다.</p>
+<ol class="arabic">
+<li><p class="first">사용자 회사/조직의 홈페이지로 연결되는 간단한 링크</p>
+<div class="highlight-python"><pre>Provided by the &lt;a href="http://topp.openplans.org"&gt;The Open Planning Project&lt;/a&gt;.</pre>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/topplink.png" src="../../../_images/topplink.png" />
+<p class="caption"><em>TOPP 홈페이지</em></p>
+</div>
+</div></blockquote>
+<ol class="arabic" start="2">
+<li><p class="first">사용자 회사/조직의 로고</p>
+<div class="highlight-python"><pre>&lt;img src="http://topp.openplans.org/images/logo.jpg"/&gt;</pre>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/topplogo.png" src="../../../_images/topplogo.png" />
+<p class="caption"><em>TOPP 로고</em></p>
+</div>
+</div></blockquote>
+<p>가능성은 무궁무진합니다. 그러나 이 예시들이 훌륭하긴 하지만 그 내용이 정적(static)이라는 점에서 약간 부족한 면이 있습니다.
+다음 섹션에서 실제로 데이터셋의 몇몇 속성에 접근하는 좀 더 실질적인 템플릿을 생성해보겠습니다.</p>
+</div>
+<div class="section" id="data-content">
+<h2>Data Content<a class="headerlink" href="#data-content" title="Permalink to this headline">¶</a></h2>
+<p>템플릿의 진짜 강점은 콘텐츠에 쉽게 접근할 수 있는 기능으로, 피처의 경우 피처 속성이 콘텐츠가 됩니다.
+KML 위치표시 설명 템플릿에서 다음과 같은 여러 가지 &#8220;템플릿 변수(template variable)&#8221;를 사용할 수 있습니다.</p>
+<ul class="simple">
+<li>&#8220;fid&#8221; 변수 &mdash;피처 ID와 연결됩니다.</li>
+<li>&#8220;typeName&#8221; 변수 &mdash;피처형의 명칭과 연결됩니다.</li>
+<li>피처 속성과 연결되는 변수들의 배열 &mdash;각각 해당 속성명의 명칭을 부여받습니다.</li>
+</ul>
+<p>이 내용을 잘 기억하고 다음 예시들을 실행해보겠습니다.</p>
+<p>단순한 fid/typename 접근:</p>
+<div class="highlight-python"><pre>This is feature ${fid} of type ${typeName}.</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">states</span></tt> 피처형에 속한, 피처 ID가 <tt class="docutils literal"><span class="pre">states.31</span></tt>인 피처의 설명이 다음과 같이 표출됩니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/fid.png" src="../../../_images/fid.png" />
+<p class="caption"><em>피처 ID</em></p>
+</div>
+<p><tt class="docutils literal"><span class="pre">STATE_NAME</span></tt>과 <tt class="docutils literal"><span class="pre">PERSONS</span></tt>라는 2개 속성의 값에 접근:</p>
+<div class="highlight-python"><pre>This is ${STATE_NAME.value} state which has a population of ${PERSONS.value}.</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">STATE_NAME</span></tt> 속성값이 Idaho인 피처의 <tt class="docutils literal"><span class="pre">PERSONS</span></tt> 속성값은 1.006.749입니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/attributes.png" src="../../../_images/attributes.png" />
+<p class="caption"><em>속성</em></p>
+</div>
+</div>
+<div class="section" id="attribute-variables">
+<h2>Attribute Variables<a class="headerlink" href="#attribute-variables" title="Permalink to this headline">¶</a></h2>
+<p>&#8220;복잡 오브젝트(complex object)&#8221;의 피처 속성은 다음 3개의 부분으로 이루어져 있습니다.</p>
+<ol class="arabic simple">
+<li><strong>value</strong> &mdash;직접 이용할 수 있는 실제 속성값을 대표하는 기본 문자열입니다.</li>
+<li><strong>rawValue</strong> &mdash;좀 더 특별하게 사용자 지정할 수 있는 실제 속성값입니다.
+(예를 들면 불 값(boolean)을 가지는 속성에 대한 사용자 지정 표현인 <tt class="docutils literal"><span class="pre">${attribute.value?string(&quot;Enabled&quot;, &quot;Disabled&quot;)}</span></tt> 등)</li>
+<li><strong>type</strong> &mdash;각각 <tt class="docutils literal"><span class="pre">${&lt;attribute_name&gt;.name}</span></tt>,
+<tt class="docutils literal"><span class="pre">${&lt;attribute_name&gt;.value}, ${&lt;attribute_name&gt;.rawValue}</span></tt>,
+<tt class="docutils literal"><span class="pre">${&lt;attribute_name&gt;.type}</span></tt>을 통해 접근할 수 있습니다.
+다른 변수로는 &#8220;fid&#8221;, &#8220;typeName&#8221;, 그리고 직접 사용할 수 있는 &#8220;단순 오브젝트(simple object)&#8221;가 있습니다.</li>
+</ol>
+</div>
+<div class="section" id="wms-demo-example">
+<h2>WMS Demo Example<a class="headerlink" href="#wms-demo-example" title="Permalink to this headline">¶</a></h2>
+<p>마지막으로 GeoServer에 기본 포함된 &#8220;WMS Example&#8221; 데모를 기본으로 하는 예시입니다.
+이 데모를 보고 싶다면 웹 브라우저에서 <a class="reference external" href="http://localhost:8080/geoserver/popup_map/index.html">http://localhost:8080/geoserver/popup_map/index.html</a> 주소로 접속하십시오.</p>
+<p>맵 상의 어떤 포인트 위에 마우스 커서를 가져가면 해당 포인트에 지정된 이미지가 표출되는 것을 볼 수 있습니다. KML 위치표시 설명 템플릿으로 이 기능을 복제해보겠습니다.</p>
+<ol class="arabic">
+<li><p class="first">GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pre">featureTypes/DS_poi_poi</span></tt> 디렉터리 안에 다음 템플릿을 생성하십시오.</p>
+<div class="highlight-python"><pre>&lt;img src="http://localhost:8080/geoserver/popup_map/${THUMBNAIL.value}"/&gt;</pre>
+</div>
+</li>
+<li><p class="first">Google 어스에 다음 네트워크 링크를 추가하십시오.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/kml?layers=tiger:poi</pre>
+</div>
+</li>
+</ol>
+<div class="figure align-center">
+<img alt="../../../_images/wmsexample.png" src="../../../_images/wmsexample.png" />
+<p class="caption"><em>WMS 예시</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../index.html" title="previous chapter">Tutorials</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../heights/heights.html" title="next chapter">Heights Templates</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">KML Placemark Templates</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#hello-world">Hello World</a></li>
+<li><a class="reference internal" href="#data-content">Data Content</a></li>
+<li><a class="reference internal" href="#attribute-variables">Attribute Variables</a></li>
+<li><a class="reference internal" href="#wms-demo-example">WMS Demo Example</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../index.html" title="previous chapter">Tutorials</a></li>
+            <li>다음: <a href="../heights/heights.html" title="next chapter">Heights Templates</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/googleearth/tutorials/kmlplacemark/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

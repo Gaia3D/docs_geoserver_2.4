@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Custom SQL session start/stop scripts &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="Working with Application Schemas" href="../app-schema/index.html" />
+      <link rel="prev" title="Controlling feature ID generation in spatial databases" href="primarykey.html" />
+</head>
+<body class="data/database/sqlsession">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>Custom SQL session start/stop scripts</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../app-schema/index.html" title="Working with Application Schemas"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="primarykey.html" title="Controlling feature ID generation in spatial databases"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="custom-sql-session-start-stop-scripts">
+<span id="data-sqlsession"></span><h1>Custom SQL session start/stop scripts<a class="headerlink" href="#custom-sql-session-start-stop-scripts" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer가 connection pool에서 연결을 확보하거나 세션이 pool로 반환될 때마다 실행할 수 있는 사용자 지정 SQL 스크립트를 GeoServer 2.1.4 버전부터 지원하고 있습니다.</p>
+<p>환경 변수 확장을 통해 이 스크립트에 파라미터를 부여할 수 있는데,
+<a class="reference internal" href="../../styling/sld-extensions/substitution.html#sld-variable-substitution"><em>Variable substitution in SLD</em></a>와 같은 방식을 써서
+이 스크립트를 OGC 요청 파라미터로 설정할 수 있습니다.</p>
+<p>요청을 통해 받게 되는 파라미터 외에도
+<tt class="docutils literal"><span class="pre">GSUSER</span></tt> 변수가 현재 GeoServer 사용자 정보를 당연히 담고 있으며, 인증이 안 될 경우엔 null값을 가집니다.
+이는 데이터베이스 접근에 대한 상세한 제어를 하기 위해 SQL 세션 스크립트를 사용하는 경우 유용합니다.</p>
+<p>SQL 스크립트는 <tt class="docutils literal"><span class="pre">${variableName, defaultValue}</span></tt> 구문(syntax)을 사용해 환경 변수를 확장할 수 있습니다.
+예를 들면 다음 스크립트는 현재 데이터베이스 사용자를 GeoServer의 현재 사용자로 변경하거나 인증된 사용자가 없을 경우 <tt class="docutils literal"><span class="pre">geoserver</span></tt>로 변경합니다.</p>
+<blockquote>
+<div>SET SESSION AUTHORIZATION ${GSUSER,geoserver}</div></blockquote>
+</div>
+<div class="section" id="using-sql-session-scripts-to-control-authorizations-at-the-database-level">
+<h1>Using SQL session scripts to control authorizations at the database level<a class="headerlink" href="#using-sql-session-scripts-to-control-authorizations-at-the-database-level" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer는 connection pool을 통해 데이터베이스와 연결하는데, connection pool 설정에서 지정된 사용자와 동일한 권한을 사용합니다.
+다양한 서비스 및 테이블에 대한 설정을 본다면 connection pool 사용자는 WMS의 경우 테이블 선택(selection), WFS-T의 경우 테이블 삽입/업데이트/삭제,
+그리고 테이블 생성 등 (RESTConfig을 통한 데이터 업로드, WPS Import 처리 그리고 결국 데이터베이스 직접 연결을 이용한 새로운 처리까지) 상당히 강력한 권한을 가지고 있을 것입니다.</p>
+<p>GeoServer의 보안 서브시스템이 사용자 권한을 제어할 수 있지만 보안 강화 설정에서 이것만으로는 부족하다고 판단될 경우 데이터베이스 레벨 접근 제어(level access control) 방법이 선호됩니다.
+레벨 접근 제어 방법에서 connection pool 사용자는 보통 읽기 전용 접근과 같은 제한된 접근 권한만 가지는 반면 특정 사용자는 더 다양한 작업을 하도록 할 수 있습니다.</p>
+<p>이런 솔루션을 설정할 때 다음 가이드라인을 기억하십시오.</p>
+<blockquote>
+<div><ul class="simple">
+<li>connection pool 사용자에게 테이블 선택 작업 권한이 있든 없든 사용자가 모든 테이블 메타데이터에 접근할 수 있어야 합니다.
+(사전(dictionary) 테이블이나 기능 설명은 언제든 접근할 수 있어야 합니다.)</li>
+<li>connection pool이 모든 개별 테이블과 뷰의 열을 보고 있어야 합니다. 다시 말하자면 현재 사용자가 바뀌어도 테이블 구조는 변경되면 안 됩니다.</li>
+<li>데이터베이스 사용자와 GeoServer 사용자는 어떤 외부 도구를 이용해 동기화 상태를 유지해야 합니다. GeoServer에는 이런 기능이 없습니다.</li>
+<li>GeoServer가 시작할 때 정상 여부를 확인하기 위해 데이터베이스에 접속하는 코드가 있습니다.
+이때 GeoServer가 사용자 인증을 하지 않기 때문에 이 코드는 <tt class="docutils literal"><span class="pre">GSUSER</span></tt> 변수에 &#8220;기본값(default value)&#8221;으로 설정된 사용자 이름으로 실행됩니다.</li>
+<li>GeoServer를 관리하는 사용자(일반적으로 <tt class="docutils literal"><span class="pre">admin</span></tt>이지만 명칭을 변경할 수도 있고 다른 사용자에게 관리자 롤(administration roles)을 할당할 수도 있습니다)는 동시에 데이터베이스 사용자여야 합니다.
+GeoServer GUI에 접근하는 모든 관리자는 그렇게 지정된 사용자 제어 세션을 가지고 있을 것입니다.</li>
+</ul>
+</div></blockquote>
+<p>일반적인 사용 예시:</p>
+<blockquote>
+<div><ul class="simple">
+<li>WFS-T를 사용해야 하는 사용자에게만 삽입/업데이트/삭제 권한을 부여하십시오.</li>
+<li>관리자에게만 새로운 테이블 생성 권한을 부여하십시오.</li>
+<li>현재 사용자의 계정을 고려해 어떤 행을 반환할지 결정하는 유동적인 SQL 뷰를 사용해서, 사용자가 테이블에서 볼 수 있는 행을 제한하십시오.</li>
+</ul>
+</div></blockquote>
+<p>요점을 말하자면, 현재 GeoServer 사용자 자격으로 PostgreSQL 세션을 실행하고 싶은 경우 다음 스크립트를 사용합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/postgresqlSession.png" src="../../_images/postgresqlSession.png" />
+<p class="caption"><em>Setting up session authorization for PostgreSQL</em></p>
+</div>
+<p>첫번째 명령으로 현재 GeoServer 사용자를, 또는 사용자 인증 정보가 없는 경우 (익명 사용자 혹은 Geoserver 시작 시) <tt class="docutils literal"><span class="pre">geoserver</span></tt> 사용자 명을 데이터베이스 세션이 사용하게 됩니다.
+두번째 명령으로 connection pool 사용자 권한 수준으로 세션을 재설정합니다.</p>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="primarykey.html" title="previous chapter">Controlling feature ID generation in spatial databases</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../app-schema/index.html" title="next chapter">Working with Application Schemas</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Custom SQL session start/stop scripts</a></li>
+<li><a class="reference internal" href="#using-sql-session-scripts-to-control-authorizations-at-the-database-level">Using SQL session scripts to control authorizations at the database level</a></li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="primarykey.html" title="previous chapter">Controlling feature ID generation in spatial databases</a></li>
+            <li>다음: <a href="../app-schema/index.html" title="next chapter">Working with Application Schemas</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/sqlsession.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

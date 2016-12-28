@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Manifests &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="REST configuration API reference" href="index.html" />
+      <link rel="next" title="REST configuration examples" href="../examples/index.html" />
+      <link rel="prev" title="Resource reset" href="reset.html" />
+</head>
+<body class="rest/api/manifests">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">REST configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">REST configuration API reference</a> &raquo;</li>
+  <li>Manifests</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../examples/index.html" title="REST configuration examples"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="reset.html" title="Resource reset"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="manifests">
+<span id="rest-api-manifests"></span><h1>Manifests<a class="headerlink" href="#manifests" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer는 실행 중인 인스턴스에서 로드한 모든 JAR 파일과 리소스들의 목록을 노출하는 REST 서비스를 제공하고 있습니다.
+버그 리포트 및 응용 프로그램이 실행 중인 확장 모듈들을 추적하는 데 유용합니다. 이 정보에 접근할 수 있는 다음 2개의 종단점이 있습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">about/manifest</span></tt> —로드된 모든 JAR 파일에 대한 상세 정보를 받아옵니다.</li>
+<li><tt class="docutils literal"><span class="pre">about/version</span></tt> —GeoSever, GeoTools, GeoWebCache와 같은 상위(high-level) 컴포넌트에 대한 상세 정보를 받아옵니다.</li>
+</ul>
+<div class="section" id="about-manifest-format">
+<h2><tt class="docutils literal"><span class="pre">/about/manifest[.&lt;format&gt;]</span></tt><a class="headerlink" href="#about-manifest-format" title="Permalink to this headline">¶</a></h2>
+<p>이 종단점은 로드된 모든 JAR 파일에 대한 상세 정보를 받아옵니다.</p>
+<p>GeoServer의 모든 목록화된(manifest) JAR 파일은 <tt class="docutils literal"><span class="pre">GeoServerModule</span></tt> 속성을 가지며 형식에 따라 분류되기 때문에,
+정규 표현식(<a class="reference internal" href="#rest-api-manifests-manifest"><em>manifest</em></a> 파라미터 참조)이나
+형식 카테고리(<a class="reference internal" href="#rest-api-manifests-key"><em>key</em></a> 및 <a class="reference internal" href="#rest-api-manifests-value"><em>value</em></a> 파라미터 참조)를 이용해
+목록(manifest)을 검색하는 필터링 기능을 사용할 수 있습니다.</p>
+<p><tt class="docutils literal"><span class="pre">core</span></tt>나 <tt class="docutils literal"><span class="pre">extension</span></tt>,
+<tt class="docutils literal"><span class="pre">community</span></tt> 형식을 쓸 수 있습니다.
+특정 형식에 따라 확장 모듈을 필터링하려면 요청에 <tt class="docutils literal"><span class="pre">key=GeoServerModule&amp;value=&lt;type&gt;</span></tt>을 삽입하십시오.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+<th class="head">파라미터</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>클래스 경로(classpath)에 모든 목록을 나열합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td><a class="reference internal" href="#rest-api-manifests-manifest"><em>manifest</em></a>, <a class="reference internal" href="#rest-api-manifests-key"><em>key</em></a>, <a class="reference internal" href="#rest-api-manifests-value"><em>value</em></a></td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>이 모델은 아주 간단하고 버전에 상관없이 공유되며, 리소스는 양쪽 요청 모두 파싱(parse)할 것을 요구합니다.</p>
+<div class="highlight-xml"><pre>&lt;about&gt;
+  &lt;resource name="{NAME}"&gt;
+    &lt;{KEY}&gt;{VALUE}&lt;/{KEY}&gt;
+    ...
+  &lt;/resource&gt;
+  ...
+&lt;/about&gt;</pre>
+</div>
+<p>데이터 디렉터리의 루트(root) 디렉터리에 <tt class="file docutils literal"><span class="pre">manifest.properties</span></tt> 속성 파일을 추가하여 사용자 지정 결과물을 만들 수 있습니다.
+다음은 사용자 지정 속성 파일이 없을 경우 쓰이는 기본 실행입니다.</p>
+<div class="highlight-python"><pre>resourceNameRegex=.+/(.*).(jar|war)
+resourceAttributeExclusions=Import-Package,Export-Package,Class-Path,Require-Bundle
+versionAttributeInclusions=Project-Version:Version,Build-Timestamp,Git-Revision,
+  Specification-Version:Version,Implementation-Version:Git-Revision</pre>
+</div>
+<p>여기에 쓰이는 파라미터는 다음과 같습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">resourceNameRegex</span></tt> —리소스의 속성명과 맞추기 위해 Group(1)을 사용합니다.</li>
+<li><tt class="docutils literal"><span class="pre">resourceAttributeExclusions</span></tt> —쉼표로 구분된, 포함시키지 말아야 할 속성 목록(블랙리스트)입니다.
+리소스 속성 리스트를 열어두기엔 너무 긴(verbose) 파라미터를 제외할 때 쓰입니다.
+사용자는 전체 파라미터 목록을 담은 (사용자 지정 속성을 가진) JAR 파일을 추가할 수 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">versionAttributeInclusions</span></tt> —쉼표로 구분된, 포함시켜야 할 속성 목록(화이트리스트)입니다.
+웹페이지의 산출물에 대한 <tt class="docutils literal"><span class="pre">versions</span></tt> 요청의 결과물을 정렬하기 위해 쓰이는, 속성의 명칭을
+(<tt class="docutils literal"><span class="pre">key:replace</span></tt>를 이용해) 변경하는 기능도 지원합니다.
+이 모델은 속성을 저장하기 위해 맵을 사용하기 때문에, 목록에서 가장 마지막에 검색된 속성을 사용할 것입니다.</li>
+</ul>
+<div class="section" id="manifest">
+<span id="rest-api-manifests-manifest"></span><h4><tt class="docutils literal"><span class="pre">manifest</span></tt><a class="headerlink" href="#manifest" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">manifest</span></tt> 파라미터는 Java 정규 표현식을 이용해 검색 결과 나온 리소스 (목록) 명칭 속성을 필터링하는 데 쓰입니다.</p>
+</div>
+<div class="section" id="key">
+<span id="rest-api-manifests-key"></span><h4><tt class="docutils literal"><span class="pre">key</span></tt><a class="headerlink" href="#key" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">key</span></tt> 파라미터는 검색 결과 나온 리소스 (목록) 속성명을 필터링하는 데 쓰입니다.
+<tt class="docutils literal"><span class="pre">value</span></tt> 파라미터와 결합해 사용할 수 있습니다.</p>
+</div>
+<div class="section" id="value">
+<span id="rest-api-manifests-value"></span><h4><tt class="docutils literal"><span class="pre">value</span></tt><a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">value</span></tt> 파라미터는 검색 결과 나온 리소스 (목록) 속성값을 필터링하는 데 쓰입니다.
+<tt class="docutils literal"><span class="pre">key</span></tt> 파라미터와 결합해 사용할 수 있습니다.</p>
+</div>
+</div>
+</div>
+<div class="section" id="about-version-format">
+<h2><tt class="docutils literal"><span class="pre">/about/version[.&lt;format&gt;]</span></tt><a class="headerlink" href="#about-version-format" title="Permalink to this headline">¶</a></h2>
+<p>이 종단점은 GeoSever, GeoTools, GeoWebCache와 같은 상위(high-level) 컴포넌트에 대한 상세 정보만을 보여줍니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+<th class="head">파라미터</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>GeoServer, GeoWebCache, GeoTools의 목록을 나열합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td><a class="reference internal" href="#rest-api-manifests-manifest"><em>manifest</em></a>, <a class="reference internal" href="#rest-api-manifests-key"><em>key</em></a>, <a class="reference internal" href="#rest-api-manifests-value"><em>value</em></a></td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="reset.html" title="previous chapter">Resource reset</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../examples/index.html" title="next chapter">REST configuration examples</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Manifests</a><ul>
+<li><a class="reference internal" href="#about-manifest-format"><tt class="docutils literal"><span class="pre">/about/manifest[.&lt;format&gt;]</span></tt></a><ul>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#manifest"><tt class="docutils literal"><span class="pre">manifest</span></tt></a></li>
+<li><a class="reference internal" href="#key"><tt class="docutils literal"><span class="pre">key</span></tt></a></li>
+<li><a class="reference internal" href="#value"><tt class="docutils literal"><span class="pre">value</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#about-version-format"><tt class="docutils literal"><span class="pre">/about/version[.&lt;format&gt;]</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="reset.html" title="previous chapter">Resource reset</a></li>
+            <li>다음: <a href="../examples/index.html" title="next chapter">REST configuration examples</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/rest/api/manifests.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>REST configuration &mdash; GeoServer 2.4.0 User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 User Manual" href="../index.html" />
+      <link rel="next" title="REST configuration API reference" href="api/index.html" />
+      <link rel="prev" title="Virtual OWS Services" href="../services/virtual-services.html" />
+</head>
+<body class="rest/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li>REST configuration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="api/index.html" title="REST configuration API reference"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../services/virtual-services.html" title="Virtual OWS Services"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="rest-configuration">
+<span id="rest"></span><h1>REST configuration<a class="headerlink" href="#rest-configuration" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer는 클라이언트가 인스턴스에 대한 정보를 읽고 설정을 변경할 수 있는 <a class="reference external" href="http://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> 인터페이스를 제공합니다.
+클라이언트는 <a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>를 이용할 필요없이 REST 인터페이스의 간단한 HTTP 호출을 이용해서 GeoServer를 설정할 수 있습니다.</p>
+<p>REST는 &#8220;<a class="reference external" href="http://en.wikipedia.org/wiki/Representational_state_transfer">REpresentational State Transfer</a>&#8221;의 약자입니다.
+REST는 명칭이 붙은 리소스에 대한 일정한 작업 집합을 채택하고 있습니다. 이때 각 리소스의 표현은 정보를 검색하고 설정하는 작업에 쓰이는 것과 동일합니다.
+다시 말해 사용자가 XML 형식의 데이터를 검색하고(읽고) 시스템에 대한 변경 사항을 설정하기(쓰기) 위해 데이터를 유사한 XML 형식으로 서버에 보낼 수 있습니다.</p>
+<p>리소스에 대한 작업은 HTTP의 표준 어근(standard primitives)을 통해 실행됩니다. GET은 읽는 데, 그리고 PUT, POST, DELETE는 변경 사항을 쓰는 데 이용됩니다.
+각 리소스는 <tt class="docutils literal"><span class="pre">http://GEOSERVER_HOME/rest/workspaces/topp</span></tt> 처럼 URL로 표현됩니다.</p>
+<p>REST API에 대해 더 자세히 알고 싶다면 <a class="reference internal" href="api/index.html#rest-api"><em>REST configuration API reference</em></a> 섹션을 참조하십시오.
+실제 사용 예시를 보고 싶다면 <a class="reference internal" href="examples/index.html#rest-examples"><em>REST configuration examples</em></a> 섹션을 참조하십시오.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">REST configuration API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/details.html">API details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/global.html">Global settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/workspaces.html">Workspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/namespaces.html">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/datastores.html">Data stores</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/featuretypes.html">Feature types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/coveragestores.html">Coverage stores</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/coverages.html">Coverages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/coverages.html#structured-coverages">Structured coverages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/styles.html">Styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/layers.html">Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/layergroups.html">Layer groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/fonts.html">Fonts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/templates.html">Freemarker templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/services.html">OWS Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/reload.html">Reloading configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/reset.html">Resource reset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/manifests.html">Manifests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">REST configuration examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/curl.html">cURL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/php.html">PHP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/python.html">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/java.html">Java</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/ruby.html">Ruby</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../services/virtual-services.html" title="previous chapter">Virtual OWS Services</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="api/index.html" title="next chapter">REST configuration API reference</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../services/virtual-services.html" title="previous chapter">Virtual OWS Services</a></li>
+            <li>다음: <a href="api/index.html" title="next chapter">REST configuration API reference</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/rest/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

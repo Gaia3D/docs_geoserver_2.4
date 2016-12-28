@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>GML &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Vector Data" href="index.html" />
+      <link rel="next" title="VPF" href="vpf.html" />
+      <link rel="prev" title="Java Properties" href="properties.html" />
+</head>
+<body class="data/vector/gml">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Vector Data</a> &raquo;</li>
+  <li>GML</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="vpf.html" title="VPF"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="properties.html" title="Java Properties"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="gml">
+<span id="data-gml"></span><h1>GML<a class="headerlink" href="#gml" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer는 초기 상태에서 GML을 지원하지 못 하기 때문에 GML 확장 모듈(extension)을 설치해야 합니다.
+확장 모듈 설치에 대해서는 <a class="reference internal" href="#gml-install"><em>Installing the GML extension</em></a> 섹션을 참조하십시오.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">현재 GML 확장 모듈은 관리 및 지원이 안 되고 있는 상황입니다.
+사용할 수는 있지만 다른 확장 모듈과 같은 안정성을 기대해서는 안 됩니다.</p>
+</div>
+<p>Geographic Markup Language(GML)은 벡터 기반 공간 데이터를 표현하기 위한 XML 기반 포맷입니다.</p>
+<div class="section" id="supported-versions">
+<h2>Supported versions<a class="headerlink" href="#supported-versions" title="Permalink to this headline">¶</a></h2>
+<p>현재 GML 버전 2를 지원하고 있습니다.</p>
+</div>
+<div class="section" id="installing-the-gml-extension">
+<span id="gml-install"></span><h2>Installing the GML extension<a class="headerlink" href="#installing-the-gml-extension" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="http://geoserver.org/display/GEOS/Download">GeoServer download page</a>에서 GML 확장 모듈을 다운로드하십시오.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">GeoServer 인스턴스 버전과 확장 모듈 버전이 일치해야 합니다!</p>
+</div>
+</li>
+<li><p class="first">압축 파일의 내용물을 GeoServer 설치 디렉터리의 <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> 디렉터리 안에 풉니다.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="adding-a-gml-data-store">
+<h2>Adding a GML data store<a class="headerlink" href="#adding-a-gml-data-store" title="Permalink to this headline">¶</a></h2>
+<p>확장 모듈을 제대로 설치했다면 새 데이터 저장소를 생성할 때 <em class="guilabel">Vector Data Sources</em> 목록에서 <em class="guilabel">GML</em> 옵션을 볼 수 있을 것입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/gmlcreate.png" src="../../_images/gmlcreate.png" />
+<p class="caption"><em>벡터 데이터 저장소 목록의 GML 옵션</em></p>
+</div>
+</div>
+<div class="section" id="configuring-a-gml-data-store">
+<h2>Configuring a GML data store<a class="headerlink" href="#configuring-a-gml-data-store" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../_images/gmlconfigure.png" src="../../_images/gmlconfigure.png" />
+<p class="caption"><em>GML 데이터 저장소 설정하기</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="properties.html" title="previous chapter">Java Properties</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="vpf.html" title="next chapter">VPF</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">GML</a><ul>
+<li><a class="reference internal" href="#supported-versions">Supported versions</a></li>
+<li><a class="reference internal" href="#installing-the-gml-extension">Installing the GML extension</a></li>
+<li><a class="reference internal" href="#adding-a-gml-data-store">Adding a GML data store</a></li>
+<li><a class="reference internal" href="#configuring-a-gml-data-store">Configuring a GML data store</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="properties.html" title="previous chapter">Java Properties</a></li>
+            <li>다음: <a href="vpf.html" title="next chapter">VPF</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/vector/gml.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

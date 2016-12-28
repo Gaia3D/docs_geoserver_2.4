@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Mac OS X Binary &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Mac OS X" href="index.html" />
+      <link rel="next" title="Linux" href="../linux/index.html" />
+      <link rel="prev" title="Mac OS X Installer" href="installer.html" />
+</head>
+<body class="installation/osx/binary">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Installation</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Mac OS X</a> &raquo;</li>
+  <li>Mac OS X Binary</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../linux/index.html" title="Linux"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="installer.html" title="Mac OS X Installer"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="mac-os-x-binary">
+<span id="installation-osx-bin"></span><h1>Mac OS X Binary<a class="headerlink" href="#mac-os-x-binary" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 섹션은 운영체제 독립적인 바이너리를 이용한 설치과정입니다. OS X 용 마법사 기반 인스톨러는 <a class="reference internal" href="installer.html#mac-os-x-installer"><em>Mac OS X Installer</em></a> 섹션을 참조하십시오.</p>
+</div>
+<p>GeoServer를 설치하는 가장 일반적인 방법은 운영체제 독립적인 바이너리를 사용하는 것입니다. 이 버전은 가벼운 서블릿 컨테이너 시스템인 <a class="reference external" href="http://www.mortbay.org/jetty/">Jetty</a> 내에 번들로 포함된 GeoServer 웹 응용 프로그램(webapp)입니다. 모든 운영체제에 걸쳐 매우 유사하게 작동하며 설치가 매우 간단하다는 장점이 있습니다.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="http://geoserver.org/display/GEOS/Stable">GeoServer Download</a> 페이지에서 선호하는 GeoServer 버전 &#8212; 안정(Stable), 최신(Latest) 또는 일일(Nightly) &#8212; 을 클릭합니다.</p>
+</li>
+<li><p class="first">다운로드 페이지에서 선호하는 GeoServer 버전의 <em class="guilabel">OS independent Binary</em>를 다운받아 저장합니다.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">적당한 위치에 GeoServer를 다운로드하십시오. 이 예제에서는 GeoServer 아카이브를 Desktop에 저장합니다. GeoServer를 다른 위치에 다운로드했다면 아래 명령어에서 <tt class="docutils literal"><span class="pre">Desktop</span></tt>을 여러분이 다운로드받은 폴더 경로로 대체하면 됩니다.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Geoserver 아카이브를 저장한 다음 다운로드 위치로 이동합니다. <em class="menuselection">Applications‣Utitlies‣Terminal</em> 메뉴로 터미널 창을 연 다음, 아래 명령어를 입력하십시오.</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>Desktop/
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">현재 디렉터리의 파일 목록을 확인하여 올바른 디렉토리에 있는지 확인합니다. <tt class="docutils literal"><span class="pre">GeoServer-2.4.0-bin.zip</span></tt>과 같은 GeoServer 아카이브가 있는지, 다음 명령어로 확인하십시오.</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre>ls -l
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">아래 두 명령어를 입력하여 <tt class="docutils literal"><span class="pre">/usr/local/geoserver</span></tt> 디렉터리에 <tt class="docutils literal"><span class="pre">GeoServer-2.4.0-bin.zip</span></tt> 파일의 압축을 풉니다.</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre>unzip <span class="nv">$geoserver</span>-2.4.0-bin.zip .
+sudo mv geoserver-2.4.0-bin/ geoserver
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">첫번째 명령어의 <strong>.</strong> 문자는 현재 디렉터리에 압축을 해제하겠다는 의미입니다.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">아래 명령어를 입력하여 GeoServer의 위치를 저장하기 위한 환경 변수를 등록합니다.</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span class="nb">echo</span> <span class="s2">&quot;export GEOSERVER_HOME=/usr/local/geoserver&quot;</span> &gt;&gt; ~/.profile
+. ~/.profile
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">여러분을 <tt class="docutils literal"><span class="pre">geoserver</span></tt> 폴더의 소유자로 지정해야 합니다. 터미널 창에 아래 명령어를 입력하여 <tt class="docutils literal"><span class="pre">USER_NAME</span></tt>을 여러분의 사용자명으로 변경합니다.</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre>sudo chown -R USER_NAME /usr/local/geoserver/
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">geoserver/bin</span></tt> 디렉터리로 이동한 다음 <tt class="docutils literal"><span class="pre">startup.sh</span></tt> 스크립트를 실행합니다.</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>geoserver/bin
+sh startup.sh
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">웹브라우저에서 <tt class="docutils literal"><span class="pre">http://localhost:8080/geoserver</span></tt> 주소로 이동합니다.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="installer.html" title="previous chapter">Mac OS X Installer</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../linux/index.html" title="next chapter">Linux</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Mac OS X Binary</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="installer.html" title="previous chapter">Mac OS X Installer</a></li>
+            <li>다음: <a href="../linux/index.html" title="next chapter">Linux</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/installation/osx/binary.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

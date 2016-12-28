@@ -1,0 +1,489 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Teradata &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="Database Connection Pooling" href="connection-pooling.html" />
+      <link rel="prev" title="Microsoft SQL Server and SQL Azure" href="sqlserver.html" />
+</head>
+<body class="data/database/teradata">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>Teradata</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="connection-pooling.html" title="Database Connection Pooling"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="sqlserver.html" title="Microsoft SQL Server and SQL Azure"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="teradata">
+<h1>Teradata<a class="headerlink" href="#teradata" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer는 초기 상태에서 Teradata를 지원하지 못 하기 때문에 확장 모듈(extension)을 설치해야 합니다.
+설치 방법은 <a class="reference internal" href="#data-teradata-install"><em>Installing the Teradata extension</em></a>을 참조하십시오.</p>
+</div>
+<p>Teradata 데이터베이스는 병렬 처리 및 호환성에 특화된, 데이터 결합이 용이한 상업 데이터베이스(RDBMS)입니다.
+Teradata 12.0 버전부터 SQL/MM 표준(SQL Multimedia 및 Applications Packages)을 대부분 따르는 지리공간 기능을 지원하고 있습니다.
+12.0 버전에서는 애드온(add-on)을 통해 지리공간 기능을 지원했지만 13.0버전에서는 표준 설치로 사용할 수 있습니다.</p>
+<p>GeoServer는 JDBC를 통해 Teradata DB와 연결합니다.</p>
+<p>Teradata 및 Teradata 데이터베이스 시스템에 대해 자세히 알고 싶다면 <a class="reference external" href="http://www.teradata.com">http://www.teradata.com</a> 웹페이지를 참조하십시오.</p>
+<div class="section" id="compatibility">
+<h2>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer의 Teradata 확장 모듈은 GeoServer 2.1.1 버전 이상과 호환됩니다.
+GeoServer는 Teradata DB 12.0 버전 이상과 연결할 수 있습니다.
+Teradata DB 12.0 버전의 경우 별도의 지리공간 확장 모듈을 설치해야 합니다.</p>
+</div>
+<div class="section" id="read-write-access">
+<h2>Read/write access<a class="headerlink" href="#read-write-access" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer와 연결된 Teradata DB는 피처 생성·편집·삭제를 포함하는 완전한 트랜잭션(transaction) 기능을 지원합니다.</p>
+<p>편집 기능을 사용하려면 테이블이 다음 가운데 하나를 담고 있어야 합니다.</p>
+<ul class="simple">
+<li>Primary key</li>
+<li>Unique primary index</li>
+<li>Identity (sequential) column</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">Identity column 하나만 사용하는 것은 권장하지 않습니다. Identity column을 참조할 경우 공간 지표 트리거(spatial index trigger)를 지원하지 못 하기 때문입니다.
+자세한 내용은 <a class="reference internal" href="#spatial-indexes"><em>Spatial Indexes</em></a>를 참조하십시오.</p>
+</div>
+</div>
+<div class="section" id="query-banding">
+<h2>Query Banding<a class="headerlink" href="#query-banding" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer의 Teradata 확장 모듈은 Query Banding을 지원합니다.
+Query Banding이란 어떤 응용 프로그램이라도 DB에 보내는 각 쿼리에 상황 정보(context information)를 연결시킬 수 있도록 해주는 기능입니다.
+실제 운용 시 이 기능을 작업량 관리(예시: 요청을 순위화), 디버그 작업, 로그 작업을 위해 쓸 수 있습니다.</p>
+<p>GeoServer는 표준 요청의 일부로 다음 정보를 보냅니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li>응용 프로그램 명칭 (예시: GeoServer)</li>
+<li>인증된 사용자명 (설정되었을 경우)</li>
+<li>호스트명 (설정되었을 경우)</li>
+<li>선언 형식(Type of statement) (예시: &#8220;SELECT&#8221;, &#8220;INSERT&#8221;, &#8220;DELETE&#8221;)</li>
+</ul>
+</div></blockquote>
+<p>GeoServer 내부적으로 이런 정보를 변경할 수는 없습니다.</p>
+</div>
+<div class="section" id="spatial-indexes">
+<h2>Spatial indexes<a class="headerlink" href="#spatial-indexes" title="Permalink to this headline">¶</a></h2>
+<p>공간 지표(spatial index)가 존재하면, GeoServer가 공간 지표에서 정보를 읽어들입니다. 공간 지표 테이블명의 형태는 일반적으로 다음과 같습니다.</p>
+<div class="highlight-python"><pre>[TABLENAME]_[GEOMETRYCOLUMN]_idx</pre>
+</div>
+<p>따라서 &#8220;GEOM&#8221;이라는 도형 열(geometry column)을 가진 &#8220;STATES&#8221;라는 레이어가 있다면 해당 인덱스 테이블명은 <em class="guilabel">STATES_GEOM_idx</em>이 됩니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">모든 테이블명 및 열 명칭의 대소문자를 일치시켜야 합니다.
+도형 열의 명칭이 &#8220;GEOM&#8221;(대문자)이고 생성된 지표의 명칭이 <em class="guilabel">STATES_geom_idx</em>(소문자)일 경우, 지표가 테이블에 제대로 링크되지 못 합니다.</p>
+</div>
+<p>이 지표 테이블은 다음 2개 열을 담고 있어야 합니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li>공간 데이터 테이블의 primary key와 매핑된 열</li>
+<li>Tessellation cell ID (cellid)</li>
+</ul>
+</div></blockquote>
+<p>Tessellation cell ID란 피처를 담고 있는 셀의 ID를 말합니다.</p>
+</div>
+<div class="section" id="geometry-column">
+<h2>Geometry column<a class="headerlink" href="#geometry-column" title="Permalink to this headline">¶</a></h2>
+<p>SQL/MM 표준에 따라 Teradata DB의 테이블에서 공간 기능을 사용하려면,
+해당 테이블에 대한 항목을 <tt class="docutils literal"><span class="pre">geometry_columns</span></tt> 테이블에 생성해야 합니다.
+다른 공간 관련 테이블과 마찬가지로 이 테이블은 SYSSPATIAL이라는 DB에 저장됩니다.</p>
+</div>
+<div class="section" id="tessellation">
+<h2>Tessellation<a class="headerlink" href="#tessellation" title="Permalink to this headline">¶</a></h2>
+<p>Tessellation은 Teradata의 공간 지표 명칭입니다.
+특정 레이어에서 tessellation을 활성화하려면 <tt class="docutils literal"><span class="pre">SYSSPATIAL.tessellation</span></tt> 테이블에 항목을 삽입(행)해야 합니다.
+이 테이블은 다음과 같은 스키마를 채택하고 있을 것입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="20%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">테이블명</th>
+<th class="head">형식</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>F_TABLE_SCHEMA</td>
+<td>varchar</td>
+<td>테이블을 담고 있는 공간DB/스키마의 명칭</td>
+</tr>
+<tr class="row-odd"><td>F_TABLE_NAME</td>
+<td>varchar</td>
+<td>공간 테이블명</td>
+</tr>
+<tr class="row-even"><td>F_GEOMETRY_COLUMN</td>
+<td>varchar</td>
+<td>공간 데이터를 담고 있는 열</td>
+</tr>
+<tr class="row-odd"><td>U_XMIN</td>
+<td>float</td>
+<td>Tessellation 영역(universe)의 최소 X 값</td>
+</tr>
+<tr class="row-even"><td>U_YMIN</td>
+<td>float</td>
+<td>Tessellation 영역(universe)의 최소 Y 값</td>
+</tr>
+<tr class="row-odd"><td>U_XMAX</td>
+<td>float</td>
+<td>Tessellation 영역(universe)의 최대 X 값</td>
+</tr>
+<tr class="row-even"><td>U_YMAX</td>
+<td>float</td>
+<td>Tessellation 영역(universe)의 최대 Y 값</td>
+</tr>
+<tr class="row-odd"><td>G_NX</td>
+<td>integer</td>
+<td>X 그리드 개수</td>
+</tr>
+<tr class="row-even"><td>G_NY</td>
+<td>integer</td>
+<td>Y 그리드 개수</td>
+</tr>
+<tr class="row-odd"><td>LEVELS</td>
+<td>integer</td>
+<td>그리드의 레벨 개수</td>
+</tr>
+<tr class="row-even"><td>SCALE</td>
+<td>float</td>
+<td>그리드의 축척값</td>
+</tr>
+<tr class="row-odd"><td>SHIFT</td>
+<td>float</td>
+<td>그리드 이동(shift) 값</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">Tessellation 테이블은 대소문자를 구분하므로 모든 테이블명 및 열 명칭의 대소문자를 일치시켜야 합니다.</p>
+</div>
+</div>
+<div class="section" id="installing-the-teradata-extension">
+<span id="data-teradata-install"></span><h2>Installing the Teradata extension<a class="headerlink" href="#installing-the-teradata-extension" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 초기 상태에서 Teradata를 지원하지 못 하기 때문에 확장 모듈(extension)을 설치해야 합니다.
+이 확장 모듈 외에도 Teradata 웹사이트에서 추가 아카이브를 다운로드해야 합니다.</p>
+<div class="section" id="geoserver-artifacts">
+<h3>GeoServer artifacts<a class="headerlink" href="#geoserver-artifacts" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="http://geoserver.org/display/GEOS/Stable">GeoServer download page</a>에서 사용자 GeoServer 버전과 맞는 Teradata 확장 모듈을 다운로드합니다.
+확장 모듈은 다운로드 페이지 하단의 <em class="guilabel">Extensions</em> 섹션 밑에 있습니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">GeoServer 인스턴스 버전과 확장 모듈 버전이 일치해야 합니다!</p>
+</div>
+</li>
+<li><p class="first">압축 파일의 내용물을 GeoServer 설치 디렉터리의 <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> 디렉터리 안에 풉니다.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="teradata-artifacts">
+<h3>Teradata artifacts<a class="headerlink" href="#teradata-artifacts" title="Permalink to this headline">¶</a></h3>
+<p>GeoServer 아카이브 외에 Teradata JDBC 드라이버도 다운로드해야 합니다. 이 파일의 재배포는 금지되어 있기 때문에 Teradata 웹사이트에서 직접 다운로드해야 합니다.</p>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="https://downloads.teradata.com/download/connectivity/jdbc-driver">https://downloads.teradata.com/download/connectivity/jdbc-driver</a> 에서 Teradata JDBC 드라이버를 다운로드합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 아카이브를 다운로드하려면 Teradata 웹사이트에 로그인해야 합니다.</p>
+</div>
+</li>
+<li><p class="first">압축 파일의 내용물을 GeoServer 설치 디렉터리의 <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> 디렉터리 안에 풉니다.</p>
+</li>
+</ol>
+<p>모든 파일의 설치가 끝난 다음 GeoServer를 재시작합니다.
+제대로 설치됐는지 확인하려면 <a class="reference internal" href="#data-teradata-add"><em>Adding a Teradata datastore</em></a> 섹션으로 가십시오.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p>Teradata JDBC 드라이버의 전체 파일 목록은 다음과 같습니다.</p>
+<ul class="last simple">
+<li><tt class="docutils literal"><span class="pre">gt-jdbc-teradata-&lt;version&gt;.jar</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tdgssconfig.jar</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">terajdbc4.jar</span></tt></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="adding-a-teradata-datastore">
+<span id="data-teradata-add"></span><h2>Adding a Teradata datastore<a class="headerlink" href="#adding-a-teradata-datastore" title="Permalink to this headline">¶</a></h2>
+<p>확장 모듈을 설치했다면, GeoServer가 기존 Teradata DB를 저장소로서 로드할 수 있습니다.
+<a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 <a class="reference internal" href="../../webadmin/data/stores.html#webadmin-stores"><em>저장소(Stores)</em></a>에서 <em class="guilabel">Add a new Store</em>를 클릭하십시오.
+<em class="guilabel">Vector Data Sources</em> 목록에 <em class="guilabel">Teradata</em> 옵션이 보일 것입니다. 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/teradata_addnewstore.png" src="../../_images/teradata_addnewstore.png" />
+<p class="caption"><em>읽기 가능한 저장소 목록의 Teradata 옵션</em></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 목록에 Teradata가 없다면 확장 모듈이 제대로 설치되지 않은 것입니다.
+<a class="reference internal" href="#data-teradata-install"><em>Installing the Teradata extension</em></a>에서 설명한 각 단계를 다시 한번 확인해주십시오.</p>
+</div>
+<p>다음 화면이 표출되면 Teradata DB와 연결하는 방법에 대해 설정하십시오. 다음과 같은 정보를 입력해야 합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em class="guilabel">Workspace</em></td>
+<td>DB를 담기 위한 작업공간의 명칭입니다. DB 테이블에서 생성될 레이어명의 접두사(prefix)가 됩니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Data Source Name</em></td>
+<td>GeoServer가 인식하는 DB명입니다. Teradata DB명과 달라도 됩니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Description</em></td>
+<td>데이터베이스/저장소에 대한 설명입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Enabled</em></td>
+<td>저장소를 활성화합니다. 체크를 해제할 경우 데이터베이스의 어떤 레이어도 서비스되지 않습니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">host</em></td>
+<td>DB가 위치한 호스트명입니다. URL이나 IP 주소로 설정할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">port</em></td>
+<td>호스트와 연결하기 위한 포트 번호입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">database</em></td>
+<td>Teradata DB명입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">user</em></td>
+<td>DB와 연결할 사용자명입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">passwd</em></td>
+<td>위 사용자와 연결된 비밀번호입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">namespace</em></td>
+<td>DB와 연결되는 namespace입니다. 이 항목은 위 Workspace 항목 입력값에 따라 자동으로 바뀝니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Expose primary keys</em></td>
+<td>Primary key를 표준 속성(standard attribute)으로 노출합니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">max connections</em></td>
+<td>DB와 연결된 open/pooled connection의 최대 개수입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">min connections</em></td>
+<td>open/pooled connection의 최소 개수입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">fetch size</em></td>
+<td>DB와 요청/응답할 때마다 읽어올 레코드 개수입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Connection timeout</em></td>
+<td>시간 제한으로 connection pool이 연결을 닫기 전에 기다리는 시간(초 단위)입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">validate connections</em></td>
+<td>연결을 시도하기 전에 연결이 살아 있는지 확인합니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Primary key metadata table</em></td>
+<td>테이블의 primary key를 알 수 없을 경우 사용할 primary key 메타데이터 테이블명입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Loose bbox</em></td>
+<td>체크하면 범위(bounding box)에 대해 1순위 필터만 적용합니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">tessellationTable</em></td>
+<td>Tessellation을 담고 있는 DB명입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">estimatedBounds</em></td>
+<td>직접 계산하기보다 geometry_columns/tessellation 테이블의 범위(bound)를 추정값으로 사용할 수 있도록 합니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Max open prepared statements</em></td>
+<td>준비된 선언(statement)의 최대 개수입니다.</td>
+</tr>
+</tbody>
+</table>
+<p>설정이 끝나면 <em class="guilabel">Save</em> 버튼을 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/teradata_store1.png" src="../../_images/teradata_store1.png" />
+</div>
+<div class="figure align-center">
+<img alt="../../_images/teradata_store2.png" src="../../_images/teradata_store2.png" />
+<p class="caption"><em>Teradata 데이터 저장소 추가하기</em></p>
+</div>
+<div class="section" id="using-jndi">
+<h3>Using JNDI<a class="headerlink" href="#using-jndi" title="Permalink to this headline">¶</a></h3>
+<p>GeoServer는 <a class="reference external" href="http://www.oracle.com/technetwork/java/jndi/index.html">JNDI</a>(Java Naming and Directory Interface)를 통해서도 Teradata DB와 연결할 수 있습니다.</p>
+<p><a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 <a class="reference internal" href="../../webadmin/data/stores.html#webadmin-stores"><em>저장소(Stores)</em></a>에서 <em class="guilabel">Add a new Store</em>를 클릭하십시오.
+<em class="guilabel">Vector Data Stores</em> 목록에 <em class="guilabel">Teradata (JNDI)</em> 옵션이 보일 것입니다. 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/teradata_selectionjndi.png" src="../../_images/teradata_selectionjndi.png" />
+<p class="caption"><em>읽기 가능한 저장소 목록의 Teradata (JNDI) 옵션</em></p>
+</div>
+<p>다음 화면이 표출되면 Teradata DB와 연결하는 방법에 대해 설정하십시오. 다음과 같은 정보를 입력해야 합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em class="guilabel">Workspace</em></td>
+<td>DB를 담기 위한 작업공간의 명칭입니다. DB 테이블에서 생성될 레이어명의 접두사(prefix)가 됩니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Data Source Name</em></td>
+<td>GeoServer가 인식하는 DB명입니다. Teradata DB명과 달라도 됩니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Description</em></td>
+<td>데이터베이스/저장소에 대한 설명입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Enabled</em></td>
+<td>저장소를 활성화합니다. 체크를 해제할 경우 데이터베이스의 어떤 레이어도 서비스되지 않습니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">jndiReferenceName</em></td>
+<td>DB와 연결할 JNDI 경로입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">schema</em></td>
+<td>위 DB에 적용할 스키마입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">namespace</em></td>
+<td>DB와 연결되는 namespace입니다. 이 항목은 위 Workspace 항목 입력값에 따라 변경됩니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Expose primary keys</em></td>
+<td>Primary key를 표준 속성(standard attribute)으로 노출합니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Primary key metadata table</em></td>
+<td>테이블의 primary key를 알 수 없을 경우 사용할 primary key 메타데이터 테이블명입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Loose bbox</em></td>
+<td>체크하면 범위(bounding box)에 대해 1순위 필터만 적용합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>설정이 끝나면 <em class="guilabel">Save</em> 버튼을 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/teradata_storejndi.png" src="../../_images/teradata_storejndi.png" />
+<p class="caption"><em>Teradata (JDNI) 데이터 저장소 추가하기</em></p>
+</div>
+</div>
+</div>
+<div class="section" id="adding-layers">
+<h2>Adding layers<a class="headerlink" href="#adding-layers" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer가 데이터 저장소를 로드했다면 다른 데이터베이스 저장소와 동일한 방법으로 DB 테이블에서 레이어를 추가할 수 있습니다.
+자세한 방법은 <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a> 섹션을 참조하십시오.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer는 공간 정보를 담고 있으며 <tt class="docutils literal"><span class="pre">SYSSPATIAL.geometry_columns</span></tt> 테이블에 내용이 담긴 DB 테이블만 서비스할 수 있습니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="sqlserver.html" title="previous chapter">Microsoft SQL Server and SQL Azure</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="connection-pooling.html" title="next chapter">Database Connection Pooling</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Teradata</a><ul>
+<li><a class="reference internal" href="#compatibility">Compatibility</a></li>
+<li><a class="reference internal" href="#read-write-access">Read/write access</a></li>
+<li><a class="reference internal" href="#query-banding">Query Banding</a></li>
+<li><a class="reference internal" href="#spatial-indexes">Spatial indexes</a></li>
+<li><a class="reference internal" href="#geometry-column">Geometry column</a></li>
+<li><a class="reference internal" href="#tessellation">Tessellation</a></li>
+<li><a class="reference internal" href="#installing-the-teradata-extension">Installing the Teradata extension</a><ul>
+<li><a class="reference internal" href="#geoserver-artifacts">GeoServer artifacts</a></li>
+<li><a class="reference internal" href="#teradata-artifacts">Teradata artifacts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adding-a-teradata-datastore">Adding a Teradata datastore</a><ul>
+<li><a class="reference internal" href="#using-jndi">Using JNDI</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adding-layers">Adding layers</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="sqlserver.html" title="previous chapter">Microsoft SQL Server and SQL Azure</a></li>
+            <li>다음: <a href="connection-pooling.html" title="next chapter">Database Connection Pooling</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/teradata.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

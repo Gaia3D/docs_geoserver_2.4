@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>GeoServer Data Directory &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="next" title="Creating a New Data Directory" href="data-dir-creating.html" />
+      <link rel="prev" title="Styling a Map" href="../gettingstarted/styling-quickstart/index.html" />
+</head>
+<body class="datadirectory/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li>GeoServer Data Directory</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="data-dir-creating.html" title="Creating a New Data Directory"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../gettingstarted/styling-quickstart/index.html" title="Styling a Map"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="geoserver-data-directory">
+<span id="data-directory"></span><h1>GeoServer Data Directory<a class="headerlink" href="#geoserver-data-directory" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer <strong>데이터 디렉터리(data directory)</strong>는 GeoServer의 설정 정보를 저장하는 파일 시스템 내부 위치를 말합니다. 이 설정은 GeoServer가 어떤 데이터를 서비스하는지, 그 데이터를 어디에 저장하는지, WFS나 WMS 같은 서비스들이 어떻게 데이터와 상호작용하고 데이터를 서비스하는지 정의합니다. 데이터 디렉터리는 GeoServer가 다양한 목적으로 사용하는 많은 지원 파일(support files) 또한 담고 있습니다.</p>
+<p>생산적인 사용을 위해, GeoServer 인스턴스(instances)를 위한 외부 데이터 디렉터리를 설정해서 업그레이드하기 쉽게 하는 편이 좋습니다. GeoServer 설치 시 어떻게 데이터 디렉터리를 생성하는지에 대해서는 <a class="reference internal" href="data-dir-creating.html#data-dir-creating"><em>Creating a New Data Directory</em></a> 섹션을 참조하십시오. <a class="reference internal" href="data-dir-setting.html#data-dir-setting"><em>Setting the Data Directory</em></a> 섹션은 GeoServer가 기존 데이터 디렉터리를 활용할 수 있는 방법에 대해 설명하고 있습니다.</p>
+<p>GeoServer가 설정 정보를 관리하기 위해 일정한 규칙을 따르는 대화형 인터페이스를 제공하고 있으므로, 일반적으로 사용자는 데이터 디렉터리 내부 구조를 몰라도 됩니다. 다만 배경지식 목적으로 <a class="reference internal" href="data-dir-structure.html#data-dir-structure"><em>Structure of the Data Directory</em></a> 섹션에서 데이터 디렉터리 내부 구조에 대한 개요를 설명하고 있습니다.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data-dir-creating.html">Creating a New Data Directory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-dir-setting.html">Setting the Data Directory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-setting.html#windows">Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-setting.html#linux">Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-setting.html#mac-os-x">Mac OS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-setting.html#web-archive">Web Archive</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data-dir-structure.html">Structure of the Data Directory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#the-xml-files">The .xml files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#workspaces">workspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#data">data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#demo">demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#geosearch">geosearch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#gwc">gwc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#layergroups">layergroups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#logs">logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#palettes">palettes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#security">security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#styles">styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#templates">templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#user-projections">user_projections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-dir-structure.html#www">www</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating a Data Directory between different versions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migrating.html#minor-and-major-version-numbers">Minor and major version numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating.html#migrating-between-geoserver-1-7-x-and-2-0-x">Migrating between GeoServer 1.7.x and 2.0.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating.html#reverting-from-geoserver-2-0-x-to-1-7-x">Reverting from GeoServer 2.0.x to 1.7.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating.html#migrating-between-geoserver-2-1-x-and-2-2-x">Migrating between GeoServer 2.1.x and 2.2.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating.html#reverting-from-geoserver-2-2-x-and-2-1-x">Reverting from GeoServer 2.2.x and 2.1.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating.html#migrating-between-geoserver-2-2-x-and-2-3-x">Migrating between GeoServer 2.2.x and 2.3.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating.html#reverting-from-geoserver-2-3-x">Reverting from GeoServer 2.3.x</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../gettingstarted/styling-quickstart/index.html" title="previous chapter">Styling a Map</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="data-dir-creating.html" title="next chapter">Creating a New Data Directory</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../gettingstarted/styling-quickstart/index.html" title="previous chapter">Styling a Map</a></li>
+            <li>다음: <a href="data-dir-creating.html" title="next chapter">Creating a New Data Directory</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/datadirectory/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

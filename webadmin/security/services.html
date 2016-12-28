@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Services &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Security" href="index.html" />
+      <link rel="next" title="File Browsing" href="filebrowse.html" />
+      <link rel="prev" title="Data" href="data.html" />
+</head>
+<body class="webadmin/security/services">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Security</a> &raquo;</li>
+  <li>Services</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="filebrowse.html" title="File Browsing"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="data.html" title="Data"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="services">
+<span id="webadmin-sec-services"></span><h1>Services<a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 <a class="reference internal" href="../../security/service.html#sec-service"><em>Service Security</em></a>에 대한 설정을 설명합니다.
+GeoServer는 OWS 서비스(WFS, WMS 등)에 기반한 접근을 제한하고 특정 작업(GetCapabilities, GetMap, 등등)도 제한할 수 있습니다.</p>
+<p>GeoServer는 기본적으로 서비스 기반 보안을 활성화시키지 않은 상태입니다. 하지만 이 메뉴에서 규칙을 추가·제거·편집할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/services.png" src="../../_images/services.png" />
+<p class="caption"><em>서비스 접근 규칙 목록</em></p>
+</div>
+<p><em class="guilabel">Add a new rule</em> 링크를 클릭해서 새 규칙을 생성하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/services_newrule.png" src="../../_images/services_newrule.png" />
+<p class="caption"><em>새 서비스 규칙</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Service</td>
+<td>새 규칙을 적용할 OWS 서비스를 설정합니다. 모든 서비스를 뜻하는 <tt class="docutils literal"><span class="pre">*</span></tt> 값이나 <tt class="docutils literal"><span class="pre">wcs</span></tt>, <tt class="docutils literal"><span class="pre">wfs</span></tt>, <tt class="docutils literal"><span class="pre">wms</span></tt> 명칭을 선택할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>Method</td>
+<td>새 규칙을 적용할 작업을 지정합니다. <em>Service</em> 항목의 값에 따라 달라지지만, 모든 작업을 의미하는 <tt class="docutils literal"><span class="pre">*</span></tt> 값은 물론 Capabilities, Transaction, GetMap 등 GeoServer가 수행할 수 있는 모든 서비스 작업을 선택할 수 있습니다.</td>
+</tr>
+<tr class="row-even"><td>Grant access to any role</td>
+<td>이 옵션을 체크하면 새 규칙을 적용할 롤을 지정할 필요 없이 모든 롤에 적용됩니다.</td>
+</tr>
+<tr class="row-odd"><td>Role list</td>
+<td>규칙이 적용된 롤 목록을 포함한 전체 롤 목록입니다. 화살표 버튼으로 규칙 적용 여부를 전환(toggle)할 수 있습니다.
+<em class="guilabel">Grant access to any role</em> 옵션을 체크했다면 이 옵션은 적용되지 않습니다.</td>
+</tr>
+<tr class="row-even"><td>Add a new role</td>
+<td>새로운 롤을 추가하기 위한 링크입니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="data.html" title="previous chapter">Data</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="filebrowse.html" title="next chapter">File Browsing</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="data.html" title="previous chapter">Data</a></li>
+            <li>다음: <a href="filebrowse.html" title="next chapter">File Browsing</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/security/services.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

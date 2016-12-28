@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Advanced log configuration &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Advanced GeoServer Configuration" href="index.html" />
+      <link rel="next" title="WMS Decorations" href="wmsdecoration.html" />
+      <link rel="prev" title="Manually editing the EPSG database" href="crshandling/manualepsg.html" />
+</head>
+<body class="advanced/logging">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Advanced GeoServer Configuration</a> &raquo;</li>
+  <li>Advanced log configuration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="wmsdecoration.html" title="WMS Decorations"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="crshandling/manualepsg.html" title="Manually editing the EPSG database"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="advanced-log-configuration">
+<span id="logging"></span><h1>Advanced log configuration<a class="headerlink" href="#advanced-log-configuration" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer의 로그 작업(logging) 하위 시스템은 Java 로그 작업을 기반으로 합니다. 그런데 Java 로그 작업은 기본적으로 Log4J로 재전송되어 
+<a class="reference internal" href="../webadmin/server/globalsettings.html#globalsettings"><em>Global Settings</em></a>에서 설정된 현재 로그 작업 설정에 따라 제어됩니다.</p>
+<p>사용자 지정 로그 작업 프로파일을 생성하거나 GeoServer가 전혀 다른 로그 작업 라이브러리를 사용하도록 하기 위해 표준 설정을 무시할 수 있는 방법은 여러 가지 있습니다.</p>
+<div class="section" id="custom-logging-profiles">
+<h2>Custom logging profiles<a class="headerlink" href="#custom-logging-profiles" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">$GEOSERVER_DATA_DIR/logs</span></tt> 디렉터리 안에 이미 있는 파일 목록에 Log4J 설정 파일을 추가하면 누구나 새로운 로그 작업 프로파일을 쓸 수 있습니다.
+해당 파일명은 관리자 콘솔에 표출되는 설정의 명칭이 되며, 파일 내용은 로그 작업자(logger)가 특정 행동을 보이도록 만듭니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">GEOTOOLS_DEVELOPER_LOGGING</span></tt> 설정에서 가져온, GeoTools의 로그 메시지를 로그에 표출하도록 만드는 예시입니다.</p>
+<div class="highlight-python"><pre>log4j.rootLogger=WARN, geoserverlogfile, stdout
+
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{dd MMM HH:mm:ss} %p [%c] - %m%n
+
+log4j.category.log4j=FATAL
+
+log4j.appender.geoserverlogfile=org.apache.log4j.RollingFileAppender
+# Keep three backup files.
+log4j.appender.geoserverlogfile.MaxBackupIndex=3
+# Pattern to output: date priority [category] - message
+log4j.appender.geoserverlogfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.geoserverlogfile.layout.ConversionPattern=%d %p [%c] - %m%n
+
+
+log4j.category.org.geotools=TRACE
+# Some more geotools loggers you may be interest in tweaking
+log4j.category.org.geotools.factory=TRACE
+log4j.category.org.geotools.renderer=DEBUG
+log4j.category.org.geotools.data=TRACE
+log4j.category.org.geotools.feature=TRACE
+log4j.category.org.geotools.filter=TRACE
+log4j.category.org.geotools.factory=TRACE
+
+log4j.category.org.geoserver=INFO
+log4j.category.org.vfny.geoserver=INFO
+
+log4j.category.org.springframework=WARN</pre>
+</div>
+<p>바람직한 로그 작업 레벨에서 특정 패키지의 로그 메시지를 제외할 수 있도록 사용자 지정 설정을 할 수 있습니다. 다만 다음 몇 가지 규칙을 따라야 합니다.</p>
+<ul class="simple">
+<li><a class="reference internal" href="../webadmin/server/globalsettings.html#globalsettings"><em>Global Settings</em></a>에서 설정된 위치에 대해 작업하도록 GeoServer가 설정할 
+<tt class="docutils literal"><span class="pre">geoserverlogfile</span></tt> 추가 작업자(appender)가 설정에 항상 포함되어야 합니다.</li>
+<li>표준 산출물을 쓰는 로그 작업자의 명칭은 <tt class="docutils literal"><span class="pre">stdout</span></tt>이어야 하며,
+역시 GeoServer가 <a class="reference internal" href="../webadmin/server/globalsettings.html#globalsettings"><em>Global Settings</em></a>의 설정에 따라
+<tt class="docutils literal"><span class="pre">stdout</span></tt>을 활성화/비활성화할 수 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">geoserverlogfile</span></tt> 추가 작업자를 위한 로그 단계(log rolling)를 설정하는 것을 권장하지만, 필수는 아닙니다.</li>
+</ul>
+</div>
+<div class="section" id="overriding-the-log-location-setup-in-the-geoserver-configuration">
+<h2>Overriding the log location setup in the GeoServer configuration<a class="headerlink" href="#overriding-the-log-location-setup-in-the-geoserver-configuration" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer 시스템의 클러스터(cluster)를 설치할 경우 보통 모든 클러스터의 모든 노드(node)가 단일한 데이터 디렉터리를 공유하도록 설정합니다.
+하지만 단점도 있습니다. 모든 노드가 동일한 파일에 로그를 쓰게 되기 때문에 OS의 파일 잠금 규칙에 따라 여러 종류의 문제가 일어날 수 있습니다.
+(단일 서버가 로그를 쓸 수도 있지만, 모든 노드가 중구난방으로 로그를 쓰게 되면 로그 파일을 읽을 수 없게 됩니다.)</p>
+<p>이런 경우 JVM 시스템 변수나 환경 변수, 서블렛 컨텍스트 파라미터에 다음 파라미터를 설정해서 GeoServer의 각 노드가 서로 다른 로그 파일 위치를 갖추도록 설정하는 편이 좋습니다.</p>
+<div class="highlight-python"><pre>GEOSERVER_LOG_LOCATION=&lt;the location of the file&gt;</pre>
+</div>
+<p>시스템 명칭을 식별자(distinction)로 사용하여 <tt class="docutils literal"><span class="pre">logs/geoserver_node1.log</span></tt>,
+<tt class="docutils literal"><span class="pre">logs/geoserver_node2.log</span></tt> 등등의 값을 설정하는 방법이 흔히 쓰입니다.
+이 경우에도 모든 로그 파일이 데이터 디렉터리 안에 담겨 적절하게 순환(rotate)되지만, 각 서버가 자체 로그 파일을 쓰게 됩니다.</p>
+</div>
+<div class="section" id="forcing-geoserver-to-relinquish-log4j-control">
+<h2>Forcing GeoServer to relinquish Log4J control<a class="headerlink" href="#forcing-geoserver-to-relinquish-log4j-control" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 현재 로그 작업 설정을 서식으로 사용하고 관리자가 설정한 로그 파일 위치 및 표준 산출물 설정을 적용해서 내부적으로 Log4J 설정을 무시합니다.</p>
+<p>GeoServer가 일반적인 Log4J 행동을 무시하지 않게 하려면, JVM 시스템 변수나 환경 변수, 서블렛 컨텍스트 파라미터에 다음 파라미터를 설정할 수 있습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">RELINQUISH_LOG4J_CONTROL</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="forcing-geoserver-to-use-an-alternate-logging-redirection">
+<h2>Forcing GeoServer to use an alternate logging redirection<a class="headerlink" href="#forcing-geoserver-to-use-an-alternate-logging-redirection" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 Java 로그 작업에 기반을 둔 GeoTools 로그 작업 프레임워크를 사용하지만, 모든 메시지를 사용자가 선택한 대체 프레임워크로 재전송할 수 있습니다.</p>
+<p>기본적으로 GeoServer는 Log4J 재전송(redirection)을 설정하지만, 대신 GeoServer가 일반 Java 로그 작업이나 Commons 로그 작업을 이용하도록 설정할 수도 있습니다.
+(프로그래밍 실력이 있다면 다른 로그 작업자를 지원하는 것도 가능합니다.)</p>
+<p>GeoServer가 다른 로그 작업 메커니즘을 사용하도록 만들고 싶다면, JVM 시스템 변수나 환경 변수, 서블렛 컨텍스트 파라미터에 다음 파라미터를 설정하십시오.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">GT2_LOGGING_REDIRECTION</span><span class="o">=</span><span class="p">[</span><span class="n">JavaLogging</span><span class="p">,</span><span class="n">CommonsLogging</span><span class="p">,</span><span class="n">Log4J</span><span class="p">]</span>
+<span class="n">RELINQUISH_LOG4J_CONTROL</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>이 예시에서 볼 수 있듯이 GeoServer가 Log4J 설정을 제어하지 않도록 요구해야 합니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="crshandling/manualepsg.html" title="previous chapter">Manually editing the EPSG database</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="wmsdecoration.html" title="next chapter">WMS Decorations</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Advanced log configuration</a><ul>
+<li><a class="reference internal" href="#custom-logging-profiles">Custom logging profiles</a></li>
+<li><a class="reference internal" href="#overriding-the-log-location-setup-in-the-geoserver-configuration">Overriding the log location setup in the GeoServer configuration</a></li>
+<li><a class="reference internal" href="#forcing-geoserver-to-relinquish-log4j-control">Forcing GeoServer to relinquish Log4J control</a></li>
+<li><a class="reference internal" href="#forcing-geoserver-to-use-an-alternate-logging-redirection">Forcing GeoServer to use an alternate logging redirection</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="crshandling/manualepsg.html" title="previous chapter">Manually editing the EPSG database</a></li>
+            <li>다음: <a href="wmsdecoration.html" title="next chapter">WMS Decorations</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/advanced/logging.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Publishing a Shapefile &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Getting Started" href="../index.html" />
+      <link rel="next" title="Publishing a PostGIS Table" href="../postgis-quickstart/index.html" />
+      <link rel="prev" title="Web Administration Interface Quickstart" href="../web-admin-quickstart/index.html" />
+</head>
+<body class="gettingstarted/shapefile-quickstart/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Getting Started</a> &raquo;</li>
+  <li>Publishing a Shapefile</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../postgis-quickstart/index.html" title="Publishing a PostGIS Table"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../web-admin-quickstart/index.html" title="Web Administration Interface Quickstart"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="publishing-a-shapefile">
+<span id="shapefile-quickstart"></span><h1>Publishing a Shapefile<a class="headerlink" href="#publishing-a-shapefile" title="Permalink to this headline">¶</a></h1>
+<p>이번 예제에서는 GeoServer에서 shapefile을 생산하는 방법을 단계별로 설명합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 예제는 GeoServer가 <a class="reference external" href="http://localhost:8080/geoserver/web">http://localhost:8080/geoserver/web</a> 주소에서 실행되고 있다고 가정합니다.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first"><a class="reference download internal" href="../../_downloads/nyc_roads.zip"><tt class="xref download docutils literal"><span class="pre">nyc_roads.zip</span></tt></a> 파일을 다운로드합니다. 이 문서 아카이브는 이번 예제에서 사용할 뉴욕 시 도로 shapefile을 포함하고 있습니다.</p>
+</li>
+<li><p class="first"><cite>nyc_roads.zip</cite> 파일의 압축을 풉니다. 압축이 풀린 <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 폴더에는 다음 4개 파일이 있습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">nyc_roads</span><span class="o">.</span><span class="n">shp</span>
+<span class="n">nyc_roads</span><span class="o">.</span><span class="n">shx</span>
+<span class="n">nyc_roads</span><span class="o">.</span><span class="n">dbf</span>
+<span class="n">nyc_roads</span><span class="o">.</span><span class="n">prj</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>#. <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 폴더를 <tt class="docutils literal"><span class="pre">&lt;GEOSERVER_DATA_DIR&gt;/data</span></tt> 디렉터리 아래로 이동합니다. <tt class="docutils literal"><span class="pre">&lt;GEOSERVER_DATA_DIR&gt;</span></tt>는 GeoServer 데이터 디렉터리의 루트 디렉터리입니다. GeoServer 파일 구조를 바꾸지 않았다면 그 경로는 <tt class="docutils literal"><span class="pre">geoserver/data_dir/data/nyc_roads</span></tt> 가 될 것입니다.</p>
+</div>
+<div class="section" id="create-a-new-workspace">
+<h2>Create a New Workspace<a class="headerlink" href="#create-a-new-workspace" title="Permalink to this headline">¶</a></h2>
+<p>첫번째 단계는 shapefile을 위한 <em>작업공간(workspace)</em>을 만드는 일입니다. 작업공간이란 유사한 레이어들을 함께 묶어두기 위한 컨테이너를 말합니다.</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">웹브라우저에서 <a class="reference external" href="http://localhost:8080/geoserver/web">http://localhost:8080/geoserver/web</a> 주소로 이동합니다.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="../web-admin-quickstart/index.html#logging-in"><em>Logging In</em></a>에서 설명한대로 GeoServer에 로그인합니다.</p>
+</li>
+<li><p class="first">왼쪽 메뉴에서 <em class="menuselection">Data‣Workspaces</em> 를 클릭합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/data_workspaces.png" src="../../_images/data_workspaces.png" />
+<p class="caption"><em>Workspaces 페이지</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">새로운 작업공간을 생성하려면 <em class="guilabel">Add new workspace</em> 버튼을 클릭한 다음, 작업공간의 <em class="guilabel">Name</em> 및 <em class="guilabel">Namespace URI</em>를 입력해야 합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/new_workspace.png" src="../../_images/new_workspace.png" />
+<p class="caption"><em>새로운 작업공간 설정</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Name</em> 란에 <tt class="docutils literal"><span class="pre">nyc_roads</span></tt>를 입력하고, <em class="guilabel">Namespace URI</em>란에 <tt class="docutils literal"><span class="pre">http://opengeo.org/nyc_roads</span></tt> 라고 입력하십시오. 작업공간의 명칭은 사용자 프로젝트를 설명해주는 식별자(identifier) 역할을 하는데, 10자를 넘거나 공백을 포함할 수 없습니다. Namespace URI(Uniform Resource Identifier)는 일반적으로 사용자 프로젝트와 관련된 URL로 해당 작업공간을 표시하는, 추적 가능한 추가적인 식별자 역할을 할 수도 있습니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/workspace_nycroads.png" src="../../_images/workspace_nycroads.png" />
+<p class="caption"><em>NYC Roads 작업공간</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Submit</em> 버튼을 클릭하십시오. <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 작업공간이 <em class="guilabel">Workspaces</em> 목록에 추가될 것입니다.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="create-a-data-store">
+<h2>Create a Data Store<a class="headerlink" href="#create-a-data-store" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">왼쪽 메뉴에서 <em class="menuselection">Data‣Stores</em> 를 클릭합니다.</p>
+</li>
+<li><p class="first">nyc_roads Shapefile을 추가하려면 새로운 Store를 만들어야 합니다. <em class="guilabel">Add new store</em> 버튼을 클릭하십시오. GeoServer가 지원하는 데이터 소스 목록이 표시됩니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/stores_nycroads.png" src="../../_images/stores_nycroads.png" />
+<p class="caption"><em>데이터 소스 목록</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Shapefile</em> - <em>ESRI(tm) Shapefiles (.shp)</em>을 선택하십시오. <em class="guilabel">New Vector Data Source</em> 페이지가 표시됩니다.</p>
+</li>
+<li><p class="first">먼저 <em class="guilabel">Basic Store Info</em>를 설정하십시오. 드롭다운 메뉴에서 <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 작업공간을 선택하십시오. <em class="guilabel">Data Source Name</em> 란에 <tt class="docutils literal"><span class="pre">NYC</span> <span class="pre">Roads</span></tt> 를 입력한 다음, <em class="guilabel">Description</em> 란에 간단한 (&#8220;Roads in New York City&#8221; 같은) 설명을 입력하십시오.</p>
+</li>
+<li><p class="first"><em class="guilabel">Connection Parameters</em>의 <em class="guilabel">URL</em> 란에 Shapefile의 정확한 경로를 <tt class="docutils literal"><span class="pre">file:data/nyc_roads/nyc_roads.shp</span></tt> 와 같이 입력합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/new_shapefile.png" src="../../_images/new_shapefile.png" />
+<p class="caption"><em>Basic Store Info 및 Connection Parameters 페이지</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Save</em>를 클릭하면, <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 레이어를 설정하기 위해 <em class="guilabel">New Layer chooser</em> 페이지로 이동할 것입니다.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="create-a-layer">
+<h2>Create a Layer<a class="headerlink" href="#create-a-layer" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first"><em class="guilabel">New Layer chooser</em> 페이지에서 <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 레이어를 선택합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/new_layer.png" src="../../_images/new_layer.png" />
+<p class="caption"><em>New Layer chooser 페이지</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Edit Layer</em> 페이지에서 레이어의 Data 및 Publishing 파라미터를 정의합니다. <em class="guilabel">Title</em> 란 및 <em class="guilabel">Abstract</em> 란에 <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 레이어에 대해 짧게 입력합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/new_data.png" src="../../_images/new_data.png" />
+<p class="caption"><em>Basic Resource Information 페이지</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">레이어의 <em>bounding boxes</em>를 생성하기 위해 먼저 <em class="guilabel">Compute from data</em>를 클릭한 다음 <em class="guilabel">Compute from Native bounds</em>를 클릭합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/boundingbox1.png" src="../../_images/boundingbox1.png" />
+<p class="caption"><em>Bounding Boxes 생성</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Publishing</em> 탭으로 전환하여 레이어 스타일을 설정하십시오.</p>
+</li>
+<li><p class="first"><em class="guilabel">Default Style</em> 드롭다운 목록에서 <em class="guilabel">line</em> 스타일을 선택하십시오.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/style1.png" src="../../_images/style1.png" />
+<p class="caption"><em>기본 스타일 선택</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">페이지 맨 아래로 스크롤한 다음 <em class="guilabel">Save</em>를 클릭하여 레이어 설정을 완료합니다.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="preview-the-layer">
+<h2>Preview the Layer<a class="headerlink" href="#preview-the-layer" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first"><tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 레이어가 정확히 생산됐는지 확인하려면 레이어 미리보기를 할 수 있습니다. <em class="guilabel">Layer Preview</em> 화면으로 이동해서 <tt class="docutils literal"><span class="pre">nyc_roads:nyc_roads</span></tt> 레이어를 찾아보십시오.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/layer_preview.png" src="../../_images/layer_preview.png" />
+<p class="caption"><em>레이어 미리보기</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Common Formats</em> 열의 <em class="guilabel">OpenLayers</em> 링크를 클릭하십시오.</p>
+</li>
+<li><p class="first">성공입니다! 새 페이지에 OpenLayers 맵이 로드되어 기본 line 스타일로 shapefile 데이터를 표시했습니다. 미리보기 맵에서 데이터셋을 줌인·줌아웃하거나 이동(pan)시켜볼 수 있으며, 피처(feature)의 속성(attribute)들을 표시해볼 수도 있습니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/openlayers1.png" src="../../_images/openlayers1.png" />
+<p class="caption"><em>nyc_roads 레이어의 미리보기 맵</em></p>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../web-admin-quickstart/index.html" title="previous chapter">Web Administration Interface Quickstart</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../postgis-quickstart/index.html" title="next chapter">Publishing a PostGIS Table</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Publishing a Shapefile</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#create-a-new-workspace">Create a New Workspace</a></li>
+<li><a class="reference internal" href="#create-a-data-store">Create a Data Store</a></li>
+<li><a class="reference internal" href="#create-a-layer">Create a Layer</a></li>
+<li><a class="reference internal" href="#preview-the-layer">Preview the Layer</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../web-admin-quickstart/index.html" title="previous chapter">Web Administration Interface Quickstart</a></li>
+            <li>다음: <a href="../postgis-quickstart/index.html" title="next chapter">Publishing a PostGIS Table</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/gettingstarted/shapefile-quickstart/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

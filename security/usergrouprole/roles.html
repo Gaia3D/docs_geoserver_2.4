@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Roles &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Role system" href="index.html" />
+      <link rel="next" title="Role services" href="roleservices.html" />
+      <link rel="prev" title="User/group services" href="usergroupservices.html" />
+</head>
+<body class="security/usergrouprole/roles">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Role system</a> &raquo;</li>
+  <li>Roles</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="roleservices.html" title="Role services"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="usergroupservices.html" title="User/group services"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="roles">
+<span id="sec-rolesystem-roles"></span><h1>Roles<a class="headerlink" href="#roles" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer에서 <strong>롤(role)</strong>이란 특정 작업을 수행하거나 특정 리소스에 접근하는 데 연계된 키(key)입니다.
+롤은 사용자와 그룹에 할당되어, 롤과 연계된 작업을 수행할 수 있는 권한을 부여합니다. GeoServer의 롤은 다음 정보를 포함합니다.</p>
+<ul class="simple">
+<li>롤 명칭(Role name)</li>
+<li>상위 롤(Parent role)</li>
+<li>키/값 쌍의 집합</li>
+</ul>
+<p>GeoServer 롤은 하위 롤(child role)이 상위 롤에 허용된 모든 접근을 상속받는 상속 구조(inheritance)를 지원합니다.
+예를 들어 <tt class="docutils literal"><span class="pre">ROLE_SECRET</span></tt>이라는 롤과 <tt class="docutils literal"><span class="pre">ROLE_SECRET</span></tt>을 확장한
+또다른 롤 <tt class="docutils literal"><span class="pre">ROLE_VERY_SECRET</span></tt>이 있다고 가정합니다.
+<tt class="docutils literal"><span class="pre">ROLE_VERY_SECRET</span></tt>은 <tt class="docutils literal"><span class="pre">ROLE_SECRET</span></tt>이 접근할 수 있는 모든 것에 접근할 수 있지만, 그 반대는 성립하지 않습니다.</p>
+<p>키/값 쌍은 실행에 특화되어(implementation-specific) 있으며, 사용자 또는 사용자 그룹이 속해 있는
+<a class="reference internal" href="usergroupservices.html#sec-rolesystem-usergroupservices"><em>사용자/그룹 서비스</em></a>에서 이 쌍을 설정할 수도 있습니다.
+예를 들면 사원 조직에 기반해서 롤을 할당하는 롤 서비스는 부서명과 같은 추가 정보를 롤과 연결하려 할 수도 있습니다.</p>
+<p>Geoserver는 다음과 같은 다수의 시스템 롤을 갖추고, 그 명칭을 보존합니다. 이 보존된 명칭으로 새로운 GeoServer 롤을 추가하는 일은 허용되지 않습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> —모든 작업 및 리소스에 접근을 허용합니다.</li>
+<li><tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt> —그룹을 관리하기 위한 특수 롤입니다.</li>
+<li><tt class="docutils literal"><span class="pre">ROLE_AUTHENTICATED</span></tt> —성공적으로 인증을 마친 모든 사용자에게 할당됩니다.</li>
+<li><tt class="docutils literal"><span class="pre">ROLE_ANONYMOUS</span></tt> —익명(anonymous) 인증이 활성화되어 있고 사용자가 로그인하지 않은 경우입니다.</li>
+</ul>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="usergroupservices.html" title="previous chapter">User/group services</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="roleservices.html" title="next chapter">Role services</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="usergroupservices.html" title="previous chapter">User/group services</a></li>
+            <li>다음: <a href="roleservices.html" title="next chapter">Role services</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/security/usergrouprole/roles.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

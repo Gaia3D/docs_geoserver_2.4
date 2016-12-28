@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WFS output formats &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Feature Service" href="index.html" />
+      <link rel="next" title="WFS vendor parameters" href="vendor.html" />
+      <link rel="prev" title="WFS reference" href="reference.html" />
+</head>
+<body class="services/wfs/outputformats">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Feature Service</a> &raquo;</li>
+  <li>WFS output formats</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="vendor.html" title="WFS vendor parameters"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="reference.html" title="WFS reference"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wfs-output-formats">
+<span id="id1"></span><h1>WFS output formats<a class="headerlink" href="#wfs-output-formats" title="Permalink to this headline">¶</a></h1>
+<p>WFS는 여러 가지 형식으로 피처 및 피처 정보를 반환합니다. 다음과 같은 구문으로 이 산출물 형식을 설정합니다.</p>
+<div class="highlight-python"><pre>outputFormat=&lt;format&gt;</pre>
+</div>
+<p>이때 <tt class="docutils literal"><span class="pre">&lt;format&gt;</span></tt> 자리에 다음 옵션 가운데 하나가 들어갑니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="30%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">형식</th>
+<th class="head">구문</th>
+<th class="head">비고</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GML2</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=GML2</span></tt></td>
+<td>WFS 1.0.0 버전의 기본값입니다.</td>
+</tr>
+<tr class="row-odd"><td>GML3</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=GML3</span></tt></td>
+<td>WFS 1.1.0, 2.0.0 버전의 기본값입니다.</td>
+</tr>
+<tr class="row-even"><td>Shapefile</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=shape-zip</span></tt></td>
+<td>shapefile을 담은 ZIP 아카이브를 생성합니다. (<a class="reference internal" href="#wfs-outputformat-shapezip"><em>Shapefile output customization</em></a> 섹션 참조)</td>
+</tr>
+<tr class="row-odd"><td>JSON</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=application/json</span></tt></td>
+<td>GeoJSON 혹은 JSON 산출물을 반환합니다. getFeature 작업의 경우에만 (역호환성을 위해) <tt class="docutils literal"><span class="pre">outputFormat=json</span></tt> 구문을 지원한다는 점을 유의하십시오.</td>
+</tr>
+<tr class="row-even"><td>JSONP</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=text/javascript</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">parseResponse(...json...)</span></tt> 형태로 <a class="reference external" href="http://en.wikipedia.org/wiki/JSONP">JSONP</a>를 반환합니다.
+콜백(callback) 명칭을 변경하려면 <a class="reference internal" href="../wms/vendor.html#wms-vendor-parameters"><em>WMS vendor parameters</em></a>를 참조하십시오.
+이 형식은 기본적으로 비활성화되어 있다는 점을 유의하십시오. (<a class="reference internal" href="../wms/global.html#wms-global-variables"><em>Global variables affecting WMS</em></a> 참조)</td>
+</tr>
+<tr class="row-odd"><td>CSV</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=csv</span></tt></td>
+<td>(쉼표로 구분된 값들인) CSV 파일을 반환합니다.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">확장 모듈을 이용하면 (<a class="reference internal" href="../../extensions/excel.html#excel-extension"><em>Excel</em></a> 같은) 몇몇 추가 산출물 형식을 쓸 수 있습니다.
+WFS <a class="reference internal" href="reference.html#wfs-getcap"><em>GetCapabilities</em></a>  요청을 실행하면 특정 GeoServer 인스턴스가 지원하는 전체 산출물 형식 목록을 볼 수 있습니다.</p>
+</div>
+<div class="section" id="shapefile-output-customization">
+<span id="wfs-outputformat-shapezip"></span><h2>Shapefile output customization<a class="headerlink" href="#shapefile-output-customization" title="Permalink to this headline">¶</a></h2>
+<p>ZIP 아카이브 명칭 및 압축할 파일들을 설정하는 <a class="reference internal" href="../../tutorials/freemarker.html#tutorial-freemarkertemplate"><em>Freemarker template</em></a>을 준비하면
+shapefile 산출물 형식을 사용자 지정할 수 있습니다. 기본 서식(template)은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>zip=${typename}
+shp=${typename}${geometryType}
+txt=wfsrequest</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">zip</span></tt> 속성은 아카이브의 명칭이고 <tt class="docutils literal"><span class="pre">shp</span></tt> 속성은 해당 피처형에 속한 shapefile의 명칭이며,
+<tt class="docutils literal"><span class="pre">txt</span></tt> 속성은 실제 WFS 요청의 덤프(dump)입니다.</p>
+<p>이 서식에 사용할 수 있는 속성은 다음과 같습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">typename</span></tt> &mdash;피처형 명칭입니다.
+(요청이 복수의 피처형을 담고 있는 경우 이 속성이 <tt class="docutils literal"><span class="pre">zip</span></tt> 속성에 담길 첫번째 피처형이 됩니다.)</li>
+<li><tt class="docutils literal"><span class="pre">geometryType</span></tt> &mdash;shapefile에 담겨 있는 도형의 종류입니다.
+산출 도형이 일반적인 종류고 하나의 shapefile에 종류별로 여러 도형이 담겨 있는 경우에만 쓰입니다.</li>
+<li><tt class="docutils literal"><span class="pre">workspace</span></tt> &mdash;피처형의 작업공간입니다.</li>
+<li><tt class="docutils literal"><span class="pre">timestamp</span></tt> &mdash;요청의 타임스탬프(timestamp)를 갖춘 날짜/시간 오브젝트입니다.</li>
+<li><tt class="docutils literal"><span class="pre">iso_timestamp</span></tt> &mdash;<tt class="docutils literal"><span class="pre">yyyyMMdd_HHmmss</span></tt> 형태의 문자열입니다.
+(요청의 GMT 시간대 ISO 타임스탬프입니다.)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="format-options-as-parameter-in-wfs-requests">
+<h2>Format options as parameter in WFS requests<a class="headerlink" href="#format-options-as-parameter-in-wfs-requests" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 각 형식에만 쓰이는 파라미터들을 설정하기 위한, 각 회사(vendor)에 특화된 파라미터인 <tt class="docutils literal"><span class="pre">format_options</span></tt> 를 제공합니다. 구문은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>format-options=param1:value1;param2:value2;...</pre>
+</div>
+<p>WFS 산출물에서 현재 지원되는 형식 옵션은 다음과 같습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">filename</span></tt> &mdash;SHAPE-ZIP 산출물 형식에만 적용됩니다. 파일명을 제공하면, 산출물 파일명으로 쓰입니다.
+예를 들어 <tt class="docutils literal"><span class="pre">format_options=filename:roads.zip</span></tt> 같이 말입니다.
+파일명을 설정하지 않을 경우 산출물 파일명은 요청받은 피처형의 명칭을 따릅니다.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="reference.html" title="previous chapter">WFS reference</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="vendor.html" title="next chapter">WFS vendor parameters</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WFS output formats</a><ul>
+<li><a class="reference internal" href="#shapefile-output-customization">Shapefile output customization</a></li>
+<li><a class="reference internal" href="#format-options-as-parameter-in-wfs-requests">Format options as parameter in WFS requests</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="reference.html" title="previous chapter">WFS reference</a></li>
+            <li>다음: <a href="vendor.html" title="next chapter">WFS vendor parameters</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wfs/outputformats.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

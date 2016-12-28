@@ -1,0 +1,409 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Seeding and Truncating &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="GeoWebCache REST API" href="index.html" />
+      <link rel="next" title="Disk Quota" href="diskquota.html" />
+      <link rel="prev" title="Managing Layers" href="layers.html" />
+</head>
+<body class="geowebcache/rest/seed">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Caching with GeoWebCache</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">GeoWebCache REST API</a> &raquo;</li>
+  <li>Seeding and Truncating</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="diskquota.html" title="Disk Quota"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="layers.html" title="Managing Layers"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="seeding-and-truncating">
+<span id="gwc-rest-seed"></span><h1>Seeding and Truncating<a class="headerlink" href="#seeding-and-truncating" title="Permalink to this headline">¶</a></h1>
+<p>GeoWebCache REST API는 각 레이어 별 기반으로 캐시에 타일을 추가하거나 삭제할 수 있는 RESTful 인터페이스를 제공합니다.</p>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<p>URL은 <tt class="docutils literal"><span class="pre">/gwc/rest/seed/&lt;layer&gt;.&lt;format&gt;</span></tt> 입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">반환 코드</th>
+<th class="head">형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>시드 작업 스레드의 상태를 반환합니다.</td>
+<td>200</td>
+<td>JSON</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>시드를 발행(issue)하거나 작업 요청을 정리(truncate)합니다.</td>
+<td>200</td>
+<td>XML, JSON</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>표현</strong>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/seed_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../../_downloads/seed_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p>다음 예시들은 <a class="reference external" href="http://curl.haxx.se/">cURL</a> 도구를 사용하지만, HTTP를 이용할 수 있는 어떤 도구나 라이브러리도 사용할 수 있습니다.</p>
+<div class="section" id="seeding">
+<h3>Seeding<a class="headerlink" href="#seeding" title="Permalink to this headline">¶</a></h3>
+<p>다음 XML 요청으로 시드 작업을 시작합니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -H &quot;Content-type: text/xml&quot; -d &#39;&lt;seedRequest&gt;&lt;name&gt;nurc:Arc_Sample&lt;/name&gt;&lt;srs&gt;&lt;number&gt;4326&lt;/number&gt;&lt;/srs&gt;&lt;zoomStart&gt;1&lt;/zoomStart&gt;&lt;zoomStop&gt;12&lt;/zoomStop&gt;&lt;format&gt;image/png&lt;/format&gt;&lt;type&gt;truncate&lt;/type&gt;&lt;threadCount&gt;2&lt;/threadCount&gt;&lt;/seedRequest&gt;&#39;  &quot;http://localhost:8080/geoserver/gwc/rest/seed/nurc:Arc_Sample.xml&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>* About to connect() to localhost port 8080 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to localhost (127.0.0.1) port 8080 (#0)
+* Server auth using Basic with user 'admin'
+&gt; POST /geoserver/gwc/rest/seed/nurc:Arc_Sample.xml HTTP/1.1
+&gt; Authorization: Basic YWRtaW46Z2Vvc2VydmVy
+&gt; User-Agent: curl/7.21.3 (x86_64-pc-linux-gnu) libcurl/7.21.3 OpenSSL/0.9.8o zlib/1.2.3.4 libidn/1.18
+&gt; Host: localhost:8080
+&gt; Accept: */*
+&gt; Content-type: text/xml
+&gt; Content-Length: 209
+&gt;
+&lt; HTTP/1.1 200 OK</pre>
+</div>
+<p>다음 시드 요청은 파라미터 필터를 포함한 좀 더 완전한 XML의 일부입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;seedRequest&gt;</span>
+  <span class="nt">&lt;name&gt;</span>topp:states<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;bounds&gt;</span>
+    <span class="nt">&lt;coords&gt;</span>
+      <span class="nt">&lt;double&gt;</span>-2495667.977678598<span class="nt">&lt;/double&gt;</span>
+      <span class="nt">&lt;double&gt;</span>-2223677.196231552<span class="nt">&lt;/double&gt;</span>
+      <span class="nt">&lt;double&gt;</span>3291070.6104286816<span class="nt">&lt;/double&gt;</span>
+      <span class="nt">&lt;double&gt;</span>959189.3312465074<span class="nt">&lt;/double&gt;</span>
+    <span class="nt">&lt;/coords&gt;</span>
+  <span class="nt">&lt;/bounds&gt;</span>
+
+  <span class="c">&lt;!-- These are listed on http://localhost:8080/geoserver/gwc/demo --&gt;</span>
+  <span class="nt">&lt;gridSetId&gt;</span>EPSG:2163<span class="nt">&lt;/gridSetId&gt;</span>
+  <span class="nt">&lt;zoomStart&gt;</span>0<span class="nt">&lt;/zoomStart&gt;</span>
+  <span class="nt">&lt;zoomStop&gt;</span>2<span class="nt">&lt;/zoomStop&gt;</span>
+  <span class="nt">&lt;format&gt;</span>image/png<span class="nt">&lt;/format&gt;</span>
+
+  <span class="c">&lt;!-- type can be seed, reseed, or truncate --&gt;</span>
+  <span class="nt">&lt;type&gt;</span>truncate<span class="nt">&lt;/type&gt;</span>
+
+  <span class="c">&lt;!-- Number of seeding threads to run in parallel.</span>
+<span class="c">       If type == truncate only one thread will be used</span>
+<span class="c">       regardless of this parameter --&gt;</span>
+  <span class="nt">&lt;threadCount&gt;</span>1<span class="nt">&lt;/threadCount&gt;</span>
+  <span class="c">&lt;!-- Parameter filters --&gt;</span>
+  <span class="nt">&lt;parameters&gt;</span>
+    <span class="nt">&lt;entry&gt;</span>
+      <span class="nt">&lt;string&gt;</span>STYLES<span class="nt">&lt;/string&gt;</span>
+      <span class="nt">&lt;string&gt;</span>pophatch<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/entry&gt;</span>
+    <span class="nt">&lt;entry&gt;</span>
+      <span class="nt">&lt;string&gt;</span>CQL_FILTER<span class="nt">&lt;/string&gt;</span>
+      <span class="nt">&lt;string&gt;</span>TOTPOP &gt; 10000<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/entry&gt;</span>
+  <span class="nt">&lt;/parameters&gt;</span>
+<span class="nt">&lt;/seedRequest&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="truncating">
+<h3>Truncating<a class="headerlink" href="#truncating" title="Permalink to this headline">¶</a></h3>
+<p>다음 XML 요청으로 시드 작업을 시작합니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -H &quot;Content-type: application/json&quot; -d &quot;{&#39;seedRequest&#39;:{&#39;name&#39;:&#39;topp:states&#39;,&#39;bounds&#39;:{&#39;coords&#39;:{ &#39;double&#39;:[&#39;-124.0&#39;,&#39;22.0&#39;,&#39;66.0&#39;,&#39;72.0&#39;]}},&#39;srs&#39;:{&#39;number&#39;:4326},&#39;zoomStart&#39;:1,&#39;zoomStop&#39;:12,&#39;format&#39;:&#39;image\/png&#39;,&#39;type&#39;:&#39;truncate&#39;,&#39;threadCount&#39;:4}}}&quot;  &quot;http://localhost:8080/geoserver/gwc/rest/seed/nurc:Arc_Sample.json&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>* About to connect() to localhost port 8080 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to localhost (127.0.0.1) port 8080 (#0)
+* Server auth using Basic with user 'admin'
+&gt; POST /geoserver/gwc/rest/seed/nurc:Arc_Sample.json HTTP/1.1
+&gt; Authorization: Basic YWRtaW46Z2Vvc2VydmVy
+&gt; User-Agent: curl/7.21.3 (x86_64-pc-linux-gnu) libcurl/7.21.3 OpenSSL/0.9.8o zlib/1.2.3.4 libidn/1.18
+&gt; Host: localhost:8080
+&gt; Accept: */*
+&gt; Content-type: application/json
+&gt; Content-Length: 205
+&gt;
+&lt; HTTP/1.1 200 OK
+&lt; Date: Fri, 14 Oct 2011 22:09:21 GMT
+&lt; Server: Noelios-Restlet-Engine/1.0..8
+&lt; Transfer-Encoding: chunked
+&lt;
+* Connection #0 to host localhost left intact
+* Closing connection #0</pre>
+</div>
+</div>
+</div>
+<div class="section" id="querying-running-tasks">
+<h2>Querying running tasks<a class="headerlink" href="#querying-running-tasks" title="Permalink to this headline">¶</a></h2>
+<p>URL은 <tt class="docutils literal"><span class="pre">/gwc/rest/seed[/&lt;layer&gt;].json</span></tt> 입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">반환 코드</th>
+<th class="head">형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>실행 중 및 보류 중인 작업의 전체 혹은 각 레이어 별 상태를 반환합니다.</td>
+<td>200</td>
+<td>JSON</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="getting-current-state-of-the-seeding-threads">
+<h3>Getting current state of the seeding threads<a class="headerlink" href="#getting-current-state-of-the-seeding-threads" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/gwc/rest/seed.json</span></tt> 리소스에 GET 요청을 전송하면 모든 레이어의 보류 중(예정된) 및 실행 중인 작업 목록을 반환합니다.</p>
+<p><tt class="docutils literal"><span class="pre">/gwc/rest/seed/&lt;layer name&gt;.json</span></tt> 리소스에 GET 요청을 전송하면 해당 레이어의 보류 중(예정된) 및 실행 중인 작업 목록을 반환합니다.</p>
+<p>다음과 같이 JSON 형식의 배열을 반환합니다.</p>
+<div class="highlight-python"><pre>{"long-array-array":[[&lt;long&gt;,&lt;long&gt;,&lt;long&gt;,&lt;long&gt;,&lt;long&gt;],...]}</pre>
+</div>
+<p>보류 중이거나 실행 중인 작업이 없을 경우 다음과 같은 빈 배열을 반환합니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;long-array-array&quot;</span><span class="p">:[]}</span>
+</pre></div>
+</div>
+<p>반환된 배열들의 배열은 각 시드(seed)/정리(truncate) 작업 별로 1개의 배열을 담고 있습니다.
+각 스레드 배열의 &lt;long&gt; 값은 다음과 같은 의미입니다.</p>
+<div class="highlight-python"><pre>[tiles processed, total # of tiles to process, # of remaining tiles, Task ID, Task status]</pre>
+</div>
+<p>반환된 <tt class="docutils literal"><span class="pre">작업 상태(Task Status)</span></tt> 값은 다음 가운데 하나입니다.</p>
+<div class="highlight-python"><pre>-1 = ABORTED
+ 0 = PENDING
+ 1 = RUNNING
+ 2 = DONE</pre>
+</div>
+<p>다음은 <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어의 현재 작업 상태를 반환하는 예시입니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -u &lt;user&gt;:&lt;password&gt; -v -XGET http://localhost:8080/geoserver/gwc/rest/seed/topp:states.json</span>
+</pre></div>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;long-array-array&quot;</span><span class="p">:[[</span><span class="mi">17888</span><span class="p">,</span><span class="mi">44739250</span><span class="p">,</span><span class="mi">18319</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">17744</span><span class="p">,</span><span class="mi">44739250</span><span class="p">,</span><span class="mi">18468</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">16608</span><span class="p">,</span><span class="mi">44739250</span><span class="p">,</span><span class="mi">19733</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">]]}</span>
+</pre></div>
+</div>
+<p>이 응답에서 <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어의 작업 <tt class="docutils literal"><span class="pre">1</span></tt>과 <tt class="docutils literal"><span class="pre">2</span></tt>는
+실행 중이며, 작업 <tt class="docutils literal"><span class="pre">3</span></tt>과 <tt class="docutils literal"><span class="pre">4</span></tt>는 사용할 수 있는 스레드를 기다리고 있는 보류 상태입니다.</p>
+<p>다음은 모든 레이어의 작업 목록을 반환하는 예시입니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -u &lt;user&gt;:&lt;password&gt; -XGET http://localhost:8080/geoserver/gwc/rest/seed.json</span>
+</pre></div>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;long-array-array&quot;</span><span class="p">:[[</span><span class="mi">2240</span><span class="p">,</span><span class="mi">327426</span><span class="p">,</span><span class="mi">1564</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2368</span><span class="p">,</span><span class="mi">327426</span><span class="p">,</span><span class="mi">1477</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2272</span><span class="p">,</span><span class="mi">327426</span><span class="p">,</span><span class="mi">1541</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2176</span><span class="p">,</span><span class="mi">327426</span><span class="p">,</span><span class="mi">1611</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1056</span><span class="p">,</span><span class="mi">15954794690</span><span class="p">,</span><span class="mi">79320691</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1088</span><span class="p">,</span><span class="mi">15954794690</span><span class="p">,</span><span class="mi">76987729</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1040</span><span class="p">,</span><span class="mi">15954794690</span><span class="p">,</span><span class="mi">80541010</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1104</span><span class="p">,</span><span class="mi">15954794690</span><span class="p">,</span><span class="mi">75871965</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">1</span><span class="p">]]}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="terminating-running-tasks">
+<h2>Terminating running tasks<a class="headerlink" href="#terminating-running-tasks" title="Permalink to this headline">¶</a></h2>
+<p>URL은 <tt class="docutils literal"><span class="pre">/gwc/rest/seed[/&lt;layer&gt;]</span></tt> 입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">반환 코드</th>
+<th class="head">형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>실행 중 및(혹은) 보류 중인 작업 요청을 종료(kill)합니다.</td>
+<td>200</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal"><span class="pre">/gwc/rest/seed</span></tt> 리소스에 POST 요청을 전송하면 <strong>모든 레이어</strong>의 실행 중 및(혹은) 보류 중인 작업을 종료합니다.
+<tt class="docutils literal"><span class="pre">/gwc/rest/seed/&lt;layername&gt;</span></tt> 리소스에 POST 요청을 전송하면 해당 레이어의 실행 중 및(혹은) 보류 중인 작업을 종료합니다.</p>
+<p>실행 중 및(혹은) 보류 중인 작업을 개별적으로 또는 한꺼번에 종료할 수 있습니다.
+<tt class="docutils literal"><span class="pre">kill_all</span></tt> 파라미터에 <tt class="docutils literal"><span class="pre">running</span></tt>이나 <tt class="docutils literal"><span class="pre">pending</span></tt>,
+혹은 <tt class="docutils literal"><span class="pre">all</span></tt> 값 가운데 하나를 사용하십시오.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">역호환성(backward compatibility)을 위해 <tt class="docutils literal"><span class="pre">kill_all</span></tt>파라미터에 <tt class="docutils literal"><span class="pre">1</span></tt>이라는 값도 쓸 수 있습니다.
+<tt class="docutils literal"><span class="pre">running</span></tt> 값과 동일한 의미입니다.</p>
+</div>
+<p>다음은 실행 중인 모든 시드 및 정리 작업을 종료하는 예시입니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -d &quot;kill_all=all&quot;  &quot;http://localhost:8080/geoserver/gwc/rest/seed&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>* About to connect() to localhost port 8080 (#0)
+*   Trying 127.0.0.1... connected
+&lt; HTTP/1.1 200 OK
+&lt; Date: Fri, 14 Oct 2011 22:23:04 GMT
+&lt; Server: Noelios-Restlet-Engine/1.0..8
+&lt; Content-Type: text/html; charset=ISO-8859-1
+&lt; Content-Length: 426
+&lt;
+&lt;html&gt;
+...
+* Connection #0 to host localhost left intact
+* Closing connection #0</pre>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="layers.html" title="previous chapter">Managing Layers</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="diskquota.html" title="next chapter">Disk Quota</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Seeding and Truncating</a><ul>
+<li><a class="reference internal" href="#operations">Operations</a><ul>
+<li><a class="reference internal" href="#seeding">Seeding</a></li>
+<li><a class="reference internal" href="#truncating">Truncating</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#querying-running-tasks">Querying running tasks</a><ul>
+<li><a class="reference internal" href="#getting-current-state-of-the-seeding-threads">Getting current state of the seeding threads</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#terminating-running-tasks">Terminating running tasks</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="layers.html" title="previous chapter">Managing Layers</a></li>
+            <li>다음: <a href="diskquota.html" title="next chapter">Disk Quota</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/geowebcache/rest/seed.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

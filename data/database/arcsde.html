@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>ArcSDE &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="DB2" href="db2.html" />
+      <link rel="prev" title="H2" href="h2.html" />
+</head>
+<body class="data/database/arcsde">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>ArcSDE</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="db2.html" title="DB2"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="h2.html" title="H2"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="arcsde">
+<span id="data-arcsde"></span><h1>ArcSDE<a class="headerlink" href="#arcsde" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer는 초기 상태에서 ArcSDE를 지원하지 못 하기 때문에 확장 모듈(extension)을 설치해야 합니다.
+설치 방법은 <a class="reference internal" href="#arcsde-install"><em>Installing the ArcSDE extension</em></a>을 참조하십시오.</p>
+</div>
+<p>ESRI의 <a class="reference external" href="http://www.esri.com/software/arcgis/arcsde/">ArcSDE</a>는 Oracle 또는 SQL Server처럼 데이터 결합이 용이한 DB(relational database) 위에서 실행되는 공간 엔진(spatial engine)입니다.
+GeoServer의 ArcSDE 확장 모듈은 ArcSDE <strong>9.2 및 9.3 버전</strong>을 지원합니다.
+이 모듈은 <strong>Oracle 10g</strong>와 <strong>Microsoft SQL Server 2000 Developer Edition</strong>과 잘 결합하는 것으로 검증되었습니다.
+ArcSDE는 GeoTools ArcSDE 드라이버를 바탕으로 ESRI Java API 라이브러리를 사용합니다.
+기술적인 사항은 <a class="reference external" href="http://docs.geotools.org/latest/userguide/library/data/arcsde.html">GeoTools ArcSDE 페이지</a>를 참조하십시오.</p>
+<p>GeoServer에 추가될 수 있는 ArcSDE 데이터는 <strong>벡터</strong>와 <strong>래스터</strong> 2가지입니다.</p>
+<div class="section" id="vector-support">
+<h2>Vector support<a class="headerlink" href="#vector-support" title="Permalink to this headline">¶</a></h2>
+<p>ArcSDE는 데이터 결합이 용이한 여러 DB를 통해 벡터 레이어(ArcSDE 용어로 &#8220;featureclass&#8221;)에 효율적으로 접근할 수 있습니다.
+GeoServer는 등록된 ArcSDE featureclass 및 공간 뷰(spatial view)의 피처형(featuretype)을 설정할 수 있습니다.
+버전이 붙은 ArcSDE featureclass의 경우, GeoServer는 읽기 및 쓰기 접근 양쪽에 대해 기본(default) 데이터베이스 버전을 바탕으로 작업합니다.</p>
+<p>Primary key를 제대로 설정한 피처형의 경우, featureclass를 사용자가 관리하든 ArcSDE가 관리하든 상관없이 트랜잭션(transaction)을 지원할 수 있습니다.
+Primary key를 설정하지 않은 featureclass는 읽기 접근만 가능합니다.</p>
+</div>
+<div class="section" id="raster-support">
+<h2>Raster support<a class="headerlink" href="#raster-support" title="Permalink to this headline">¶</a></h2>
+<p>가공하지 않은(raw) 래스터 데이터를 DB 덩어리(blob)로 저장하고 타일로 나누어 피라미드를 생성하는 방법을 통해 ArcSDE가 다중 밴드(multi-band) 래스터에 효율적으로 접근할 수 있습니다.
+또 타일화된 덩어리(blob) 데이터를 압축하는 방식을 설정할 수 있으며, 피라미드를 리샘플링하는 보간법(interpolation)을 설정할 수도 있습니다.</p>
+<p>하나의 ArcSDE 래스터 레이어를 구성하는 모든 밴드는 동일한 픽셀 색상 범위(pixel depth)여야 합니다.
+정수형 데이터형(integral data type)의 경우 픽셀 생상 범위는 샘플 당 1, 4, 8, 16, 32-bit 가운데 하나가 될 수 있습니다.
+8, 16, 32-bit 밴드의 경우 음수/양수(signed)가 될 수도 양수(unsigned)가 될 수도 있습니다. 32, 64-bit 실수(floating point) 샘플형(sample type)도 지원합니다.</p>
+<p>ArcSDE 래스터가 양수(unsigned) 8 또는 16-bit 데이터형 단일 밴드라면 래스터에 색상이 할당되는(color mapped) 경우도 있습니다.</p>
+<p>마지막으로 ArcSDE는 래스터 카탈로그를 지원합니다.
+래스터 카탈로그는 동일한 스펙트럼 속성을 가진 래스터들의 모자이크지만, 카탈로그를 구성하는 래스터들은 미리 계산된(precomputed) 모자이크가 아니라 서로 독립적이며, 응용 프로그램이 모자이크 작업을 실시간으로 수행합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>기술적 사항</strong></td>
+<td><strong>상태</strong></td>
+</tr>
+<tr class="row-even"><td>압축 방식</td>
+<td>LZW, JPEG</td>
+</tr>
+<tr class="row-odd"><td>밴드 개수</td>
+<td>1, 4-bit 래스터는 단일 밴드만 지원하며, 그 외 래스터는 개수에 제한이 없습니다.</td>
+</tr>
+<tr class="row-even"><td>색상 할당된 래스터의 색상 범위</td>
+<td>8-bit 혹은 16-bit</td>
+</tr>
+<tr class="row-odd"><td>래스터 카탈로그</td>
+<td>픽셀 저장 형식(Any pixel storage type)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="installing-the-arcsde-extension">
+<span id="arcsde-install"></span><h2>Installing the ArcSDE extension<a class="headerlink" href="#installing-the-arcsde-extension" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">라이선스 문제로 확장 모듈이 모든 파일을 담고 있지 않기 때문에, ArcSDE 지원 기능을 설치하려면 외부 파일을 추가로 다운로드해야 합니다.
+<strong>ArcSDE 확장 모듈만 설치해서는 아무런 효과도 없습니다.</strong></p>
+</div>
+<div class="section" id="geoserver-files">
+<h3>GeoServer files<a class="headerlink" href="#geoserver-files" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="http://geoserver.org/display/GEOS/Download">GeoServer download page</a>에서 ArcSDE 확장 모듈을 다운로드합니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">GeoServer 인스턴스 버전과 확장 모듈 버전이 일치해야 합니다!</p>
+</div>
+</li>
+<li><p class="first">압축 파일의 내용물을 GeoServer 설치 디렉터리의 <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> 디렉터리 안에 풉니다.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="required-external-files">
+<h3>Required external files<a class="headerlink" href="#required-external-files" title="Permalink to this headline">¶</a></h3>
+<p>GeoServer 확장 모듈에 패키지되지 않은 파일 2개가 필요합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>파일</strong></td>
+<td><strong>비고</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="file docutils literal"><span class="pre">jsde_sdk.jar</span></tt></td>
+<td><tt class="file docutils literal"><span class="pre">jsde##_sdk.jar</span></tt> 파일명에서 <tt class="docutils literal"><span class="pre">##</span></tt>은 버전 번호로,
+ArcSDE 9.2의 경우 <tt class="docutils literal"><span class="pre">92</span></tt>가 됩니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="file docutils literal"><span class="pre">jpe_sdk.jar</span></tt></td>
+<td><tt class="file docutils literal"><span class="pre">jpe##_sdk.jar</span></tt> 파일명에서 <tt class="docutils literal"><span class="pre">##</span></tt>은 버전 번호로,
+ArcSDE 9.2의 경우 <tt class="docutils literal"><span class="pre">92</span></tt>가 됩니다.</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="file docutils literal"><span class="pre">jsde_sdk.jar</span></tt>와 <tt class="file docutils literal"><span class="pre">jpe_sdk.jar</span></tt>의 버전이 서비스팩을 포함한 ArcSDE 서버 버전과 일치하는지 항상 확인해야 합니다.
+다만 ArcSDE Server 버전보다 클라이언트의 JAR 버전이 높아도 일반적으로 아무 문제가 없습니다.</p>
+<p>이 파일들은 ArcSDE 설치 매체의 ArcSDE Java SDK를 설치하면 사용할 수 있습니다.
+(일반적으로 <tt class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files\ArcGIS\ArcSDE\lib</span></tt> 경로에 있습니다.)
+이 파일들을 포함한 서비스팩이 있다면 ESRI 웹사이트에서 다운로드할 수도 있지만 항상 그런 것은 아닙니다.
+ESRI 웹사이트에서 이 파일들을 다운로드하는 방법은 다음과 같습니다.</p>
+<ol class="arabic simple">
+<li>웹브라우저에서 <a class="reference external" href="http://support.esri.com/index.cfm?fa=downloads.patchesServicePacks.listPatches&amp;PID=66">http://support.esri.com/index.cfm?fa=downloads.patchesServicePacks.listPatches&amp;PID=66</a> 주소로 이동합니다.</li>
+<li>사용자 ArcSDE 버전의 최신 서비스팩 링크를 찾습니다.</li>
+<li>(사용자 시스템 OS와 상관없이) <em class="menuselection">Installing this Service Pack ‣ ArcSDE SDK ‣ UNIX</em> 메뉴로 이동합니다.</li>
+<li>서비스팩을 다운로드합니다. (사용자 시스템 OS에 맞도록 32-bit 혹은 64-bit 용인지 확인하십시오)</li>
+<li>압축 파일을 열고, 해당 JAR 파일을 압축 해제합니다.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 JAR 파일들이 압축 파일 안의 압축 파일 안에 있을 수도 있습니다.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">ArcSDE Java SDK 설치 폴더에 <tt class="file docutils literal"><span class="pre">icu4j##.jar</span></tt> 파일이 있을 수도 있지만
+GeoServer ArcSDE 확장 모듈이 이 파일을 포함하고 있으니 별도로 설치할 필요는 없습니다.</p>
+</div>
+<ol class="arabic simple">
+<li>압축을 푼 다음 2개 파일을 GeoServer 설치 디렉터리의 <tt class="file docutils literal"><span class="pre">WEB-INF/lib</span></tt> 디렉터리로 옮깁니다.</li>
+</ol>
+<p>GeoServer 확장 모듈 및 외부 파일 설치가 모두 끝났다면 GeoServer를 재시작하십시오.</p>
+</div>
+</div>
+<div class="section" id="adding-an-arcsde-vector-data-store">
+<h2>Adding an ArcSDE vector data store<a class="headerlink" href="#adding-an-arcsde-vector-data-store" title="Permalink to this headline">¶</a></h2>
+<p>벡터 데이터 레이어를 서비스하려면 먼저 GeoServer에 ArcSDE 인스턴스를 데이터 저장소로 등록해야 합니다.
+<a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 <a class="reference internal" href="../../webadmin/data/stores.html#webadmin-stores"><em>저장소(Stores)</em></a>에서 <strong>New data source</strong> 페이지로 이동하십시오.
+<em class="guilabel">Vector Data Sources</em> 목록에 <strong>ArcSDE</strong> 옵션이 보일 것입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>Feature Data Set Description</strong>의 드롭다운 메뉴에 <tt class="docutils literal"><span class="pre">ArcSDE</span></tt>가 없다면 확장 모듈이 제대로 설치되지 않았다는 뜻입니다.
+이럴 경우 <a class="reference internal" href="#arcsde-install"><em>Installing the ArcSDE extension</em></a> 섹션을 참조하십시오.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/arcsdevectorcreate.png" src="../../_images/arcsdevectorcreate.png" />
+<p class="caption"><em>벡터 데이터 저장소 목록의 ArcSDE 옵션</em></p>
+</div>
+</div>
+<div class="section" id="configuring-an-arcsde-vector-data-store">
+<h2>Configuring an ArcSDE vector data store<a class="headerlink" href="#configuring-an-arcsde-vector-data-store" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">ArcSDE</span></tt> 옵션을 클릭하면 ArcSDE 벡터 데이터 저장소를 설정할 수 있는 페이지가 표출됩니다.
+양식을 입력한 다음 <em class="guilabel">Save</em> 버튼을 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/arcsdevectorconfigure.png" src="../../_images/arcsdevectorconfigure.png" />
+<p class="caption"><em>새로운 ArcSDE 데이터 저장소 설정하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="12%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Feature</span> <span class="pre">Data</span> <span class="pre">Set</span> <span class="pre">ID</span></tt></td>
+<td>N/A</td>
+<td>이전 페이지에서 설정한 데이터 저장소 명칭입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Enabled</span></tt></td>
+<td>N/A</td>
+<td>이 옵션을 체크하면 데이터 저장소가 활성화되어 GeoServer가 사용할 수 있게 됩니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Namespace</span></tt></td>
+<td>Yes</td>
+<td>데이터 저장소와 연결된 namespace입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Description</span></tt></td>
+<td>No</td>
+<td>데이터 저장소에 대한 설명입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">server</span></tt></td>
+<td>Yes</td>
+<td>ArcSDE 인스턴스의 URL을 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">port</span></tt></td>
+<td>Yes</td>
+<td>ArcSDE 인스턴스에 접근할 수 있는 포트 번호를 설정합니다. 초기값은 5151입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">instance</span></tt></td>
+<td>No</td>
+<td>적용 가능한 경우, 기본(underlying) DB를 따르는 특정 ArcSDE 인스턴스명을 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">user</span></tt></td>
+<td>Yes</td>
+<td>ArcSDE 인스턴스 인증을 위한 사용자명입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">password</span></tt></td>
+<td>No</td>
+<td>ArcSDE 인스턴스 인증을 위한 사용자와 연결되는 비밀번호입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">pool.minConnections</span></tt></td>
+<td>No</td>
+<td>Connection pool 설정 파라미터입니다. 자세한 사항은 <a class="reference internal" href="connection-pooling.html#connection-pooling"><em>Database Connection Pooling</em></a> 섹션을 참조하십시오.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">pool.maxConnections</span></tt></td>
+<td>No</td>
+<td>Connection pool 설정 파라미터입니다. 자세한 사항은 <a class="reference internal" href="connection-pooling.html#connection-pooling"><em>Database Connection Pooling</em></a> 섹션을 참조하십시오.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">pool.timeOut</span></tt></td>
+<td>No</td>
+<td>Connection pool 설정 파라미터입니다. 자세한 사항은 <a class="reference internal" href="connection-pooling.html#connection-pooling"><em>Database Connection Pooling</em></a> 섹션을 참조하십시오.</td>
+</tr>
+</tbody>
+</table>
+<p>이제 <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a>에서 <em class="guilabel">New Layer</em> 페이지로 이동해서 일반적인 방법으로 피처형을 추가할 수 있습니다.</p>
+</div>
+<div class="section" id="configuring-an-arcsde-vector-data-store-with-direct-connect">
+<h2>Configuring an ArcSDE vector data store with Direct Connect<a class="headerlink" href="#configuring-an-arcsde-vector-data-store-with-direct-connect" title="Permalink to this headline">¶</a></h2>
+<p>ESRI Direct Connect(ESRI DC)를 사용하면 클라이언트가 SDE 서버 인스턴스 없이도 SDE GEODB 9.2 버전 이상에 직접 접속할 수 있습니다.
+단일장애점(single point of failure)인 ArcSDE 게이트웨이 서버를 제거할 수 있기 때문에, 고가용성(high availability) 환경에서 권장하고 있습니다.
+ESRI DC를 사용하려면 시스템 플랫폼에 맞는 바이너리 드라이버 및 (ORACLE DB와 접속 중일 경우) 실행중인 Oracle Client ENVIRONMENT가 필요합니다.
+직접 접속(Direct Connect)에 대해 자세히 알고 싶다면 ESRI ArcSDE 문서 가운데 <a class="reference external" href="http://webhelp.esri.com/arcgisserver/9.3/java/index.htm#geodatabases/setting1995868008.htm">Properties of a direct connection to an ArcSDE geodatabase</a>를 참조하십시오.
+ArcSDE가 지원하는 다른 DB들과 접속하는 방법에 대해서는 <a class="reference external" href="http://webhelp.esri.com/arcgisserver/9.3/java/index.htm#geodatabases/setting1995868008.htm">Setting up clients for a direct connection</a>를 참조하십시오.</p>
+<p>GeoServer 설정 파라미터는 앞 섹션의 <cite>Configuring an ArcSDE vector data store</cite>과 동일하지만, 파라미터의 포맷에 몇 가지 다른 점이 있습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li>server—ESRI Direct Connect Mode에서 이 값이 없으면 Direct Connect Driver가 오류를 일으키므로, &#8216;none&#8217;을 입력하십시오. 아무 문자열이나 상관없습니다!</li>
+<li>port—ESRI Direct Connect Mode에서 포트 번호는 문자열로 표현됩니다. 예를 들어 <cite>sde:oracle10g</cite>, <cite>sde:oracle11g:/:test</cite> 등입니다.
+더 자세한 내용을 알고 싶다면 ESRI의 공식 ArcSDE 문서인 <a class="reference external" href="http://webhelp.esri.com/arcgisserver/9.3/java/geodatabases/arcsde-2034353163.htm">ArcSDE connection syntax</a>를 참조하십시오.</li>
+<li>instance—ESRI Direct Connect Mode에서 이 값이 없으면 Direct Connect Driver가 오류를 일으키므로, &#8216;none&#8217;을 입력하십시오. 아무 문자열이나 상관없습니다!</li>
+<li>user—GEODB 인증을 위한 사용자명입니다.</li>
+<li>password—GEODB 인증을 위한 사용자와 연결된 비밀번호입니다.</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">Oracle DB의 경우 다음 password&#64;&lt;Oracle Net Service name&gt; 처럼 비밀번호를 설정하십시오.</p>
+</div>
+<p>이제 <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a>에서 <em class="guilabel">New Layer</em> 페이지로 이동해서 일반적인 방법으로 피처형을 추가할 수 있습니다.</p>
+</div>
+<div class="section" id="adding-an-arcsde-vector-data-store-with-jndi">
+<h2>Adding an ArcSDE vector data store with JNDI<a class="headerlink" href="#adding-an-arcsde-vector-data-store-with-jndi" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="configuring-an-arcsde-vector-data-store-with-jndi">
+<h2>Configuring an ArcSDE vector data store with JNDI<a class="headerlink" href="#configuring-an-arcsde-vector-data-store-with-jndi" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="adding-an-arcsde-raster-coveragestore">
+<h2>Adding an ArcSDE raster coveragestore<a class="headerlink" href="#adding-an-arcsde-raster-coveragestore" title="Permalink to this headline">¶</a></h2>
+<p>래스터 레이어(혹은 커버리지)를 서비스하려면 먼저 GeoServer에 ArcSDE 인스턴스를 데이터 저장소로 등록해야 합니다.
+<a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 <a class="reference internal" href="../../webadmin/data/stores.html#webadmin-stores"><em>저장소(Stores)</em></a>에서 <strong>Add new store</strong> 페이지로 이동하십시오.
+<em class="guilabel">Raster Data Sources</em> 목록에 <strong>ArcSDE Raster Format</strong> 옵션이 보일 것입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>Coverage Data Set Description</strong>의 드롭다운 메뉴에 <tt class="docutils literal"><span class="pre">ArcSDE Raster Format</span></tt>이 없다면 확장 모듈이 제대로 설치되지 않았다는 뜻입니다.
+이럴 경우 <a class="reference internal" href="#arcsde-install"><em>Installing the ArcSDE extension</em></a> 섹션을 참조하십시오.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/arcsderastercreate.png" src="../../_images/arcsderastercreate.png" />
+<p class="caption"><em>래스터 데이터 저장소 목록의 ArcSDE Raster 옵션</em></p>
+</div>
+</div>
+<div class="section" id="configuring-an-arcsde-raster-coveragestore">
+<h2>Configuring an ArcSDE raster coveragestore<a class="headerlink" href="#configuring-an-arcsde-raster-coveragestore" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">ArcSDE Raster</span></tt> 옵션을 클릭하면 ArcSDE 래스터 데이터 저장소를 설정할 수 있는 페이지가 표출됩니다.
+양식을 입력한 다음 <em class="guilabel">Save</em> 버튼을 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/arcsderasterconfigure.png" src="../../_images/arcsderasterconfigure.png" />
+<p class="caption"><em>새로운 ArcSDE 커버리지 저장소 설정하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="64%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Coverage</span> <span class="pre">Data</span> <span class="pre">Set</span> <span class="pre">ID</span></tt></td>
+<td>N/A</td>
+<td>이전 페이지에서 설정한 커버리지 저장소 명칭입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Enabled</span></tt></td>
+<td>N/A</td>
+<td>이 옵션을 체크하면 커버리지 저장소가 활성화되어 GeoServer가 사용할 수 있게 됩니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Namespace</span></tt></td>
+<td>Yes</td>
+<td>커버리지 저장소와 연결된 namespace입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Type</span></tt></td>
+<td>No</td>
+<td>커버리지 저장소의 형식입니다. <tt class="docutils literal"><span class="pre">ArcSDE Raster</span></tt>라는 초기값을 유지하십시오.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">URL</span></tt></td>
+<td>Yes</td>
+<td><tt class="docutils literal"><span class="pre">sde://&lt;user&gt;:&lt;pwd&gt;&#64;&lt;server&gt;/#&lt;tableName&gt;</span></tt> 과 같은 형식의 래스터 URL을 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Description</span></tt></td>
+<td>No</td>
+<td>커버리지 저장소에 대한 설명을 입력합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>이제 <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a>에서 <em class="guilabel">Add new layer</em> 페이지로 이동해서 일반적인 방법으로 커버리지를 추가할 수 있습니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="h2.html" title="previous chapter">H2</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="db2.html" title="next chapter">DB2</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">ArcSDE</a><ul>
+<li><a class="reference internal" href="#vector-support">Vector support</a></li>
+<li><a class="reference internal" href="#raster-support">Raster support</a></li>
+<li><a class="reference internal" href="#installing-the-arcsde-extension">Installing the ArcSDE extension</a><ul>
+<li><a class="reference internal" href="#geoserver-files">GeoServer files</a></li>
+<li><a class="reference internal" href="#required-external-files">Required external files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adding-an-arcsde-vector-data-store">Adding an ArcSDE vector data store</a></li>
+<li><a class="reference internal" href="#configuring-an-arcsde-vector-data-store">Configuring an ArcSDE vector data store</a></li>
+<li><a class="reference internal" href="#configuring-an-arcsde-vector-data-store-with-direct-connect">Configuring an ArcSDE vector data store with Direct Connect</a></li>
+<li><a class="reference internal" href="#adding-an-arcsde-vector-data-store-with-jndi">Adding an ArcSDE vector data store with JNDI</a></li>
+<li><a class="reference internal" href="#configuring-an-arcsde-vector-data-store-with-jndi">Configuring an ArcSDE vector data store with JNDI</a></li>
+<li><a class="reference internal" href="#adding-an-arcsde-raster-coveragestore">Adding an ArcSDE raster coveragestore</a></li>
+<li><a class="reference internal" href="#configuring-an-arcsde-raster-coveragestore">Configuring an ArcSDE raster coveragestore</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="h2.html" title="previous chapter">H2</a></li>
+            <li>다음: <a href="db2.html" title="next chapter">DB2</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/arcsde.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

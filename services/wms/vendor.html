@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WMS vendor parameters &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Map Service" href="index.html" />
+      <link rel="next" title="WMS configuration" href="configuration.html" />
+      <link rel="prev" title="WMS output formats" href="outputformats.html" />
+</head>
+<body class="services/wms/vendor">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Map Service</a> &raquo;</li>
+  <li>WMS vendor parameters</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="configuration.html" title="WMS configuration"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="outputformats.html" title="WMS output formats"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wms-vendor-parameters">
+<span id="id1"></span><h1>WMS vendor parameters<a class="headerlink" href="#wms-vendor-parameters" title="Permalink to this headline">¶</a></h1>
+<p>WMS 벤더(vendor) 파라미터는 강화된 역량을 제공하기 위해 정의된 비표준 요청 파라미터입니다.
+GeoServer는 벤더에 특화된 다양한 WMS 파라미터를 지원하고 있습니다.</p>
+<div class="section" id="angle">
+<h2>angle<a class="headerlink" href="#angle" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">angle</span></tt> 파라미터는 중심점을 기준으로 산출 맵을 시계방향으로 회전시킵니다.
+구문(syntax)은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>angle=&lt;x&gt;</pre>
+</div>
+<p>이때 <tt class="docutils literal"><span class="pre">&lt;x&gt;</span></tt>는 회전 각도를 나타냅니다.</p>
+<p>모든 래스터 포맷이 맵 회전을 지원하며, (기본값인) Batik 생산자(Batik producer)를 사용할 경우 PDF 및 SVG도 지원합니다.</p>
+</div>
+<div class="section" id="buffer">
+<h2>buffer<a class="headerlink" href="#buffer" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">GetMap</span></tt>과 <tt class="docutils literal"><span class="pre">GetFeatureInfo</span></tt> 작업에 쓰이는
+<tt class="docutils literal"><span class="pre">buffer</span></tt> 파라미터는 추가적인 경계선(border) 픽셀값을 설정합니다. 구문은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>buffer=&lt;bufferwidth&gt;</pre>
+</div>
+<p>이때 <tt class="docutils literal"><span class="pre">&lt;bufferwidth&gt;</span></tt>가 버퍼 폭의 픽셀값입니다.</p>
+<p><a class="reference internal" href="reference.html#wms-getmap"><em>GetMap</em></a> 작업 시,
+버퍼 작업은 요청 범위(bounding box) 바깥에 있지만 맵 영역 안에 보일 정도로 굵은 스타일이 적용된 피처도 포함합니다.</p>
+<p><a class="reference internal" href="reference.html#wms-getfeatureinfo"><em>GetFeatureInfo</em></a> 작업 시,
+버퍼 작업이 요청한 위치 주위에 &#8220;검색 반경(search radius)&#8221;을 생성하고, 이 검색 영역과 교차(intersect)하는 피처의 정보를 반환합니다.
+이 기능은 (<a class="reference internal" href="../../webadmin/layerpreview/index.html#layerpreview"><em>Layer Preview</em></a> 페이지에서 생성한 것과 같은) OpenLayers 맵을 작업할 경우 유용합니다.
+적합한 피처의 정보를 반환받기 위해 정확한 포인트를 클릭해야 하는 수고를 줄여주기 때문입니다.</p>
+<p>이 두 작업을 실행할 경우 GeoServer는 각 레이어에 적용된 스타일을 검사해서 자동적으로 <tt class="docutils literal"><span class="pre">buffer</span></tt> 값을 계산하려 하는데,
+활성화된 모든 심볼라이저를 평가해서 (가장 큰 포인트 심볼라이저나 가장 굵은 라인 심볼라이저 등) 가장 큰 크기의 심볼라이저를 이용해서 계산합니다.
+다음과 같은 경우 자동 버퍼 계산을 할 수 없습니다.</p>
+<ul class="simple">
+<li>SLD가 피처 속성값으로 설정된 크기(size)를 담고 있는 경우</li>
+<li>SLD가 그 크기를 명확하게 설정하지 않은 외부 그래픽을 담고 있는 경우</li>
+</ul>
+<p>이런 경우에는 다음 기본값을 이용합니다.</p>
+<ul class="simple">
+<li><a class="reference internal" href="reference.html#wms-getmap"><em>GetMap</em></a> 요청의 경우 0픽셀</li>
+<li><a class="reference internal" href="reference.html#wms-getfeatureinfo"><em>GetFeatureInfo</em></a> 요청의 경우 2픽셀</li>
+</ul>
+<p>기본 픽셀값이 충분히 크지 않은 경우 좀 더 명확한 파라미터를 이용할 수 있습니다.</p>
+</div>
+<div class="section" id="cql-filter">
+<h2>cql_filter<a class="headerlink" href="#cql-filter" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">cql_filter</span></tt> 파라미터는 표준 <tt class="docutils literal"><span class="pre">filter</span></tt> 파라미터와 유사하지만,
+ECQL(Extended Common Query Language)을 써서 필터를 표현합니다. ECQL은 OGC의 XML 필터보다 더 간략하고 가독성이 높은 구문을 제공합니다.
+전체 문법을 알고 싶다면 <a class="reference internal" href="../../filter/ecql_reference.html#filter-ecql-reference"><em>ECQL Reference</em></a> 및
+<a class="reference internal" href="../../tutorials/cql/cql_tutorial.html#cql-tutorial"><em>CQL and ECQL</em></a> 예제를 참조하십시오.</p>
+<p><tt class="docutils literal"><span class="pre">layers</span></tt> 파라미터가 하나 이상의 레이어를 설정하고 있을 경우 각 레이어에 대해 쌍반점(semicolon)으로 구분한 개별 필터를 설정할 수 있습니다.
+구문은 다음과 같습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cql_filter</span><span class="o">=</span><span class="n">filter1</span><span class="p">;</span><span class="n">filter2</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>다음은 간단한 CQL 필터의 예시입니다.</p>
+<div class="highlight-python"><pre>cql_filter=INTERSECT(the_geom,%20POINT%20(-74.817265%2040.5296504))</pre>
+</div>
+</div>
+<div class="section" id="env">
+<h2>env<a class="headerlink" href="#env" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">env</span></tt> 파라미터는 SLD 변수 대입(substitution)에 쓰이는 대입 값의 집합을 정의합니다.
+구문은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>env=param1:value1;param2:value2;...</pre>
+</div>
+<p>자세한 정보를 알고 싶다면 <a class="reference internal" href="../../styling/sld-extensions/substitution.html#sld-variable-substitution"><em>Variable substitution in SLD</em></a>를 참조하십시오.</p>
+</div>
+<div class="section" id="featureid">
+<h2>featureid<a class="headerlink" href="#featureid" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">featureid</span></tt> 파라미터는 모든 피처에 부여된 유일한 값인 피처 ID로 피처를 필터링합니다.
+피처 ID를 다음과 같이 쉼표로 구분해서 복수의 피처를 선별할 수 있습니다.</p>
+<div class="highlight-python"><pre>featureid=states.1,states.45</pre>
+</div>
+</div>
+<div class="section" id="filter">
+<h2>filter<a class="headerlink" href="#filter" title="Permalink to this headline">¶</a></h2>
+<p>WMS 사양은 데이터에 대해 제한된 필터링만을 허용합니다. GeoServer는 WFS가 제공하는 기능에 맞추기 위해 WMS 필터 역량을 강화하고 있습니다.
+<tt class="docutils literal"><span class="pre">filter</span></tt> 파라미터로 OGC의 XML 필터 목록을 설정할 수 있습니다.
+이 목록을 <strong>( )</strong> 괄호로 둘러쌓야 합니다. GET 요청에 사용할 경우 XML 태그 괄호 &lt; &gt;를 URL 코드화해야 합니다.</p>
+<p><tt class="docutils literal"><span class="pre">layers</span></tt> 파라미터에서 하나 이상의 레이어를 설정한 경우 각 레이어에 대해 개별 필터를 설정할 수 있습니다.</p>
+<p>다음은 GET 요청에 코드화된 OGC 필터의 예시입니다.</p>
+<div class="highlight-python"><pre>filter=%3CFilter%20xmlns:gml=%22http://www.opengis.net/gml%22%3E%3CIntersects%3E%3CPropertyName%3Ethe_geom%3C/PropertyName%3E%3Cgml:Point%20srsName=%224326%22%3E%3Cgml:coordinates%3E-74.817265,40.5296504%3C/gml:coordinates%3E%3C/gml:Point%3E%3C/Intersects%3E%3C/Filter%3E</pre>
+</div>
+</div>
+<div class="section" id="format-options">
+<h2>format_options<a class="headerlink" href="#format-options" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">format_options</span></tt>는 형식에 특화된(format-specific) 파라미터를 위한 컨테이너입니다.
+구문은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>format_options=param1:value1;param2:value2;...</pre>
+</div>
+<p>다음 형식 옵션을 지원합니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">antialiasing</span></tt> (값: <tt class="docutils literal"><span class="pre">on</span></tt>, <tt class="docutils literal"><span class="pre">off</span></tt>, <tt class="docutils literal"><span class="pre">text</span></tt>)
+&mdash;래스터 산출물에 쓰이는 앤티에일리어싱 렌더링을 제어합니다.</li>
+<li><tt class="docutils literal"><span class="pre">callback</span></tt> &mdash;JSONP 응답 형식에 대한 콜백 함수명을 설정합니다.
+(기본값은 <tt class="docutils literal"><span class="pre">parseResponse</span></tt>입니다.)</li>
+<li><tt class="docutils literal"><span class="pre">dpi</span></tt> &mdash;래스터 산출물의 렌더링 DPI(dots-per-inch)를 설정합니다. OGC 표준 산출물 해상도는 90 DPI입니다.
+프린트 작업 등을 위해 더 높은 해상도의 이미지를 생성해야 할 경우 더 큰 이미지를 요청하고 더 높은 DPI를 설정하는 것이 좋습니다.
+보통 이미지 크기는 <tt class="docutils literal"><span class="pre">targetDPI/90</span></tt>과 동일한 인자(factor)를 기준으로 형식 옵션에 설정된 목표 DPI에 따라 커져야 합니다.
+예를 들어 100x100픽셀 크기의 이미지를 300 DPI로 출력하려면, 다음과 같이 DPI값을 300으로 설정해서 333x333 크기의 이미지를 요청하십시오.
+<tt class="docutils literal"><span class="pre">&amp;width=333&amp;height=333&amp;format_options=dpi:300</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">layout</span></tt> &mdash;사용할 레이아웃명을 설정합니다. 레이아웃은 나침반이나 범례와 같은 장식을 추가하는 데 쓰입니다.
+<a class="reference internal" href="../../advanced/wmsdecoration.html#wms-decorations"><em>WMS Decorations</em></a> 섹션에서 이 기능을 자세히 설명하고 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">quantizer</span></tt> (값: <tt class="docutils literal"><span class="pre">octree</span></tt>, <tt class="docutils literal"><span class="pre">mediancut</span></tt>)
+&mdash;PNG8 이미지를 생산하는 데 쓰이는 색상 양자기(color quantizer)를 제어합니다.
+GeoServer 2.2.0 버전부터, 빠르지만 투명도를 처리하지 못 하는 <tt class="docutils literal"><span class="pre">octree</span></tt>라는 RGB 양자기와
+조금 느리지만 더 엄밀한 <tt class="docutils literal"><span class="pre">mediancut</span></tt>이라는 RGBA 양자기를 지원하고 있습니다.
+기본적으로 불투명 이미지에 대해 전자를 사용하고, 클라이언트가 <tt class="docutils literal"><span class="pre">transparent=true</span></tt> 파라미터로 투명 이미지를 요청할 경우 후자를 활성화합니다.
+사용자가 직접 특정 양자기를 강제로 사용하기 위해 이 벤더 파라미터를 이용할 수도 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">kmattr</span></tt> (값: <tt class="docutils literal"><span class="pre">true</span></tt>, <tt class="docutils literal"><span class="pre">false</span></tt>)
+&mdash;GeoServer가 반환하는 KML이 클릭할 수 있는 속성을 포함할지 결정합니다. 이 파라미터는 구글어스(Google Earth) 렌더링에 주로 영향을 미칩니다.</li>
+<li><tt class="docutils literal"><span class="pre">legend</span></tt> (값: <tt class="docutils literal"><span class="pre">true</span></tt>, <tt class="docutils literal"><span class="pre">false</span></tt>)
+&mdash;KML이 범례를 추가할 수도 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">kmscore</span></tt> (값: 래스터 산출물을 강제하는 <tt class="docutils literal"><span class="pre">0</span></tt>과 벡터 산출물을 강제하는 <tt class="docutils literal"><span class="pre">100</span></tt> 사이)
+&mdash;GeoServer가 KML 데이터를 벡터로 렌더링할지 래스터로 렌더링할지 설정하는 파라미터입니다. 이 파라미터는 구글어스(Google Earth) 렌더링에 주로 영향을 미칩니다.</li>
+<li><tt class="docutils literal"><span class="pre">kmltitle</span></tt> &mdash;이 파라미터는 KML의 제목(title)을 설정합니다.</li>
+</ul>
+</div>
+<div class="section" id="maxfeatures-and-startindex">
+<h2>maxFeatures and startIndex<a class="headerlink" href="#maxfeatures-and-startindex" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">maxFeatures</span></tt>와 <tt class="docutils literal"><span class="pre">startIndex</span></tt> 파라미터를 함께 사용하면 &#8220;페이징(paging)&#8221;을 지원할 수 있습니다.
+페이징은 피처의 개수가 많아 맵을 부분별로 받아올 수 있는 KML 크롤링(crawling)과 같은 기능이 적합한 상황에 유용합니다.</p>
+<p><tt class="docutils literal"><span class="pre">startindex=n</span></tt> 파라미터가 순서대로 정리된 피처 목록에서 렌더링을 시작할 인덱스(index)를 설정합니다.
+<tt class="docutils literal"><span class="pre">n</span></tt>은 자연수여야 합니다.</p>
+<p><tt class="docutils literal"><span class="pre">maxfeatures=n</span></tt> 파라미터가 렌더링할 피처의 개수를 제한합니다.
+<tt class="docutils literal"><span class="pre">n</span></tt>은 자연수여야 합니다.
+<tt class="docutils literal"><span class="pre">startindex</span></tt> 파라미터와 함께 사용할 경우, <tt class="docutils literal"><span class="pre">startindex</span></tt> 값의 피처부터 렌더링을 시작합니다.</p>
+<p>모든 레이어가 페이징을 지원하지는 않는다는 점을 유의하십시오. 레이어가 페이징을 지원하려면 기저 피처 소스가 페이징을 지원해야 합니다. 보통 PostGIS 같은 데이터베이스가 페이징을 지원합니다.</p>
+</div>
+<div class="section" id="namespace">
+<h2>namespace<a class="headerlink" href="#namespace" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">namespace</span></tt> 파라미터는 WMS가 특정 명칭공간에 속한 레이어만 필터링한
+<a class="reference internal" href="reference.html#wms-getcap"><em>GetCapabilities</em></a> 응답을 반환하도록 합니다.
+구문은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>namespace=&lt;namespace&gt;</pre>
+</div>
+<p>이때 <tt class="docutils literal"><span class="pre">&lt;namespace&gt;</span></tt> 자리에 명칭공간의 접두사(prefix)를 입력합니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">유효하지 않은 명칭공간 접두사를 써도 오류가 발생하지는 않지만 반환된 역량 문서에 레이어 그룹만 담길 뿐 레이어는 하나도 담기지 않습니다.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 파라미터는 역량 문서에만 영향을 미칠 뿐 다른 요청과는 관계가 없습니다. 다른 WMS 작업은 명칭공간을 설정하더라도 모든 레이어를 처리할 것입니다.</p>
+</div>
+</div>
+<div class="section" id="palette">
+<h2>palette<a class="headerlink" href="#palette" title="Permalink to this headline">¶</a></h2>
+<p>반환되는 맵의 비트 심도(bit depth)를 (속도 및 대역폭을 위해) 다운샘플링하는 편이 좋은 경우가 가끔 있습니다.
+이렇게 하려면 제한된 색상표(color palette)로 이미지를 생성해서 GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pre">palettes</span></tt> 디렉터리에 저장한 다음,
+다음과 같은 형태의 <tt class="docutils literal"><span class="pre">palette</span></tt> 파라미터를 설정할 수 있습니다.</p>
+<div class="highlight-python"><pre>palette=&lt;image&gt;</pre>
+</div>
+<p>이때 <tt class="docutils literal"><span class="pre">&lt;image&gt;</span></tt>는 (확장자를 뺀) 색상표 이미지의 파일명입니다.
+시스템 독립적인 웹 색상표(web-safe palette)를 강제하려면 <tt class="docutils literal"><span class="pre">palette=safe</span></tt> 구문을 사용하십시오.
+더 자세한 정보를 알고 싶다면 <a class="reference internal" href="../../tutorials/palettedimage/palettedimage.html#tutorials-palettedimages"><em>Paletted Images</em></a>페이지의 예제를 참조하십시오.</p>
+</div>
+<div class="section" id="propertyname">
+<h2>propertyName<a class="headerlink" href="#propertyname" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">propertyName</span></tt> 파라미터를 통해 <tt class="docutils literal"><span class="pre">GetFeatureInfo</span></tt> 작업의 응답에 어떤 속성을 담을 것인지 설정합니다.
+WFS의 <tt class="docutils literal"><span class="pre">GetFeature</span></tt> 작업과 동일한 구문을 사용합니다.
+단일 레이어를 요청하는 경우의 구문은 다음과 같습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">propertyName</span><span class="o">=</span><span class="n">name1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">nameN</span>
+</pre></div>
+</div>
+<p>복수의 레이어를 요청하는 경우의 구문은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>propertyName=(nameLayer11,...,nameLayer1N)...(name1LayerN,...,nameNLayerN)</pre>
+</div>
+<p>속성의 유형은 레이어 종류에 따라 달라집니다.</p>
+<ul class="simple">
+<li>벡터 레이어의 경우 <tt class="docutils literal"><span class="pre">propertyName</span></tt>은 피처 속성을 설정합니다.</li>
+<li>래스터 레이어의 경우 <tt class="docutils literal"><span class="pre">propertyName</span></tt>은 밴드를 설정합니다.</li>
+<li>종속(cascaded) WMS 레이어의 경우 <tt class="docutils literal"><span class="pre">propertyName</span></tt>은 원격 서버가 반환할 GML 속성을 설정합니다.</li>
+</ul>
+</div>
+<div class="section" id="tiled">
+<h2>tiled<a class="headerlink" href="#tiled" title="Permalink to this headline">¶</a></h2>
+<p>메타 타일 작업(meta-tiling)은 OpenLayers 같은 타일 클라이언트 사용 시 레이블이 복제되는 문제를 예방합니다.
+메타 타일 작업을 하면, 이미지를 서비스하기 전에 렌더링해서 작은 타일들(기본적으로 3x3 패턴)로 나눕니다.
+메타 타일 작업이 성공하려면 타일 크기를 <em>반드시</em> 256x256 픽셀로 설정하고,
+<tt class="docutils literal"><span class="pre">tiled</span></tt> 및 <tt class="docutils literal"><span class="pre">tilesorigin</span></tt> 파라미터를 설정해야 합니다.</p>
+<p><tt class="docutils literal"><span class="pre">tiled</span></tt> 파라미터는 메타 타일 작업을 할 것인지 제어합니다. 구문은 다음과 같습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tiled</span><span class="o">=</span><span class="p">[</span><span class="n">yes</span><span class="o">|</span><span class="n">no</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>메타 타일 작업을 호출하려면 <tt class="docutils literal"><span class="pre">tiled=yes</span></tt> 구문을 사용하십시오.</p>
+</div>
+<div class="section" id="tilesorigin">
+<h2>tilesorigin<a class="headerlink" href="#tilesorigin" title="Permalink to this headline">¶</a></h2>
+<p>메타 타일 작업을 하려면 <tt class="docutils literal"><span class="pre">tilesorigin</span></tt> 파라미터도 필요합니다. 구문은 다음과 같습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tilesorigin</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>이때 <tt class="docutils literal"><span class="pre">x</span></tt>와 <tt class="docutils literal"><span class="pre">y</span></tt>는 타일 그리드 시스템의 좌하단(&#8220;시작점(origin)&#8221;)의 좌표를 나타냅니다.</p>
+<div class="section" id="openlayers-example">
+<h3>OpenLayers example<a class="headerlink" href="#openlayers-example" title="Permalink to this headline">¶</a></h3>
+<p>OpenLayers의 경우, <tt class="docutils literal"><span class="pre">tilesorigin</span></tt>을 설정하려면 맵 크기(extent)를 직접 참조하는 것이 좋습니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">맵 크기를 동적으로 변경하는 경우 메타 타일 작업을 한 각 레이어의 <tt class="docutils literal"><span class="pre">tilesorigin</span></tt>도 각각 업데이트해야 합니다.</p>
+</div>
+<p>다음은 메타 타일 작업 파라미터를 어떻게 설정하는지 보여주는 코드입니다.</p>
+<div class="highlight-javascript"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre> <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="p">...</span>
+     <span class="nx">maxExtent</span><span class="o">:</span> <span class="k">new</span> <span class="nx">OpenLayers</span><span class="p">.</span><span class="nx">Bounds</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
+     <span class="p">...</span>
+ <span class="p">};</span>
+ <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">OpenLayers</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="s1">&#39;map&#39;</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+
+ <span class="nx">tiled</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">OpenLayers</span><span class="p">.</span><span class="nx">Layer</span><span class="p">.</span><span class="nx">WMS</span><span class="p">(</span>
+     <span class="s2">&quot;Layer name&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8080/geoserver/wms&quot;</span><span class="p">,</span>
+     <span class="p">{</span>
+         <span class="nx">srs</span><span class="o">:</span> <span class="s1">&#39;EPSG:4326&#39;</span><span class="p">,</span>
+         <span class="nx">width</span><span class="o">:</span> <span class="mi">391</span><span class="p">,</span>
+         <span class="nx">styles</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+         <span class="nx">height</span><span class="o">:</span> <span class="mi">550</span><span class="p">,</span>
+         <span class="nx">layers</span><span class="o">:</span> <span class="s1">&#39;layerName&#39;</span><span class="p">,</span>
+         <span class="nx">format</span><span class="o">:</span> <span class="s1">&#39;image/png&#39;</span><span class="p">,</span>
+         <span class="nx">tiled</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+         <span class="nx">tilesorigin</span><span class="o">:</span> <span class="p">[</span><span class="nx">map</span><span class="p">.</span><span class="nx">maxExtent</span><span class="p">.</span><span class="nx">left</span><span class="p">,</span> <span class="nx">map</span><span class="p">.</span><span class="nx">maxExtent</span><span class="p">.</span><span class="nx">bottom</span><span class="p">]</span>
+     <span class="p">},</span>
+     <span class="p">{</span><span class="nx">buffer</span><span class="o">:</span> <span class="mi">0</span><span class="p">}</span>
+ <span class="p">);</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="outputformats.html" title="previous chapter">WMS output formats</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="configuration.html" title="next chapter">WMS configuration</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WMS vendor parameters</a><ul>
+<li><a class="reference internal" href="#angle">angle</a></li>
+<li><a class="reference internal" href="#buffer">buffer</a></li>
+<li><a class="reference internal" href="#cql-filter">cql_filter</a></li>
+<li><a class="reference internal" href="#env">env</a></li>
+<li><a class="reference internal" href="#featureid">featureid</a></li>
+<li><a class="reference internal" href="#filter">filter</a></li>
+<li><a class="reference internal" href="#format-options">format_options</a></li>
+<li><a class="reference internal" href="#maxfeatures-and-startindex">maxFeatures and startIndex</a></li>
+<li><a class="reference internal" href="#namespace">namespace</a></li>
+<li><a class="reference internal" href="#palette">palette</a></li>
+<li><a class="reference internal" href="#propertyname">propertyName</a></li>
+<li><a class="reference internal" href="#tiled">tiled</a></li>
+<li><a class="reference internal" href="#tilesorigin">tilesorigin</a><ul>
+<li><a class="reference internal" href="#openlayers-example">OpenLayers example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="outputformats.html" title="previous chapter">WMS output formats</a></li>
+            <li>다음: <a href="configuration.html" title="next chapter">WMS configuration</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wms/vendor.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

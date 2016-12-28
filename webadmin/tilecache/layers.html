@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Tile Layers &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Tile Caching" href="index.html" />
+      <link rel="next" title="Demo page" href="demopage.html" />
+      <link rel="prev" title="Tile Caching" href="index.html" />
+</head>
+<body class="webadmin/tilecache/layers">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Tile Caching</a> &raquo;</li>
+  <li>Tile Layers</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="demopage.html" title="Demo page"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Tile Caching"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="tile-layers">
+<span id="webadmin-tilecaching-layers"></span><h1>Tile Layers<a class="headerlink" href="#tile-layers" title="Permalink to this headline">¶</a></h1>
+<p>이 페이지에서 통합 GeoWebCache가 다룰 수 있는 모든 레이어의 목록을 제시합니다.
+GeoWebCache의 경우 <a class="reference internal" href="../layerpreview/index.html#layerpreview"><em>Layer Preview</em></a> 페이지와 많은 옵션이 일치합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/tilelayers.png" src="../../_images/tilelayers.png" />
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><cite>GeoWebCache 데모 단독 실행 페이지인 &lt;webadmin_tilecaching_demopage&gt;</cite> 로 연결되는 링크도 있습니다.</p>
+</div>
+<div class="section" id="layer-information">
+<h2>Layer information<a class="headerlink" href="#layer-information" title="Permalink to this headline">¶</a></h2>
+<p>GeoWebCache는 레이어를 캐시할 때마다 다음 정보를 추가합니다.</p>
+<div class="section" id="disk-quota">
+<h3>Disk Quota<a class="headerlink" href="#disk-quota" title="Permalink to this headline">¶</a></h3>
+<p>해당 레이어를 위해 쓸 수 있는 최대 디스크 용량입니다.
+<a class="reference internal" href="diskquotas.html#webadmin-tilecaching-diskquotas"><em>Disk Quotas</em></a>가 활성화되지 않았다면, 이 값은 기본적으로 <em class="guilabel">N/A</em>(무제한)으로 설정되어 있습니다.</p>
+</div>
+<div class="section" id="disk-used">
+<h3>Disk Used<a class="headerlink" href="#disk-used" title="Permalink to this headline">¶</a></h3>
+<p>해당 레이어를 구성하는 타일이 현재 사용하고 있는 디스크 용량입니다.</p>
+</div>
+<div class="section" id="enabled">
+<h3>Enabled<a class="headerlink" href="#enabled" title="Permalink to this headline">¶</a></h3>
+<p>해당 레이어가 타일 캐싱을 사용할 수 있는지 나타냅니다. 레이어를 정의했지만 타일 캐싱을 활성화하지 않는 경우(Layer Properties에서 설정)도 가능합니다.</p>
+</div>
+<div class="section" id="preview">
+<h3>Preview<a class="headerlink" href="#preview" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../layerpreview/index.html#layerpreview"><em>Layer Preview</em></a>처럼, 이 옵션은 사용 가능한 그리드셋/이미지 포맷 조합 가운데에서 나온 타일들로 채워진 간단한 OpenLayers 미리 보기 창을 생성합니다.
+OpenLayers에서 레이어를 보려면 메뉴에서 원하는 옵션을 선택하십시오.</p>
+</div>
+<div class="section" id="seed-truncate">
+<h3>Seed/Truncate<a class="headerlink" href="#seed-truncate" title="Permalink to this headline">¶</a></h3>
+<p>GeoWebCache 페이지를 열어 타일 캐시를 자동적으로 시드(seed)하고 정리(truncate)합니다. 사용자 캐시의 일부를 미리 채우고 싶을 때 사용하십시오.</p>
+</div>
+<div class="section" id="empty">
+<h3>Empty<a class="headerlink" href="#empty" title="Permalink to this headline">¶</a></h3>
+<p>저장된 모든 타일을 캐시에서 제거합니다. 레이어를 완전히 정리(full truncate)하는 작업과 동일합니다.</p>
+</div>
+</div>
+<div class="section" id="add-or-remove-cached-layers">
+<h2>Add or remove cached layers<a class="headerlink" href="#add-or-remove-cached-layers" title="Permalink to this headline">¶</a></h2>
+<p>이 페이지에 표출되는 레이어 목록은 일반적으로 GeoServer에 등록된 모든 레이어의 목록과 동일하거나 거의 같습니다.
+그러나 GeoServer가 생산한 모든 레이어를 레이어 컴포넌트(component)로 캐시하는 것은 바람직하지 않습니다.
+이 경우, 제거할 레이어 옆의 체크박스를 선택하고 <em class="guilabel">Remove selected cached layers</em> 링크를 클릭하십시오.
+선택한 레이어가 GeoWebCache에서 제거되고 해당 레이어의 디스크 캐시는 완전히 삭제될 것입니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">타일 캐시를 제거하면 되살릴 수 없습니다.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/removecachedlayers.png" src="../../_images/removecachedlayers.png" />
+<p class="caption"><em>캐시된 레이어를 제거하기</em></p>
+</div>
+<p>(레이어를 자동적으로 추가하도록 설정하지 않은 경우) GeoServer에서 레이어를 추가하려면 <em class="guilabel">Add a new cached layer</em> 링크를 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/newcachedlayer.png" src="../../_images/newcachedlayer.png" />
+<p class="caption"><em>새로운 레이어를 캐시하기</em></p>
+</div>
+<p>레이어 설정을 위해 2가지 옵션이 존재합니다. 첫번째는 기본 (일반적인) 설정을 사용해서 레이어를 로드하는 옵션입니다.
+이 옵션을 실행하려면 캐시 작업을 시작하고자 하는 레이어를 선택한 다음 <em class="guilabel">Configure selected layers with caching defaults</em> 링크를 클릭하십시오.
+두번째는 <a class="reference internal" href="../data/layers.html#webadmin-layers"><em>layer configuration</em></a> 페이지에서 캐시 작업 파라미터를 수동으로 설정하는 옵션입니다.
+이 옵션을 실행하려면 레이어명을 클릭하면 됩니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Tile Caching</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="demopage.html" title="next chapter">Demo page</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Tile Layers</a><ul>
+<li><a class="reference internal" href="#layer-information">Layer information</a><ul>
+<li><a class="reference internal" href="#disk-quota">Disk Quota</a></li>
+<li><a class="reference internal" href="#disk-used">Disk Used</a></li>
+<li><a class="reference internal" href="#enabled">Enabled</a></li>
+<li><a class="reference internal" href="#preview">Preview</a></li>
+<li><a class="reference internal" href="#seed-truncate">Seed/Truncate</a></li>
+<li><a class="reference internal" href="#empty">Empty</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#add-or-remove-cached-layers">Add or remove cached layers</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Tile Caching</a></li>
+            <li>다음: <a href="demopage.html" title="next chapter">Demo page</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/tilecache/layers.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

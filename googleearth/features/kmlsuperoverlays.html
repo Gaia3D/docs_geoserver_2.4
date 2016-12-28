@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>KML Super-Overlays &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Features" href="index.html" />
+      <link rel="next" title="KML Regionation" href="kmlregionation.html" />
+      <link rel="prev" title="Filters" href="filters.html" />
+</head>
+<body class="googleearth/features/kmlsuperoverlays">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Google Earth</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Features</a> &raquo;</li>
+  <li>KML Super-Overlays</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="kmlregionation.html" title="KML Regionation"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="filters.html" title="Filters"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="kml-super-overlays">
+<span id="ge-feature-kml-super-overlays"></span><h1>KML Super-Overlays<a class="headerlink" href="#kml-super-overlays" title="Permalink to this headline">¶</a></h1>
+<p>수퍼오버레이(super-overlay)는 데이터를 지역(region)으로 분할한 KML 형태로, Google 어스의 뷰(view) 영역을 변경할 경우 특정 지역만 새로고침/요청(refresh/request)할 수 있게 해줍니다.
+대용량 데이터셋을 효과적으로 서비스하기 위해 수퍼오버레이를 사용합니다.
+(자세한 내용은 <a class="reference external" href="http://code.google.com/apis/kml/documentation/kml_21tutorial.html#superoverlays">수퍼오버레이에 대한 Google 페이지</a>를 참조하십시오.)</p>
+<p>GeoServer는 <strong>래스터(raster)</strong>와 <strong>벡터(vector)</strong>, 2가지 종류의 수퍼오버레이를 지원합니다.
+래스터 수퍼오버레이의 경우, 줌 레벨이 변경될 때마다 GeoServer가 지능적으로 현재 줌 레벨에 적합한 화상을 생산해서 동적으로 새로운 화상을 산출합니다.
+벡터 수퍼오버레이의 경우, 뷰에 보이는 피처에 대해서만 피처 데이터를 요청해서 필요한대로 새로운 피처를 동적으로 읽어들입니다.
+래스터 수퍼오버레이가 클라이언트 상에서 리소스를 덜 소모하지만, 산출물의 질은 벡터 수퍼오버레이 쪽이 더 좋습니다.</p>
+<p><a class="reference internal" href="kmlreflector.html#ge-feature-kml-reflector"><em>KML 반영자(reflector)</em></a>를 사용하는 경우 요청 데이터가 벡터든 래스터든 기본적으로 수퍼오버레이가 활성화됩니다.
+KML 수퍼오버레이 산출물에 대한 다양한 옵션을 더 자세히 알고 싶다면 <a class="reference internal" href="kmlreflector.html#ge-feature-kml-reflector"><em>KML Reflector</em></a> 페이지를 참조하십시오.</p>
+<div class="section" id="raster-super-overlays">
+<h2>Raster Super-Overlays<a class="headerlink" href="#raster-super-overlays" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer가 생산한 이미지가 있다고 할 때, 줌아웃하면 데이터의 크기는 작아집니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/tile0small.png" src="../../_images/tile0small.png" />
+</div>
+<p>줌인하면 이미지의 크기는 커지지만 (원래 작게 보이도록 생산되었기 때문에) 해상도가 낮으므로 질이 떨어집니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/tile0.png" src="../../_images/tile0.png" />
+</div>
+<p>그러나 수퍼오버레이를 사용하고 있다면 KML 문서가 GeoServer에 해당 줌 레벨에 맞는 새로운 고해상도 이미지를 요청합니다. 새로운 이미지를 다운로드하면 기존 이미지를 새 이미지로 교체합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/tile4.png" src="../../_images/tile4.png" />
+</div>
+</div>
+<div class="section" id="raster-super-overlays-and-geowebcache">
+<h2>Raster Super-Overlays and GeoWebCache<a class="headerlink" href="#raster-super-overlays-and-geowebcache" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 WMS 타일 작업 클라이언트 권고(WMS Tiling Client Recommendation)와 호환되는 방식으로 수퍼오버레이를 실행합니다.
+수퍼오버레이의 타일이 WMS 타일 작업 클라이언트가 요청하는 타일과 동일하도록 수퍼오버레이를 생산합니다.
+따라서 기존 타일 캐시 작업(tile caching) 메커니즘을 이용해서 대단한 속도 향상을 이룰 수도 있습니다.</p>
+<p>래스터 수퍼오버레이를 타일 캐시하는 가장 쉬운 방법은 다음과 같이 GeoServer에 내장된 GeoWebCache를 이용하는 것입니다.</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/gwc/service/kml/&lt;layername&gt;.&lt;imageformat&gt;.kmz</pre>
+</div>
+<p>이때 <tt class="docutils literal"><span class="pre">GEOSERVER_URL</span></tt>은 사용자 GeoServer 인스턴스의 URL입니다.</p>
+</div>
+<div class="section" id="vector-super-overlays">
+<h2>Vector Super-Overlays<a class="headerlink" href="#vector-super-overlays" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer가 KML 문서 안에 피처 정보를 직접 포함시킬 수 있습니다. 이렇게 하는 데 많은 장점이 있습니다.
+사용자가 피처를 선택(클릭)해서 설명(description)을 볼 수도 있고, 개별 피처의 표출을 켰다 껐다 할 수도 있으며, 줌 레벨에 상관없이 더 낳은 렌더링 결과를 볼 수 있습니다.
+그러나 대용량 데이터셋의 경우 피처 정보를 다운로드하는 데 많은 시간이 걸릴 수 있으며 클라이언트 쪽의 리소스를 많이 소모하게 됩니다.
+벡터 수퍼오버레이를 사용하면 클라이언트가 데이터셋의 일부분만 다운로드할 수 있어서 필요한 만큼 더 많은 피처를 요청할 수 있습니다.</p>
+<p>벡터 수퍼오버레이는 위계(hierarchy)적으로 피처들을 조직하기 위해 <a class="reference internal" href="kmlregionation.html#ge-feature-kml-regionation"><em>KML 지역화(regionation)</em></a> 처리 과정을 이용할 수 있습니다.
+이때 지역화 처리 과정을 다양한 모드로 실행할 수 있습니다.
+대부분의 모드는 특정 줌 레벨에서 어떤 피처를 표출하고 어떤 피처를 표출하지 않을지를 결정하는 데 쓰이는 &#8220;지역화 속성(regionation attribute)&#8221;을 필요로 합니다.
+더 자세한 내용은 <a class="reference internal" href="kmlregionation.html#ge-feature-kml-regionation"><em>KML Regionation</em></a> 페이지를 참조하십시오.</p>
+</div>
+<div class="section" id="vector-super-overlays-and-geowebcache">
+<h2>Vector Super-Overlays and GeoWebCache<a class="headerlink" href="#vector-super-overlays-and-geowebcache" title="Permalink to this headline">¶</a></h2>
+<p>래스터 수퍼오버레이와 마찬가지로, GeoWebCache를 이용해서 벡터 수퍼오버레이를 캐시할 수 있습니다. 다음은 GeoWebCache를 통해 벡터 수퍼오버레이 KML 문서를 생산하는 구문(syntax)입니다.</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/gwc/service/kml/&lt;layername&gt;.kml.kmz</pre>
+</div>
+<p>이때 <tt class="docutils literal"><span class="pre">GEOSERVER_URL</span></tt>은 사용자 GeoServer 인스턴스의 URL입니다.</p>
+<p>표준 <a class="reference internal" href="kmlreflector.html#ge-feature-kml-reflector"><em>KML 반영자</em></a>로 수퍼오버레이를 생상하는 것과 달리, URL 안에 지역화 속성을 설정할 수 없습니다.
+<a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>레이어</em></a> 설정에서 이 파라미터들을 설정해줘야 합니다.
+웹 관리자 인터페이스의 왼쪽 사이드 메뉴에서 &#8216;Layers&#8217;를 클릭한 다음 원하는 벡터 레이어를 선택하십시오.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="filters.html" title="previous chapter">Filters</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="kmlregionation.html" title="next chapter">KML Regionation</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">KML Super-Overlays</a><ul>
+<li><a class="reference internal" href="#raster-super-overlays">Raster Super-Overlays</a></li>
+<li><a class="reference internal" href="#raster-super-overlays-and-geowebcache">Raster Super-Overlays and GeoWebCache</a></li>
+<li><a class="reference internal" href="#vector-super-overlays">Vector Super-Overlays</a></li>
+<li><a class="reference internal" href="#vector-super-overlays-and-geowebcache">Vector Super-Overlays and GeoWebCache</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="filters.html" title="previous chapter">Filters</a></li>
+            <li>다음: <a href="kmlregionation.html" title="next chapter">KML Regionation</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/googleearth/features/kmlsuperoverlays.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

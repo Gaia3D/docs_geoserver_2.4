@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Styling mixed geometry types &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="SLD Tips and Tricks" href="index.html" />
+      <link rel="next" title="Styling using Transformation Functions" href="transformation-func.html" />
+      <link rel="prev" title="SLD Tips and Tricks" href="index.html" />
+</head>
+<body class="styling/sld-tipstricks/mixed-geometries">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Styling</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">SLD Tips and Tricks</a> &raquo;</li>
+  <li>Styling mixed geometry types</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="transformation-func.html" title="Styling using Transformation Functions"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="SLD Tips and Tricks"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="styling-mixed-geometry-types">
+<span id="mixed-geometries"></span><h1>Styling mixed geometry types<a class="headerlink" href="#styling-mixed-geometry-types" title="Permalink to this headline">¶</a></h1>
+<p>각 피처마다 다른 도형 형식(일부는 폴리곤, 일부는 포인트, 등등)인 도형 열(geometry column)에 스타일을 적용할 때 도형 형식에따라 다른 스타일을 적용해야 하는 경우가 있습니다.</p>
+<p>SLD 1.0에서 이런 상황에 대처할 수 있는 명쾌한 해결 방법은 없습니다. 포인트, 라인, 폴리곤 심볼라이저는 도형을 형식에 따라 선별하지 않습니다. 각 심볼라이저 모두 다른 도형 형식에 적용될 수 있기 때문입니다.</p>
+<ul class="simple">
+<li>포인트 심볼라이저는 모든 도형 형식에 적용됩니다. 도형이 포인트가 아닐 경우, 도형의 중심점에 적용됩니다.</li>
+<li>라인 심볼라이저는 라인과 폴리곤 양쪽에 적용됩니다. 폴리곤의 경우 경계선에 적용됩니다.</li>
+<li>라인의 첫번째 포인트와 마지막 포인트를 연결하는 닫는(closing) 세그먼트를 추가해서 폴리곤 심볼라이저를 라인에 적용할 수 있습니다.</li>
+</ul>
+<p>규칙에 사용할 수 있는, 도형 형식을 식별하는 표준 필터 술어(predicate)는 없습니다.</p>
+<p>이 섹션에서 도형 형식에 따라 스타일을 적용할 수 있는 여러 방법을 소개합니다. 데이터를 재구성(restructuring)하거나, 비표준 필터 함수를 사용하거나 해야 합니다.</p>
+<div class="section" id="restructuring-the-data">
+<h2>Restructuring the data<a class="headerlink" href="#restructuring-the-data" title="Permalink to this headline">¶</a></h2>
+<p>표준 SLD 구성체(constructs)만 사용해 도형 형식에 따라 스타일을 적용할 수 있도록 데이터를 재구성하는 몇 가지 방법이 있습니다.</p>
+<div class="section" id="split-the-table">
+<h3>Split the table<a class="headerlink" href="#split-the-table" title="Permalink to this headline">¶</a></h3>
+<p>첫번째로, 원래 테이블을 각각 단일 도형 형식만 담은 개별 테이블들로 분리하는(split) 방법이 있습니다.
+예를 들면 <tt class="docutils literal"><span class="pre">findings</span></tt> 테이블이 포인트, 라인, 폴리곤을 담을 수 있는 도형 열을 가지고 있을 경우, 각각 단일 도형 형식만 담은 3개의 테이블을 생성할 수 있습니다.</p>
+</div>
+<div class="section" id="separate-geometry-columns">
+<h3>Separate geometry columns<a class="headerlink" href="#separate-geometry-columns" title="Permalink to this headline">¶</a></h3>
+<p>두번째로, 테이블 1개와 개별 도형 열들을 이용하는 방법이 있습니다.
+즉 <tt class="docutils literal"><span class="pre">findings</span></tt> 테이블이 <tt class="docutils literal"><span class="pre">geom</span></tt> 열을 가지고 있을 경우,
+테이블을 재구성하여 각 열이 단일 도형 형식을 담은 <tt class="docutils literal"><span class="pre">point</span></tt>, <tt class="docutils literal"><span class="pre">line</span></tt>,
+<tt class="docutils literal"><span class="pre">polygon</span></tt> 열을 생성하는 방법입니다. 재구성 작업 후 심볼라이저가 다음과 같이 특정 도형을 가리키게 됩니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;PolygonSymbolizer&gt;</span>
+    <span class="nt">&lt;Geometry&gt;&lt;ogc:PropertyName&gt;</span>polygon<span class="nt">&lt;/ogc:PropertyName&gt;&lt;/Geometry&gt;</span>
+<span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+</pre></div>
+</div>
+<p>이렇게 하면 각 심볼라이저는 자신이 렌더링해야 하는 도형 형식에만 적용되며, 널 값을 담은 행은 무시합니다.</p>
+</div>
+<div class="section" id="add-a-geometry-type-column">
+<h3>Add a geometry type column<a class="headerlink" href="#add-a-geometry-type-column" title="Permalink to this headline">¶</a></h3>
+<p>세번째로, 표준 필터링 구성체를 사용할 수 있도록 도형 형식 열을 추가하고 도형 형식마다 개별적인 규칙을 만들 수 있습니다.
+앞의 예시에 <tt class="docutils literal"><span class="pre">Point</span></tt>, <tt class="docutils literal"><span class="pre">Line</span></tt>, <tt class="docutils literal"><span class="pre">Polygon</span></tt> 값을
+담은 새로운 <tt class="docutils literal"><span class="pre">gtype</span></tt> 열을 추가합니다. 다음은 이렇게 변경한 후 사용할 수 있는 SLD 서식입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Rule&gt;</span>
+   <span class="nt">&lt;ogc:Filter&gt;</span>
+      <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+         <span class="nt">&lt;ogc:PropertyName&gt;</span>gtype<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;ogc:Literal&gt;</span>Point<span class="nt">&lt;/ogc:Literal&gt;</span>
+      <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+   <span class="nt">&lt;/ogc:Filter&gt;</span>
+   <span class="nt">&lt;PointSymbolizer&gt;</span>
+      ...
+   <span class="nt">&lt;/PointSymbolizer&gt;</span>
+<span class="nt">&lt;/Rule&gt;</span>
+<span class="nt">&lt;Rule&gt;</span>
+   <span class="nt">&lt;ogc:Filter&gt;</span>
+      <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+         <span class="nt">&lt;ogc:PropertyName&gt;</span>gtype<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;ogc:Literal&gt;</span>Line<span class="nt">&lt;/ogc:Literal&gt;</span>
+      <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+   <span class="nt">&lt;/ogc:Filter&gt;</span>
+   <span class="nt">&lt;LineSymbolizer&gt;</span>
+      ...
+   <span class="nt">&lt;/LineSymbolizer&gt;</span>
+<span class="nt">&lt;/Rule&gt;</span>
+<span class="nt">&lt;Rule&gt;</span>
+   <span class="nt">&lt;ogc:Filter&gt;</span>
+      <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+         <span class="nt">&lt;ogc:PropertyName&gt;</span>gtype<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;ogc:Literal&gt;</span>Polygon<span class="nt">&lt;/ogc:Literal&gt;</span>
+      <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+   <span class="nt">&lt;/ogc:Filter&gt;</span>
+   <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+      ...
+   <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+<span class="nt">&lt;/Rule&gt;</span>
+</pre></div>
+</div>
+<p>데이터를 기술적으로 재구성할 수 있는 경우 이 서식을 쓸 수 있습니다. 도형 형식을 식별할 수 있는 함수를 제공하는 공간DB에서 대부분 가능합니다.</p>
+</div>
+<div class="section" id="create-views">
+<h3>Create views<a class="headerlink" href="#create-views" title="Permalink to this headline">¶</a></h3>
+<p>테이블 구조를 변경하지 않고 동일한 결과를 얻을 수 있는 덜 침습적인 방법은 필요한 구조를 가진 뷰(view)를 생성하는 것입니다. 이렇게 하면 원래 데이터를 그대로 보존할 수 있고, 뷰를 렌더링에 사용할 수도 있습니다.</p>
+</div>
+</div>
+<div class="section" id="using-sld-rules-and-filter-functions">
+<h2>Using SLD rules and filter functions<a class="headerlink" href="#using-sld-rules-and-filter-functions" title="Permalink to this headline">¶</a></h2>
+<p>SLD 1.0은 각 규칙에 따라 스타일을 적용할 데이터를 필터링하기 위해 OGC Filter Encoding 1.0 사양을 이용합니다.
+필터는 도형값의 속성을 계산하는 <a class="reference internal" href="../../filter/function.html#filter-function"><em>필터 함수</em></a>를 담을 수 있습니다.
+GeoServer의 경우, <tt class="docutils literal"><span class="pre">geometryType</span></tt> 또는 <tt class="docutils literal"><span class="pre">dimension</span></tt> 필터 함수를 써서
+도형 형식에 따라 필터링 작업을 할 수 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">OGC Filter Encoding 1.0 사양은 필터 함수를 위한 표준 문법을 제공하지만 특정 함수들의 집합을 정의하고 있지 않습니다.
+SLD가 이런 함수를 사용하고 있다면, 다른 스타일 작업 소프트웨어에서 호환되지 않을 수도 있습니다.</p>
+</div>
+<div class="section" id="geometrytype-function">
+<h3>geometryType function<a class="headerlink" href="#geometrytype-function" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">geometryType</span></tt> 함수는 도형 속성을 불러들여 문자열을 반환합니다.
+이 문자열은 (현재 버전에서) 다음 <tt class="docutils literal"><span class="pre">Point</span></tt>, <tt class="docutils literal"><span class="pre">LineString</span></tt>,
+<tt class="docutils literal"><span class="pre">LinearRing</span></tt>, <tt class="docutils literal"><span class="pre">Polygon</span></tt>, <tt class="docutils literal"><span class="pre">MultiPoint</span></tt>,
+<tt class="docutils literal"><span class="pre">MultiLineString</span></tt>, <tt class="docutils literal"><span class="pre">MultiPolygon</span></tt>,
+<tt class="docutils literal"><span class="pre">GeometryCollection</span></tt> 값 가운데 하나입니다.</p>
+<p>이 함수를 이용해 만든, 단일 포인트에만 적용되는 <tt class="docutils literal"><span class="pre">Rule</span></tt>은 다음과 같습니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Rule&gt;</span>
+   <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+      <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;geometryType&quot;</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;ogc:PropertyName&gt;</span>geom<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+      <span class="nt">&lt;/ogc:Function&gt;</span>
+      <span class="nt">&lt;ogc:Literal&gt;</span>Point<span class="nt">&lt;/ogc:Literal&gt;</span>
+   <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+   <span class="nt">&lt;PointSymbolizer&gt;</span>
+     ...
+   <span class="nt">&lt;/PointSymbolizer&gt;</span>
+<span class="nt">&lt;/Rule&gt;</span>
+</pre></div>
+</div>
+<p>모든 라인 도형 형식에 구칙을 적용해야 할 경우, 필터는 다음과 같이 더 복잡해집니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Rule&gt;</span>
+   <span class="nt">&lt;ogc:Filter&gt;</span>
+     <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+       <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;in3&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;geometryType&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;ogc:PropertyName&gt;</span>geom<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+          <span class="nt">&lt;/ogc:Function&gt;</span>
+          <span class="nt">&lt;ogc:Literal&gt;</span>LineString<span class="nt">&lt;/ogc:Literal&gt;</span>
+          <span class="nt">&lt;ogc:Literal&gt;</span>LinearRing<span class="nt">&lt;/ogc:Literal&gt;</span>
+          <span class="nt">&lt;ogc:Literal&gt;</span>MultiLineString<span class="nt">&lt;/ogc:Literal&gt;</span>
+       <span class="nt">&lt;/ogc:Function&gt;</span>
+       <span class="nt">&lt;ogc:Literal&gt;</span>true<span class="nt">&lt;/ogc:Literal&gt;</span>
+     <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+   <span class="nt">&lt;/ogc:Filter&gt;</span>
+   <span class="nt">&lt;LineSymbolizer&gt;</span>
+     ...
+   <span class="nt">&lt;/LineSymbolizer&gt;</span>
+<span class="nt">&lt;/Rule&gt;</span>
+</pre></div>
+</div>
+<p>이 필터는 <tt class="docutils literal"><span class="pre">geometryType(geom) in (&quot;LineString&quot;, &quot;LinearRing&quot;, &quot;MultiLineString&quot;)</span></tt>라고 읽습니다.
+OGC Filter Encoding 1.0 사양의 필터 함수는 고정 개수의 인수(argument)를 가지므로,
+<tt class="docutils literal"><span class="pre">in2</span></tt>, <tt class="docutils literal"><span class="pre">in3</span></tt>, ..., <tt class="docutils literal"><span class="pre">in10</span></tt>처럼
+인수 개수에 해당하는 명칭을 가진 일련의 <tt class="docutils literal"><span class="pre">in</span></tt> 함수들이 있습니다.</p>
+</div>
+<div class="section" id="dimension-function">
+<h3>dimension function<a class="headerlink" href="#dimension-function" title="Permalink to this headline">¶</a></h3>
+<p>약간 간단한 방법은 원하는 차원의 도형을 선별하는 도형 <tt class="docutils literal"><span class="pre">dimension</span></tt> 함수를 사용하는 것입니다.
+<tt class="docutils literal"><span class="pre">dimension</span></tt> 값이 0이면 포인트와 다중 포인트(MultiPoint),
+<tt class="docutils literal"><span class="pre">dimension</span></tt> 값이 1이면 LineStrings, LinearRings, MultiLineStrings,
+<tt class="docutils literal"><span class="pre">dimension</span></tt> 값이 2면 폴리곤과 다중 폴리곤(MultiPolygon)입니다.
+다음은 어떻게 라인 도형을 선별하는지 보여주는 예시입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Rule&gt;</span>
+   <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+      <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;dimension&quot;</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;ogc:PropertyName&gt;</span>geom<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+      <span class="nt">&lt;/ogc:Function&gt;</span>
+      <span class="nt">&lt;ogc:Literal&gt;</span>1<span class="nt">&lt;/ogc:Literal&gt;</span>
+   <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+   <span class="nt">&lt;LineSymbolizer&gt;</span>
+     ...
+   <span class="nt">&lt;/LineSymbolizer&gt;</span>
+<span class="nt">&lt;/Rule&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">SLD Tips and Tricks</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="transformation-func.html" title="next chapter">Styling using Transformation Functions</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Styling mixed geometry types</a><ul>
+<li><a class="reference internal" href="#restructuring-the-data">Restructuring the data</a><ul>
+<li><a class="reference internal" href="#split-the-table">Split the table</a></li>
+<li><a class="reference internal" href="#separate-geometry-columns">Separate geometry columns</a></li>
+<li><a class="reference internal" href="#add-a-geometry-type-column">Add a geometry type column</a></li>
+<li><a class="reference internal" href="#create-views">Create views</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-sld-rules-and-filter-functions">Using SLD rules and filter functions</a><ul>
+<li><a class="reference internal" href="#geometrytype-function">geometryType function</a></li>
+<li><a class="reference internal" href="#dimension-function">dimension function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">SLD Tips and Tricks</a></li>
+            <li>다음: <a href="transformation-func.html" title="next chapter">Styling using Transformation Functions</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/styling/sld-tipstricks/mixed-geometries.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

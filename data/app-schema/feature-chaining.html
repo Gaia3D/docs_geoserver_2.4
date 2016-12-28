@@ -1,0 +1,669 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Feature Chaining &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Polymorphism" href="polymorphism.html" />
+      <link rel="prev" title="Data Stores" href="data-stores.html" />
+</head>
+<body class="data/app-schema/feature-chaining">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Feature Chaining</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="polymorphism.html" title="Polymorphism"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="data-stores.html" title="Data Stores"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="feature-chaining">
+<span id="app-schema-feature-chaining"></span><h1>Feature Chaining<a class="headerlink" href="#feature-chaining" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="scope">
+<h2>Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h2>
+<p>이 페이지에서 &#8220;피처 연쇄 처리(Feature Chaining)&#8221;를 이용해 단순한 컴포넌트들로 복잡 피처를 구성하는 방법을 설명하고, 특히 실사용 시 중요하다고 검증된 몇 가지 요구 사항을 밝힙니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li>단일 피처형 내 다중 값 속성들을 한꺼번에 처리하기</li>
+<li>다중 값 속성 내에 다른 다중 값 속성을 내포시키기</li>
+<li>연계(association)를 통해 연관된 피처형을 링크하고, 특히 연관 피처형들을 재사용할 수 있게 하기
+(예를 들어 O&amp;M 패턴은 <tt class="docutils literal"><span class="pre">samplingFeature</span></tt>에서 나온
+<tt class="docutils literal"><span class="pre">relatedObservation</span></tt>을 가지고 있지만 <tt class="docutils literal"><span class="pre">Observation</span></tt> 그 자체로도 쓸모가 있습니다.)</li>
+<li>복수의 피처들이 동일한 참조 속성 오브젝트를 담고 있을 경우, 해당 참조 속성 오브젝트를 링크로 코드화하기</li>
+<li>최상위 피처 및 그 연관 피처의 대용량 비정규화 데이터 저장소 뷰의 필요성을 제거하기.
+다수 대 다수(many-to-many) 관계처럼 특별한 경우 비정규화 뷰가 필요할 때도 있지만, 대용량(large)은 아닙니다.</li>
+</ul>
+</div></blockquote>
+<p>현재 버전의 사용자 매뉴얼은 Geotools 응용 프로그램 스키마 설정 방법을 기술하며, 곧 Geoserver 2.0 설정 예시를 반영하여 업데이트할 예정입니다.
+비(非) 응용 스키마 설정의 경우, <a class="reference internal" href="data-access-integration.html#app-schema-data-access-integration"><em>Data Access Integration</em></a>을 참조하십시오.</p>
+<div class="section" id="versions-supported">
+<h3>Versions supported<a class="headerlink" href="#versions-supported" title="Permalink to this headline">¶</a></h3>
+<p>피처 연쇄 처리는 GeoTools 자체(2.6.x 버전 이후)의 응용 스키마 모듈 내부에서 실행됩니다.
+GeoServer 자체에서 피처 연쇄 처리를 지원하기 위한 작업 중입니다. GeoServer 1.6의 개발자 공동체 스키마(community-schema)에서는 지원되지 않습니다.</p>
+</div>
+</div>
+<div class="section" id="mapping-steps">
+<h2>Mapping steps<a class="headerlink" href="#mapping-steps" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-a-mapping-file-for-every-complex-type">
+<h3>Create a mapping file for every complex type<a class="headerlink" href="#create-a-mapping-file-for-every-complex-type" title="Permalink to this headline">¶</a></h3>
+<p>내포될 각 복잡형(complex type)마다 매핑 파일 하나가 필요합니다. 이 복잡형은 예를 들어 <tt class="docutils literal"><span class="pre">gsml:CompositionPart</span></tt>와 같은 비(非) 피처를 포함합니다.</p>
+<p>데이터형인 <tt class="docutils literal"><span class="pre">CompositionPart</span></tt>처럼 개별적으로 접근할 수 없는 비 피처형도 재사용성을 위해 개별적으로 매핑될 수 있습니다.
+이런 경우, 이를 담고 있는 피처형이 매핑 파일에 이런 형식들을 포함해야 합니다.
+<tt class="docutils literal"><span class="pre">Include</span></tt> 태그는 내포된 매핑 파일의 경로를 이를 담고 있는 형식의 매핑 파일 위치를 기준으로 하는 상대 경로로 담고 있어야 합니다.
+다음은 <a class="reference download internal" href="../../_downloads/GeologicUnit_MappingFile.xml"><tt class="xref download docutils literal"><span class="pre">GeologicUnit_MappingFile.xml</span></tt></a> 파일의 예시입니다.</p>
+<div class="highlight-python"><pre>&lt;includedTypes&gt;
+    &lt;Include&gt;CGITermValue_MappingFile.xml&lt;/Include&gt;
+    &lt;Include&gt;CompositionPart_MappingFile.xml&lt;/Include&gt;
+&lt;/includedTypes&gt;</pre>
+</div>
+<p>개별적으로 접근 가능한 피처형은 GeoServer가 찾을 수 있도록 설정되기 때문에 매핑 파일 안에 명시적으로 포함될 필요가 없습니다.
+이런 피처형의 매핑 파일은 해당 <tt class="docutils literal"><span class="pre">datastore.xml</span></tt> 파일과 연결되는데, 이는 데이터 저장소 레지스트리에서 찾을 수 있다는 뜻입니다.
+다시 말해 어떤 형식이 <tt class="docutils literal"><span class="pre">datastore.xml</span></tt> 파일과 연결되어 있다면 다른 매핑 파일에서 참조되는 경우 명시적으로 포함될 필요가 없습니다.</p>
+<p><strong>예시</strong>:</p>
+<p><a class="reference download internal" href="../../_downloads/MappedFeature_Output.xml"><tt class="xref download docutils literal"><span class="pre">MappedFeature_Output.xml</span></tt></a> 산출물의 경우,
+해당 매핑 파일은 다음과 같습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/MappedFeature_MappingFile.xml"><tt class="xref download docutils literal"><span class="pre">MappedFeature_MappingFile.xml</span></tt></a></li>
+<li><a class="reference download internal" href="../../_downloads/GeologicUnit_MappingFile.xml"><tt class="xref download docutils literal"><span class="pre">GeologicUnit_MappingFile.xml</span></tt></a></li>
+<li><a class="reference download internal" href="../../_downloads/CompositionPart_MappingFile.xml"><tt class="xref download docutils literal"><span class="pre">CompositionPart_MappingFile.xml</span></tt></a></li>
+<li><a class="reference download internal" href="../../_downloads/GeologicEvent_MappingFile.xml"><tt class="xref download docutils literal"><span class="pre">GeologicEvent_MappingFile.xml</span></tt></a></li>
+<li><a class="reference download internal" href="../../_downloads/CGITermValue_MappingFile.xml"><tt class="xref download docutils literal"><span class="pre">CGITermValue_MappingFile.xml</span></tt></a></li>
+</ul>
+</div></blockquote>
+<p><em>GeologicUnit type</em></p>
+<p>GeologicUnit 피처에서 <tt class="docutils literal"><span class="pre">gml:composition</span></tt>(CompositionPart type)과
+<tt class="docutils literal"><span class="pre">gsml:geologicHistory</span></tt>(GeologicEvent type) 모두 다중 값 속성인 것을 알 수 있습니다.
+단일 피처형 안에서 어떻게 다중 값 속성을 여러 개 설정할 수 있는지 보여줍니다.
+또 <tt class="docutils literal"><span class="pre">CompositionPart</span></tt>가 데이터형이기 때문에, 비 피처형을 &#8220;연쇄 처리(chain)&#8221;할 수 있다는 것도 알 수 있습니다.</p>
+<p><em>GeologicEvent type</em></p>
+<p><tt class="docutils literal"><span class="pre">gsml:eventEnvironment</span></tt>(CGI_TermValue type)과
+<tt class="docutils literal"><span class="pre">gsml:eventProcess</span></tt>(역시 CGI_TermValue type) 모두 다중 값 속성들입니다.
+<tt class="docutils literal"><span class="pre">GeologicEvent</span></tt>가 <tt class="docutils literal"><span class="pre">GeologicUnit</span></tt>에 내포되어 있으므로,
+다양한 레벨에서 &#8220;연쇄 처리 작업&#8221;이 가능하다는 것을 알 수 있습니다.
+<tt class="docutils literal"><span class="pre">GeologicEvent</span></tt> 하나마다 <tt class="docutils literal"><span class="pre">eventAge</span></tt> 하나만 있을 수 있고,
+따라서 피처 연쇄 처리의 필요성이 없기 때문에 <tt class="docutils literal"><span class="pre">gsml:eventAge</span></tt> 속성이 그때 그때 즉시 처리되는 직렬(inline) 속성으로 설정되었다는 점을 유의하십시오.</p>
+</div>
+<div class="section" id="configure-nesting-on-the-nested-feature-type">
+<h3>Configure nesting on the nested feature type<a class="headerlink" href="#configure-nesting-on-the-nested-feature-type" title="Permalink to this headline">¶</a></h3>
+<p>내포된 피처형의 경우, 상위(parent) 피처가 참조할 수 있는 항목을 가지고 있는지 확인하십시오.
+참조할 수 있는 항목이 하나도 없을 경우, 시스템 항목인 <em>FEATURE_LINK</em>를 외부 키(foreign key) 값을 담도록 매핑할 수 있습니다.
+이 항목은 다중 값 항목이기 때문에, 서로 다른 상위 피처에 내포될 수 있는 피처의 경우 동일한 피처형에 하나 이상의 인스턴스를 매핑할 수 있습니다.
+이 항목은 스키마에 없기 때문에 산출물 문서에는 표출되지 않습니다.</p>
+<p>소스 표현식 태그에서 다음을 유의하십시오.</p>
+<blockquote>
+<div><ul class="simple">
+<li>OCQL: 이 값을 상위 피처의 OCQL 부분과 연결해야 합니다.</li>
+</ul>
+</div></blockquote>
+<p><strong>1번 예시</strong>: <em>FEATURE_LINK</em>를 <tt class="docutils literal"><span class="pre">GeologicEvent</span></tt>가
+<tt class="docutils literal"><span class="pre">gsml:eventProcess</span></tt>와 <tt class="docutils literal"><span class="pre">gsml:eventEnvironment</span></tt>로
+참조하는 CGI의 <tt class="docutils literal"><span class="pre">TermValue</span></tt> 형에 사용합니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">GeologicEvent</span></tt>(컨테이너 피처)의 매핑 작업예시입니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;gsml:eventEnvironment&lt;/targetAttribute&gt;
+      &lt;sourceExpression&gt;
+              &lt;OCQL&gt;id&lt;/OCQL&gt;
+              &lt;linkElement&gt;gsml:CGI_TermValue&lt;/linkElement&gt;
+              &lt;linkField&gt;FEATURE_LINK[1]&lt;/linkField&gt;
+      &lt;/sourceExpression&gt;
+      &lt;isMultiple&gt;true&lt;/isMultiple&gt;
+&lt;/AttributeMapping&gt;
+&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;gsml:eventProcess&lt;/targetAttribute&gt;
+      &lt;sourceExpression&gt;
+              &lt;OCQL&gt;id&lt;/OCQL&gt;
+              &lt;linkElement&gt;gsml:CGI_TermValue&lt;/linkElement&gt;
+              &lt;linkField&gt;FEATURE_LINK[2]&lt;/linkField&gt;
+      &lt;/sourceExpression&gt;
+      &lt;isMultiple&gt;true&lt;/isMultiple&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>다음은 <tt class="docutils literal"><span class="pre">CGI_TermValue</span></tt>(내포 피처)의 매핑 작업예시입니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;!-- FEATURE_LINK[1] is referred by geologic event as environment --&gt;
+  &lt;targetAttribute&gt;FEATURE_LINK[1]&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+      &lt;OCQL&gt;ENVIRONMENT_OWNER&lt;/OCQL&gt;
+  &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;
+&lt;AttributeMapping&gt;
+  &lt;!-- FEATURE_LINK[2] is referred by geologic event as process --&gt;
+  &lt;targetAttribute&gt;FEATURE_LINK[2]&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;&lt;
+      &lt;OCQL&gt;PROCESS_OWNER&lt;/OCQL&gt;
+  &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">CGI_TermValue</span></tt> 뷰의 <em>ENVIRONMENT_OWNER</em> 열은
+<tt class="docutils literal"><span class="pre">GeologicEvent</span></tt> 뷰의 ID 열과 연결됩니다.</p>
+<p><strong><tt class="docutils literal"><span class="pre">GeologicEvent</span></tt> 속성 파일:</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="45%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>ID</strong></td>
+<td><strong>GEOLOGIC_UNIT_ID:String</strong></td>
+<td><strong>ghminage:String</strong></td>
+<td><strong>ghmaxage:String</strong></td>
+<td><strong>ghage_cdspace:String</strong></td>
+</tr>
+<tr class="row-even"><td>ge.26931120</td>
+<td>gu.25699</td>
+<td>Oligocene</td>
+<td>Paleocene</td>
+<td><a class="reference external" href="urn:cgi:classifierScheme:ICS:StratChart:2008">urn:cgi:classifierScheme:ICS:StratChart:2008</a></td>
+</tr>
+<tr class="row-odd"><td>ge.26930473</td>
+<td>gu.25678</td>
+<td>Holocene</td>
+<td>Pleistocene</td>
+<td><a class="reference external" href="urn:cgi:classifierScheme:ICS:StratChart:2008">urn:cgi:classifierScheme:ICS:StratChart:2008</a></td>
+</tr>
+<tr class="row-even"><td>ge.26930960</td>
+<td>gu.25678</td>
+<td>Pliocene</td>
+<td>Miocene</td>
+<td><a class="reference external" href="urn:cgi:classifierScheme:ICS:StratChart:2008">urn:cgi:classifierScheme:ICS:StratChart:2008</a></td>
+</tr>
+<tr class="row-odd"><td>ge.26932959</td>
+<td>gu.25678</td>
+<td>LowerOrdovician</td>
+<td>LowerOrdovician</td>
+<td><a class="reference external" href="urn:cgi:classifierScheme:ICS:StratChart:2008">urn:cgi:classifierScheme:ICS:StratChart:2008</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong><tt class="docutils literal"><span class="pre">CGI_TermValue</span></tt> 속성 파일:</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="30%" />
+<col width="30%" />
+<col width="30%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>ID</strong></td>
+<td><strong>VALUE:String</strong></td>
+<td><strong>PROCESS_OWNER:String</strong></td>
+<td><strong>ENVIRONMENT_OWNER:String</strong></td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>fluvial</td>
+<td>NULL</td>
+<td>ge.26931120</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>swamp/marsh/bog</td>
+<td>NULL</td>
+<td>ge.26930473</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>marine</td>
+<td>NULL</td>
+<td>ge.26930960</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>submarine fan</td>
+<td>NULL</td>
+<td>ge.26932959</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>hemipelagic</td>
+<td>NULL</td>
+<td>ge.26932959</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>detrital deposition still water</td>
+<td>ge.26930473</td>
+<td>NULL</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>water [process]</td>
+<td>ge.26932959</td>
+<td>NULL</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>channelled stream flow</td>
+<td>ge.26931120</td>
+<td>NULL</td>
+</tr>
+<tr class="row-even"><td>11</td>
+<td>turbidity current</td>
+<td>ge.26932959</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<p>산출물에서 <em>FEATURE_LINK</em> 시스템 항목은 코드화되지 않습니다.</p>
+<div class="highlight-python"><pre>&lt;gsml:GeologicEvent&gt;
+  &lt;gml:name codeSpace="urn:cgi:classifierScheme:GSV:GeologicalUnitId"&gt;gu.25699&lt;/gml:name&gt;
+  &lt;gsml:eventAge&gt;
+    &lt;gsml:CGI_TermRange&gt;
+       &lt;gsml:lower&gt;
+          &lt;gsml:CGI_TermValue&gt;
+            &lt;gsml:value codeSpace="urn:cgi:classifierScheme:ICS:StratChart:2008"&gt;Oligocene&lt;/gsml:value&gt;
+          &lt;/gsml:CGI_TermValue&gt;
+       &lt;/gsml:lower&gt;
+       &lt;gsml:upper&gt;
+          &lt;gsml:CGI_TermValue&gt;
+            &lt;gsml:value codeSpace="urn:cgi:classifierScheme:ICS:StratChart:2008"&gt;Paleocene&lt;/gsml:value&gt;
+          &lt;/gsml:CGI_TermValue&gt;
+       &lt;/gsml:upper&gt;
+    &lt;/gsml:CGI_TermRange&gt;
+  &lt;/gsml:eventAge&gt;
+  &lt;gsml:eventEnvironment&gt;
+    &lt;gsml:CGI_TermValue&gt;
+       &lt;gsml:value&gt;fluvial&lt;/gsml:value&gt;
+    &lt;/gsml:CGI_TermValue&gt;
+  &lt;/gsml:eventEnvironment&gt;
+  &lt;gsml:eventProcess&gt;
+    &lt;gsml:CGI_TermValue&gt;
+       &lt;gsml:value&gt;channelled stream flow&lt;/gsml:value&gt;
+    &lt;/gsml:CGI_TermValue&gt;
+  &lt;/gsml:eventProcess&gt;</pre>
+</div>
+<p><strong>2번 예시</strong>:
+기존 항목(<tt class="docutils literal"><span class="pre">gml:name</span></tt>)을 이용해서 외부 키를 담으려면,
+다음 <a class="reference download internal" href="../../_downloads/MappedFeature_MappingFile.xml"><tt class="xref download docutils literal"><span class="pre">MappedFeature_MappingFile.xml</span></tt></a> 파일을 참조하십시오.</p>
+<p><tt class="docutils literal"><span class="pre">GeologicUnit</span></tt>에서 <tt class="docutils literal"><span class="pre">gsml:specification</span></tt>이 다음과 같이
+<tt class="docutils literal"><span class="pre">gml:name</span></tt>과 링크됩니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gsml:specification&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+    &lt;OCQL&gt;GEOLOGIC_UNIT_ID&lt;/OCQL&gt;
+    &lt;linkElement&gt;gsml:GeologicUnit&lt;/linkElement&gt;
+    &lt;linkField&gt;gml:name[3]&lt;/linkField&gt;
+  &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>다음 <a class="reference download internal" href="../../_downloads/GeologicUnit_MappingFile.xml"><tt class="xref download docutils literal"><span class="pre">GeologicUnit_MappingFile.xml</span></tt></a> 파일도 참조하십시오.</p>
+<p><tt class="docutils literal"><span class="pre">GeologicUnit</span></tt>은 매핑 파일에 3개의 <tt class="docutils literal"><span class="pre">gml:name</span></tt> 속성을 갖추고 있으므로,
+각 속성은 다음과 같이 자신을 명확하게 정의하는 코드 공간(code space)을 가지고 있습니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gml:name[1]&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+    &lt;OCQL&gt;ABBREVIATION&lt;/OCQL&gt;
+  &lt;/sourceExpression&gt;
+  &lt;ClientProperty&gt;
+    &lt;name&gt;codeSpace&lt;/name&gt;
+    &lt;value&gt;'urn:cgi:classifierScheme:GSV:GeologicalUnitCode'&lt;/value&gt;
+  &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;
+&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gml:name[2]&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+    &lt;OCQL&gt;NAME&lt;/OCQL&gt;
+  &lt;/sourceExpression&gt;
+  &lt;ClientProperty&gt;
+    &lt;name&gt;codeSpace&lt;/name&gt;
+    &lt;value&gt;'urn:cgi:classifierScheme:GSV:GeologicalUnitName'&lt;/value&gt;
+  &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;
+&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gml:name[3]&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+    &lt;OCQL&gt;id&lt;/OCQL&gt;
+  &lt;/sourceExpression&gt;
+  &lt;ClientProperty&gt;
+    &lt;name&gt;codeSpace&lt;/name&gt;
+    &lt;value&gt;'urn:cgi:classifierScheme:GSV:MappedFeatureReference'&lt;/value&gt;
+  &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>다음은 복수의 <tt class="docutils literal"><span class="pre">gml:name</span></tt> 속성과 그 코드 공간을 담고 있는 산출물의 예시입니다.</p>
+<div class="highlight-python"><pre>&lt;gsml:specification&gt;
+  &lt;gsml:GeologicUnit gml:id="gu.25678"&gt;
+      &lt;gml:description&gt;Olivine basalt, tuff, microgabbro, minor sedimentary rocks&lt;/gml:description&gt;
+      &lt;gml:name codeSpace="urn:cgi:classifierScheme:GSV:GeologicalUnitCode"&gt;-Py&lt;/gml:name&gt;
+      &lt;gml:name codeSpace="urn:cgi:classifierScheme:GSV:GeologicalUnitName"&gt;Yaugher Volcanic Group&lt;/gml:name&gt;
+      &lt;gml:name codeSpace="urn:cgi:classifierScheme:GSV:MappedFeatureReference"&gt;gu.25678&lt;/gml:name&gt;</pre>
+</div>
+<p>이것이 일 대 다수(one-to-many) 또는 다수 대 일(many-to-one) 데이터베이스 관계의 &#8220;한쪽&#8221;일 경우, 앞의 예시에서 살펴본 바와 같이 소스 표현식 항목으로 피처 ID를 이용할 수 있습니다.
+<a class="reference download internal" href="../../_downloads/one_to_many_relationship.JPG"><tt class="xref download docutils literal"><span class="pre">one_to_many_relationship.JPG</span></tt></a> 그림이 이를 설명하고 있습니다.</p>
+<p>다수 대 다수 관계라면 내포 작업의 어느 쪽에 대해서도 하나의 비정규화된 뷰를 이용할 수 있습니다.
+즉 이를 위해 참조된 항목으로 피처 ID를 이용하거나, 열을 할당할 수 있다는 뜻입니다.
+<a class="reference download internal" href="../../_downloads/many_to_many_relationship.JPG"><tt class="xref download docutils literal"><span class="pre">many_to_many_relationship.JPG</span></tt></a> 그림이 이를 설명하고 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<ul class="last simple">
+<li>다수 대 다수 관계의 경우 내포 작업의 양쪽에 대해 동일한 비정규화된 뷰를 사용할 수 없습니다.</li>
+</ul>
+</div>
+<p>내포된 피처 자체에 대해 <tt class="docutils literal"><span class="pre">getFeature</span></tt> 요청을 실행해서 이 설정을 테스트하십시오.</p>
+</div>
+<div class="section" id="configure-nesting-on-the-containing-feature-type">
+<h3>Configure nesting on the &#8220;containing&#8221; feature type<a class="headerlink" href="#configure-nesting-on-the-containing-feature-type" title="Permalink to this headline">¶</a></h3>
+<p>또 다른 복잡형(complex type)을 내포시키는 경우, 소스 표현식에 다음을 설정해야 합니다.</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><strong>OCQL</strong>: 데이터 저장소 열의 OCQL(OGC&#8217;s Common Query Language) 표현식</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>linkElement</strong>:</dt>
+<dd><ul class="first last simple">
+<li>내포된 요소명으로, 보통 연계되는 형(type)의 <tt class="docutils literal"><span class="pre">targetElement</span></tt>나 <tt class="docutils literal"><span class="pre">mappingName</span></tt>입니다.</li>
+<li>몇몇 경우에는 OCQL 함수여야만 합니다. (<a class="reference internal" href="polymorphism.html#app-schema-polymorphism"><em>Polymorphism</em></a> 참조)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><strong>linkField</strong>: OCQL이 연계되는 내포된 요소의 인덱스화된 <tt class="docutils literal"><span class="pre">XPath</span></tt> 속성입니다.</p>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>예시</strong>: <tt class="docutils literal"><span class="pre">GeologicUnit</span></tt> 피처에 구성(composition) 부분을 내포시키기</p>
+<p>다음 <tt class="docutils literal"><span class="pre">GeologicUnit</span></tt> 매핑 파일에서,</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;gsml:composition&lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+            &lt;OCQL&gt;id&lt;/OCQL&gt;
+            &lt;linkElement&gt;gsml:CompositionPart&lt;/linkElement&gt;
+            &lt;linkField&gt;FEATURE_LINK&lt;/linkField&gt;
+    &lt;/sourceExpression&gt;
+    &lt;isMultiple&gt;true&lt;/isMultiple&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<ul class="simple">
+<li><em>OCQL</em>: ID는 <tt class="docutils literal"><span class="pre">GeologicUnit</span></tt>의 ID입니다.</li>
+<li><em>linkElement</em>: <tt class="docutils literal"><span class="pre">gsml:CompositionPart</span></tt>형과 링크합니다.</li>
+<li><em>linkField</em>: <tt class="docutils literal"><span class="pre">GeologicUnit</span></tt> ID도 저장하는 <tt class="docutils literal"><span class="pre">gsml:CompositionPart</span></tt>형에
+매핑된 링크 항목인 <em>FEATURE_LINK</em>입니다. 내포된 피처형에 이 속성이 하나 이상 존재하는 경우 <em>FEATURE_LINK[2]</em> 같은 인덱스도 함께 포함되어 있는지 확인하십시오.</li>
+</ul>
+<p><strong><tt class="docutils literal"><span class="pre">GeologicUnit</span></tt> 속성 파일</strong>:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="5%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>ID</strong></td>
+<td><strong>ABBREVIATAION:String</strong></td>
+<td><strong>NAME:String</strong></td>
+<td><strong>TEXTDESCRIPTION:String</strong></td>
+</tr>
+<tr class="row-even"><td>gu.25699</td>
+<td>-Py</td>
+<td>Yaugher Volcanic Group</td>
+<td>Olivine basalt, tuff, microgabbro, minor sedimentary rocks</td>
+</tr>
+<tr class="row-odd"><td>gu.25678</td>
+<td>-Py</td>
+<td>Yaugher Volcanic Group</td>
+<td>Olivine basalt, tuff, microgabbro, minor sedimentary rocks</td>
+</tr>
+</tbody>
+</table>
+<p><strong>구성 부분(Composition Part) 속성 파일</strong>:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>ID</strong></td>
+<td><strong>COMPONENT_ROLE:String</strong></td>
+<td><strong>PROPORTION:String</strong></td>
+<td><strong>GEOLOGIC_UNIT_ID:String</strong></td>
+</tr>
+<tr class="row-even"><td>cp.167775491936278812</td>
+<td>interbedded component</td>
+<td>significant</td>
+<td>gu.25699</td>
+</tr>
+<tr class="row-odd"><td>cp.167775491936278856</td>
+<td>interbedded component</td>
+<td>minor</td>
+<td>gu.25678</td>
+</tr>
+<tr class="row-even"><td>cp.167775491936278844</td>
+<td>sole component</td>
+<td>major</td>
+<td>gu.25678</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal"><span class="pre">getFeature</span></tt> 요청을 실행해서 이 설정을 테스트하십시오.
+2단계에서 반환된 내포 피처가 컨테이너 피처 안에 제대로 배열되었는지 확인하십시오.
+그렇지 않거나 혹은 예외가 발생하는 경우, &#8220;Trouble Shooting&#8221; 섹션을 참조하십시오.</p>
+</div>
+</div>
+<div class="section" id="multiple-mappings-of-the-same-type">
+<h2>Multiple mappings of the same type<a class="headerlink" href="#multiple-mappings-of-the-same-type" title="Permalink to this headline">¶</a></h2>
+<p>가끔 동일한 피처형에 대해 서로 다른 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt> 인스턴스가 필요할 때가 있습니다.
+동일한 피처형에서 서로 다른 2가지 속성을 내포해야 할 수도 있습니다.
+예를 들면 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>에서
+<tt class="docutils literal"><span class="pre">gsml:exposureColor</span></tt>와 <tt class="docutils literal"><span class="pre">gsml:outcropCharacter</span></tt> 모두
+<tt class="docutils literal"><span class="pre">gsml:CGI_TermValue</span></tt>형입니다.</p>
+<p>이때 <a class="reference internal" href="mapping-file.html#app-schema-mapping-file"><em>Mapping File</em></a>에서 언급한
+선택적인 <tt class="docutils literal"><span class="pre">mappingName</span></tt> 태그를 사용합니다.
+컨테이너 피처형의 <tt class="docutils literal"><span class="pre">linkElement</span></tt> 안에 내포된 피처형의 <tt class="docutils literal"><span class="pre">targetElement</span></tt>를 전송하는 대신
+연계되는 <tt class="docutils literal"><span class="pre">mappingName</span></tt>을 설정합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<ul class="last simple">
+<li><tt class="docutils literal"><span class="pre">mappingName</span></tt>은 명칭공간을 인식하며 대소문자를 구분합니다.</li>
+<li>참조된 <tt class="docutils literal"><span class="pre">mappingName</span></tt>이 &#8216;-&#8217; 같은 특수 문자를 포함하는 경우,
+<tt class="docutils literal"><span class="pre">linkElement</span></tt> 내에서 작은 따옴표로 감싸야 합니다.
+예를 들면 <tt class="docutils literal"><span class="pre">&lt;linkElement&gt;&#8217;observation-method&#8217;&lt;/linkElement&gt;</span></tt>처럼 말입니다.</li>
+<li>각 <tt class="docutils literal"><span class="pre">mappingName</span></tt>은 전체 응용 프로그램 내에서
+다른 <tt class="docutils literal"><span class="pre">mappingName</span></tt>이나 <tt class="docutils literal"><span class="pre">targetElement</span></tt>와 구별되어야 합니다.</li>
+<li>내포된 피처형에서 연쇄된 피처형을 식별하기 위해서만 <tt class="docutils literal"><span class="pre">mappingName</span></tt>을 사용합니다.
+최상위 피처로서 2개 이상의 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt> 인스턴스를 쿼리할 수 있는 경우
+복수의 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt> 인스턴스를 위한 해결책이 아닙니다.</li>
+<li>최상위 피처로서 쿼리하는 경우, 일반적인 <tt class="docutils literal"><span class="pre">targetElement</span></tt>를 이용합니다.
+내포 피처형 관련 필터는 쿼리의 <tt class="docutils literal"><span class="pre">PropertyName</span></tt> 부분에서 <tt class="docutils literal"><span class="pre">targetElement</span></tt>를 계속 사용합니다.</li>
+<li>피처형 가운데 하나가 최상위 피처인 경우 동일한 매핑 파일 안에서 동일 피처형의 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt> 인스턴스를 1개 이상 쓸 수 없습니다.
+<tt class="docutils literal"><span class="pre">featuretype.xml</span></tt> 파일이 <tt class="docutils literal"><span class="pre">targetElement</span></tt>를 찾을 때 어떤 것을 선택해야 할지 알 수 없어지기 때문입니다.</li>
+</ul>
+</div>
+<p>원하는 최상위 피처의 위치에 단 하나의 <tt class="docutils literal"><span class="pre">featuretype.xml</span></tt> 파일만 있도록
+<tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt> 인스턴스들을 다음과 같이 개별 파일 및 위치로 나누면 주석의 마지막 항목을 해결할 수 있습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">gsml:CGI_TermValue</span></tt>형은 피처형이 아니기 때문에 <tt class="docutils literal"><span class="pre">gsml:CGI_TermValue</span></tt>형을 위한 1개의 파일 안에서
+2개의 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt> 인스턴스를 쓸 수 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>에 대해 2개의 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt> 인스턴스를 쓸 수 있지만
+개별 파일들로 나누어야 합니다. 최상위 피처형으로서 쿼리할 수 있는 쪽의 위치에 <tt class="docutils literal"><span class="pre">featuretype.xml</span></tt> 파일을 넣습니다.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="nesting-simple-properties">
+<h2>Nesting simple properties<a class="headerlink" href="#nesting-simple-properties" title="Permalink to this headline">¶</a></h2>
+<p>다중 값을 가지는 단순 속성을 연쇄시키고 개별적으로 매핑할 필요는 없습니다. 원(original) 설정을 그대로 사용할 수 있습니다.</p>
+</div>
+<div class="section" id="filtering-nested-attributes-on-chained-features">
+<span id="app-schema-filtering-nested"></span><h2>Filtering nested attributes on chained features<a class="headerlink" href="#filtering-nested-attributes-on-chained-features" title="Permalink to this headline">¶</a></h2>
+<p>필터를 그대로 사용할 수 있습니다. 속성의 전체 <tt class="docutils literal"><span class="pre">XPath</span></tt>를 제공할 수 있으며, 코드가 이를 처리할 것입니다.
+예를 들면 <tt class="docutils literal"><span class="pre">gsml:MappedFeatureUseCase2A</span></tt> 상에서 다음 필터를 실행할 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;ogc:Filter&gt;
+      &lt;ogc:PropertyIsEqualTo&gt;
+          &lt;ogc:Function name="contains_text"&gt;
+              &lt;ogc:PropertyName&gt;gsml:specification/gsml:GeologicUnit/gml:description&lt;/ogc:PropertyName&gt;
+              &lt;ogc:Literal&gt;Olivine basalt, tuff, microgabbro, minor sedimentary rocks&lt;/ogc:Literal&gt;
+          &lt;/ogc:Function&gt;
+          &lt;ogc:Literal&gt;1&lt;/ogc:Literal&gt;
+      &lt;/ogc:PropertyIsEqualTo&gt;
+&lt;/ogc:Filter&gt;</pre>
+</div>
+</div>
+<div class="section" id="multi-valued-properties-by-reference-xlink-href">
+<span id="app-schema-feature-chaining-by-reference"></span><h2>Multi-valued properties by reference (<em>xlink:href</em>)<a class="headerlink" href="#multi-valued-properties-by-reference-xlink-href" title="Permalink to this headline">¶</a></h2>
+<p>참조를 통해 다중 값 속성들을 설정하는 데 피처 연쇄 처리를 이용하려 할 수도 있습니다.
+순환 관계(circular relationship)에서 무한 반복(endless loop)을 피하는 데 특히 유용합니다.
+예를 들면 <tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>와 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>이 다음과 같이 순환 관계일 수도 있습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>가 <tt class="docutils literal"><span class="pre">gsml:specification</span></tt>으로서 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>을 가지고 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>이 <tt class="docutils literal"><span class="pre">gsml:occurrence</span></tt>로서 <tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>를 가지고 있습니다.</li>
+</ul>
+</div></blockquote>
+<p>당연하게도 이 관계의 한쪽 면만 코드화할 수 있습니다. 양쪽을 모두 코드화하면 무한 반복에 빠질 것이기 때문입니다.
+따라서 이 관계에서 &#8220;연쇄 처리&#8221;할 한쪽 면을 고른 다음 다른 면에 대해서는 <tt class="docutils literal"><span class="pre">xlink:href</span></tt>를 이용합니다.</p>
+<p>이 예시에서 <tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>에
+<tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>을 <tt class="docutils literal"><span class="pre">gsml:specification</span></tt>으로서 내포시킵니다.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">보통 경우와 마찬가지로 컨테이너 피처형 매핑 작업에 내포 작업을 설정합니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gsml:specification&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+      &lt;OCQL&gt;GEOLOGIC_UNIT_ID&lt;/OCQL&gt;
+        &lt;linkElement&gt;gsml:GeologicUnit&lt;/linkElement&gt;
+        &lt;linkField&gt;gml:name[2]&lt;/linkField&gt;
+  &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+</li>
+<li><p class="first">다른 매핑 파일 상에 <tt class="docutils literal"><span class="pre">ClientProperty</span></tt>로 <tt class="docutils literal"><span class="pre">xlink:href</span></tt>를 설정합니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gsml:occurrence&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+        &lt;OCQL&gt;id&lt;/OCQL&gt;
+        &lt;linkElement&gt;gsml:MappedFeature&lt;/linkElement&gt;
+        &lt;linkField&gt;gsml:specification&lt;/linkField&gt;
+  &lt;/sourceExpression&gt;
+  &lt;isMultiple&gt;true&lt;/isMultiple&gt;
+  &lt;ClientProperty&gt;
+         &lt;name&gt;xlink:href&lt;/name&gt;
+         &lt;value&gt;strConcat('urn:cgi:feature:MappedFeature:', ID)&lt;/value&gt;
+  &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>내포된 피처에서 <tt class="docutils literal"><span class="pre">ClientProperty</span></tt> 값을 얻게 되기 때문에, 피처를 연쇄 처리하는 것처럼 설정해야 합니다.
+그러나 속성 매핑 작업 시 <em>xlink:href</em>를 담고 있는 <tt class="docutils literal"><span class="pre">ClientProperty</span></tt>도 추가해야 합니다.
+코드가 <em>xlink:href</em> 설정을 감지하면 내포 피처의 속성을 구축하려 하지 않을 것이고, 그러면 <em>xlink:href</em> <tt class="docutils literal"><span class="pre">ClientProperty</span></tt>를 가진 비어 있는 속성을 받게 됩니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>에 대한 코드화된 결과의 예시입니다.</p>
+<div class="highlight-python"><pre>&lt;gsml:GeologicUnit gml:id="gu.25678"&gt;
+         &lt;gsml:occurrence xlink:href="urn:cgi:feature:MappedFeature:mf2"/&gt;
+         &lt;gsml:occurrence xlink:href="urn:cgi:feature:MappedFeature:mf3"/&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<ul class="last simple">
+<li>매핑 파일의 명칭공간 섹션에 <em>XLink</em>를 추가하는 것을 잊지 마십시오. <em>XLink</em>를 추가하지 않으면 <em>xlink:href</em> <tt class="docutils literal"><span class="pre">ClientProperty</span></tt>를 인식하지 못 하고
+매핑 작업을 무한히 연쇄 처리하기 때문에 <tt class="docutils literal"><span class="pre">StackOverflowException</span></tt>이 발생합니다.</li>
+<li><em>XLink</em> 참조를 설정했다 하더라도 응용 스키마가 특정 수준까지 전체 피처 연쇄 처리를 하도록 강제하는 데 <a class="reference internal" href="wfs-2.0-support.html#app-schema-resolve"><em>Resolving</em></a>을 이용할 수 있습니다.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="data-stores.html" title="previous chapter">Data Stores</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="polymorphism.html" title="next chapter">Polymorphism</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Feature Chaining</a><ul>
+<li><a class="reference internal" href="#scope">Scope</a><ul>
+<li><a class="reference internal" href="#versions-supported">Versions supported</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mapping-steps">Mapping steps</a><ul>
+<li><a class="reference internal" href="#create-a-mapping-file-for-every-complex-type">Create a mapping file for every complex type</a></li>
+<li><a class="reference internal" href="#configure-nesting-on-the-nested-feature-type">Configure nesting on the nested feature type</a></li>
+<li><a class="reference internal" href="#configure-nesting-on-the-containing-feature-type">Configure nesting on the &#8220;containing&#8221; feature type</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#multiple-mappings-of-the-same-type">Multiple mappings of the same type</a></li>
+<li><a class="reference internal" href="#nesting-simple-properties">Nesting simple properties</a></li>
+<li><a class="reference internal" href="#filtering-nested-attributes-on-chained-features">Filtering nested attributes on chained features</a></li>
+<li><a class="reference internal" href="#multi-valued-properties-by-reference-xlink-href">Multi-valued properties by reference (<em>xlink:href</em>)</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="data-stores.html" title="previous chapter">Data Stores</a></li>
+            <li>다음: <a href="polymorphism.html" title="next chapter">Polymorphism</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/feature-chaining.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

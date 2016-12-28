@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>GetLegendGraphic &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../../index.html" />
+      <link rel="up" title="Web Map Service" href="../index.html" />
+      <link rel="next" title="Web Coverage Service" href="../../wcs/index.html" />
+      <link rel="prev" title="Global variables affecting WMS" href="../global.html" />
+</head>
+<body class="services/wms/get_legend_graphic/legendgraphic">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Map Service</a> &raquo;</li>
+  <li>GetLegendGraphic</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../../wcs/index.html" title="Web Coverage Service"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../global.html" title="Global variables affecting WMS"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="getlegendgraphic">
+<span id="get-legend-graphic"></span><h1>GetLegendGraphic<a class="headerlink" href="#getlegendgraphic" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 <tt class="docutils literal"><span class="pre">GetLegendGraphic</span></tt> 요청을 사용하는 방법에 대해 설명합니다.
+SLD 1.0.0 사양에서 <tt class="docutils literal"><span class="pre">GetLegendGraphic</span></tt> 요청에 대해 잘 설명하고 있습니다.</p>
+<p><cite>GetLegendGraphic 작업 자체는 SLD를 쓸 수 있는 WMS의 필수 요소가 아닙니다.
+GetLegendGraphic 작업은 WMS 역량의 LegendURL 참조를 넘어서 범례 심볼을 받아오기 위한 일반적인 메커니즘을 제공합니다.
+GetLegendGraphic 호출을 지원하는 서버가 인터페이스 일관성을 위해 LegendURL 참조를 GetLegendGraphic으로 코드화할 수도 있습니다.
+GetLegendGraphic 요청에 벤터에 특화된 파라미터를 추가해서 일반적인 모든 OGC 인터페이스 옵션과 규칙을 적용할 수도 있습니다.
+현재 GetLegendGraphic에 대해 어떤 XML-POST 방식(method)도 정의되지 않았습니다.</cite></p>
+<p>다음은 <tt class="docutils literal"><span class="pre">GetLegendGraphic</span></tt> 작업을 호출하는 예시입니다.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&amp;VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=topp:states</pre>
+</div>
+<p>이 요청으로 <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어의 기본 스타일 규칙을 그래픽으로 표현하는 4개의 20x20 픽셀 크기의 아이콘을 생성합니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/samplelegend.png" src="../../../_images/samplelegend.png" />
+<p class="caption"><em>범례 예시</em></p>
+</div>
+<p>다음은 사용 가능한 모든 <tt class="docutils literal"><span class="pre">GetLegendGraphic</span></tt> 파라미터를 담고 있는 표입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="10%" />
+<col width="75%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>파라미터</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><em>REQUEST</em></td>
+<td>○</td>
+<td>값이 &#8220;GetLegendRequest&#8221;이어야 합니다.</td>
+</tr>
+<tr class="row-odd"><td><em>LAYER</em></td>
+<td>○</td>
+<td>범례 그래픽을 생성하는 대상 레이어입니다.</td>
+</tr>
+<tr class="row-even"><td><em>STYLE</em></td>
+<td>Χ</td>
+<td>범례 그래픽을 생성하는 대상 레이어의 스타일입니다. 설정하지 않으면 기본 스타일을 선택합니다. 이 스타일은 SLD가 아니라 내부적으로 정의된 스타일도 포함하는, 해당 레이어에 적용할 수 있는 어떤 유효한 스타일도 설정할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><em>FEATURETYPE</em></td>
+<td>Χ</td>
+<td>범례 그래픽을 생성하는 대상 피처형입니다. 레이어가 단일 피처형만 담고 있는 경우 설정할 필요가 없습니다.</td>
+</tr>
+<tr class="row-even"><td><em>RULE</em></td>
+<td>Χ</td>
+<td>범례 그래픽을 생성하는 (적용 가능한) 스타일 규칙입니다. 스타일이 복수의 규칙을 담고 있지만 어떤 특정 규칙도 선택하지 않았을 경우, 맵 서버는 스타일의 모든 규칙을 적용한 그래픽을 생산해야만 합니다.</td>
+</tr>
+<tr class="row-odd"><td><em>SCALE</em></td>
+<td>Χ</td>
+<td>스타일에 대한 규칙을 설정하지 않았을 경우, 이 파라미터로 범위를 벗어난(out-of-scope) 내부 규칙을 제외해서 서버가 좀 더 적합한 표현 그래픽을 선택하도록 도울 수 있습니다.
+이 값은 표준화된 축척 분모(scale denominator)입니다. 축척을 설정하면 심볼라이저가 설정된 축척에 따라 측정 단위 크기 조정(Unit Of Measure resize)을 할 수 있습니다.</td>
+</tr>
+<tr class="row-even"><td><em>SLD</em></td>
+<td>Χ</td>
+<td>이 파라미터로 외부 SLD 문서를 참조하도록 설정합니다. WMS GetMap 작업의 <tt class="docutils literal"><span class="pre">SLD=</span></tt> 파라미터와 동일한 방식으로 동작합니다.</td>
+</tr>
+<tr class="row-odd"><td><em>SLD_BODY</em></td>
+<td>Χ</td>
+<td>이 파라미터를 통해 HTTP-GET 요청에 직접 SLD 문서를 삽입할 수 있습니다. WMS GetMap 작업의 <tt class="docutils literal"><span class="pre">SLD_BODY=</span></tt> 파라미터와 동일한 방식으로 동작합니다.</td>
+</tr>
+<tr class="row-even"><td><em>FORMAT</em></td>
+<td>○</td>
+<td>범례 그래픽을 반환할 파일 형식의 MIME 유형을 설정합니다. WMS GetMap 작업의 <tt class="docutils literal"><span class="pre">FORMAT=</span></tt> 파라미터와 동일한 값을 쓸 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><em>WIDTH</em></td>
+<td>Χ</td>
+<td>반환되는 그래픽의 너비를 픽셀값으로 나타냅니다. 벡터 그래픽도 포함해야 할 세부 수준(level of detail)에 대한 기준으로 이 값을 사용할 수 있습니다.</td>
+</tr>
+<tr class="row-even"><td><em>HEIGHT</em></td>
+<td>Χ</td>
+<td>반환되는 그래픽의 높이를 픽셀값으로 나타냅니다.</td>
+</tr>
+<tr class="row-odd"><td><em>EXCEPTIONS</em></td>
+<td>Χ</td>
+<td>예외를 반환할 형식의 MIME 유형을 설정합니다. WMS GetMap 작업의 <tt class="docutils literal"><span class="pre">EXCEPTIONS=</span></tt> 파라미터와 동일한 값을 쓸 수 있습니다.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="controlling-legend-appearance-with-legend-options">
+<h2>Controlling legend appearance with LEGEND_OPTIONS<a class="headerlink" href="#controlling-legend-appearance-with-legend-options" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 <tt class="docutils literal"><span class="pre">LEGEND_OPTIONS</span></tt> 벤더 파라미터를 통해 범례의 모양을 더 세밀하게 제어할 수 있습니다.
+<tt class="docutils literal"><span class="pre">LEGEND_OPTIONS</span></tt>의 일반적인 구문은 <tt class="docutils literal"><span class="pre">FORMAT_OPTIONS</span></tt>와 동일합니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...&amp;</span><span class="n">LEGEND_OPTION</span><span class="o">=</span><span class="n">key1</span><span class="p">:</span><span class="n">v1</span><span class="p">;</span><span class="n">key2</span><span class="p">:</span><span class="n">v2</span><span class="p">;</span><span class="o">...</span><span class="p">;</span><span class="n">keyn</span><span class="p">:</span><span class="n">vn</span>
+</pre></div>
+</div>
+<p>다음은 <tt class="docutils literal"><span class="pre">LEGEND_OPTIONS</span></tt>에 쓸 수 있는 다양한 파라미터에 대한 설명입니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>fontName (string)</strong> &mdash;규칙 제목을 생성할 때 사용할 폰트명입니다. 서버 상에서 폰트에 접근할 수 있어야 합니다.</li>
+<li><strong>fontStyle (string)</strong> &mdash;텍스트 스타일을 제어하기 위해 이탤릭체나 볼드체로 설정할 수 있습니다. 현재 다른 조합을 사용할 수는 없지만 개발 중에 있습니다.</li>
+<li><strong>fontSize (integer)</strong> &mdash;다양한 텍스트 요소에 대한 폰트 크기를 설정할 수 있습니다. 기본 크기가 12인 점을 유의하십시오</li>
+<li><strong>fontColor (hex)</strong> &mdash;규칙 및 레이블의 텍스트 색상을 설정할 수 있습니다. (색상을 생성하는 추천 방법은 다음에 나옵니다.)
+해당 값은 <tt class="docutils literal"><span class="pre">0xRRGGBB</span></tt> 형식으로 표현됩니다.</li>
+<li><strong>fontAntiAliasing (true/false)</strong> &mdash;&#8220;true&#8221;로 설정하면 규칙 제목에 앤티에일리어싱을 적용합니다.</li>
+<li><strong>bgColor (hex)</strong> &mdash;생성된 범례의 바탕색으로, 해당값은 <tt class="docutils literal"><span class="pre">0xRRGGBB</span></tt> 형식으로 표현됩니다.</li>
+<li><strong>dpi (integer)</strong> &mdash;GetMap이 지원하는 것과 동일한 방식으로 현재 요청에 대한 DPI를 설정합니다.
+90 DPI(기본값)보다 높게 설정하면 현재 축척을 변경하지 않고도 모든 폰트, 심볼, 라인의 폭을 더 굵게 만들어서 출력물에 넣기 적합한 고해상도 버전의 범례를 얻을 수 있습니다.</li>
+<li><strong>forceLabels</strong> &mdash;&#8220;on&#8221;으로 설정하면 하나의 규칙만 사용할 수 있는 경우라도 항상 레이블을 표출합니다.
+&#8220;off&#8221;로 설정하면 복수의 규칙을 사용할 수 있는 경우라도 어떤 레이블도 표출하지 않습니다. 기본값은 &#8220;off&#8221;입니다.</li>
+</ul>
+</div></blockquote>
+<p>다음은 모든 옵션을 포함한 앞과 동일한 요청입니다.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&amp;VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=topp:states&amp;legend_options=fontName:Times%20New%20Roman;fontAntiAliasing:true;fontColor:0x000033;fontSize:14;bgColor:0xFFFFEE;dpi:180</pre>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/legendoptions.png" src="../../../_images/legendoptions.png" />
+<p class="caption"><em>산출물 제어를 위해 LEGEND_OPTIONS 이용하기</em></p>
+</div>
+</div>
+<div class="section" id="raster-legends-explained">
+<h2>Raster Legends Explained<a class="headerlink" href="#raster-legends-explained" title="Permalink to this headline">¶</a></h2>
+<p>이 섹션에서 래스터 데이터에 대해 SLD 1.0 RasterSymbolizer 요소의 다양한 부분에서 가져온 정보를 그리는 범례를 지원하기 위한 작업들을 설명합니다.
+지금까지 래스터 데이터를 위해 범례를 생성할 방법이 없었다는 점을 떠올려보면, SLD 1.0 RasterSymbolizer의 <tt class="docutils literal"><span class="pre">ColorMap</span></tt> 요소와 함께 동작하는
+<tt class="docutils literal"><span class="pre">getLegendGraphic</span></tt> 요청을 실행해서 그 공백을 메워야 할 것입니다.
+<tt class="docutils literal"><span class="pre">ColorMap</span></tt> 유형은 물론 출력에 쓰이는 밴드 등과 같은 스타일에 대한 &#8220;디버그(debug)&#8221; 정보에도 유의하십시오.</p>
+<div class="section" id="what-s-a-raster-legend">
+<h3>What&#8217;s a raster legend<a class="headerlink" href="#what-s-a-raster-legend" title="Permalink to this headline">¶</a></h3>
+<p>다음은 일반적인 범례의 구조를 보여주는 그림으로, 주목해야 할 몇몇 요소들을 파라미터화했습니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/rasterlegend1.png" src="../../../_images/rasterlegend1.png" />
+<p class="caption"><em>일반적인 범례의 구조</em></p>
+</div>
+<p>이 페이지에 첨부된 SLD 파일을 예로 들어보자면, 다음 그림에서 각 행은 다음과 같은 <tt class="docutils literal"><span class="pre">ColorMapEntry</span></tt> 요소에 따라 그려집니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;ColorMapEntry</span> <span class="na">color=</span><span class="s">&quot;#732600&quot;</span> <span class="na">quantity=</span><span class="s">&quot;9888&quot;</span> <span class="na">opacity=</span><span class="s">&quot;1.0&quot;</span> <span class="na">label=</span><span class="s">&quot;&lt;-70 mm&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>래스터 범례 생산자(producer)는 범례를 구축하기 위해 이런 요소들을 이용한다는 사실을 염두에 두고, 다음 내용을 유의하십시오.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Color</strong> 요소의 너비는 <tt class="docutils literal"><span class="pre">GetLegendGraphic</span></tt> 요청이 요청한 너비를 따릅니다.</li>
+<li>설정된 텍스트의 폰트 및 폰트 크기에 따라 레이블 및 규칙의 너비와 높이를 계산합니다. (<strong>현재 새로운 라인 관리를 지원하지 않습니다</strong>.)</li>
+<li><strong>Color</strong> 요소의 높이는 <tt class="docutils literal"><span class="pre">GetLegendGraphic</span></tt> 요청이 요청한 높이를 따르지만,
+다음 <strong>Ramp</strong> 유형에서는 다양한 <strong>Color</strong> 요소를 하나의 긴 띠로 합치기 위해 아래위로 약간 늘렸다는 점을 유의하십시오.</li>
+<li>각 행의 높이는 개별 요소 가운데 최대 높이로 설정됩니다.</li>
+<li>각 행의 너비는 다양한 요소의 너비와 다양한 여백의 합으로 설정됩니다.</li>
+<li><strong>dx,dy</strong> &mdash;각 요소 및 행 사이의 여백은 요청한 너비 및 높이의 15%로 설정됩니다.
+다음 <tt class="docutils literal"><span class="pre">ColorMap</span></tt>의 <strong>Ramp</strong> 유형에서는 연속적인 색상 띠를 생성해야 하기 때문에 <strong>dy</strong>를 무시했다는 점을 유의하십시오.</li>
+<li><strong>mx,my</strong> &mdash;범례의 내부 여백은 범례 전체 크기의 1.5%로 설정됩니다.</li>
+</ul>
+</div></blockquote>
+<p>결론부터 말하자면, 다음 그림이 이 다양한 옵션을 적용한 예시 범례입니다. 이 범례를 생성한 요청은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>http://localhost:8081/geoserver/wms?REQUEST=GetLegendGraphic&amp;VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=100&amp;HEIGHT=20&amp;LAYER=it.geosolutions:di08031_da&amp;LEGEND_OPTIONS=forceRule:True;dx:0.2;dy:0.2;mx:0.2;my:0.2;fontStyle:bold;borderColor:0000ff;border:true;fontColor:ff0000;fontSize:18</pre>
+</div>
+<p>이 요청을 잘 해석할 수 없더라도 너무 걱정하지 마십시오. 여기 사용된 다양한 파라미터들을 곧 설명할 것입니다.
+이 파라미터들을 생성하고 설정하는 방법에 대한 기본적인 정보를 이 <a class="reference external" href="http://geoserver.org/display/GEOSDOC/GetLegendGraphic+Improvements">페이지</a>에서 찾아볼 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/rasterlegend2.png" src="../../../_images/rasterlegend2.png" />
+<p class="caption"><em>래스터 범례의 예시</em></p>
+</div>
+</div>
+<div class="section" id="raster-legends-types">
+<h3>Raster legends&#8217; types<a class="headerlink" href="#raster-legends-types" title="Permalink to this headline">¶</a></h3>
+<p>잘 알려지지는 않았지만 GeoServer는 다음 3가지 유형의 <tt class="docutils literal"><span class="pre">ColorMap</span></tt>을 지원합니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>ramp</strong> &mdash;다양한 <tt class="docutils literal"><span class="pre">ColorMapEntry</span></tt> 요소의 색상 사이의 값에 가중치를 두는 선형 보간(linear interpolation)을 뜻하는 SLD 1.0의 기본값입니다.</li>
+<li><strong>values</strong> &mdash;<tt class="docutils literal"><span class="pre">ColorMapEntry</span></tt>가 설정한 대로 양(量)과 색상을 연결하는 확장 모듈입니다. 설정되지 않은 값은 투명한 픽셀로 변환됩니다.</li>
+<li><strong>classes</strong> &mdash;<tt class="docutils literal"><span class="pre">ColorMapEntry</span></tt> 설정에서 생성된 간격을 바탕으로 순수하게 분류하는 확장 모듈입니다. 설정되지 않은 값은 투명한 픽셀로 변환됩니다.</li>
+</ul>
+</div></blockquote>
+<p>다음은 강수량을 부동 소수점(floating point) 값으로 나타낸 GeoTiff에 첨부 스타일을 사용한 다양한 예시들입니다.</p>
+</div>
+<div class="section" id="colormap-type-is-values">
+<h3>ColorMap type is VALUES<a class="headerlink" href="#colormap-type-is-values" title="Permalink to this headline">¶</a></h3>
+<p>첨부된 rainfall.sld SLD 파일을 참조하십시오.</p>
+<div class="figure align-center">
+<img alt="../../../_images/rasterlegend3.png" src="../../../_images/rasterlegend3.png" />
+<p class="caption"><em>래스터 범례: VALUES 유형</em></p>
+</div>
+</div>
+<div class="section" id="colormap-type-is-classes">
+<h3>ColorMap type is CLASSES<a class="headerlink" href="#colormap-type-is-classes" title="Permalink to this headline">¶</a></h3>
+<p>첨부된 rainfall_classes.sld SLD 파일을 참조하십시오.</p>
+<div class="figure align-center">
+<img alt="../../../_images/rasterlegend4.png" src="../../../_images/rasterlegend4.png" />
+<p class="caption"><em>래스터 범례: CLASSES 유형</em></p>
+</div>
+</div>
+<div class="section" id="colormap-type-is-ramp">
+<h3>ColorMap type is RAMP<a class="headerlink" href="#colormap-type-is-ramp" title="Permalink to this headline">¶</a></h3>
+<p>첨부된 rainfall_classes.sld SLD 파일을 참조하십시오.
+첫번째 범례가 기본 경계(border)를 나타내는 반면 두번째 범례는 렌더링된 텍스트가 가리키는 <tt class="docutils literal"><span class="pre">ColorMapEntry</span></tt>
+설정의 구획(breakpoint) 색상에 대응하는 경계를 그리고 있다는 점을 유의하십시오.
+각 색상 요소가 그리고 있는 <tt class="docutils literal"><span class="pre">ColorMapEntry</span></tt>에서 나온 고정 색상을 보여주는 부분(두번째 범례에서 경계선으로 구분된 최하단)을 가지고 있는 반면
+해당 요소의 상단은 선형 보간법을 사용하고 있다는 사싷실을 드러내주도록 각 요소와 이전 요소를 이어주는 그레이디언트를 가지고 있다는 점을 유의하십시오.</p>
+<div class="figure align-center">
+<img alt="../../../_images/rasterlegend5.png" src="../../../_images/rasterlegend5.png" />
+<p class="caption"><em>래스터 범례: RAMP 유형</em></p>
+</div>
+</div>
+<div class="section" id="the-various-control-parameters-and-how-to-set-them">
+<h3>The various control parameters and how to set them<a class="headerlink" href="#the-various-control-parameters-and-how-to-set-them" title="Permalink to this headline">¶</a></h3>
+<p>범례의 레이아웃과 내용을 제어하는 데 이용할 수 있는 다양한 파라미터들에 대해 간략히 설명합니다.
+(이 <a class="reference external" href="http://geoserver.org/display/GEOSDOC/GetLegendGraphic+Improvements">페이지</a>도 참조하십시오.)
+다음은 다양한 모든 옵션을 포함한 요청의 예시입니다.</p>
+<div class="highlight-python"><pre>http://localhost:8081/geoserver/wms?REQUEST=GetLegendGraphic&amp;VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=100&amp;HEIGHT=20&amp;LAYER=it.geosolutions:di08031_da&amp;LEGEND_OPTIONS=forceRule:True;dx:0.2;dy:0.2;mx:0.2;my:0.2;fontStyle:bold;borderColor:0000ff;border:true;fontColor:ff0000;fontSize:18</pre>
+</div>
+<p>이제 주목해야 할 요소들을 하나씩 살펴보겠습니다. 여기서 <tt class="docutils literal"><span class="pre">GetLegendGraphic</span></tt> 작업의 메커니즘을 논의하지 않는다는 점을 유의하십시오.
+그 메커니즘에 대해 자세히 알고 싶다면 SLD 1.0의 사양을 참조하십시오. 여기에서는 <tt class="docutils literal"><span class="pre">LEGEND_OPTIONS</span></tt> 파라미터에 대해 간략히 논의하겠습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>forceRule (boolean)</strong> &mdash;레이블이 하나도 없는 경우 기본적으로 범례를 작고 조밀하게 유지하기 위해 <tt class="docutils literal"><span class="pre">ColorMapEntry</span></tt>에 대한 규칙을 표출하지 않습니다.
+이 파라미터를 <tt class="docutils literal"><span class="pre">true</span></tt>로 설정하면 해당 규칙을 표출하게 할 수 있습니다.</li>
+<li><strong>dx,dy,mx,my (double)</strong> &mdash;여백 및 각 요소 사이의 버퍼를 설정하는 데 이용할 수 있습니다.</li>
+<li><strong>border (boolean)</strong> &mdash;색상 요소 상에 각 단계를 분명히 하기 위한 경계선을 활성화하거나 비활성화합니다.
+이 예시에서 <tt class="docutils literal"><span class="pre">ColorMap</span></tt>의 <tt class="docutils literal"><span class="pre">ramp</span></tt> 유형에서
+다양한 색상 요소를 나누는 경계선을 <strong>언제나</strong> 활성화하고 있다는 사실을 유의하십시오.</li>
+<li><strong>borderColor (hex)</strong> &mdash;경계선의 색상을 <tt class="docutils literal"><span class="pre">0xRRGGBB</span></tt> 형식으로 설정할 수 있습니다.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../global.html" title="previous chapter">Global variables affecting WMS</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../../wcs/index.html" title="next chapter">Web Coverage Service</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">GetLegendGraphic</a><ul>
+<li><a class="reference internal" href="#controlling-legend-appearance-with-legend-options">Controlling legend appearance with LEGEND_OPTIONS</a></li>
+<li><a class="reference internal" href="#raster-legends-explained">Raster Legends Explained</a><ul>
+<li><a class="reference internal" href="#what-s-a-raster-legend">What&#8217;s a raster legend</a></li>
+<li><a class="reference internal" href="#raster-legends-types">Raster legends&#8217; types</a></li>
+<li><a class="reference internal" href="#colormap-type-is-values">ColorMap type is VALUES</a></li>
+<li><a class="reference internal" href="#colormap-type-is-classes">ColorMap type is CLASSES</a></li>
+<li><a class="reference internal" href="#colormap-type-is-ramp">ColorMap type is RAMP</a></li>
+<li><a class="reference internal" href="#the-various-control-parameters-and-how-to-set-them">The various control parameters and how to set them</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../global.html" title="previous chapter">Global variables affecting WMS</a></li>
+            <li>다음: <a href="../../wcs/index.html" title="next chapter">Web Coverage Service</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/services/wms/get_legend_graphic/legendgraphic.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

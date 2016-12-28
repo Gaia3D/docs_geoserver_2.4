@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WMS configuration &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Map Service" href="index.html" />
+      <link rel="next" title="Global variables affecting WMS" href="global.html" />
+      <link rel="prev" title="WMS vendor parameters" href="vendor.html" />
+</head>
+<body class="services/wms/configuration">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Map Service</a> &raquo;</li>
+  <li>WMS configuration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="global.html" title="Global variables affecting WMS"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="vendor.html" title="WMS vendor parameters"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wms-configuration">
+<span id="id1"></span><h1>WMS configuration<a class="headerlink" href="#wms-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="layer-groups">
+<h2>Layer Groups<a class="headerlink" href="#layer-groups" title="Permalink to this headline">¶</a></h2>
+<p>레이어 그룹은 하나의 레이어명으로 부를 수 있는 레이어들의 무리입니다.
+예를 들어 layer_A, layer_B, layer_C라는 3개의 레이어를 하나의 &#8220;레이어 그룹&#8221; 레이어로 묶은 다음
+해당 그룹명으로 WMS GetMap 요청을 보내면 해당 3개 레이어의 맵을 반환받게 됩니다.</p>
+<p>웹 관리자 인터페이스에서 레이어 그룹을 설정하는 방법은 <a class="reference internal" href="../../webadmin/data/layergroups.html#webadmin-layergroups"><em>Layer Groups</em></a>를 참조하십시오.</p>
+</div>
+<div class="section" id="request-limits">
+<span id="wms-configuration-limits"></span><h2>Request limits<a class="headerlink" href="#request-limits" title="Permalink to this headline">¶</a></h2>
+<p>요청 제한 옵션으로 관리자가 각 WMS <tt class="docutils literal"><span class="pre">GetMap</span></tt> 요청이 소비하는 리소스를 제한할 수 있습니다.</p>
+<p>다음은 옵션명, 설명, 해당 옵션을 사용할 수 있는 GeoServer의 최저 버전을 보여주는 표입니다. (최저 버전 이전의 버전은 해당 옵션을 설정해도 무시합니다.)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="80%" />
+<col width="10%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+<td><strong>버전</strong></td>
+</tr>
+<tr class="row-even"><td><strong>maxRequestMemory</strong></td>
+<td>단일 GetMap 요청이 사용할 수 있는 최대 메모리 용량을 (KB 단위로) 설정합니다.
+요청을 실행하기 전에 요청한 형식을 산출하는 데 필요한 메모리 용량을 측정해서 제한 용량을 확인합니다.
+예를 들면 이미지 형식의 경우 렌더링에 필요한 메모리 용량을 기반으로 측정합니다.
+(필요한 메모리 용량은 이미지 크기, 픽셀의 비트 심도(bit depth), 요청 축척에서 활성화된 FeatureTypeStyles의 개수로 정해집니다.)
+측정된 메모리 용량이 제한 용량 밑이면 요청을 실행하고, 아니라면 취소합니다.</td>
+<td>1.7.5</td>
+</tr>
+<tr class="row-odd"><td><strong>maxRenderingTime</strong></td>
+<td>GeoServer가 요청을 처리하는 데 들이는 최대 시간을 (초 단위로) 설정합니다.
+이 옵션은 요청의 &#8220;보이지 않는 처리 과정(blind processing)&#8221; 부분, 즉 데이터를 읽고 산출 결과를 계산하는 데 (동시에 처리될 수도 있습니다) 들어가는 시간을 제한합니다.
+이 실행 시간이 제한 시간을 넘기면 요청을 취소합니다.
+클라이언트에게 반환할 결과물을 쓰는(write) 데 필요한 시간은 이 파라미터의 영향을 받지 않습니다. 서버와 클라이언트 사이의 (알 수 없는) 네트워크 대기 시간에 따라 결정되기 때문입니다.
+예를 들어 PNG/JPEG 이미지를 생성하는 경우 이 옵션이 데이터 읽기 및 렌더링 시간을 제한할 수 있지만 산출 이미지를 쓰는 데 걸리는 시간은 제한하지 않습니다.</td>
+<td>1.7.5</td>
+</tr>
+<tr class="row-even"><td><strong>maxRenderingErrors</strong></td>
+<td>GetMap 요청이 허용하는 최대 렌더링 오류 발생 회수를 설정합니다.
+기본적으로 GetMap 요청은 유효하지 않은 피처나 재투영 오류 등을 무시하며 결과물을 서비스하기 위해 최선을 다 합니다.
+무시할 오류의 개수에 제한을 두면 문제 발생 시 더 쉽게 알아차릴 수 있고, 처리하고 로그에 기록해야 할 오류를 줄여 CPU 사이클(cycle)을 보존할 수 있습니다.</td>
+<td>1.7.5</td>
+</tr>
+</tbody>
+</table>
+<p>각 제한의 기본값은 <tt class="docutils literal"><span class="pre">0</span></tt>으로, 즉 제한을 적용하지 않도록 설정하고 있습니다.</p>
+<p>요청 제한 가운데 하나라도 초과할 경우, GetMap 작업을 취소하고 클라이언트에게 <tt class="docutils literal"><span class="pre">ServiceException</span></tt>을 반환합니다.</p>
+<p>앞의 제한을 설정할 때 최고(peak) 조건을 고려하는 편이 좋습니다. 예를 들어 일반적인 상황에서라면 GetMap 요청 처리에 1초도 걸리지 않습니다.
+과부하가 걸려 있다면 좀 더 오래 걸릴 수도 있지만, 요청을 처리하는 데 30분이나 걸리는 상황은 보통 바람직하지 않습니다.</p>
+<p>다음 표에서 각 요청 제한에 대한 합리적인 값의 예시를 보여줍니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="10%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>값</strong></td>
+<td><strong>근거</strong></td>
+</tr>
+<tr class="row-even"><td>maxRequestMemory</td>
+<td>16384</td>
+<td>2048x2048 픽셀 크기의 이미지를 (전체 색상 및 투명도를 지원할 수 있는) 픽셀 당 4바이트로 렌더링하거나, GeoWebCache나 TileCache 사용 시 8x8 메타 타일을 렌더링하는 데 16MB면 충분합니다.
+렌더링 처리 과정에서 SLD 안의 각 FeatureTypeStyle에 대해 개별 메모리 버퍼를 사용하기 때문에 최대 이미지 크기에도 영향을 미친다는 점을 유의하십시오.
+예를 들면 SLD가 고속도로를 위한 2중 라인을 그리기 위해 2개의 FeatureTypeStyle 요소를 담고 있는 경우, 최대 이미지 크기는 1448x1448 픽셀로 제한됩니다.
+(산출 이미지의 크기에 따라 필요한 메모리가 증가하므로, 메모리를 반으로 줄이면 이미지 크기가 약 30% 정도 감소합니다.)</td>
+</tr>
+<tr class="row-odd"><td>maxRenderingTime</td>
+<td>120</td>
+<td>어떤 요청이 2분 동안 처리되고 있다면 현재 서버 부하에 상관없이 너무 많은 피처를 렌더링하고 있다는 의미입니다.
+적합한 축척 의존성(scale dependency)을 갖추지 못 한 스타일을 적용한 대용량 레이어에 대해 요청을 전송한 경우 이런 일이 일어날 수도 있습니다.</td>
+</tr>
+<tr class="row-even"><td>maxRenderingErrors</td>
+<td>100</td>
+<td>오류가 100번 이상 발생한다는 것은 대용량 데이터를 산출물 크기(extent)에 적합하지 않은 투영체로 재투영하려 해서 수많은 재투영 실패가 일어나기 때문일 수도 있습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="vendor.html" title="previous chapter">WMS vendor parameters</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="global.html" title="next chapter">Global variables affecting WMS</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WMS configuration</a><ul>
+<li><a class="reference internal" href="#layer-groups">Layer Groups</a></li>
+<li><a class="reference internal" href="#request-limits">Request limits</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="vendor.html" title="previous chapter">WMS vendor parameters</a></li>
+            <li>다음: <a href="global.html" title="next chapter">Global variables affecting WMS</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wms/configuration.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

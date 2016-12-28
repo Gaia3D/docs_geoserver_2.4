@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Coverage stores &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="REST configuration API reference" href="index.html" />
+      <link rel="next" title="Coverages" href="coverages.html" />
+      <link rel="prev" title="Feature types" href="featuretypes.html" />
+</head>
+<body class="rest/api/coveragestores">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">REST configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">REST configuration API reference</a> &raquo;</li>
+  <li>Coverage stores</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="coverages.html" title="Coverages"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="featuretypes.html" title="Feature types"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="coverage-stores">
+<span id="rest-api-coveragestores"></span><h1>Coverage stores<a class="headerlink" href="#coverage-stores" title="Permalink to this headline">¶</a></h1>
+<p><tt class="docutils literal"><span class="pre">커버리지 저장소(coverage store)</span></tt>는 래스터 형식의 공간 데이터를 담고 있습니다.</p>
+<div class="section" id="workspaces-ws-coveragestores-format">
+<h2><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores[.&lt;format&gt;]</span></tt><a class="headerlink" href="#workspaces-ws-coveragestores-format" title="Permalink to this headline">¶</a></h2>
+<p>설정된 작업공간의 모든 커버리지 저장소를 제어합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>작업공간 <tt class="docutils literal"><span class="pre">ws</span></tt>의 모든 커버리지 저장소를 나열합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>새로운 커버리지 저장소를 생성합니다.</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="workspaces-ws-coveragestores-cs-format">
+<h2><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;[.&lt;format&gt;]</span></tt><a class="headerlink" href="#workspaces-ws-coveragestores-cs-format" title="Permalink to this headline">¶</a></h2>
+<p>설정된 작업공간의 특정 커버리지 저장소를 제어합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+<th class="head">파라미터</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>커버리지 저장소 <tt class="docutils literal"><span class="pre">cs</span></tt>를 반환합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>커버리지 저장소 <tt class="docutils literal"><span class="pre">cs</span></tt>를 변경합니다.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>커버리지 저장소 <tt class="docutils literal"><span class="pre">cs</span></tt>를 삭제합니다.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#rest-api-coveragestores-recurse"><em>recurse</em></a></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="exceptions">
+<h3>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">예외</th>
+<th class="head">상태 코드</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>존재하지 않는 커버리지 저장소에 대한 GET</td>
+<td>404</td>
+</tr>
+<tr class="row-odd"><td>커버리지 저장소의 명칭을 변경하는 PUT</td>
+<td>403</td>
+</tr>
+<tr class="row-even"><td>커버리지 저장소의 작업공간을 변경하는 PUT</td>
+<td>403</td>
+</tr>
+<tr class="row-odd"><td>설정된 커버리지를 담고 있는 커버리지 저장소에 대한 DELETE</td>
+<td>403</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="recurse">
+<span id="rest-api-coveragestores-recurse"></span><h4><tt class="docutils literal"><span class="pre">recurse</span></tt><a class="headerlink" href="#recurse" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">recurse</span></tt> 파라미터는 설정된 커버리지 저장소가 참조하는 모든 레이어를 반복적으로 삭제합니다.
+이 파라미터에 쓸 수 있는 값은 &#8220;true&#8221; 혹은 &#8220;false&#8221;로, 기본값은 &#8220;false&#8221;입니다.</p>
+</div>
+</div>
+</div>
+<div class="section" id="workspaces-ws-coveragestores-cs-file-extension">
+<h2><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/file[.&lt;extension&gt;]</span></tt><a class="headerlink" href="#workspaces-ws-coveragestores-cs-file-extension" title="Permalink to this headline">¶</a></h2>
+<p>이 종단점(endpoint)은 공간 데이터를 담고 있는 파일을 (POST 또는 PUT을 통해) 기존 커버리지 저장소에 추가할 수 있고, 또 커버리지 저장소가 없을 경우 새 커버리지 저장소를 생성하여 추가할 수 있습니다.
+커버리지 저장소가 다중 커버리지(NetCDF 파일의 mosaic 등)를 담고 있을 경우, 파라미터 <tt class="docutils literal"><span class="pre">configure=false</span></tt>가 설정되지 않은 이상 모든 커버리지를 설정합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+<th class="head">파라미터</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td><em>이제 사용되지 않습니다(deprecated)</em>. 커버리지 저장소의 기반이 되는 파일을 MIME 형식 <tt class="docutils literal"><span class="pre">application/zip</span></tt>을 통해 ZIP 파일로 읽어들입니다.</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>(GeoTiff 등과 같은) 단순한 커버리지 저장소의 경우 405를 반환하고,
+(mosaic 등과 같은) 구조적인 커버리지 저장소의 경우 설정된 파일을 거둬들인(harvest) 다음 저장소와 통합(integrate)합니다.
+거둬들인(harvest)다는 것은 저장소 독립적이라는 뜻으로, 모자이크의 경우 새로운 파일을 모자이크의 새로운 입자(granule)로 추가하며, 기존 파일의 속성을 업데이트합니다. 다른 저장소에서는 다른 양상을 보일 수도 있습니다.</td>
+<td>405 (단순한 커버리지 저장소의 경우), 200 (구조적 저장소이며 하베스트(harvest) 작업이 성공했을 경우)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#rest-api-coveragestores-recalculate"><em>recalculate</em></a></td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>커버리지 저장소 <tt class="docutils literal"><span class="pre">cs</span></tt>의 파일을 덮어쓰거나 새로운 저장소를 생성합니다.</td>
+<td>200</td>
+<td><a class="reference internal" href="#rest-api-coveragestores-file-put"><em>다음 주석을 참조하십시오</em></a>.</td>
+<td>:set spell spelllang=en_us</td>
+<td><a class="reference internal" href="#rest-api-coveragestores-configure"><em>configure</em></a>, <a class="reference internal" href="#rest-api-coveragestores-coveragename"><em>coverageName</em></a></td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note" id="rest-api-coveragestores-file-put">
+<p class="first admonition-title">주석</p>
+<p>PUT을 통해 단독 파일(standalone) 또는 ZIP 압축 파일로 커버리지 저장소에 파일을 추가할 수 있습니다. 단독 파일은 GeoTIFF 저장소처럼 단일 파일을 이용하는 커버리지 저장소에만 적합합니다.
+ImageMosaic 저장소처럼 복수의 파일을 이용하는 커버리지 저장소에는 ZIP 파일로 파일을 보내야 합니다.</p>
+<p class="last">단독 파일을 업로드할 경우, 파일 형식에 일치하는 <tt class="docutils literal"><span class="pre">Content-type</span></tt>을 설정하십시오.
+ZIP 파일을 업로드할 경우, <tt class="docutils literal"><span class="pre">Content-type</span></tt>을 <tt class="docutils literal"><span class="pre">application/zip</span></tt>으로 설정하십시오.</p>
+</div>
+<div class="section" id="id1">
+<h3>Exceptions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">예외</th>
+<th class="head">상태 코드</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>존재하지 않는 커버리지 저장소에 대한 GET</td>
+<td>404</td>
+</tr>
+<tr class="row-odd"><td>파일 기반이 아닌 커버리지 저장소에 대한 GET</td>
+<td>404</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="extension">
+<h4><tt class="docutils literal"><span class="pre">extension</span></tt><a class="headerlink" href="#extension" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">extension</span></tt> 파라미터가 커버리지 저장소의 형식을 설정합니다. 다음과 같은 확장자를 지원합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">확장자</th>
+<th class="head">커버리지 저장소</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>geotiff</td>
+<td>GeoTIFF</td>
+</tr>
+<tr class="row-odd"><td>worldimage</td>
+<td>지리정보 참조(georeferenced) 이미지 (JPEG, PNG, TIFF)</td>
+</tr>
+<tr class="row-even"><td>imagemosaic</td>
+<td>Image mosaic</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="configure">
+<span id="rest-api-coveragestores-configure"></span><h4><tt class="docutils literal"><span class="pre">configure</span></tt><a class="headerlink" href="#configure" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">configure</span></tt> 파라미터는 파일 업로드에 대한 커버리지 저장소 설정을 제어합니다. 다음 3가지 값 가운데 하나를 쓸 수 있습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">first</span></tt> —(<em>기본값</em>) 커버리지 저장소에서 사용할 수 있는 첫번째 커버리지만 설정합니다.</li>
+<li><tt class="docutils literal"><span class="pre">none</span></tt> —어떤 커버리지도 설정하지 않습니다.</li>
+<li><tt class="docutils literal"><span class="pre">all</span></tt> —모든 커버리지를 설정합니다.</li>
+</ul>
+</div>
+<div class="section" id="coveragename">
+<span id="rest-api-coveragestores-coveragename"></span><h4><tt class="docutils literal"><span class="pre">coverageName</span></tt><a class="headerlink" href="#coveragename" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">coverageName</span></tt> 파라미터는 커버리지 저장소 내 커버리지의 명칭을 설정합니다.
+이 파라미터는 <tt class="docutils literal"><span class="pre">configure</span></tt> 파라미터 값이 &#8220;none&#8221;이 아닐 경우에만 의미가 있습니다.
+이 파라미터를 설정하지 않으면, 산출 커버리지는 커버리지 저장소와 동일한 명칭을 받게 됩니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">현재 버전에서 커버리지 저장소와 커버리지의 관계는 1대1입니다. 하지만 다중차원(multidimensional) 커버리지를 지원할 예정이므로, 이 파라미터도 바뀔 수 있습니다.</p>
+</div>
+</div>
+<div class="section" id="recalculate">
+<span id="rest-api-coveragestores-recalculate"></span><h4><tt class="docutils literal"><span class="pre">recalculate</span></tt><a class="headerlink" href="#recalculate" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">recalculate</span></tt> 파라미터는 커버리지의 범위(bounding box)들 가운데 하나라도 재계산해야 할지 설정합니다.
+필요한 경우 커버리지의 일부 속성은 자동적으로 재계산됩니다. 특히 투영체 혹은 투영 정책이 변경되었을 경우 자체(native) 범위를 재계산합니다.
+자체 범위를 재계산했을 경우 또는 새로운 자체 범위가 요청에 명확하게 들어 있을 경우 경도/위도(lat/long) 범위를 재계산합니다.
+(자체 범위와 경도/위도 범위가 요청에 명확하게 들어 있을 경우 자동적으로 재계산하지 않습니다.)
+또 클라이언트가 다음과 같이 <tt class="docutils literal"><span class="pre">recalculate</span></tt> 파라미터에 쉼표로 구분된 명칭을 포함시켜 고정 항목 집합(fixed set of fields)을 계산하도록 명확하게 요청할 수도 있습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">recalculate=</span></tt> —(값이 없는 파라미터) 투영체, 투영 정책 등에 상관없이 어떤 항목(field)도 계산하지 않습니다.
+대용량 데이터셋을 작업할 경우 재계산으로 느려지는 것을 막고 싶을 때 유용합니다.</li>
+<li><tt class="docutils literal"><span class="pre">recalculate=nativebbox</span></tt> —자체 범위를 재계산하지만 경도/위도(lat/long) 범위는 재계산하지 않습니다.</li>
+<li><tt class="docutils literal"><span class="pre">recalculate=nativebbox,latlonbbox</span></tt> —자체 범위 및 경도/위도(lat/long) 범위를 모두 재계산합니다.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="featuretypes.html" title="previous chapter">Feature types</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="coverages.html" title="next chapter">Coverages</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Coverage stores</a><ul>
+<li><a class="reference internal" href="#workspaces-ws-coveragestores-format"><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores[.&lt;format&gt;]</span></tt></a></li>
+<li><a class="reference internal" href="#workspaces-ws-coveragestores-cs-format"><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;[.&lt;format&gt;]</span></tt></a><ul>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#parameters">Parameters</a><ul>
+<li><a class="reference internal" href="#recurse"><tt class="docutils literal"><span class="pre">recurse</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#workspaces-ws-coveragestores-cs-file-extension"><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/file[.&lt;extension&gt;]</span></tt></a><ul>
+<li><a class="reference internal" href="#id1">Exceptions</a></li>
+<li><a class="reference internal" href="#id2">Parameters</a><ul>
+<li><a class="reference internal" href="#extension"><tt class="docutils literal"><span class="pre">extension</span></tt></a></li>
+<li><a class="reference internal" href="#configure"><tt class="docutils literal"><span class="pre">configure</span></tt></a></li>
+<li><a class="reference internal" href="#coveragename"><tt class="docutils literal"><span class="pre">coverageName</span></tt></a></li>
+<li><a class="reference internal" href="#recalculate"><tt class="docutils literal"><span class="pre">recalculate</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="featuretypes.html" title="previous chapter">Feature types</a></li>
+            <li>다음: <a href="coverages.html" title="next chapter">Coverages</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/rest/api/coveragestores.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

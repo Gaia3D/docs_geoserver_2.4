@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Caching defaults &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Tile Caching" href="index.html" />
+      <link rel="next" title="Gridsets" href="gridsets.html" />
+      <link rel="prev" title="Demo page" href="demopage.html" />
+</head>
+<body class="webadmin/tilecache/defaults">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Tile Caching</a> &raquo;</li>
+  <li>Caching defaults</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="gridsets.html" title="Gridsets"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="demopage.html" title="Demo page"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="caching-defaults">
+<span id="webadmin-tilecaching-defaults"></span><h1>Caching defaults<a class="headerlink" href="#caching-defaults" title="Permalink to this headline">¶</a></h1>
+<p>Caching Defaults 페이지에서 GeoServer의 타일 캐시 작업(tile caching) 기능으로 내장된 GeoWebCache에 대한 공통 설정 옵션을 설명합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 내장된 버전에 대해 더 자세히 알고 싶다면 <a class="reference internal" href="../../geowebcache/index.html#geowebcache"><em>Caching with GeoWebCache</em></a> 섹션을 참조하십시오.</p>
+</div>
+<div class="section" id="gwc-provided-services">
+<h2>GWC Provided Services<a class="headerlink" href="#gwc-provided-services" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer의 종말점(endpoint) 외에 GeoWebCache도 OGC 서비스를 위한 종말점을 추가로 제공합니다.
+예를 들면 GeoServer WMS의 종말점은 다음과 같은 주소에서 찾을 수 있으며,</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/wms?...</pre>
+</div>
+<p>GeoWebCache WMS의 종말점은 다음과 같은 주소에서 찾을 수 있습니다.</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/gwc/service/wms?...</pre>
+</div>
+<div class="figure">
+<img alt="../../_images/defaults_services.png" src="../../_images/defaults_services.png" />
+<p class="caption"><em>제공되는 서비스들</em></p>
+</div>
+<p>다음 설정들은 GeoWebCache가 활성화할 수 있는 각각의 서비스들을 설명합니다.</p>
+<div class="section" id="enable-direct-integration-with-geoserver-wms">
+<h3>Enable direct integration with GeoServer WMS<a class="headerlink" href="#enable-direct-integration-with-geoserver-wms" title="Permalink to this headline">¶</a></h3>
+<p>Direct integration 옵션으로 GeoServer를 통해 서비스되는 WMS 요청을 GeoWebCache가 받아서 처리하는 것처럼 캐시할 수 있습니다.
+타일 서버를 사용할 때의 모든 장점을 그대로 지니면서도, 좀 더 유연한 GeoServer WMS를 여전히 대체 시스템으로 사용할 수 있습니다.
+이 기능에 대해 자세히 알고 싶다면 <a class="reference internal" href="../../geowebcache/using.html#gwc-using"><em>Using GeoWebCache</em></a> 섹션을 참조하세요.</p>
+<p>Direct integration 옵션을 사용하면 <tt class="docutils literal"><span class="pre">tiled=true</span></tt> 파라미터를 담고 있는 모든 표준 WMS 요청에 대해 모든 필수 파라미터들을 만족시키면서 타일 캐시 작업을 할 수 있습니다.</p>
+<p>이 설정은 기본적으로 비활성화되어 있습니다. 이 옵션을 활성화할 경우, 타일이 무한히 저장되는 일을 막기 위해 <a class="reference internal" href="diskquotas.html#webadmin-tilecaching-diskquotas"><em>Disk Quotas</em></a> 설정도 활성화하는 편이 좋습니다.</p>
+</div>
+<div class="section" id="enable-wms-c-service">
+<h3>Enable WMS-C Service<a class="headerlink" href="#enable-wms-c-service" title="Permalink to this headline">¶</a></h3>
+<p>Cached Web Map Service(WMS-C)를 활성화합니다. 이 설정을 활성화하면 GeoWebCache가 고유한 WMS-C 종말점에 응답할 것입니다.</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/gwc/service/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;TILED=true&amp;...</pre>
+</div>
+<p>이 서비스를 비활성화시키면, 역량 문서를 호출했을 때 <tt class="docutils literal"><span class="pre">Service</span> <span class="pre">is</span> <span class="pre">disabled</span></tt> 메시지를 받게 됩니다.</p>
+</div>
+<div class="section" id="enable-tms-service">
+<h3>Enable TMS Service<a class="headerlink" href="#enable-tms-service" title="Permalink to this headline">¶</a></h3>
+<p>GeoWebCache의 Tiled Map Service(TMS) 종말점을 활성화합니다. TMS 서비스를 활성화하면 GeoWebCache가 고유한 TMS 종말점에 응답할 것입니다.</p>
+<div class="highlight-python"><pre>http://GEOSERVER/URL/gwc/service/tms/1.0.0</pre>
+</div>
+<p>이 서비스를 비활성화시키면, 역량 문서를 호출했을 때 <tt class="docutils literal"><span class="pre">Service</span> <span class="pre">is</span> <span class="pre">disabled</span></tt> 메시지를 받게 됩니다.</p>
+</div>
+<div class="section" id="enable-wmts-service">
+<h3>Enable WMTS Service<a class="headerlink" href="#enable-wmts-service" title="Permalink to this headline">¶</a></h3>
+<p>GeoWebCache의 Web Map Tiled Service(WMTS) 종말점을 활성화합니다. 이 설정을 활성화하면 GeoWebCache가 고유한 WMTS 종말점에 응답할 것입니다.</p>
+<div class="highlight-python"><pre>http://GEOSERVER/URL/gwc/service/wmts?...</pre>
+</div>
+<p>이 서비스를 비활성화시키면, 역량 문서를 호출했을 때 <tt class="docutils literal"><span class="pre">Service</span> <span class="pre">is</span> <span class="pre">disabled</span></tt> 메시지를 받게 됩니다.</p>
+</div>
+</div>
+<div class="section" id="default-caching-options-for-geoserver-layers">
+<h2>Default Caching Options for GeoServer Layers<a class="headerlink" href="#default-caching-options-for-geoserver-layers" title="Permalink to this headline">¶</a></h2>
+<p>이 섹션에서 GeoServer의 타일 캐시에 대한 여러 기본값 및 다른 공통 옵션의 설정에 대해 설명합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/defaults_options.png" src="../../_images/defaults_options.png" />
+<p class="caption"><em>Default Caching 옵션</em></p>
+</div>
+<div class="section" id="automatically-configure-a-geowebcache-layer-for-each-new-layer-or-layer-group">
+<h3>Automatically configure a GeoWebCache layer for each new layer or layer group<a class="headerlink" href="#automatically-configure-a-geowebcache-layer-for-each-new-layer-or-layer-group" title="Permalink to this headline">¶</a></h3>
+<p>기본적으로 활성화되어 있는 이 설정은 GeoServer의 레이어를 내장된 GeoWebCache를 통해 어떻게 다룰 것인지 결정합니다.
+이 설정을 활성화하면 GeoServer가 새로운 레이어나 레이어 그룹을 생산할 때마다 GeoWebCache의 레이어 목록에 추가됩니다.
+이 설정으로 GeoWebCache 카탈로그(catalog)의 동기화를 유지하십시오. (이 설정은 기본적으로 활성화되어 있습니다.)</p>
+</div>
+<div class="section" id="automatically-cache-non-default-styles">
+<h3>Automatically cache non-default styles<a class="headerlink" href="#automatically-cache-non-default-styles" title="Permalink to this headline">¶</a></h3>
+<p>기본적으로, 해당 레이어에 대해 기본 스타일을 사용한 요청만 캐시됩니다.
+이 설정을 활성화하면 표준이 아닌 스타일을 적용한 레이어라 할지라도 해당 레이어에 대한 모든 요청을 캐시하게 됩니다.
+디스크 용량이 부족하다거나 기본 스타일 딱 하나만 중요한 경우라면 이 설정을 비활성화시키는 편이 좋습니다.</p>
+</div>
+<div class="section" id="default-metatile-size">
+<h3>Default metatile size<a class="headerlink" href="#default-metatile-size" title="Permalink to this headline">¶</a></h3>
+<p>메타 타일(metatile)은 여러 타일이 모여 큰 타일 하나가 된 것을 말합니다.
+이 큰 메타 타일은 표준 타일로서 서비스되기 (그리고 캐시되기) 전에 생성된 다음 다시 작게 나뉩니다.
+레이블(label)이나 복잡한 형태의 도형이 타일 경계선 위에 있을 경우 잘리거나 변형될 수도 있는데, 메타 타일을 사용하면 이를 예방할 수 있습니다.
+메타 타일 작업으로 이런 타일 경계 문제가 크게 줄어듭니다.</p>
+<p>더구나 메타 타일 작업 시 전체 맵을 단일 타일들로 렌더링하는 경우와 비교했을 때, 대부분의 경우 캐시를 시드하는 데 걸리는 전체 시간이 줄어듭니다.
+실제로 캐시를 시드하는 데 걸리는 시간을 줄이는 데 큰 메타 타일 요소를 사용하는 것이 좋은 방법입니다.</p>
+<p>메타 타일 작업 시 대용량 데이터일 경우 메모리 소비량이 문제가 될 수도 있다는 단점이 있습니다.</p>
+<p>메타 타일의 기본 크기를 설정할 수 있습니다.
+GeoServer는 초기값으로 메타 타일의 크기를 <strong>4x4</strong>로 설정해놓고 있는데, 이 크기는 작업 속도, 메모리 사용량, 렌더링 정확도를 고려한 결과입니다.</p>
+</div>
+<div class="section" id="default-gutter-size">
+<h3>Default gutter size<a class="headerlink" href="#default-gutter-size" title="Permalink to this headline">¶</a></h3>
+<p>Gutter Size는 타일을 생성할 때 사용되는 여분 공간의 (픽셀) 크기를 말합니다.
+레이블과 피처가 타일 경계 상에 있기 때문에 부정확하게 렌더링되는 문제를 줄이려면 메타 타일 옵션과 함께 이 옵션을 사용하십시오.</p>
+</div>
+<div class="section" id="default-cache-formats">
+<h3>Default Cache Formats<a class="headerlink" href="#default-cache-formats" title="Permalink to this headline">¶</a></h3>
+<p>타일 작업 요청이 들어왔을 때 캐시될 수 있는 이미지 포맷 기본값을 설정합니다.
+타일 저장 시 사용할 수 있는 이미지 포맷은 4가지 있습니다.</p>
+<ul class="simple">
+<li>PNG (24-bit PNG)</li>
+<li>PNG8 (8-bit PNG)</li>
+<li>JPEG</li>
+<li>GIF</li>
+</ul>
+<p>기본 설정은 벡터 레이어, 래스터 레이어, 레이어 그룹으로 다시 나뉩니다. 이 3가지 레이어형에 대해 앞 4가지 포맷 가운데 무엇이든 선택할 수 있습니다.
+GeoServer를 통해 이 레이어/이미지 포맷 조합에 해당되지 않는 요청이 들어왔을 경우 캐시되지 않고, GeoWebCache 종말점으로 들어왔을 경우 에러 메시지를 반환합니다.</p>
+<p><a class="reference internal" href="../data/layers.html#webadmin-layers"><em>레이어 속성을 편집하면</em></a> 이 기본값들을 레이어별로 재설정할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/defaults_formats.png" src="../../_images/defaults_formats.png" />
+<p class="caption"><em>이미지 포맷 기본값</em></p>
+</div>
+</div>
+<div class="section" id="default-cached-gridsets">
+<h3>Default Cached Gridsets<a class="headerlink" href="#default-cached-gridsets" title="Permalink to this headline">¶</a></h3>
+<p>이 섹션에서 캐시된 레이어별로 자동으로 설정되는 그리드셋에 대해 설명합니다.
+미리 설정된 그리드셋이 몇 개 있지만, 기본적으로 2개만 활성화되어 있습니다. 가장 흔하고 일반적으로 사용되는 그리드셋은 다음과 같습니다.</p>
+<ul class="simple">
+<li>EPSG:4326 (geographic) : 22개의 최대 줌 레벨 및 256x256 픽셀 타일 크기</li>
+<li>EPSG:900913 (spherical Mercator) : 31개의 최대 줌 레벨 및 256x256 픽셀 타일 크기</li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/defaults_gridsets.png" src="../../_images/defaults_gridsets.png" />
+<p class="caption"><em>기본 그리드셋</em></p>
+</div>
+<p>그리드셋을 기본 그리드셋 목록에 추가하려면 <em class="guilabel">Add default grid set</em> 메뉴를 고른 다음 Add 아이콘(더하기 표시가 있는 녹색 원 모양)을 클릭합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/addexistinggridset.png" src="../../_images/addexistinggridset.png" />
+<p class="caption"><em>기본 그리드셋 목록에 그리드셋을 추가하기</em></p>
+</div>
+<p>그리드셋은 <a class="reference internal" href="gridsets.html#webadmin-tilecaching-gridsets"><em>Gridsets</em></a> 페이지에서 더 자세히 설명하고 있습니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="demopage.html" title="previous chapter">Demo page</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="gridsets.html" title="next chapter">Gridsets</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Caching defaults</a><ul>
+<li><a class="reference internal" href="#gwc-provided-services">GWC Provided Services</a><ul>
+<li><a class="reference internal" href="#enable-direct-integration-with-geoserver-wms">Enable direct integration with GeoServer WMS</a></li>
+<li><a class="reference internal" href="#enable-wms-c-service">Enable WMS-C Service</a></li>
+<li><a class="reference internal" href="#enable-tms-service">Enable TMS Service</a></li>
+<li><a class="reference internal" href="#enable-wmts-service">Enable WMTS Service</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#default-caching-options-for-geoserver-layers">Default Caching Options for GeoServer Layers</a><ul>
+<li><a class="reference internal" href="#automatically-configure-a-geowebcache-layer-for-each-new-layer-or-layer-group">Automatically configure a GeoWebCache layer for each new layer or layer group</a></li>
+<li><a class="reference internal" href="#automatically-cache-non-default-styles">Automatically cache non-default styles</a></li>
+<li><a class="reference internal" href="#default-metatile-size">Default metatile size</a></li>
+<li><a class="reference internal" href="#default-gutter-size">Default gutter size</a></li>
+<li><a class="reference internal" href="#default-cache-formats">Default Cache Formats</a></li>
+<li><a class="reference internal" href="#default-cached-gridsets">Default Cached Gridsets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="demopage.html" title="previous chapter">Demo page</a></li>
+            <li>다음: <a href="gridsets.html" title="next chapter">Gridsets</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/tilecache/defaults.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

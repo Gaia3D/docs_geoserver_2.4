@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Manually editing the EPSG database &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Coordinate Reference System Handling" href="index.html" />
+      <link rel="next" title="Advanced log configuration" href="../logging.html" />
+      <link rel="prev" title="Coordinate Operations" href="coordtransforms.html" />
+</head>
+<body class="advanced/crshandling/manualepsg">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Advanced GeoServer Configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Coordinate Reference System Handling</a> &raquo;</li>
+  <li>Manually editing the EPSG database</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../logging.html" title="Advanced log configuration"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="coordtransforms.html" title="Coordinate Operations"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="manually-editing-the-epsg-database">
+<span id="crs-manual-epsg"></span><h1>Manually editing the EPSG database<a class="headerlink" href="#manually-editing-the-epsg-database" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">이 섹션의 설명은 매우 전문적인 것이며, 그저 EPSG 데이터베이스 하위 시스템에 대해 더 자세히 알고자 하는 사용자를 위해 추가된 것입니다.</p>
+</div>
+<p>사용자 지정 투영체를 정의하려면 캐시된 EPSG 데이터베이스를 생성하는 데 쓰이는 <tt class="file docutils literal"><span class="pre">EPSG.sql</span></tt> 파일을 편집해야 합니다.</p>
+<ol class="arabic">
+<li><p class="first"><tt class="file docutils literal"><span class="pre">WEB-INF/lib</span></tt> 디렉터리로 이동합니다.</p>
+</li>
+<li><p class="first"><tt class="file docutils literal"><span class="pre">gt2-epsg-h.jar</span></tt> 파일의 압축을 풉니다. 리눅스 명령어는 다음과 같습니다.</p>
+<div class="highlight-python"><pre>jar xvf gt2-epsg-h.jar</pre>
+</div>
+</li>
+<li><p class="first">텍스트 편집기에서 <tt class="file docutils literal"><span class="pre">org/geotools/referencing/factory/epsg/EPSG.sql</span></tt> 파일을 엽니다.
+사용자 지정 투영체를 추가하려면 다음 항목들이 꼭 필요합니다.</p>
+<ol class="arabic">
+<li><p class="first"><tt class="file docutils literal"><span class="pre">EPSG_COORDINATEREFERENCESYSTEM</span></tt> 테이블의 다음 항목에서</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">41111</span><span class="p">,</span><span class="s">&#39;WGC 84 / WRF Lambert&#39;</span><span class="p">,</span><span class="mi">1324</span><span class="p">,</span><span class="s">&#39;projected&#39;</span><span class="p">,</span><span class="mi">4400</span><span class="p">,</span><span class="n">NULL</span><span class="p">,</span><span class="mi">4326</span><span class="p">,</span><span class="mi">20000</span><span class="p">,</span><span class="n">NULL</span><span class="p">,</span><span class="n">NULL</span><span class="p">,</span><span class="s">&#39;US Nat. scale mapping.&#39;</span><span class="p">,</span><span class="s">&#39;Entered by Alex Petkov&#39;</span><span class="p">,</span><span class="s">&#39;Missoula Firelab WRF&#39;</span><span class="p">,</span><span class="s">&#39;WRF&#39;</span><span class="p">,</span><span class="s">&#39;2000-10-19&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+</pre></div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><strong>1324</strong> —사용자 투영체가 커버하는 영역을 설명하는 <tt class="file docutils literal"><span class="pre">EPSG_AREA</span></tt> 코드입니다.</li>
+<li><strong>4400</strong> —사용자 투영체를 위한 <tt class="file docutils literal"><span class="pre">EPSG_COORDINATESYSTEM</span></tt> 코드입니다.</li>
+<li><strong>20000</strong> —사용자 투영체 파라미터를 담고 있는 배열을 위한 <tt class="file docutils literal"><span class="pre">EPSG_COORDOPERATIONPARAMVALUE</span></tt> 키(key)입니다.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="file docutils literal"><span class="pre">EPSG_COORDOPERATIONPARAMVALUE</span></tt> 테이블의 다음 항목에서</p>
+<div class="highlight-python"><pre>(20000,9802,8821,40,'',9102),    //latitude of origin
+(20000,9802,8822,-97.0,'',9102), //central meridian
+(20000,9802,8823,33,'',9110),    //st parallel 1
+(20000,9802,8824,45,'',9110),    //st parallel 2
+(20000,9802,8826,0.0,'',9001),   //false easting
+(20000,9802,8827,0.0,'',9001)    //false northing</pre>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><strong>9802</strong> —람베르트 정각원추도법(Lambert Conic Conformal (2SP)) 공식을 위한 <tt class="file docutils literal"><span class="pre">EPSG_COORDOPERATIONMETHOD</span></tt> 키(key)입니다.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="file docutils literal"><span class="pre">EPSG_COORDOPERATION</span></tt> 테이블의 다음 항목에서</p>
+<p>(20000,&#8217;WRF Lambert&#8217;,&#8217;conversion&#8217;,NULL,NULL,&#8217;&#8216;,NULL,1324,&#8217;Used for weather forecasting.&#8217;,0.0,9802,NULL,NULL,&#8217;Used with the WRF-Chem model for weather forecasting&#8217;,&#8217;Firelab in Missoula, MT&#8217;,&#8217;EPSG&#8217;,&#8216;2005-11-23&#8217;,&#8216;2005.01&#8217;,1,0)</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>1324</strong> —사용자 투영체가 커버하는 영역을 설명하는 <tt class="file docutils literal"><span class="pre">EPSG_AREA</span></tt> 코드입니다.</li>
+<li><strong>9802</strong> —람베르트 정각원추도법(2SP) 공식을 위한 <tt class="file docutils literal"><span class="pre">EPSG_COORDOPERATIONMETHOD</span></tt> 키(key)입니다.</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">쉼표를 잘 보십시오. INSERT 선언문 끝에 행을 입력할 경우 쉼표를 뺍니다. (이전 열 끝에 쉼표가 있는지 확인하십시오.) 그 외의 경우에는 입력 항목의 끝에 쉼표를 붙입니다.</p>
+</div>
+<ol class="arabic">
+<li><p class="first">모든 편집이 끝나면 파일을 저장하고 텍스트 편집기를 종료하십시오.</p>
+</li>
+<li><p class="first"><tt class="file docutils literal"><span class="pre">gt2-epsg-h.jar</span></tt> 파일을 다시 압축합니다. 리눅스 명령어는 다음과 같습니다.</p>
+<div class="highlight-python"><pre>jar -Mcvf gt2-epsg-h.jar META-INF org</pre>
+</div>
+</li>
+<li><p class="first">EPSG 데이터베이스의 캐시된 카피(cached copy)를 제거해서 재생성할 수 있도록 합니다. 리눅스 명령어는 다음과 같습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">Geotools</span><span class="o">/</span><span class="n">Databases</span><span class="o">/</span><span class="n">HSQL</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">GeoServer를 재시작합니다.</p>
+</li>
+</ol>
+<p>새로운 투영체가 성공적으로 파싱되었습니다.
+<a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 <a class="reference internal" href="../../webadmin/demos/index.html#srs-list"><em>SRS</em></a>
+페이지에서 CRS 정보가 제대로 파싱되었는지 확인하십시오.</p>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="coordtransforms.html" title="previous chapter">Coordinate Operations</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../logging.html" title="next chapter">Advanced log configuration</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="coordtransforms.html" title="previous chapter">Coordinate Operations</a></li>
+            <li>다음: <a href="../logging.html" title="next chapter">Advanced log configuration</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/advanced/crshandling/manualepsg.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

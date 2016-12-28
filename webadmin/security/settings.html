@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Settings &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Security" href="index.html" />
+      <link rel="next" title="Authentication" href="auth.html" />
+      <link rel="prev" title="Security" href="index.html" />
+</head>
+<body class="webadmin/security/settings">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Security</a> &raquo;</li>
+  <li>Settings</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="auth.html" title="Authentication"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Security"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="settings">
+<span id="webadmin-sec-settings"></span><h1>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h1>
+<p>Settings 페이지에서 GeoServer 공통 보안 설정을 관리합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/settings.png" src="../../_images/settings.png" />
+<p class="caption"><em>Security Settings 페이지</em></p>
+</div>
+<div class="section" id="active-role-service">
+<h2>Active role service<a class="headerlink" href="#active-role-service" title="Permalink to this headline">¶</a></h2>
+<p>이 옵션으로 활성화된 <a class="reference internal" href="../../security/usergrouprole/roleservices.html#sec-rolesystem-roleservices"><em>role service</em></a>(롤에 대한 정보를 제공)를 설정합니다.
+<a class="reference internal" href="ugr.html#webadmin-sec-ugr"><em>Users, Groups, Roles</em></a>페이지에서 롤 서비스(role service)를 관리합니다.
+활성화된 롤 서비스는 오직 한번에 하나만 가능합니다.</p>
+</div>
+<div class="section" id="encryption">
+<h2>Encryption<a class="headerlink" href="#encryption" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer 유저 인터페이스(UI)는 가끔 URL 주소 안에 단순 텍스트로 파라미터를 드러낼 때가 있습니다.
+따라서 URL 파라미터를 암호화하는 것이 바람직합니다. 암호화를 활성화하려면, <em class="guilabel">Encrypt web admin URL parameters</em>를 선택하십시오.
+이 옵션으로 GeoServer가 PBE 기반 <a class="reference internal" href="../../security/passwd.html#sec-passwd-encryption"><em>Password encryption</em></a>을 사용하도록 설정할 수 있습니다.</p>
+<p>예를 들면 이 기능을 활성화하면 다음 URL이</p>
+<div class="highlight-python"><pre>http://GEOSERVER/web/?wicket:bookmarkablePage=:org.geoserver.security.web.SecuritySettingsPage</pre>
+</div>
+<p>다음과 같은 URL로 바뀌게 됩니다.</p>
+<div class="highlight-python"><pre>http://GEOSERVER/web/?x=hrTNYMcF3OY7u4NdyYnRanL6a1PxMdLxTZcY5xK5ZXyi617EFEFCagMwHBWhrlg*ujTOyd17DLSn0NO2JKO1Dw</pre>
+</div>
+</div>
+<div class="section" id="password-encryption">
+<h2>Password encryption<a class="headerlink" href="#password-encryption" title="Permalink to this headline">¶</a></h2>
+<p>사용자가 비밀번호 암호화에 사용할 <a class="reference internal" href="../../security/passwd.html#sec-passwd-encryption"><em>Password encryption</em></a> 종류를 설정할 수 있습니다.
+<em class="guilabel">Plain text</em>, <em class="guilabel">Weak PBE</em>, 혹은 <em class="guilabel">Strong PBE</em> 3가지 옵션이 있습니다.</p>
+<p>JVM에서 Strong PBE를 사용할 수 없는 경우, 경고 메시지가 표출되며 옵션이 비활성화될 것입니다.
+Strong PBE를 활성화하려면 이 암호화 형식을 지원하는 외부 정책 JAR들을 설치해야 합니다.
+이 설정에 대해 더 자세히 알고 싶다면 <a class="reference internal" href="../../security/passwd.html#sec-passwd-encryption"><em>Password encryption</em></a> 섹션을 참조하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/settings_pbewarning.png" src="../../_images/settings_pbewarning.png" />
+<p class="caption"><em>Strong PBE를 사용할 수 없는 경우의 경고 메시지</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Security</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="auth.html" title="next chapter">Authentication</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Settings</a><ul>
+<li><a class="reference internal" href="#active-role-service">Active role service</a></li>
+<li><a class="reference internal" href="#encryption">Encryption</a></li>
+<li><a class="reference internal" href="#password-encryption">Password encryption</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Security</a></li>
+            <li>다음: <a href="auth.html" title="next chapter">Authentication</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/security/settings.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

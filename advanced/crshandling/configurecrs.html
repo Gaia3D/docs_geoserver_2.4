@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Coordinate Reference System Configuration &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Coordinate Reference System Handling" href="index.html" />
+      <link rel="next" title="Custom CRS Definitions" href="customcrs.html" />
+      <link rel="prev" title="Coordinate Reference System Handling" href="index.html" />
+</head>
+<body class="advanced/crshandling/configurecrs">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Advanced GeoServer Configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Coordinate Reference System Handling</a> &raquo;</li>
+  <li>Coordinate Reference System Configuration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="customcrs.html" title="Custom CRS Definitions"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Coordinate Reference System Handling"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="coordinate-reference-system-configuration">
+<span id="crs-configure"></span><h1>Coordinate Reference System Configuration<a class="headerlink" href="#coordinate-reference-system-configuration" title="Permalink to this headline">¶</a></h1>
+<p>데이터를 추가할 경우, GeoServer는 EPSG 코드를 찾아 데이터 헤더를 검사하려 합니다.</p>
+<ul class="simple">
+<li>데이터가 명확한 EPSG 코드를 가진 CRS를 갖추고 있고 이 코드의 전체 CRS 정의가 GeoServer의 정의와 일치한다면, 해당 데이터의 CRS는 이미 설정된 것입니다.</li>
+<li>데이터가 CRS를 갖추고 있지만 EPSG 코드는 없을 경우, <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a> 페이지에서 <em class="guilabel">Find</em> 옵션을 사용해서
+GeoServer가 데이터의 CRS를 다른 모든 알려진 CRS와 비교하는 검색 작업을 실행하도록 할 수 있습니다. 이 작업이 성공하면 EPSG 코드를 선택할 것입니다.
+CRS를 갖추고 있지만 EPSG 코드는 없는 흔한 경우가 shapefile로, PRJ 파일에 유효한 WKT 문자열이 있지만 (필수가 아닌) EPSG 식별자는 없는 경우입니다.</li>
+</ul>
+<p>EPSG 코드를 찾을 수 없다면, 데이터가 CRS를 갖추고 있지 않거나 GeoServer가 해당 CRS를 인식하지 못 하는 경우입니다. 이럴 경우 다음과 같은 몇 가지 옵션이 있습니다.</p>
+<ul class="simple">
+<li>자체(native) CRS를 무시하고 강제로 CRS를 선언합니다. 자체 CRS가 올바르지 않을 경우 최선의 방법입니다.</li>
+<li>자체 CRS에서 선언 CRS로 재투영(reproject)합니다. 자체 CRS가 올바르지만 일치하는 EPSG 코드가 없을 경우 최선의 해결책입니다.
+(차선책은 자체 CRS와 정확히 일치하는 사용자 지정 EPSG 코드를 추가하는 방법입니다. 자세한 정보를 알고 싶다면 <a class="reference internal" href="customcrs.html#crs-custom"><em>Custom CRS Definitions</em></a> 섹션을 참조하십시오.)</li>
+</ul>
+<p>사용자의 데이터가 자체 CRS 정보를 갖추고 있지 않다면, EPSG 코드를 설정하거나 강제하는 것이 유일한 옵션입니다.</p>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Coordinate Reference System Handling</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="customcrs.html" title="next chapter">Custom CRS Definitions</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Coordinate Reference System Handling</a></li>
+            <li>다음: <a href="customcrs.html" title="next chapter">Custom CRS Definitions</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/advanced/crshandling/configurecrs.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

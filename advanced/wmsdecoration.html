@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WMS Decorations &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Advanced GeoServer Configuration" href="index.html" />
+      <link rel="next" title="Security" href="../security/index.html" />
+      <link rel="prev" title="Advanced log configuration" href="logging.html" />
+</head>
+<body class="advanced/wmsdecoration">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Advanced GeoServer Configuration</a> &raquo;</li>
+  <li>WMS Decorations</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../security/index.html" title="Security"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="logging.html" title="Advanced log configuration"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wms-decorations">
+<span id="id1"></span><h1>WMS Decorations<a class="headerlink" href="#wms-decorations" title="Permalink to this headline">¶</a></h1>
+<p>WMS 장식(decoration)은 WMS에서 나온 시각적인 주석(annotating) 이미지를 공간적이라기보다 절대적인 위치에 배치하는 프레임워크를 제공합니다.
+장식의 예를 들자면 나침반(compass), 범례(legend), 워터마크(watermark) 등이 있습니다.</p>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../services/wms/reference.html#wms-getmap"><em>GetMap</em></a> 요청에서 장식을 사용하려면, 먼저 관리자(administrator)가 장식 레이아웃을 설정해야 합니다.
+이 레이아웃 하나마다 XML 파일 하나가 <a class="reference internal" href="../datadirectory/index.html#data-directory"><em>GeoServer 데이터 디렉터리</em></a>의
+<tt class="docutils literal"><span class="pre">layouts</span></tt> 하위 디렉터리에 저장됩니다. 각 레이아웃 파일의 확장자는 <tt class="docutils literal"><span class="pre">.xml</span></tt>이어야 합니다.
+레이아웃 <tt class="docutils literal"><span class="pre">foo.xml</span></tt>을 정의한 다음,
+요청 파라미터에 <tt class="docutils literal"><span class="pre">&amp;format_options=layout:foo</span></tt>를 추가해서 해당 레이아웃을 요청할 수 있습니다.</p>
+<p>레이아웃 파일은 매우 간단한 XML 구조를 따릅니다. <tt class="docutils literal"><span class="pre">layout</span></tt> 루트 노드(root node)는 장식 요소를 제한없이 담을 수 있습니다.
+각 장식 요소는 다음과 같이 몇 개의 속성을 가지고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>속성(Attribute)</strong></td>
+<td><strong>의미</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">type</span></tt></td>
+<td>사용할 장식의 형식입니다. (<a class="reference internal" href="#decoration-types"><em>Decoration Types</em></a>를 참조하십시오.)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">affinity</span></tt></td>
+<td>장식을 배치(anchor)할 맵 이미지의 영역입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">offset</span></tt></td>
+<td>배치 포인트(anchor point)와 장식의 거리입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">size</span></tt></td>
+<td>장식을 렌더링할 최대 크기입니다. 몇몇 장식은 스스로 크기를 유동적으로 조절한다는 점을 유의하십시오.</td>
+</tr>
+</tbody>
+</table>
+<p>또한 각 장식 요소는 다음과 같이 파라미터 명칭 및 값을 제공하는 임의 개수의 옵션 요소를 담고 있을 수도 있습니다.</p>
+<div class="highlight-python"><pre>&lt;option name="foo" value="bar"/&gt;</pre>
+</div>
+<p>옵션 해석(option interpretation)은 사용하는 장식의 형식에 따라 달라집니다.</p>
+</div>
+<div class="section" id="decoration-types">
+<span id="id2"></span><h2>Decoration Types<a class="headerlink" href="#decoration-types" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer의 확장 모듈을 통해 장식을 추가할 수 있지만, 기본 설치 시 포함되는 다음과 같은 핵심적인 장식 집합도 있습니다.</p>
+<p><strong>이미지(image)</strong> 장식(<tt class="docutils literal"><span class="pre">type=&quot;image&quot;</span></tt>)은 문서 위에 고정된 이미지를 덮어씁니다(overlay).
+높이/너비를 설정한 경우, 이에 맞추어 이미지 크기를 조정합니다. 설정하지 않으면 자체 크기로 이미지를 표출합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션명</strong></td>
+<td><strong>의미</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">url</span></tt></td>
+<td>표출한 이미지의 (GeoServer 데이터 디렉터리를 기준으로 하는) 상대 위치를 가리키는 URL이나 파일 경로입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">opacity</span></tt></td>
+<td>0에서 100 사이의 값을 가지는 이미지 불투명도입니다.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>축척비(scaleratio)</strong> 장식(<tt class="docutils literal"><span class="pre">type=&quot;scaleratio&quot;</span></tt>)은 문서 위에 맵의 축척 비율을 보여주는 텍스트를 덮어씁니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션명</strong></td>
+<td><strong>의미</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">bgcolor</span></tt></td>
+<td>텍스트의 바탕색(background color)입니다. 16진수값으로 설정된 RGB 또는 RGBA 색상을 지원합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">fgcolor</span></tt></td>
+<td>텍스트 및 경계(border)의 색상입니다. 16진수값으로 설정된 RGB 또는 RGBA 색상을 지원합니다.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>축척막대(scaleline)</strong> 장식(<tt class="docutils literal"><span class="pre">type=&quot;scaleline&quot;</span></tt>)은 맵의 축척을 세계 단위(world unit)로 보여주는 그래픽을 덮어씁니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션명</strong></td>
+<td><strong>의미</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">bgcolor</span></tt></td>
+<td>바탕색입니다. 16진수값으로 설정된 RGB 또는 RGBA 색상을 지원합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">fgcolor</span></tt></td>
+<td>전면색(foreground color)입니다. 16진수값으로 설정된 RGB 또는 RGBA 색상을 지원합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">fontsize</span></tt></td>
+<td>사용할 폰트의 크기입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">transparent</span></tt></td>
+<td>참(true)으로 설정할 경우, 바탕(background) 및 경계(border)를 칠하지 않습니다. (기본값은 거짓입니다.)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>범례(legend)</strong> 장식(<tt class="docutils literal"><span class="pre">type=&quot;legend&quot;</span></tt>)은 맵의 레이어에 대한 범례를 담은 그래픽을 덮어씁니다.</p>
+<p><strong>텍스트(text)</strong> 장식(<tt class="docutils literal"><span class="pre">type=&quot;text&quot;</span></tt>)은 맵 상단에 파라미터값대로 한 줄로 된 텍스트 메시지를 덮어씁니다.
+SLD 환경 파라미터와 마찬가지로 <tt class="docutils literal"><span class="pre">env</span></tt> 요청 파라미터를 통해 파라미터값을 부여할 수 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션명</strong></td>
+<td><strong>의미</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">message</span></tt></td>
+<td>표출할 메시지입니다. 일반 텍스트 또는 변수를 확장하기 위한 <tt class="docutils literal"><span class="pre">env</span></tt> 맵 내용을 사용할 수 있는 Freemarker 서식으로 표현됩니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">font-family</span></tt></td>
+<td>메시지를 표출하기 위한 <tt class="docutils literal"><span class="pre">Arial</span></tt> 같은 폰트명입니다. 기본값은 <tt class="docutils literal"><span class="pre">Serif</span></tt>입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">font-size</span></tt></td>
+<td>사용할 폰트의 크기(소수점 사용 가능)입니다. 기본값은 12입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">font-italic</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">참(true)</span></tt>일 경우 폰트를 이탤릭체로 표출합니다. 기본값은 <tt class="docutils literal"><span class="pre">거짓(false)</span></tt>입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">font-bold</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">참</span></tt>일 경우 폰트를 볼드체로 표출합니다. 기본값은 <tt class="docutils literal"><span class="pre">거짓</span></tt>입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">font-color</span></tt></td>
+<td>메시지의 색상을 <tt class="docutils literal"><span class="pre">#RRGGBB</span></tt> 또는 <tt class="docutils literal"><span class="pre">#RRGGBBAA</span></tt> 형식으로 설정합니다. 기본값은 검정입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">halo-radius</span></tt></td>
+<td>메시지 주위를 둘러싸는 배경색(halo)의 반경(소수점 사용 가능)입니다. 기본값은 0입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">halo-color</span></tt></td>
+<td>배경색(halo) 색상을 <tt class="docutils literal"><span class="pre">#RRGGBB</span></tt> 또는 <tt class="docutils literal"><span class="pre">#RRGGBBAA</span></tt> 형식으로 설정합니다. 기본값은 하양입니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>레이아웃 설정 파일은 다음과 같이 보일 것입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;layout&gt;</span>
+    <span class="nt">&lt;decoration</span> <span class="na">type=</span><span class="s">&quot;image&quot;</span> <span class="na">affinity=</span><span class="s">&quot;bottom,right&quot;</span> <span class="na">offset=</span><span class="s">&quot;6,6&quot;</span> <span class="na">size=</span><span class="s">&quot;80,31&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;url&quot;</span> <span class="na">value=</span><span class="s">&quot;pbGS_80x31glow.png&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/decoration&gt;</span>
+
+    <span class="nt">&lt;decoration</span> <span class="na">type=</span><span class="s">&quot;scaleline&quot;</span> <span class="na">affinity=</span><span class="s">&quot;bottom,left&quot;</span> <span class="na">offset=</span><span class="s">&quot;36,6&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;decoration</span> <span class="na">type=</span><span class="s">&quot;legend&quot;</span> <span class="na">affinity=</span><span class="s">&quot;top,left&quot;</span> <span class="na">offset=</span><span class="s">&quot;6,6&quot;</span> <span class="na">size=</span><span class="s">&quot;auto&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/layout&gt;</span>
+</pre></div>
+</div>
+<p>이 레이아웃을 기존 GeoServer 데이터에서 나온 미국 주(州) 레이어에 사용하면 다음과 같은 이미지를 생산합니다.</p>
+<div class="figure align-center">
+<img alt="../_images/decoration.png" src="../_images/decoration.png" />
+<p class="caption">앞의 장식 레이아웃으로 그린 기본 주(州) 레이어입니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="logging.html" title="previous chapter">Advanced log configuration</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../security/index.html" title="next chapter">Security</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WMS Decorations</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#decoration-types">Decoration Types</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="logging.html" title="previous chapter">Advanced log configuration</a></li>
+            <li>다음: <a href="../security/index.html" title="next chapter">Security</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/advanced/wmsdecoration.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>PostGIS &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="H2" href="h2.html" />
+      <link rel="prev" title="Working with Databases" href="index.html" />
+</head>
+<body class="data/database/postgis">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>PostGIS</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="h2.html" title="H2"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Working with Databases"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="postgis">
+<span id="data-postgis"></span><h1>PostGIS<a class="headerlink" href="#postgis" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://postgis.org">PostGIS</a>는 <a class="reference external" href="http://postgresql.com/">PostgreSQL</a> 기반 오픈소스 데이터베이스로 오늘날 가장 유명한 오픈소스 공간DB 가운데 하나입니다.</p>
+<div class="section" id="adding-a-postgis-database">
+<h2>Adding a PostGIS database<a class="headerlink" href="#adding-a-postgis-database" title="Permalink to this headline">¶</a></h2>
+<p>다른 모든 포맷들과 마찬가지로 GeoServer에 PostGIS DB를 추가하려면 <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>에서 기존 <a class="reference internal" href="../../webadmin/data/stores.html#webadmin-stores"><em>저장소(Stores)</em></a>에 새 저장소를 추가해야 합니다.</p>
+<div class="section" id="using-default-connection">
+<h3>Using default connection<a class="headerlink" href="#using-default-connection" title="Permalink to this headline">¶</a></h3>
+<p>PostGIS DB를 추가하려면 <em class="menuselection">Stores ‣ Add a new store ‣ PostGIS NG</em> 메뉴로 이동하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/postgis.png" src="../../_images/postgis.png" />
+<p class="caption"><em>PostGIS DB 추가하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Workspace</em></td>
+<td>데이터베이스를 담기 위한 작업공간의 명칭을 선택합니다. 해당 데이터베이스의 테이블에서 생성될 레이어명의 접두사(prefix)가 됩니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Data Source Name</em></td>
+<td>DB명을 설정합니다. PostgreSQL/PostGIS가 인식하는 이름과 달라도 됩니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Description</em></td>
+<td>데이터베이스/저장소에 대한 설명입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Enabled</em></td>
+<td>저장소를 활성화합니다. 체크를 해제할 경우 데이터베이스의 어떤 데이터도 서비스되지 않습니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">dbtype</em></td>
+<td>DB 형식을 설정합니다. 초기값을 유지하십시오.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">host</em></td>
+<td>DB가 위치한 호스트명입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">port</em></td>
+<td>해당 호스트에 접속하기 위한 포트 번호를 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">database</em></td>
+<td>호스트가 인식하고 있는 DB명을 입력합니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">schema</em></td>
+<td>이 데이터베이스가 채택하고 있는 스키마(schema)를 입력합니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">user</em></td>
+<td>DB에 접속하기 위한 사용자명을 설정합니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">passwd</em></td>
+<td>이 사용자와 연결된 비밀번호를 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">namespace</em></td>
+<td>DB와 연결될 Namespace를 설정합니다. 이 항목은 작업공간 명칭에 따라 변경됩니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">max connections</em></td>
+<td>DB에 연결되는 open connection의 최대 개수입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">min connections</em></td>
+<td>pooled connection의 최소 개수입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">fetch size</em></td>
+<td>DB와 요청/응답할 때마다 읽어오는 레코드의 개수입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Connection timeout</em></td>
+<td>connection pool이 시간 제한이 되기 전까지 기다리는 시간(초 단위)을 설정합니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">validate connections</em></td>
+<td>연결을 사용하기 전에 끊어지지 않았는지 확인합니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Loose bbox</em></td>
+<td>범위(bounding box)에 대한 필터 가운데 1순위 필터만 실행합니다.
+자세한 내용을 알고 싶다면 <a class="reference internal" href="#postgis-loose-bbox"><em>Using loose bounding box</em></a> 섹션을 참조하십시오.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">preparedStatements</em></td>
+<td>준비된 선언(statement)을 활성화합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>설정을 완료하면, <em class="guilabel">Save</em> 버튼을 클릭하십시오.</p>
+</div>
+<div class="section" id="using-jndi">
+<h3>Using JNDI<a class="headerlink" href="#using-jndi" title="Permalink to this headline">¶</a></h3>
+<p>GeoServer는 <a class="reference external" href="http://java.sun.com/products/jndi/">JNDI</a>(Java Naming and Directory Interface)를 통해서도 PostGIS DB에 접속할 수 있습니다.</p>
+<p>PostGIS DB (using JNDI)를 추가하려면 <em class="menuselection">Stores ‣ Add a new store ‣ PostGIS NG (JNDI)</em> 메뉴로 이동하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/postgisjndi.png" src="../../_images/postgisjndi.png" />
+<p class="caption"><em>PostGIS DB (using JNDI) 추가하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Workspace</em></td>
+<td>저장소를 담기 위한 작업공간의 명칭을 선택합니다. 해당 저장소에서 생성될 레이어명의 접두사(prefix)가 됩니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Data Source Name</em></td>
+<td>DB명을 설정합니다. PostgreSQL/PostGIS가 인식하는 이름과 달라도 됩니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Description</em></td>
+<td>데이터베이스/저장소에 대한 설명입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Enabled</em></td>
+<td>저장소를 활성화합니다. 체크를 해제할 경우 데이터베이스의 어떤 데이터도 서비스되지 않습니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">dbtype</em></td>
+<td>DB 형식을 설정합니다. 초기값을 유지하십시오.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">jndiReferenceName</em></td>
+<td>DB를 가리키는 JNDI 경로를 설정합니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">schema</em></td>
+<td>이 데이터베이스가 채택하고 있는 스키마(schema)를 입력합니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">namespace</em></td>
+<td>DB와 연결될 Namespace를 설정합니다. 이 항목은 작업공간 명칭에 따라 변경됩니다.</td>
+</tr>
+</tbody>
+</table>
+<p>설정을 완료하면, <em class="guilabel">Save</em> 버튼을 클릭하십시오.</p>
+</div>
+</div>
+<div class="section" id="configuring-postgis-layers">
+<h2>Configuring PostGIS layers<a class="headerlink" href="#configuring-postgis-layers" title="Permalink to this headline">¶</a></h2>
+<p>제대로 로드되었다면 GeoServer가 데이터베이스의 모든 테이블을 인식할 수 있지만, GeoServer가 서비스하기 위해서는 개별 테이블에 대한 설정을 마쳐야 합니다.
+새로운 레이어를 추가·편집하는 방법은 <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a> 페이지를 참조하십시오.</p>
+</div>
+<div class="section" id="using-loose-bounding-box">
+<span id="postgis-loose-bbox"></span><h2>Using loose bounding box<a class="headerlink" href="#using-loose-bounding-box" title="Permalink to this headline">¶</a></h2>
+<p><em class="guilabel">loose bbox</em> 옵션을 활성화하면 평면 도형(geometry)의 범위(bounding box)만 사용하게 됩니다.
+이 옵션으로 성능이 크게 향상될 수 있지만, 전체적인 정확도는 떨어지게 됩니다.
+엄격히 말해 범위 안에 들어오지 않는 몇몇 평면 도형이 범위 안에 있다고 판단하는 경우가 생깁니다.</p>
+<p>주로 WMS를 통해 이 DB에 접근하는 경우, 정확도가 약간 떨어져도 큰 문제는 없기 때문에 이 옵션을 활성화해도 됩니다.
+그러나 WFS를 사용하는 경우, 특히 BBOX filtering capabilities를 사용하는 경우라면 이 옵션을 활성화해서는 안 됩니다.</p>
+</div>
+<div class="section" id="publishing-a-postgis-view">
+<h2>Publishing a PostGIS view<a class="headerlink" href="#publishing-a-postgis-view" title="Permalink to this headline">¶</a></h2>
+<p>뷰(view)를 생산하는 과정은 테이블을 생성하는 과정과 동일합니다.
+단 하나 추가 단계가 있다면 뷰가 <tt class="docutils literal"><span class="pre">geometry_columns</span></tt> 테이블에 항목을 가지고 있다는 것을 직접 확인하는 것뿐입니다.</p>
+<p>예를 들어 스키마를 가진 테이블을 생각해보십시오.</p>
+<div class="highlight-python"><pre>my_table( id int PRIMARY KEY, name VARCHAR, the_geom GEOMETRY )</pre>
+</div>
+<p>다음 뷰도 생각해보십시오.</p>
+<div class="highlight-python"><pre>CREATE VIEW my_view as SELECT id, the_geom FROM my_table;</pre>
+</div>
+<p>GeoServer가 이 뷰를 서비스하려면 먼저 <tt class="docutils literal"><span class="pre">geometry_columns</span></tt> 항목을 사용자가 직접 생성해야 합니다.</p>
+<div class="highlight-python"><pre>INSERT INTO geometry_columns VALUES ('','public','my_view','my_geom', 2, 4326, 'POINT' );</pre>
+</div>
+</div>
+<div class="section" id="performance-considerations">
+<h2>Performance considerations<a class="headerlink" href="#performance-considerations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="geos">
+<h3>GEOS<a class="headerlink" href="#geos" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://trac.osgeo.org/geos/">GEOS</a>(Geometry Engine, Open Source)는 PostGIS의 추가 설치 요소입니다.
+GeoServer가 사용할 PostGIS 인스턴스를 설치할 경우 GEOS도 함께 설치하는 것을 권장합니다. 공간 작업 시 GeoServer가 GEOS의 기능을 활용할 수 있기 때문입니다.
+GEOS가 설치되지 않은 경우, 이런 작업은 내부적으로 처리되는데 속도가 떨어질 수 있습니다.</p>
+</div>
+<div class="section" id="spatial-indexing">
+<h3>Spatial indexing<a class="headerlink" href="#spatial-indexing" title="Permalink to this headline">¶</a></h3>
+<p>공간 요소(spatial component)를 담은 테이블에 공간 지표(spatial index)를 생성하는 것(예시: geometry column 집어넣기)을 강력히 권장합니다.
+공간 지표가 없는 테이블의 경우 쿼리에 대한 응답 속도가 느려질 것입니다.</p>
+</div>
+</div>
+<div class="section" id="common-problems">
+<h2>Common problems<a class="headerlink" href="#common-problems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="primary-keys">
+<h3>Primary keys<a class="headerlink" href="#primary-keys" title="Permalink to this headline">¶</a></h3>
+<p>(transactional WFS 용) 테이블에 transactional 확장 모듈을 활성화시키려면 테이블이 primary key를 가지고 있어야 합니다.
+GeoServer는 primary key가 없는 테이블을 읽기 전용으로 인식합니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Working with Databases</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="h2.html" title="next chapter">H2</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">PostGIS</a><ul>
+<li><a class="reference internal" href="#adding-a-postgis-database">Adding a PostGIS database</a><ul>
+<li><a class="reference internal" href="#using-default-connection">Using default connection</a></li>
+<li><a class="reference internal" href="#using-jndi">Using JNDI</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuring-postgis-layers">Configuring PostGIS layers</a></li>
+<li><a class="reference internal" href="#using-loose-bounding-box">Using loose bounding box</a></li>
+<li><a class="reference internal" href="#publishing-a-postgis-view">Publishing a PostGIS view</a></li>
+<li><a class="reference internal" href="#performance-considerations">Performance considerations</a><ul>
+<li><a class="reference internal" href="#geos">GEOS</a></li>
+<li><a class="reference internal" href="#spatial-indexing">Spatial indexing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-problems">Common problems</a><ul>
+<li><a class="reference internal" href="#primary-keys">Primary keys</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Working with Databases</a></li>
+            <li>다음: <a href="h2.html" title="next chapter">H2</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/postgis.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

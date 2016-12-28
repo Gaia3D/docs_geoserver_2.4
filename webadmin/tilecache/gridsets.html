@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Gridsets &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Tile Caching" href="index.html" />
+      <link rel="next" title="Disk Quotas" href="diskquotas.html" />
+      <link rel="prev" title="Caching defaults" href="defaults.html" />
+</head>
+<body class="webadmin/tilecache/gridsets">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Tile Caching</a> &raquo;</li>
+  <li>Gridsets</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="diskquotas.html" title="Disk Quotas"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="defaults.html" title="Caching defaults"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="gridsets">
+<span id="webadmin-tilecaching-gridsets"></span><h1>Gridsets<a class="headerlink" href="#gridsets" title="Permalink to this headline">¶</a></h1>
+<p>그리드셋은 공간 참조 시스템(spatial reference system), Bounding Box(범위), 줌 레벨 목록(해상도 혹은 축척 분모), 타일 크기를 정의합니다.
+타일 요청은 그리드셋 매트릭스에 부합되어야 하고, 그렇지 않으면 캐시 작업을 못 하게 됩니다.</p>
+<p>이 메뉴에서 기존에 저장된 그리드셋을 편집하거나 새 그리드셋을 생성할 수 있습니다.
+미리 설정된 그리드셋은 5개인데, 모두 EPSG:4326 및 EPSG:900913 2개 좌표 참조 시스템(CRS) 가운데 하나를 사용합니다.
+다른 CRS를 사용하려면 새 그리드셋을 생성하면 됩니다. 새 그리드셋을 생성해서 타일 크기나 줌 레벨 개수를 다르게 사용할 수도 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/gridsets.png" src="../../_images/gridsets.png" />
+<p class="caption"><em>그리드셋 메뉴</em></p>
+</div>
+<div class="section" id="creating-a-new-gridset">
+<h2>Creating a new gridset<a class="headerlink" href="#creating-a-new-gridset" title="Permalink to this headline">¶</a></h2>
+<p>새로운 그리드셋을 생성하려면 <em class="guilabel">Create new gridset</em>을 클릭한 다음 파라미터 범위를 입력해야 합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/gridsets_new.png" src="../../_images/gridsets_new.png" />
+<p class="caption"><em>새로운 그리드셋 생성하기</em></p>
+</div>
+<div class="section" id="name">
+<h3>Name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h3>
+<p>새로운 그리드셋의 짧은 이름입니다.</p>
+</div>
+<div class="section" id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>그리드셋에 대한 메타데이터입니다.</p>
+</div>
+<div class="section" id="coordinate-reference-system">
+<h3>Coordinate Reference System<a class="headerlink" href="#coordinate-reference-system" title="Permalink to this headline">¶</a></h3>
+<p>그리드 셋에서 사용할 좌표 참조 시스템(Coordinate Reference System)입니다. GeoServer가 지원하는 CRS라면 무엇이든 선택할 수 있습니다.
+CRS를 선택하면 단위(미터, 피트, 도(˚) 등등)와 함께 단위 당 몇 미터인지 표시됩니다.</p>
+</div>
+<div class="section" id="gridset-bounds">
+<h3>Gridset bounds<a class="headerlink" href="#gridset-bounds" title="Permalink to this headline">¶</a></h3>
+<p>그리드셋의 최대 범위를 설정합니다. 일반적으로 선택한 CRS의 최대 범위로 설정되지만, 원한다면 더 작은 값으로 설정할 수도 있습니다.
+최대 범위를 계산·입력하려면 <em class="guilabel">Compute from maximum extent of CRS</em>를 클릭하십시오.</p>
+</div>
+<div class="section" id="tile-width-and-height">
+<h3>Tile width and height<a class="headerlink" href="#tile-width-and-height" title="Permalink to this headline">¶</a></h3>
+<p>타일 크기를 설정합니다. <strong>256x256 픽셀</strong>이 기본값입니다. 16에서 2048 픽셀 사이라면 어떤 값이든 타일 크기로 설정할 수 있습니다.
+덧붙이자면 타일이 정사각형이 아니어도 괜찮습니다.</p>
+</div>
+<div class="section" id="tile-matrix-set">
+<h3>Tile matrix set<a class="headerlink" href="#tile-matrix-set" title="Permalink to this headline">¶</a></h3>
+<p>Tile matrix set(또는 타일 피라미드)은 타일 개수가 레벨에 따라 증가하는 줌 레벨 목록입니다.
+이렇게 3가지 값을 가지는 타일 &#8220;슬롯(slot)&#8221; 모음이 실제 이미지 타일이 저장될 프레임워크를 생성합니다.
+사용자는 tile matrix를 해상도 혹은 축척 분모에 따라 정의할 수 있습니다.</p>
+<p>첫번째 줌 레벨을 생성하려면 <em class="guilabel">Add zoom level</em>을 클릭하십시오.
+타일 전체 범위가 단일 픽셀의 높이에 담기도록 파라미터들이 자동적으로 설정될 것입니다.
+해당 줌 레벨의 픽셀 개수가 픽셀 크기(Pixel Size), 축척(Scale), 반드시 입력할 필요는 없는 명칭(Name)과 함께 표시됩니다. 사용자가 원한다면 각 줌 레벨의 명칭(Name)을 설정할 수 있습니다.</p>
+<p>줌 레벨을 추가하면 일반적으로 이전 레벨보다 2배의 값을 가지며, 따라서 이전 레벨보다 타일 개수가 4배 많아집니다.
+실제 값은 <em class="guilabel">Add zoom level</em> 링크를 클릭할 때마다 자동적으로 입력됩니다.
+이렇게 자동으로 입력된 값을 수정할 필요는 없으며, 사용자는 해당 그리드셋의 줌 레벨 최대 개수만 정하면 됩니다.</p>
+<p>생성을 완료하면 <em class="guilabel">Save</em>를 클릭하십시오.
+이 새로운 그리드셋을 레이어에 적용하려면 먼저 레이어가 사용할 수 있는 그리드셋 목록에 이 그리드셋을 추가해야 합니다.
+이 작업은 개별 레이어의 <a class="reference internal" href="../data/layers.html#webadmin-layers"><em>properties</em></a> 페이지에서 가능합니다.
+<a class="reference internal" href="defaults.html#webadmin-tilecaching-defaults"><em>Caching defaults</em></a> 페이지에서 이 그리드셋을 기본 목록에 추가할 수도 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/gridsets_matrix.png" src="../../_images/gridsets_matrix.png" />
+<p class="caption"><em>Tile matrix set</em></p>
+</div>
+</div>
+</div>
+<div class="section" id="editing-a-gridset">
+<h2>Editing a gridset<a class="headerlink" href="#editing-a-gridset" title="Permalink to this headline">¶</a></h2>
+<p>기존 그리드셋을 클릭해서 편집창을 여십시오. 기존에 내장된 그리드셋은 편집할 수 없지만, 복사할 수는 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/editgridset.png" src="../../_images/editgridset.png" />
+<p class="caption"><em>그리드셋 편집하기</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/readonlygridset.png" src="../../_images/readonlygridset.png" />
+<p class="caption"><em>이 그리드셋은 읽기만 가능</em></p>
+</div>
+</div>
+<div class="section" id="copying-a-gridset">
+<h2>Copying a gridset<a class="headerlink" href="#copying-a-gridset" title="Permalink to this headline">¶</a></h2>
+<p>그리드셋의 설정 옵션이 아주 많은 만큼, 종종 기존 그리드셋을 복사하는 편이 쉬울 때도 있습니다.
+기존 그리드셋의 경우, <em class="guilabel">Create a copy</em> 링크를 클릭해서 그리드셋 정보를 새 그리드셋으로 복사하십시오.</p>
+</div>
+<div class="section" id="removing-a-gridset">
+<h2>Removing a gridset<a class="headerlink" href="#removing-a-gridset" title="Permalink to this headline">¶</a></h2>
+<p>그리드셋을 제거하려면 그리드셋 옆의 체크박스를 선택한 다음 <em class="guilabel">Remove selected gridsets</em>를 클릭하십시오.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">그리드셋 정의를 제거하면 그리드셋만 삭제되는 것이 아니라 해당 그리드셋으로 생성된 모든 타일이나 레이어도 함께 삭제됩니다.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/removegridset.png" src="../../_images/removegridset.png" />
+<p class="caption"><em>그리드셋 제거하기</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="defaults.html" title="previous chapter">Caching defaults</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="diskquotas.html" title="next chapter">Disk Quotas</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Gridsets</a><ul>
+<li><a class="reference internal" href="#creating-a-new-gridset">Creating a new gridset</a><ul>
+<li><a class="reference internal" href="#name">Name</a></li>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#coordinate-reference-system">Coordinate Reference System</a></li>
+<li><a class="reference internal" href="#gridset-bounds">Gridset bounds</a></li>
+<li><a class="reference internal" href="#tile-width-and-height">Tile width and height</a></li>
+<li><a class="reference internal" href="#tile-matrix-set">Tile matrix set</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#editing-a-gridset">Editing a gridset</a></li>
+<li><a class="reference internal" href="#copying-a-gridset">Copying a gridset</a></li>
+<li><a class="reference internal" href="#removing-a-gridset">Removing a gridset</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="defaults.html" title="previous chapter">Caching defaults</a></li>
+            <li>다음: <a href="diskquotas.html" title="next chapter">Disk Quotas</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/tilecache/gridsets.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

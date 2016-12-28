@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>JAI &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Server" href="index.html" />
+      <link rel="next" title="Layer Preview" href="../layerpreview/index.html" />
+      <link rel="prev" title="Coverage Access settings" href="coverageaccess.html" />
+</head>
+<body class="webadmin/server/JAI">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Server</a> &raquo;</li>
+  <li>JAI</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../layerpreview/index.html" title="Layer Preview"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="coverageaccess.html" title="Coverage Access settings"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="jai">
+<span id="id1"></span><h1>JAI<a class="headerlink" href="#jai" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://java.sun.com/javase/technologies/desktop/media/jai/">Java Advanced Imaging</a>(JAI)는 Sun Microsystems가 개발하고 오픈소스 라이선스에 따라 배포하는 이미지 조정(manipulation) 라이브러리입니다.
+<a class="reference external" href="https://jai-imageio.dev.java.net/">JAI Image I/O Tools</a>는 표준 Java Image I/O Framework을 위한 읽기 도구(reader), 쓰기 도구(writer), 스트리밍 플러그인(stream plug-in)을 제공합니다.
+WMS 및 WCS 실행 시 모두 사용하는 몇몇 JAI 파라미터들을 JAI Settings 페이지에서 설정할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/server_JAI1.png" src="../../_images/server_JAI1.png" />
+<p class="caption"><em>JAI Settings 페이지</em></p>
+</div>
+<div class="section" id="memory-tiling">
+<h2>Memory &amp; Tiling<a class="headerlink" href="#memory-tiling" title="Permalink to this headline">¶</a></h2>
+<p>대용량 이미지를 서비스할 때 이미지 전체를 메모리에 로드하기보다 이미지 서브셋(subsets)으로 작업하는 편이 효율적입니다.
+원본 이미지를 모자이크처럼 쪼개서(tessellation) 전체 이미지 데이터를 한꺼번에 읽기보다 조금씩 읽어들이는 타일링 기법이 널리 쓰입니다.
+하나의 타일(tile)을 처리할 경우 주변 타일도 함께 처리해야 하는 경우가 대부분이기 때문에, 타일링 기법을 타일 캐싱(tile-caching) 메커니즘과 함께 사용해야 합니다.
+다음 JAI 파라미터 설정을 통해 작업 효율을 최적화하기 위한 JAI 캐시 메커니즘을 관리할 수 있습니다.</p>
+<p><strong>Memory Capacity</strong>—타일에 메모리를 할당하기 위해 JAI에서 TileCache라는 인터페이스를 제공하고 있습니다.
+Memory Capacity는 공통 JAI TileCache를 사용 가능한 메모리 총량의 백분율값으로 설정합니다. 0에서 1 사이의 값이어야 합니다.
+새 Memory Capacity 값이 현재 Memory Capacity보다 작을 경우 원하는 설정에 맞추기 위해 캐시가 담고 있던 타일들을 지웁니다.
+타일 캐시에 대용량 메모리를 설정하면, 쌍방향(interactive) 작업은 빨라지지만 타일 캐시는 금방 가득 차게 됩니다.
+타일 캐시에 적은 용량의 메모리를 설정하면, 작업 효율이 나빠집니다.</p>
+<p><strong>Memory Threshold</strong>—공통 JAI TileCache의 기준 메모리 역치를 설정합니다.
+이 값은 타일 제거 작업 시 유지해야 할 캐시 메모리를 백분률값으로 나타낸 것입니다. JAI Memory Threshold 값은 0.0에서 1.0 사이의 값이어야 합니다.
+Memory Threshold 설정은 <a class="reference internal" href="status.html#status"><em>Status</em></a> 페이지에서도 볼 수 있습니다.</p>
+<p><strong>Tile Threads</strong>—JAI는 타일 계산 작업에 TileScheduler라는 도구를 사용합니다. 타일 계산 시 작업 효율 향상을 위해 멀티스레딩(multithreading)을 활용할 수도 있습니다.
+Tile Threads 파라미터는 TileScheduler를 설정하며, 이 값은 타일 로딩 시 사용할 스레드 개수를 의미합니다.</p>
+<p><strong>Tile Threads Priority</strong>—공통 JAI TileScheduler 스레드 우선순위를 설정합니다. 이 값은 1(최저)에서 10(최고) 사이여야 합니다. 기본 우선순위는 5(보통)로 설정되어 있습니다.</p>
+<p><strong>Tile Recycling</strong>—JAI Cache Tile Recycling 옵션을 켜거나 끕니다. 선택할 경우 JAI가 이미 로드된 타일을 재사용할 수 있도록 하는데, 이는 작업 효율면에서 필수적인 기능입니다.</p>
+<p><strong>Native Acceleration</strong>—이미지 처리 응용 프로그램의 계산 속도를 향상시키기 위해, JAI는 많은 플랫폼에서 Java 코드와 자연어 코드(native code)를 모두 지원합니다.
+Java Virtual Machine(JVM)이 자연어 코드를 찾았을 경우에는 자연어 코드를 사용하고, 자연어 코드가 없을 경우에 Java 코드를 사용할 것입니다.
+JAI 패키지는 이렇게 서로 다른 플랫폼에서 각 플랫폼의 장점들을 취하여 최적화된 성능을 제공할 수 있습니다.</p>
+<p><strong>JPEG Native Acceleration</strong>—JAI JPEG Native Acceleration 옵션을 켜거나 끕니다. 선택할 경우 JPEG 자연어 코드를 활용해 작업 속도를 높일 수 있지만, 보안 및 크래시(crash) 보호 기능이 저하될 수 있습니다.</p>
+<p><strong>PNG Native Acceleration</strong>—JAI PNG Native Acceleration 옵션을 켜거나 끕니다. 선택할 경우 PNG 자연어 코드를 활용해 작업 속도를 높일 수 있지만, 보안 및 크래시(crash) 보호 기능이 저하될 수 있습니다.</p>
+<p><strong>Mosaic Native Acceleration</strong>—대용량 데이터 처리 시 부가 시간(overhead time)을 줄이기 위해 데이터를 작은 부분들로 나누었다가 이미지 모자이크를 생성하기 위해 나중에 합치는 방법을 사용하곤 합니다.
+고해상도의 작은 이미지들 수천 개로 이루어진 항공 사진이 대표적인 예입니다.
+자연어 모자이크 작업 및 JAI 모자이크 작업을 모두 사용할 수 있습니다. 선택할 경우, 모자이크를 생성하는 작업을 자연어로 실행합니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="coverageaccess.html" title="previous chapter">Coverage Access settings</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../layerpreview/index.html" title="next chapter">Layer Preview</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">JAI</a><ul>
+<li><a class="reference internal" href="#memory-tiling">Memory &amp; Tiling</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="coverageaccess.html" title="previous chapter">Coverage Access settings</a></li>
+            <li>다음: <a href="../layerpreview/index.html" title="next chapter">Layer Preview</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/server/JAI.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

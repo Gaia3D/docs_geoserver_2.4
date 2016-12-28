@@ -1,0 +1,1111 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Polygons &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="SLD Cookbook" href="index.html" />
+      <link rel="next" title="Rasters" href="rasters.html" />
+      <link rel="prev" title="Lines" href="lines.html" />
+</head>
+<body class="styling/sld-cookbook/polygons">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Styling</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">SLD Cookbook</a> &raquo;</li>
+  <li>Polygons</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="rasters.html" title="Rasters"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="lines.html" title="Lines"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="polygons">
+<span id="sld-cookbook-polygons"></span><h1>Polygons<a class="headerlink" href="#polygons" title="Permalink to this headline">¶</a></h1>
+<p>폴리곤은 외곽 경계(또는 &#8220;획&#8221;)와 내부(또는 &#8220;면&#8221;)를 갖추고 있는 2차원 형태입니다.
+폴리곤을 불규칙한 형태의 포인트로 생각할 수도 있어, 포인트와 유사한 방법으로 스타일을 적용합니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">이 페이지에서 볼 수 있는 코드 예시는 <strong>전체 SLD 코드가 아닙니다</strong>. 간결성을 위해 SLD 헤더(header) 및 푸터(footer) 정보를 제거한 것입니다.
+각 예시의 전체 SLD를 다운로드하려면 링크를 클릭하십시오.</p>
+</div>
+<div class="section" id="example-polygons-layer">
+<span id="sld-cookbook-polygons-attributes"></span><h2>Example polygons layer<a class="headerlink" href="#example-polygons-layer" title="Permalink to this headline">¶</a></h2>
+<p>각 예시에 사용되는 <a class="reference download internal" href="../../_downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">폴리곤 레이어</span></tt></a>는
+가상 국가의 군(county) 정보를 담고 있습니다. 이 레이어의 다음 속성 테이블을 참조하십시오.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="40%" />
+<col width="30%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>fid</strong> (피처 ID)</td>
+<td><strong>name</strong> (군 명칭)</td>
+<td><strong>pop</strong> (인구)</td>
+</tr>
+<tr class="row-even"><td>polygon.1</td>
+<td>Irony County</td>
+<td>412234</td>
+</tr>
+<tr class="row-odd"><td>polygon.2</td>
+<td>Tracker County</td>
+<td>235421</td>
+</tr>
+<tr class="row-even"><td>polygon.3</td>
+<td>Dracula County</td>
+<td>135022</td>
+</tr>
+<tr class="row-odd"><td>polygon.4</td>
+<td>Poly County</td>
+<td>1567879</td>
+</tr>
+<tr class="row-even"><td>polygon.5</td>
+<td>Bearing County</td>
+<td>201989</td>
+</tr>
+<tr class="row-odd"><td>polygon.6</td>
+<td>Monte Cristo County</td>
+<td>152734</td>
+</tr>
+<tr class="row-even"><td>polygon.7</td>
+<td>Massive County</td>
+<td>67123</td>
+</tr>
+<tr class="row-odd"><td>polygon.8</td>
+<td>Rhombus County</td>
+<td>198029</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference download internal" href="../../_downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">폴리곤 shapefile을 다운로드하십시오</span></tt></a>.</p>
+</div>
+<div class="section" id="simple-polygon">
+<span id="sld-cookbook-polygons-simplepolygon"></span><h2>Simple polygon<a class="headerlink" href="#simple-polygon" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 폴리곤의 면을 파랑으로 설정합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_simplepolygon1.png" src="../../_images/polygon_simplepolygon1.png" />
+<p class="caption"><em>단순한 폴리곤</em></p>
+</div>
+<div class="section" id="code">
+<h3>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_simplepolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#000080<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="details">
+<h3>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h3>
+<p>이 SLD는 <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt> 하나에 <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt> 하나를 담고 있는데, 가장 단순한 상황입니다.
+(이 페이지의 모든 예시는 달리 언급하지 않는 한 <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt> 하나에 <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt> 하나를 담고 있습니다.)
+<strong>3-7행</strong>의 <tt class="docutils literal"><span class="pre">&lt;PolygonSymbolizer&gt;</span></tt>에서 폴리곤 스타일 작업을 실행합니다.
+<strong>5행</strong>에서 폴리곤의 면 색상을 어두운 파랑(<tt class="docutils literal"><span class="pre">#000080</span></tt>)으로 설정합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">폴리곤을 둘러싼 밝은 색의 경계선(border)은 폴리곤들이 인접해 있기 때문에 발생한 렌더러의 부산물입니다. 이 스타일에 경계선은 설정되지 않았습니다.</p>
+</div>
+</div>
+</div>
+<div class="section" id="simple-polygon-with-stroke">
+<span id="sld-cookbook-polygons-simplepolygonwithstroke"></span><h2>Simple polygon with stroke<a class="headerlink" href="#simple-polygon-with-stroke" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 <a class="reference internal" href="#sld-cookbook-polygons-simplepolygon"><em>Simple polygon</em></a> 예시에 하얀 색상에 2픽셀 굵기의 획을 추가합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_simplepolygonwithstroke1.png" src="../../_images/polygon_simplepolygonwithstroke1.png" />
+<p class="caption"><em>획을 추가한 단순 폴리곤</em></p>
+</div>
+<div class="section" id="id1">
+<h3>Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_simplepolygonwithstroke.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple polygon with stroke&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#000080<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FFFFFF<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id2">
+<h3>Details<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>이 예시는 앞의 <a class="reference internal" href="#sld-cookbook-polygons-simplepolygon"><em>Simple polygon</em></a> 예시와 유사하지만,
+<strong>7-10행</strong>에 <tt class="docutils literal"><span class="pre">&lt;Stroke&gt;</span></tt> 태그가 추가되었습니다.
+<strong>8행</strong>에서 획의 색상을 하양(<tt class="docutils literal"><span class="pre">#FFFFFF</span></tt>)으로, <strong>9행</strong>에서 획의 굵기를 2픽셀로 설정합니다.</p>
+</div>
+</div>
+<div class="section" id="transparent-polygon">
+<h2>Transparent polygon<a class="headerlink" href="#transparent-polygon" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 <a class="reference internal" href="#sld-cookbook-polygons-simplepolygonwithstroke"><em>Simple polygon with stroke</em></a> 예시를 바탕으로 불투명도(opacity)를 50%로 설정하여 면을 반투명하게 만듭니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_transparentpolygon1.png" src="../../_images/polygon_transparentpolygon1.png" />
+<p class="caption"><em>투명한 폴리곤</em></p>
+</div>
+<div class="section" id="id3">
+<h3>Code<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_transparentpolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Transparent polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#000080<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill-opacity&quot;</span><span class="nt">&gt;</span>0.5<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FFFFFF<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id4">
+<h3>Details<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p><strong>6행</strong>에서 면의 불투명도를 설정하는 것을 제외하면, 이 예시는 <a class="reference internal" href="#sld-cookbook-polygons-simplepolygonwithstroke"><em>Simple polygon with stroke</em></a> 예시와 유사합니다.
+0.5 값으로 불투명도 50%를 성정하여 면을 반투명하게 합니다. 불투명도 값이 1이면 형태가 100% 불투명해지고, 불투명도 값이 0이면 0% 불투명, 즉 완전히 투명해집니다.
+이 예시에서 배경(background)이 하양이기 때문에 어두운 파랑이 밝게 보입니다. 폴리곤이 어두운 배경 위에 있었다면 더 어둡게 보였을 것입니다.</p>
+</div>
+</div>
+<div class="section" id="graphic-fill">
+<span id="sld-cookbook-polygons-graphicfill"></span><h2>Graphic fill<a class="headerlink" href="#graphic-fill" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 각 폴리곤의 면을 타일 그래픽으로 채웁니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_graphicfill1.png" src="../../_images/polygon_graphicfill1.png" />
+<p class="caption"><em>그래픽 채우기</em></p>
+</div>
+<div class="section" id="id5">
+<h3>Code<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_graphicfill.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Graphic fill&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;GraphicFill&gt;</span>
+             <span class="nt">&lt;Graphic&gt;</span>
+               <span class="nt">&lt;ExternalGraphic&gt;</span>
+                 <span class="nt">&lt;OnlineResource</span>
+                   <span class="na">xlink:type=</span><span class="s">&quot;simple&quot;</span>
+                   <span class="na">xlink:href=</span><span class="s">&quot;colorblocks.png&quot;</span> <span class="nt">/&gt;</span>
+                 <span class="nt">&lt;Format&gt;</span>image/png<span class="nt">&lt;/Format&gt;</span>
+               <span class="nt">&lt;/ExternalGraphic&gt;</span>
+             <span class="nt">&lt;Size&gt;</span>93<span class="nt">&lt;/Size&gt;</span>
+             <span class="nt">&lt;/Graphic&gt;</span>
+           <span class="nt">&lt;/GraphicFill&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id6">
+<h3>Details<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>이 스타일은 폴리곤의 면을 타일 그래픽으로 채웁니다.
+렌더러(renderer)에 &#8220;내장된(internal)&#8221; 정사각형이나 원처럼 흔히 쓰이는 형태와 구분하기 위해 SLD에서는 <tt class="docutils literal"><span class="pre">&lt;ExternalGraphic&gt;</span></tt> 태그를 사용합니다.
+<strong>7-12행</strong>에서 이 그래픽의 세부 사항을 설정합니다.
+<strong>10행</strong>에서 그래픽의 경로 및 파일명을, <strong>11행</strong>에서 그래픽(<tt class="docutils literal"><span class="pre">image/png</span></tt>)의 포맷(MIME type)을 설정합니다.
+이 예시에서 그래픽과 SLD가 동일한 디렉터리에 위치하기 때문에 <strong>10행</strong>에 경로 정보가 없어도 됩니다. 다만 원한다면 전체 URL을 쓸 수 있습니다.
+<strong>13행</strong>에서 표출되는 그래픽의 높이를 픽셀 값으로 설정합니다. 이 값이 그래픽의 실제 높이와 다를 경우 높이/너비 비율을 유지하면서 조정될 것입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/colorblocks1.png" src="../../_images/colorblocks1.png" />
+<p class="caption"><em>면에 사용된 그래픽</em></p>
+</div>
+</div>
+</div>
+<div class="section" id="hatching-fill">
+<h2>Hatching fill<a class="headerlink" href="#hatching-fill" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 폴리곤을 해칭 패턴으로 채웁니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">표준 SLD 1.0 사양이 해칭을 포함하지 않기 때문에 이 예시에 GeoServer의 SLD 확장 모듈이 필요합니다.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/polygon_hatchingfill1.png" src="../../_images/polygon_hatchingfill1.png" />
+<p class="caption"><em>해칭 채우기</em></p>
+</div>
+<div class="section" id="id7">
+<h3>Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_hatchingfill.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Hatching fill&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;GraphicFill&gt;</span>
+             <span class="nt">&lt;Graphic&gt;</span>
+               <span class="nt">&lt;Mark&gt;</span>
+                 <span class="nt">&lt;WellKnownName&gt;</span>shape://times<span class="nt">&lt;/WellKnownName&gt;</span>
+                 <span class="nt">&lt;Stroke&gt;</span>
+                   <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#990099<span class="nt">&lt;/CssParameter&gt;</span>
+                   <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/CssParameter&gt;</span>
+                 <span class="nt">&lt;/Stroke&gt;</span>
+               <span class="nt">&lt;/Mark&gt;</span>
+               <span class="nt">&lt;Size&gt;</span>16<span class="nt">&lt;/Size&gt;</span>
+             <span class="nt">&lt;/Graphic&gt;</span>
+           <span class="nt">&lt;/GraphicFill&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id8">
+<h3>Details<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>이 예시에 <a class="reference internal" href="#sld-cookbook-polygons-graphicfill"><em>Graphic fill</em></a> 예시와 마찬가지로 <tt class="docutils literal"><span class="pre">&lt;GraphicFill&gt;</span></tt> 태그가 있지만,
+<tt class="docutils literal"><span class="pre">&lt;ExternalGraphic&gt;</span></tt> 대신 <strong>7-13행</strong>의 <tt class="docutils literal"><span class="pre">&lt;Mark&gt;</span></tt>를 사용합니다.
+<strong>8행</strong>에서 해치 심볼(&#8220;x&#8221;)이 폴리곤 전체에 걸쳐 나열(tile)되도록 &#8220;times&#8221;를 설정합니다.
+<strong>10행</strong>에서 해치 색상을 보라색(<tt class="docutils literal"><span class="pre">#990099</span></tt>)으로, <strong>11행</strong>에서 해치 굵기를 1픽셀로, <strong>14행</strong>에서 해치 타일 크기를 16픽셀로 설정합니다.
+해치 타일은 언제나 정사각형이므로, <tt class="docutils literal"><span class="pre">&lt;Size&gt;</span></tt>가 높이와 너비 둘 다 설정합니다.</p>
+</div>
+</div>
+<div class="section" id="polygon-with-default-label">
+<span id="sld-cookbook-polygons-polygonwithdefaultlabel"></span><h2>Polygon with default label<a class="headerlink" href="#polygon-with-default-label" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 단순한 폴리곤에 텍스트 레이블이 표출됩니다. 사용자가 따로 지정하지 않을 경우 레이블이 어떻게 표출되는지 보여줍니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_polygonwithdefaultlabel1.png" src="../../_images/polygon_polygonwithdefaultlabel1.png" />
+<p class="caption"><em>기본 레이블이 표출된 폴리곤</em></p>
+</div>
+<div class="section" id="id9">
+<h3>Code<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_polygonwithdefaultlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Polygon with default label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#40FF40<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FFFFFF<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+       <span class="nt">&lt;TextSymbolizer&gt;</span>
+         <span class="nt">&lt;Label&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>name<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;/Label&gt;</span>
+       <span class="nt">&lt;/TextSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id10">
+<h3>Details<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>이 예시에 <tt class="docutils literal"><span class="pre">&lt;PolygonSymbolizer&gt;</span></tt>와 <tt class="docutils literal"><span class="pre">&lt;TextSymbolizer&gt;</span></tt>가 있습니다.
+<strong>3-11행</strong>에서 <tt class="docutils literal"><span class="pre">&lt;PolygonSymbolizer&gt;</span></tt>를 설정합니다.
+<strong>5행</strong>에서 폴리곤의 면 색상을 밝은 초록(<tt class="docutils literal"><span class="pre">#40FF40</span></tt>)으로,
+<strong>8-9행</strong>에서 획의 색상을 하양(<tt class="docutils literal"><span class="pre">#FFFFFF</span></tt>), 굵기를 2픽셀로 설정합니다.
+<strong>12-16행</strong>의 <tt class="docutils literal"><span class="pre">&lt;TextSymbolizer&gt;</span></tt>에서 레이블을 설정합니다.
+<strong>14행</strong>에서 &#8220;name&#8221; 속성값을 표출할 텍스트로 설정합니다.
+(필요할 경우 <a class="reference internal" href="#sld-cookbook-polygons-attributes"><em>Example polygons layer</em></a> 섹션의 속성 테이블을 참조하십시오.)
+레이블에 대한 다른 세부 사항은 렌더러의 기본값으로 설정되어 있습니다. 폰트는 Times New Roman, 폰트 색상은 검정, 폰트 크기는 10픽셀입니다.</p>
+</div>
+</div>
+<div class="section" id="label-halo">
+<h2>Label halo<a class="headerlink" href="#label-halo" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 레이블에 하얀 배경색(halo)을 추가하여 <a class="reference internal" href="#sld-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a>의 스타일을 변경합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_labelhalo1.png" src="../../_images/polygon_labelhalo1.png" />
+<p class="caption"><em>레이블 배경색</em></p>
+</div>
+<div class="section" id="id11">
+<h3>Code<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_labelhalo.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Label halo&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#40FF40<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FFFFFF<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+       <span class="nt">&lt;TextSymbolizer&gt;</span>
+         <span class="nt">&lt;Label&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>name<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;/Label&gt;</span>
+         <span class="nt">&lt;Halo&gt;</span>
+           <span class="nt">&lt;Radius&gt;</span>3<span class="nt">&lt;/Radius&gt;</span>
+           <span class="nt">&lt;Fill&gt;</span>
+             <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#FFFFFF<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;/Halo&gt;</span>
+       <span class="nt">&lt;/TextSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id12">
+<h3>Details<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>이 예시는 <a class="reference internal" href="#sld-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a> 예시와 유사하지만,
+<strong>16-21행</strong>에서 레이블을 둘러싼 배경색을 추가했습니다. 배경색은 가독성을 높이기 위해 레이블을 둘러싼 색상 버퍼(buffer)를 생성합니다.
+<strong>17행</strong>에서 배경색의 반경(radius)을 레이블 경계에서 3픽셀로, <strong>19행</strong>에서 배경색을 하양(<tt class="docutils literal"><span class="pre">#FFFFFF</span></tt>)으로 설정합니다.
+배경색이 텍스트 색상과 강한 대조를 이루어야 가장 유용하므로, 최상의 가독성을 위해 검은 텍스트를 하얀 배경색이 둘러싸도록 했습니다.</p>
+</div>
+</div>
+<div class="section" id="polygon-with-styled-label">
+<span id="sld-cookbook-polygons-polygonwithstyledlabel"></span><h2>Polygon with styled label<a class="headerlink" href="#polygon-with-styled-label" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 레이블을 폴리곤 중심으로 정렬하고, 폰트명 및 크기를 변경하며, 레이블 배치 최적화를 위한 설정을 추가해서
+<a class="reference internal" href="#sld-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a> 예시의 레이블 스타일을 향상시킵니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer에 특화된 SLD 확장 모듈에서 다음에 설명할 배치 최적화 <tt class="docutils literal"><span class="pre">&lt;VendorOption&gt;</span></tt> 태그를 사용할 수 있습니다. 표준 SLD 1.0 사양에 포함되지 않았습니다.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/polygon_polygonwithstyledlabel1.png" src="../../_images/polygon_polygonwithstyledlabel1.png" />
+<p class="caption"><em>스타일 적용 레이블이 표출된 폴리곤</em></p>
+</div>
+<div class="section" id="id13">
+<h3>Code<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_polygonwithstyledlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Polygon with styled label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#40FF40<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FFFFFF<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+       <span class="nt">&lt;TextSymbolizer&gt;</span>
+         <span class="nt">&lt;Label&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>name<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;/Label&gt;</span>
+         <span class="nt">&lt;Font&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-family&quot;</span><span class="nt">&gt;</span>Arial<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-size&quot;</span><span class="nt">&gt;</span>11<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-style&quot;</span><span class="nt">&gt;</span>normal<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-weight&quot;</span><span class="nt">&gt;</span>bold<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Font&gt;</span>
+         <span class="nt">&lt;LabelPlacement&gt;</span>
+           <span class="nt">&lt;PointPlacement&gt;</span>
+             <span class="nt">&lt;AnchorPoint&gt;</span>
+               <span class="nt">&lt;AnchorPointX&gt;</span>0.5<span class="nt">&lt;/AnchorPointX&gt;</span>
+               <span class="nt">&lt;AnchorPointY&gt;</span>0.5<span class="nt">&lt;/AnchorPointY&gt;</span>
+             <span class="nt">&lt;/AnchorPoint&gt;</span>
+           <span class="nt">&lt;/PointPlacement&gt;</span>
+         <span class="nt">&lt;/LabelPlacement&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#000000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;autoWrap&quot;</span><span class="nt">&gt;</span>60<span class="nt">&lt;/VendorOption&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;maxDisplacement&quot;</span><span class="nt">&gt;</span>150<span class="nt">&lt;/VendorOption&gt;</span>
+       <span class="nt">&lt;/TextSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id14">
+<h3>Details<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>이 예시는 <a class="reference internal" href="#sld-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a> 예시와 유사하지만,
+<strong>12-35행</strong>의 <tt class="docutils literal"><span class="pre">&lt;TextSymbolizer&gt;</span></tt>에 스타일 옵션이 추가되었습니다.
+<strong>16-21행</strong>에서 폰트 스타일을 설정합니다. <strong>17행</strong>에서 폰트 패밀리를 &#8220;Arial&#8221;로, <strong>18행</strong>에서 폰트 크기를 11픽셀로,
+<strong>19행</strong>에서 폰트 스타일을 (&#8220;italic&#8221;나 &#8220;oblique&#8221;가 아닌) &#8220;normal&#8221;로, <strong>20행</strong>에서 폰트 굵기를 (&#8220;normal&#8221;이 아닌) &#8220;bold&#8221;로 설정합니다.</p>
+<p><strong>22-29행</strong>의 <tt class="docutils literal"><span class="pre">&lt;LabelPlacement&gt;</span></tt> 태그에서 폴리곤의 중심점(centroid)을 기준으로 어떻게 레이블을 배치할지 설정합니다.
+<strong>21행</strong>에서 폴리곤의 중심점을 기준으로 레이블의 수평축 0.5(50%)로 설정해서 가운데 정렬되도록 합니다.
+<strong>22행</strong>에서 수직축 0.5로 설정해서 마찬가지로 가운데 정렬되도록 합니다.</p>
+<p>마지막으로 레이블 배치 최적화를 위해 2가지 작업을 해줍니다.
+<strong>33행</strong>에서 긴 레이블을 여러 행으로 나누도록 최대 행 길이(line wrapping)를 60픽셀로 설정하고, <strong>34행</strong>에서 레이블이 150픽셀까지 이동할 수 있도록 설정합니다.
+이렇게 하면 레이블이 조밀해져 대부분의 경우 폴리곤 경계를 넘지 않게 됩니다. 다만 우하단의 작은 &#8220;Massive County&#8221;의 레이블이 어떻게 표출되는지 보십시오.</p>
+</div>
+</div>
+<div class="section" id="attribute-based-polygon">
+<h2>Attribute-based polygon<a class="headerlink" href="#attribute-based-polygon" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 인구(&#8220;pop&#8221;) 속성값에 따라 폴리곤에 다른 스타일을 적용합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_attributebasedpolygon1.png" src="../../_images/polygon_attributebasedpolygon1.png" />
+<p class="caption"><em>속성 기반 폴리곤</em></p>
+</div>
+<div class="section" id="id15">
+<h3>Code<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_attributebasedpolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Attribute-based polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>SmallPop<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;Title&gt;</span>Less Than 200,000<span class="nt">&lt;/Title&gt;</span>
+       <span class="nt">&lt;ogc:Filter&gt;</span>
+         <span class="nt">&lt;ogc:PropertyIsLessThan&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>pop<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+           <span class="nt">&lt;ogc:Literal&gt;</span>200000<span class="nt">&lt;/ogc:Literal&gt;</span>
+         <span class="nt">&lt;/ogc:PropertyIsLessThan&gt;</span>
+       <span class="nt">&lt;/ogc:Filter&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#66FF66<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>MediumPop<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;Title&gt;</span>200,000 to 500,000<span class="nt">&lt;/Title&gt;</span>
+       <span class="nt">&lt;ogc:Filter&gt;</span>
+         <span class="nt">&lt;ogc:And&gt;</span>
+           <span class="nt">&lt;ogc:PropertyIsGreaterThanOrEqualTo&gt;</span>
+             <span class="nt">&lt;ogc:PropertyName&gt;</span>pop<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+             <span class="nt">&lt;ogc:Literal&gt;</span>200000<span class="nt">&lt;/ogc:Literal&gt;</span>
+           <span class="nt">&lt;/ogc:PropertyIsGreaterThanOrEqualTo&gt;</span>
+           <span class="nt">&lt;ogc:PropertyIsLessThan&gt;</span>
+             <span class="nt">&lt;ogc:PropertyName&gt;</span>pop<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+             <span class="nt">&lt;ogc:Literal&gt;</span>500000<span class="nt">&lt;/ogc:Literal&gt;</span>
+           <span class="nt">&lt;/ogc:PropertyIsLessThan&gt;</span>
+         <span class="nt">&lt;/ogc:And&gt;</span>
+       <span class="nt">&lt;/ogc:Filter&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#33CC33<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>LargePop<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;Title&gt;</span>Greater Than 500,000<span class="nt">&lt;/Title&gt;</span>
+       <span class="nt">&lt;ogc:Filter&gt;</span>
+         <span class="nt">&lt;ogc:PropertyIsGreaterThan&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>pop<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+           <span class="nt">&lt;ogc:Literal&gt;</span>500000<span class="nt">&lt;/ogc:Literal&gt;</span>
+         <span class="nt">&lt;/ogc:PropertyIsGreaterThan&gt;</span>
+       <span class="nt">&lt;/ogc:Filter&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#009900<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id16">
+<h3>Details<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 레이어의 속성을 보려면 <a class="reference internal" href="#sld-cookbook-polygons-attributes"><em>Example polygons layer</em></a>를 참조하십시오.
+스타일을 단순하게 하기 위해 이 예시에서 레이블을 제거했습니다.
+그러나 어떤 속성이 어떤 폴리곤과 대응하는지 보려면 <a class="reference internal" href="#sld-cookbook-polygons-polygonwithstyledlabel"><em>Polygon with styled label</em></a> 예시를 참조하십시오.</p>
+</div>
+<p>이 가상 국가의 군들은 인구(&#8220;pop&#8221;) 속성이 나타내는 인구를 가지고 있습니다.
+이 스타일은 &#8220;pop&#8221; 속성값에 따라 각 폴리곤의 면에 대한 설정을 변경하는 3가지 규칙을 갖추고 있습니다. &#8220;pop&#8221; 속성값이 작을수록 면 색상이 밝아지고 커질수록 어두워집니다.</p>
+<p>이 3가지 규칙은 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="30%" />
+<col width="30%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>규칙 순서</strong></td>
+<td><strong>규칙명</strong></td>
+<td><strong>인구</strong> (&#8220;pop&#8221;)</td>
+<td><strong>색상</strong></td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>SmallPop</td>
+<td>200,000 미만</td>
+<td><tt class="docutils literal"><span class="pre">#66FF66</span></tt></td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>MediumPop</td>
+<td>200,000 이상 500,000 미만</td>
+<td><tt class="docutils literal"><span class="pre">#33CC33</span></tt></td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>LargePop</td>
+<td>500,000 이상</td>
+<td><tt class="docutils literal"><span class="pre">#009900</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>이 경우 각 폴리곤마다 1가지 규칙만 적용되기 때문에 규칙의 순서는 중요하지 않습니다.</p>
+<p>첫번째 규칙은 <strong>2-16행</strong>에 있으며, 인구 속성값이 200,000 미만인 폴리곤의 스타일을 설정합니다.
+<strong>5-10행</strong>에서 이 필터를 설정합니다. <strong>6-9행</strong>에서 &#8220;미만(less than)&#8221; 필터를, <strong>7행</strong>에서 속성명(&#8220;pop&#8221;)을, <strong>8행</strong>에서 200,000이란 값을 설정합니다.
+<strong>13행</strong>에서 면 색상을 밝은 초록(<tt class="docutils literal"><span class="pre">#66FF66</span></tt>)으로 설정합니다.</p>
+<p>두번째 규칙은 <strong>17-37행</strong>에 있으며, 인구 속성값이 200,000 이상 500,000 미만인 폴리곤의 스타일을 설정합니다.
+<strong>20-31행</strong>에서 인구 필터를 설정합니다. 이 필터는 하나가 아니라 &#8220;이상(greater than or equal to)&#8221;과 &#8220;미만(less than)&#8221;이라는 2가지 기준(criteria)을 설정해야 하기 때문에 첫번째 규칙보다 깁니다.
+<strong>21행</strong>과 <strong>30행</strong>에 쓰인 <tt class="docutils literal"><span class="pre">And</span></tt>에 유의하십시오. 이 때문에 두 필터가 모두 참이어야 규칙을 적용할 수 있습니다.
+<strong>34행</strong>에서 면 색상을 중간 정도의 초록(<tt class="docutils literal"><span class="pre">#33CC33</span></tt>)으로 설정합니다.</p>
+<p>세번째 규칙은 <strong>38-52행</strong>에 있으며, 인구 속성값이 500,000 이상인 폴리곤의 스타일을 설정합니다.
+이 규칙에서 단 하나 다른 것은 면 색상으로 <strong>49행</strong>에서 어두운 초록(<tt class="docutils literal"><span class="pre">#009900</span></tt>)으로 설정합니다.</p>
+</div>
+</div>
+<div class="section" id="zoom-based-polygon">
+<h2>Zoom-based polygon<a class="headerlink" href="#zoom-based-polygon" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 서로 다른 줌 레벨에서 폴리곤의 스타일을 변경합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_zoombasedpolygonlarge1.png" src="../../_images/polygon_zoombasedpolygonlarge1.png" />
+<p class="caption"><em>줌 기반 폴리곤: Zoomed in</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/polygon_zoombasedpolygonmedium1.png" src="../../_images/polygon_zoombasedpolygonmedium1.png" />
+<p class="caption"><em>줌 기반 폴리곤: Partially zoomed</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/polygon_zoombasedpolygonsmall1.png" src="../../_images/polygon_zoombasedpolygonsmall1.png" />
+<p class="caption"><em>줌 기반 폴리곤: Zoomed out</em></p>
+</div>
+<div class="section" id="id17">
+<h3>Code<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/polygon_zoombasedpolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Zoom-based polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>Large<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;MaxScaleDenominator&gt;</span>100000000<span class="nt">&lt;/MaxScaleDenominator&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#0000CC<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#000000<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>7<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+       <span class="nt">&lt;TextSymbolizer&gt;</span>
+         <span class="nt">&lt;Label&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>name<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;/Label&gt;</span>
+         <span class="nt">&lt;Font&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-family&quot;</span><span class="nt">&gt;</span>Arial<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-size&quot;</span><span class="nt">&gt;</span>14<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-style&quot;</span><span class="nt">&gt;</span>normal<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-weight&quot;</span><span class="nt">&gt;</span>bold<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Font&gt;</span>
+         <span class="nt">&lt;LabelPlacement&gt;</span>
+           <span class="nt">&lt;PointPlacement&gt;</span>
+             <span class="nt">&lt;AnchorPoint&gt;</span>
+               <span class="nt">&lt;AnchorPointX&gt;</span>0.5<span class="nt">&lt;/AnchorPointX&gt;</span>
+               <span class="nt">&lt;AnchorPointY&gt;</span>0.5<span class="nt">&lt;/AnchorPointY&gt;</span>
+             <span class="nt">&lt;/AnchorPoint&gt;</span>
+           <span class="nt">&lt;/PointPlacement&gt;</span>
+         <span class="nt">&lt;/LabelPlacement&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#FFFFFF<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+       <span class="nt">&lt;/TextSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>Medium<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;MinScaleDenominator&gt;</span>100000000<span class="nt">&lt;/MinScaleDenominator&gt;</span>
+       <span class="nt">&lt;MaxScaleDenominator&gt;</span>200000000<span class="nt">&lt;/MaxScaleDenominator&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#0000CC<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#000000<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>4<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>Small<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;MinScaleDenominator&gt;</span>200000000<span class="nt">&lt;/MinScaleDenominator&gt;</span>
+       <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#0000CC<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#000000<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id18">
+<h3>Details<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>자연스럽게 보이는 맵을 생성하고자 하는 경우, 줌 레벨이 높아질수록 형태를 크게 만드는 편이 바람직합니다.
+이 예시에서 줌 레벨에 따라 선의 굵기를 변화시킵니다. 폴리곤의 2차원 성질 때문에 이런 변화는 원래 일어납니다.
+하지만 줌 레벨에 따라 스타일을 변화시키는 또다른 방법은 맵을 줌인할수록 획의 굵기를 굵게 만들거나 특정 줌 레벨까지만 레이블이 표출되도록 제한하는 것입니다.
+이렇게 하면 획과 레이블의 크기와 양을 읽을 수 있을 정도로 유지하고, 폴리곤 자체를 덮어버리지 않게 할 수 있습니다.</p>
+<p>줌 레벨(정확히 말하자면 축척 분모)는 맵의 축척을 가리킵니다. 축척 분모가 10,000이면 맵의 축척은 맵 투영체 단위로 1:10,000입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">사용하기에 적당한 축척 분모(줌 레벨)를 결정하는 방법은 이 예시의 범위를 벗어납니다.</p>
+</div>
+<p>이 스타일은 다음과 같은 3가지 규칙을 갖추고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="15%" />
+<col width="40%" />
+<col width="10%" />
+<col width="20%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>규칙 순서</strong></td>
+<td><strong>규칙명</strong></td>
+<td><strong>축척 분모</strong></td>
+<td><strong>획 굵기</strong></td>
+<td><strong>레이블 표출 여부</strong></td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>Large</td>
+<td>1:100,000,000 이하</td>
+<td>7</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Medium</td>
+<td>1:100,000,000 초과 1:200,000,000 미만</td>
+<td>4</td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>Small</td>
+<td>1:200,000,000 이상</td>
+<td>2</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>첫번째 규칙은 <strong>2-36행</strong>에 있으며, 뷰(view)에서 &#8220;줌인(zoomed in)&#8221;할 경우에 대응하는 가장 작은 축척 분모에 대한 규칙입니다.
+<strong>4행</strong>에서 축척 규칙을 설정해 축척 분모가 100,000,000 이하인 모든 맵에 적용됩니다. <strong>7행</strong>에서 색상을 파랑(<tt class="docutils literal"><span class="pre">#0000CC</span></tt>)으로 설정합니다.
+축척 분모에 상관없이 모든 규칙에서 면 색상이 같다는 점에 유의하십시오.
+<a class="reference internal" href="#sld-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a>이나
+<a class="reference internal" href="#sld-cookbook-polygons-polygonwithstyledlabel"><em>Polygon with styled label</em></a> 예시와 마찬가지로,
+<strong>14-35행</strong>의 <tt class="docutils literal"><span class="pre">&lt;TextSymbolizer&gt;</span></tt>에서 폴리곤 위에 표출될 텍스트 레이블을 설정합니다.
+<strong>19-22행</strong>에서 폰트 정보를 Arial, 14픽셀, normal, bold로 설정합니다.
+<strong>27-28행</strong>에서 폴리곤의 중심점(centroid)을 기준으로 어떻게 레이블을 배치할지 설정합니다.
+<strong>21행</strong>에서 <tt class="docutils literal"><span class="pre">&lt;AnchorPointX&gt;</span></tt>와 <tt class="docutils literal"><span class="pre">&lt;AnchorPointY&gt;</span></tt>를 모두 0.5(50%)로 설정해서
+레이블이 폴리곤의 중심점을 기준으로 수평축, 수직축 모두 가운데 정렬되도록 합니다.
+마지막으로 <strong>33행</strong>에서 폰트 색상을 하양(<tt class="docutils literal"><span class="pre">#FFFFFF</span></tt>)으로 설정합니다.</p>
+<p>두번째 규칙은 <strong>37-50행</strong>에 있으며, 뷰(view)에서 &#8220;줌(partially zoomed)&#8221;할 경우에 대응하는 중간 정도의 축척 분모에 대한 규칙입니다.
+<strong>39-40행</strong>에서 축척 규칙을 설정해 축척 분모가 100,000,000을 초과하고 200,000,000미만인 모든 맵에 적용됩니다.
+(<tt class="docutils literal"><span class="pre">&lt;MinScaleDenominator&gt;</span></tt>는 포괄적(inclusive)이고
+<tt class="docutils literal"><span class="pre">&lt;MaxScaleDenominator&gt;</span></tt>는 배타적(exclusive)이므로, 줌 레벨이 정확히 200,000,000인 경우 이 규칙은 적용되지 <em>않습니다</em>.)
+축척을 제외하면 첫번째와 두번째 규칙에 2가지 차이점이 있습니다.
+<strong>47행</strong>에서 획의 굵기를 4픽셀로 설정하고, <tt class="docutils literal"><span class="pre">&lt;TextSymbolizer&gt;</span></tt>가 없으므로 레이블이 표출되지 않습니다.</p>
+<p>세번째 규칙은 <strong>51-63행</strong>에 있으며, 뷰(view)에서 &#8220;줌아웃(zoomed out)&#8221;할 경우에 대응하는 가장 큰 축척 분모에 대한 규칙입니다.
+<strong>53행</strong>에서 축척 규칙을 설정해 축척 분모가 200,000,000 이상인 모든 맵에 적용됩니다.
+이 규칙과 다른 두 규칙의 유일한 차이는 획의 굵기로 <strong>60행</strong>에서 1픽셀로 설정합니다.
+마찬가지로 <tt class="docutils literal"><span class="pre">&lt;TextSymbolizer&gt;</span></tt>가 없으므로 레이블이 표출되지 않습니다.</p>
+<p>그 결과 이 스타일에서 사용자가 줌인할수록 획이 굵어지며, 충분한 레벨까지 줌인해야 레이블이 표출됩니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="lines.html" title="previous chapter">Lines</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="rasters.html" title="next chapter">Rasters</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Polygons</a><ul>
+<li><a class="reference internal" href="#example-polygons-layer">Example polygons layer</a></li>
+<li><a class="reference internal" href="#simple-polygon">Simple polygon</a><ul>
+<li><a class="reference internal" href="#code">Code</a></li>
+<li><a class="reference internal" href="#details">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#simple-polygon-with-stroke">Simple polygon with stroke</a><ul>
+<li><a class="reference internal" href="#id1">Code</a></li>
+<li><a class="reference internal" href="#id2">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#transparent-polygon">Transparent polygon</a><ul>
+<li><a class="reference internal" href="#id3">Code</a></li>
+<li><a class="reference internal" href="#id4">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#graphic-fill">Graphic fill</a><ul>
+<li><a class="reference internal" href="#id5">Code</a></li>
+<li><a class="reference internal" href="#id6">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hatching-fill">Hatching fill</a><ul>
+<li><a class="reference internal" href="#id7">Code</a></li>
+<li><a class="reference internal" href="#id8">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#polygon-with-default-label">Polygon with default label</a><ul>
+<li><a class="reference internal" href="#id9">Code</a></li>
+<li><a class="reference internal" href="#id10">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#label-halo">Label halo</a><ul>
+<li><a class="reference internal" href="#id11">Code</a></li>
+<li><a class="reference internal" href="#id12">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#polygon-with-styled-label">Polygon with styled label</a><ul>
+<li><a class="reference internal" href="#id13">Code</a></li>
+<li><a class="reference internal" href="#id14">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attribute-based-polygon">Attribute-based polygon</a><ul>
+<li><a class="reference internal" href="#id15">Code</a></li>
+<li><a class="reference internal" href="#id16">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zoom-based-polygon">Zoom-based polygon</a><ul>
+<li><a class="reference internal" href="#id17">Code</a></li>
+<li><a class="reference internal" href="#id18">Details</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="lines.html" title="previous chapter">Lines</a></li>
+            <li>다음: <a href="rasters.html" title="next chapter">Rasters</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/styling/sld-cookbook/polygons.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

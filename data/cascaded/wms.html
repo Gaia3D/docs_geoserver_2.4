@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>External Web Map Server &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Cascaded Services" href="index.html" />
+      <link rel="next" title="Filtering in GeoServer" href="../../filter/index.html" />
+      <link rel="prev" title="External Web Feature Server" href="wfs.html" />
+</head>
+<body class="data/cascaded/wms">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Cascaded Services</a> &raquo;</li>
+  <li>External Web Map Server</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../../filter/index.html" title="Filtering in GeoServer"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="wfs.html" title="External Web Feature Server"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="external-web-map-server">
+<span id="data-external-wms"></span><h1>External Web Map Server<a class="headerlink" href="#external-web-map-server" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer는 원격 WMS(Web Map Service)를 대리(proxy)할 수 있습니다. 때로 <strong>종속(cascading) WMS</strong>라고 불리는 과정입니다.
+원격 WMS를 로드하면 많은 면에서 유용합니다. 지금까지 원격 WMS에 접근하거나 관리하지 않았다면, 이제 원격 WMS의 산출물을 로컬 데이터처럼 관리할 수 있습니다.
+원격 WMS가 GeoServer가 아니라고 할지라도 GeoServer의 기능(워터마크, 장식, 프린트 작업 등)을 사용해서 원격 WMS의 산출물을 처리할 수 있습니다.</p>
+<p>원격 WMS에 연결하려면 해당 WMS를 새로운 데이터 저장소로 등록해야 합니다. 이 저장소를 성공적으로 추가하려면 GeoServer가 원격 WMS의 역량 문서에 접근할 수 있어야 합니다.</p>
+<div class="section" id="adding-an-external-wms">
+<h2>Adding an external WMS<a class="headerlink" href="#adding-an-external-wms" title="Permalink to this headline">¶</a></h2>
+<p>외부 WFS에 연결하려면 새로운 데이터 저장소로 등록해야 합니다. <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>에서
+<em class="menuselection">Stores &raquo; Add a new store &raquo; WMS</em>로 이동하십시오. <em class="guilabel">Other Data Sources</em> 아래에 옵션 목록이 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/wmsaddnew.png" src="../../_images/wmsaddnew.png" />
+<p class="caption"><em>외부 WMS를 데이터 저장소로 추가하기</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/wmsconfigure.png" src="../../_images/wmsconfigure.png" />
+<p class="caption"><em>새로운 외부 WMS 저장소 설정하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Workspace</em></td>
+<td>저장소를 담는 작업공간의 명칭입니다. 해당 저장소에서 생산되는 모든 레이어명의 접두사가 됩니다. <strong>원격 WMS 상의 작업공간명은 종속되지 않습니다.</strong></td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Data Source Name</em></td>
+<td>GeoServer가 식별하는 저장소명입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Description</em></td>
+<td>저장소의 설명을 입력합니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Enabled</em></td>
+<td>저장소를 활성화합니다. 비활성화할 경우 외부 WMS의 어떤 데이터도 서비스되지 않습니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Capabilities URL</em></td>
+<td>원격 WMS의 역량 문서에 접근하는 전체 URL입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">User Name</em></td>
+<td>WMS가 인증을 요구할 경우 연결하기 위한 사용자명입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Password</em></td>
+<td>WMS가 인증을 요구할 경우 위 사용자의 비밀번호입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Max concurrent connections</em></td>
+<td>해당 WMS에 대해 유지해야 할 지속 연결(persistent connection)의 최대 개수입니다.</td>
+</tr>
+</tbody>
+</table>
+<p>설정이 끝나면 <em class="guilabel">Save</em>를 클릭하십시오.</p>
+</div>
+<div class="section" id="configuring-external-wms-layers">
+<h2>Configuring external WMS layers<a class="headerlink" href="#configuring-external-wms-layers" title="Permalink to this headline">¶</a></h2>
+<p>제대로 등록되었을 경우 GeoServer가 외부 WMS가 서비스하는 모든 레이어를 사용할 수 있습니다. 그러나 서비스할 수 있기 전에 각각 새로운 레이어로 설정(생산)해야 합니다.
+새로운 레이어를 추가하고 편집하는 방법은 <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a> 섹션을 참조하십시오.
+설정이 끝나면, 레이어들이 WMS 역량 문서의 일부로서 <a class="reference internal" href="../../webadmin/layerpreview/index.html#layerpreview"><em>Layer Preview</em></a>에 표출될 것입니다.</p>
+</div>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>원격 WMS에 연결하면 다음 기능을 쓸 수 있습니다.</p>
+<ul class="simple">
+<li><strong>Dynamic reprojection</strong> &mdash;레이어의 기본 투영체는 종속되지만, 원격 WMS에 SRS 파라미터를 전송할 수 있습니다.
+원격 서버 상에서 그 SRS를 지원하지 않을 경우 GeoServer는 원격 WMS에서 전송된 이미지를 동적으로 재투영합니다.</li>
+<li><strong>GetFeatureInfo</strong> &mdash;WMS GetFeatureInfo 요청을 원격 WMS로 전송합니다. 원격 WMS가 <tt class="docutils literal"><span class="pre">application/vnd.ogc.gml</span></tt> 형식을 지원할 경우 요청을 성공적으로 처리할 것입니다.</li>
+<li>전체 <strong>REST Configuration</strong> &mdash;GeoServer REST 인터페이스에 대해 자세한 정보를 알고 싶다면 <a class="reference internal" href="../../rest/index.html#rest"><em>REST configuration</em></a> 섹션을 참조하십시오.</li>
+</ul>
+</div>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<p>외부 WMS를 통해 서비스되는 레이어는 로컬 WMS의 모든 기능을 전부 지원하지 못 합니다.</p>
+<ul class="simple">
+<li>SLD로 레이어에 스타일을 적용할 수 없습니다.</li>
+<li>대체(로컬) 스타일을 쓸 수 없습니다.</li>
+<li>가외의 요청 파라미터(<tt class="docutils literal"><span class="pre">time</span></tt>, <tt class="docutils literal"><span class="pre">elevation</span></tt>, <tt class="docutils literal"><span class="pre">cql_filter</span></tt>, 등등)를 쓸 수 없습니다.</li>
+<li>GetLegendGraphic 요청을 지원하지 않습니다.</li>
+<li>이미지 형식을 설정할 수 없습니다. GeoServer는 PNG 이미지를 요청하려 하는데, 실패할 경우 원격 서버의 기본 이미지 형식을 사용합니다.</li>
+<li>원격 WMS에 대한 인증 작업을 지원하지 않습니다. 원격 WMS의 보안이 해제되어 있어야 합니다.</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="wfs.html" title="previous chapter">External Web Feature Server</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../../filter/index.html" title="next chapter">Filtering in GeoServer</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">External Web Map Server</a><ul>
+<li><a class="reference internal" href="#adding-an-external-wms">Adding an external WMS</a></li>
+<li><a class="reference internal" href="#configuring-external-wms-layers">Configuring external WMS layers</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#limitations">Limitations</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="wfs.html" title="previous chapter">External Web Feature Server</a></li>
+            <li>다음: <a href="../../filter/index.html" title="next chapter">Filtering in GeoServer</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/cascaded/wms.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

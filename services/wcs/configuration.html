@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WCS configuration &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Coverage Service" href="index.html" />
+      <link rel="next" title="Virtual OWS Services" href="../virtual-services.html" />
+      <link rel="prev" title="WCS Vendor Parameters" href="vendor.html" />
+</head>
+<body class="services/wcs/configuration">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Coverage Service</a> &raquo;</li>
+  <li>WCS configuration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../virtual-services.html" title="Virtual OWS Services"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="vendor.html" title="WCS Vendor Parameters"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wcs-configuration">
+<span id="id1"></span><h1>WCS configuration<a class="headerlink" href="#wcs-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="coverage-processing">
+<h2>Coverage processing<a class="headerlink" href="#coverage-processing" title="Permalink to this headline">¶</a></h2>
+<p>래스터 오버뷰와 읽기 서브샘플링을 이용하는 방법에 대해 WCS 연쇄 처리 과정(processing chain)을 조정할 수 있습니다.</p>
+<p>오버뷰 정책은 사용 가능한 다음 4가지 값을 갖추고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="60%" />
+<col width="10%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+<td><strong>버전</strong></td>
+</tr>
+<tr class="row-even"><td><strong>Lower resolution overview</strong></td>
+<td>요청한 해상도에 가장 가까운 해상도를 가진 오버뷰 2개를 찾아 더 낮은 해상도의 오버뷰를 선택합니다.</td>
+<td>2.0.3</td>
+</tr>
+<tr class="row-odd"><td><strong>Don&#8217;t use overviews</strong></td>
+<td>(기본값) 오버뷰를 무시하고, 대신 데이터의 자체(native) 해상도를 사용합니다.</td>
+<td>2.0.3</td>
+</tr>
+<tr class="row-even"><td><strong>Higher resolution overview</strong></td>
+<td>요청한 해상도에 가장 가까운 해상도를 가진 오버뷰 2개를 찾아 더 높은 해상도의 오버뷰를 선택합니다.</td>
+<td>2.0.3</td>
+</tr>
+<tr class="row-odd"><td><strong>Closest overview</strong></td>
+<td>요청한 해상도에 가장 가까운 오버뷰를 찾습니다.</td>
+<td>2.0.3</td>
+</tr>
+</tbody>
+</table>
+<p>지속성(persistent) 저장소 상에서 사용할 수 있는 커버리지의 해상도보다 낮은 해상도의 커버리지 데이터를 읽는 동안
+메모리에 읽어들이는 데이터의 해상도를 낮추기 위한 방법으로 N번째 픽셀들을 읽어들이는 서브샘플링을 자주 이용합니다.
+<strong>Use subsampling</strong>을 통해 서브샘플링을 이용할 것인지 제어합니다.</p>
+</div>
+<div class="section" id="request-limits">
+<h2>Request limits<a class="headerlink" href="#request-limits" title="Permalink to this headline">¶</a></h2>
+<p>관리자(administrator)는 요청 제한 옵션을 통해 각 WCS <tt class="docutils literal"><span class="pre">GetCoverage</span></tt> 요청이 소모하는 리소스를 제한할 수 있습니다.</p>
+<p>요청 제한으로 소스에서 읽어오는 이미지 용량과 클라이언트에게 반환하는 이미지 용량을 제한합니다.
+이 2가지 제한 모두 최악의 경우로 간주되어 서버가 너무 큰 데이터를 처리하도록 요청받는 일이 없게 하기 위해 설정됩니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="60%" />
+<col width="10%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+<td><strong>버전</strong></td>
+</tr>
+<tr class="row-even"><td><strong>Maximum input memory</strong></td>
+<td><tt class="docutils literal"><span class="pre">GetCoverage</span></tt> 요청이 데이터 소스에서 커버리지를 읽어오는 데 쓸 수 있는 최대 메모리 용량을 KB 단위로 설정합니다.
+이 메모리 용량을 <tt class="docutils literal"><span class="pre">rw * rh * pixelsize</span></tt>로 계산하는데,
+이때 <tt class="docutils literal"><span class="pre">rw</span></tt>와 <tt class="docutils literal"><span class="pre">rh</span></tt>는 읽어올 래스터의 크기이며
+<tt class="docutils literal"><span class="pre">pixelsize</span></tt>는 치수(dimension) 또는 픽셀을 뜻합니다.
+(예를 들면 RGBA 이미지는 32-bit 픽셀을, 수심 측량 자료(bathymetry)는 부호가 붙은 정수(signed integer) 16-bit 픽셀을 가질 수도 있습니다.)</td>
+<td>2.0.3</td>
+</tr>
+<tr class="row-odd"><td><strong>Maximum output memory</strong></td>
+<td><tt class="docutils literal"><span class="pre">GetCoverage</span></tt> 요청이 생성하는 래스터를 관리(host)하는 데 쓸 수 있는 최대 메모리 용량을 KB 단위로 설정합니다.
+이 메모리 용량을 <tt class="docutils literal"><span class="pre">ow * oh * pixelsize</span></tt>로 계산하는데,
+이때 <tt class="docutils literal"><span class="pre">ow</span></tt>와 <tt class="docutils literal"><span class="pre">oh</span></tt>는 산출물로 생성되는 래스터의 크기를 뜻합니다.</td>
+<td>2.0.3</td>
+</tr>
+</tbody>
+</table>
+<p>이 제한을 이해하기 위해 타일이나 오버뷰가 없는 매우 단순화된 예시를 들어보겠습니다.</p>
+<ul class="simple">
+<li>원(original) 래스터의 특정 영역을 쿼리하는 요청이 있다고 할 때
+해당 래스터를 최대 해상도로 읽어오려면 <tt class="docutils literal"><span class="pre">rw * rh</span></tt> 크기의 래스터를 불러와야 하는데,
+이 래스터는 각각 특정 용량을 차지하는 특정 개수의 밴드를 담고 있습니다.
+따라서 읽기에 쓰이는 메모리 용량은 <tt class="docutils literal"><span class="pre">rw * rh * pixelsize</span></tt>가 되며,
+입력 메모리 제한(input memory limit)은 이 값을 측정합니다.</li>
+<li>WCS가 밴드 선별, 해상도 변경(다운샘플링 또는 업샘플링), 재투영 등 필요한 처리 과정을 수행합니다.</li>
+<li>산출물로 생성되는 래스터의 크기는 <tt class="docutils literal"><span class="pre">ow * oh</span></tt>가 될 것이며,
+입력 데이터보다는 적을 수 있지만 각각 특정 용량을 차지하는 특정 개수의 밴드를 담고 있을 것입니다.
+따라서 최종 래스터에 쓰이는 메모리 용량은 <tt class="docutils literal"><span class="pre">ow * oh * pixelsize</span></tt>가 되며,
+출력 메모리 제한(output memory limit)은 이 값을 측정합니다.</li>
+<li>마지막으로 산출물로 생성된 래스터를 산출물 형식으로 인코딩하게 됩니다.
+산출물 형식의 구조에 따라 결과물의 용량이 메모리 용량보다 클 수도(ArcGrid의 경우) 있고, 작을 수도(예를 들면 GeoTIFF 산출물의 경우 보통 LZW 방식으로 압축됩니다) 있습니다.</li>
+</ul>
+<p>실제 상황에서는 이보다 좀 더 복잡해집니다.</p>
+<ul class="simple">
+<li>입력 소스가 타일화되어 있을 수도 있는데, 이때 전체 지역을 메모리로 읽어들일 필요없이 한 번에 하나의 타일만 읽어와도 충분할 수 있습니다.
+입력 메모리 제한은 제한 용량을 계산할 때 내부 타일링을 고려하지 않습니다. 하지만 모든 입력 커버리지가 타일화되어 있을 경우,
+메모리에 저장되는 데이터 용량이 아니라 지속성 저장소에서 읽어오는 데이터의 용량을 고려하도록 입력 메모리 제한을 설계해야 합니다.</li>
+<li>산출물을 서브샘플링해야 하는 경우, 자체 해상도로 모든 데이터를 읽어와야 하는 상황을 피하기 위해 리더(reader)가 오버뷰를 사용하거나, 데이터를 읽어오는 동안 서브샘플링을 수행할 수도 있습니다.</li>
+<li>산출물 형식이 (GeoTIFF처럼) 타일을 인식할 수도 있습니다. 즉 한 번에 하나의 타일을 생성할 수도 있다는 의미입니다.
+이런 경우라면 산출물 래스터 전체가 메모리에 저장되는 일이 없어집니다.</li>
+</ul>
+<p>리더가 전체 입력 데이터를 한 번에 읽어들여야 할 정도로 엉망인 구조를 가진 입력 형식은 몇 개 없습니다. 다음은 그런 형식의 예시입니다.</p>
+<ul class="simple">
+<li>월드(world) 파일을 갖춘 JPEG 또는 PNG 이미지</li>
+<li>단일 타일화되고 JPEG 방식으로 압축된 GeoTIFF 파일</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="vendor.html" title="previous chapter">WCS Vendor Parameters</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../virtual-services.html" title="next chapter">Virtual OWS Services</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WCS configuration</a><ul>
+<li><a class="reference internal" href="#coverage-processing">Coverage processing</a></li>
+<li><a class="reference internal" href="#request-limits">Request limits</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="vendor.html" title="previous chapter">WCS Vendor Parameters</a></li>
+            <li>다음: <a href="../virtual-services.html" title="next chapter">Virtual OWS Services</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wcs/configuration.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

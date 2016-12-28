@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Web Administration Interface Quickstart &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Getting Started" href="../index.html" />
+      <link rel="next" title="Publishing a Shapefile" href="../shapefile-quickstart/index.html" />
+      <link rel="prev" title="Getting Started" href="../index.html" />
+</head>
+<body class="gettingstarted/web-admin-quickstart/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Getting Started</a> &raquo;</li>
+  <li>Web Administration Interface Quickstart</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../shapefile-quickstart/index.html" title="Publishing a Shapefile"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../index.html" title="Getting Started"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="web-administration-interface-quickstart">
+<span id="web-admin-quickstart"></span><h1>Web Administration Interface Quickstart<a class="headerlink" href="#web-administration-interface-quickstart" title="Permalink to this headline">¶</a></h1>
+<p><em>웹 관리도구(Web Administration Tool)</em>는 데이터를 추가하고 생산하거나 서비스 설정을 바꾸는 등 GeoServer의 모든 기능을 설정하는 웹 기반 응용 프로그램입니다.</p>
+<p>웹 관리도구는 웹브라우저에서 <tt class="docutils literal"><span class="pre">http://&lt;host&gt;:&lt;port&gt;/geoserver</span></tt> 주소로 (로컬 호스트(local host)의 기본 설치 링크 주소는 <a class="reference external" href="http://localhost:8080/geoserver/web">http://localhost:8080/geoserver/web</a> 입니다) 접속합니다. 프로그램이 시작되면, 공개 환영 페이지가 표시됩니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/web-admin.png" src="../../_images/web-admin.png" />
+<p class="caption"><em>환영 페이지</em></p>
+</div>
+<div class="section" id="logging-in">
+<span id="id1"></span><h2>Logging In<a class="headerlink" href="#logging-in" title="Permalink to this headline">¶</a></h2>
+<p>서버 설정을 바꾸거나 데이터를 설정하려면, 사용자는 먼저 인증을 받아야 합니다. GeoServer 환영 화면 오른쪽 위를 보십시오. 기본 사용자명 및 비밀번호는 <tt class="docutils literal"><span class="pre">admin</span></tt>과 <tt class="docutils literal"><span class="pre">geoserver</span></tt>입니다. 사용자명과 비밀번호는 <a class="reference internal" href="../../datadirectory/index.html#geoserver-data-directory"><em>GeoServer Data Directory</em></a>에 있는 <tt class="file docutils literal"><span class="pre">security/users.properties</span></tt> 파일을 편집하여 변경할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/login-page.png" src="../../_images/login-page.png" />
+<p class="caption"><em>로그인</em></p>
+</div>
+<p>로그인을 하면, 환영 화면에서 사용가능한 관리자 기능을 보여주는 화면으로 바뀝니다. 이 기능들은 왼쪽 메뉴 섹션의 링크로 불러올 수 있습니다.</p>
+</div>
+<div class="section" id="server">
+<h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
+<p><em class="guilabel">Server</em> 섹션은 GeoServer 환경 정보에 대해 접근할 수 있습니다. 이 섹션은 진단 도구와 설정 도구를 통합한 것으로, 디버그 시 특히 유용합니다.</p>
+<p><em class="guilabel">Server Status</em> 페이지에서 서버 설정 파라미터 및 실행 상태(run-time status)를 한 눈에 볼 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/server_status.png" src="../../_images/server_status.png" />
+<p class="caption"><em>Server Status 페이지</em></p>
+</div>
+<p><em class="guilabel">Contact Information</em> 페이지에서 WMS 서버의 역량 문서(Capabilities document) 안의 공개 연락처 정보를 설정할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/server_contact.png" src="../../_images/server_contact.png" />
+<p class="caption"><em>Contact Information 페이지</em></p>
+</div>
+<p><em class="guilabel">Global Settings</em> 페이지에서 서버 전체의 메시지 수준, 로그 수준, 캐릭터셋과 캐릭터 인코딩, 프록시 등을 설정할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/server_globalsettings.png" src="../../_images/server_globalsettings.png" />
+<p class="caption"><em>Global Settings 페이지</em></p>
+</div>
+<p><em class="guilabel">JAI Settings</em> 페이지에서 WMS 및 WCS 운용시 사용되는 JAI 파라미터들을 설정할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/server_JAI.png" src="../../_images/server_JAI.png" />
+<p class="caption"><em>JAI Settings 페이지</em></p>
+</div>
+<p><em class="guilabel">About GeoServer</em> 섹션은 GeoServer 문서, 홈페이지, 버그 추적 페이지의 링크를 제공합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/about-geoserver.png" src="../../_images/about-geoserver.png" />
+<p class="caption"><em>About GeoServer 섹션</em></p>
+</div>
+</div>
+<div class="section" id="services">
+<h2>Services<a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h2>
+<p><em class="guilabel">Services</em>는 전문 사용자가 GeoServer가 사용하는 요청(request) 프로토콜을 설정할 수 있는 섹션입니다. 웹 커버리지 서비스(Web Coverage Service), 즉 <em class="guilabel">WCS</em> 페이지에서 WCS, WFS, WMS의 요청에 대한 공통 메타데이터 정보를 관리합니다. 웹 피처 서비스(Web Feature Service), <em class="guilabel">WFS</em> 페이지에서는 피처, 서비스 레벨, GML 산출물의 설정을 할 수 있습니다. 웹 맵 서비스(Web Map Service), 즉 <em class="guilabel">WMS</em> 페이지에서는 래스터(raster) 및 SVG 옵션을 설정합니다.</p>
+</div>
+<div class="section" id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<p><em class="guilabel">Data</em> 링크는 편집, 추가, 제거 기능이 있는 데이터형(data type) 페이지로 연결됩니다. 모든 데이터형 서브섹션은 유사한 작업 흐름을 따릅니다. 다음 <em class="guilabel">Styles</em> 예제에서 볼 수 있듯이, 각 데이터형의 첫 페이지는 해당 데이터의 인덱스 테이블(indexed table)을 보여주는 페이지입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_style.png" src="../../_images/data_style.png" />
+<p class="caption"><em>Styles를 보여주는 페이지</em></p>
+</div>
+<p>각 데이터형 명칭 링크는 해당 설정 페이지로 연결됩니다. 예를 들면 <em class="guilabel">Layers</em>를 보여주는 페이지에서 Workspace, Store, Layer Name 아래의 모든 항목은 해당 설정 페이지로 연결됩니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers.png" src="../../_images/data_layers.png" />
+<p class="caption"><em>Layers를 보여주는 페이지</em></p>
+</div>
+<p>데이터형을 보여주는 패널에서 데이터형을 찾을 수 있는 3가지 방법이 있습니다. 정렬(sorting), 검색(searching), 훑어보기(scrolling)입니다.</p>
+<p>데이터형을 알파벳순으로 정렬하려면 그 열(column)의 머리부(header)를 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_sort.png" src="../../_images/data_sort.png" />
+<p class="caption"><em>왼쪽은 정렬 안 된 열, 오른쪽은 정렬된 열</em></p>
+</div>
+<p>간단한 검색을 하려면, 검색 상자에 검색 기준(search criteria)을 입력한 다음 Enter 키를 누르십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_search_results.png" src="../../_images/data_search_results.png" />
+<p class="caption"><em>검색어 &#8220;top&#8221;에 대한 검색 결과.</em></p>
+</div>
+<p>데이터형 페이지들을 훑어보려면 뷰테이블(view table) 위아래에 있는 화살표 버튼을 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_scroll.png" src="../../_images/data_scroll.png" />
+<p class="caption"><em>데이터형 훑어보기</em></p>
+</div>
+<p>다음 <em class="guilabel">Stores</em> 예제에서 보이듯이, 데이터형을 추가·제거할 수 있는 버튼이 각 페이지 상단에 위치합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_add_remove.png" src="../../_images/data_stores_add_remove.png" />
+<p class="caption"><em>Stores 추가·제거 버튼</em></p>
+</div>
+<p>새로운 데이터를 추가하려면 <em class="guilabel">Add</em> 버튼을 선택한 다음 데이터형 세부사항에 대한 메시지를 따르십시오. 데이터형을 제거하려면 해당 데이터형 옆의 체크박스를 클릭한 다음 <em class="guilabel">Remove</em> 버튼을 선택하십시오. (동일한 유형의 데이터형이라면 다중 선택하여 동시에 제거할 수 있습니다)</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_delete.png" src="../../_images/data_stores_delete.png" />
+<p class="caption"><em>제거를 위해 선택된 Stores</em></p>
+</div>
+</div>
+<div class="section" id="demos">
+<h2>Demos<a class="headerlink" href="#demos" title="Permalink to this headline">¶</a></h2>
+<p><em class="guilabel">Demos</em> 페이지에는 GeoServer가 알고 있는 모든 SRS 정보를 나열한 링크와 함께, WMS, WCS, WFS의 GeoServer에 대한 요청(request)의 예제들이 있습니다. GeoServer에 로그인하지 않아도 이 페이지에 접속할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/demos_view.png" src="../../_images/demos_view.png" />
+<p class="caption"><em>Demos 페이지</em></p>
+</div>
+</div>
+<div class="section" id="layer-preview">
+<h2>Layer Preview<a class="headerlink" href="#layer-preview" title="Permalink to this headline">¶</a></h2>
+<p><em class="guilabel">Layer Preview</em> 페이지에서 일반적인 OpenLayers와 KML 포맷을 포함한 다양한 산출물(output) 포맷들의 레이어 미리보기(layer previews)를 할 수 있습니다. 이 페이지에서 특정 레이어의 설정을 시각적으로 확인하고 둘러볼 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/preview_list.png" src="../../_images/preview_list.png" />
+<p class="caption"><em>Layer 미리보기 페이지</em></p>
+</div>
+<p>각 레이어 행(row)은 <em class="guilabel">Type</em>, <em class="guilabel">Name</em>, <em class="guilabel">Title</em> 그리고 미리보기를 할 수 있는 포맷들로 이루어져 있습니다. <em class="guilabel">Type</em> 열은 레이어 데이터형을 표시하는 아이콘을 보여줍니다. <em class="guilabel">Name</em> 열은 해당 레이어의 작업공간 및 레이어명을 보여주며, <em class="guilabel">Title</em> 열은 <a class="reference internal" href="../../webadmin/data/layers.html#edit-layer-data"><em>Edit Layer Data</em></a> 패널에서 설정한 간단한 설명을 보여줍니다. <em class="guilabel">Common Formats</em> 열은 적용 가능한 경우에 OpenLayers, KML, GML을 표시하며, <em class="guilabel">All Formats</em> 열은 더 전문적인 경우나 데이터 공유를 위한 추가 산출물 포맷들을 표시합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/preview_row.png" src="../../_images/preview_row.png" />
+<p class="caption"><em>Single Layer 미리보기 행</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../index.html" title="previous chapter">Getting Started</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../shapefile-quickstart/index.html" title="next chapter">Publishing a Shapefile</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Web Administration Interface Quickstart</a><ul>
+<li><a class="reference internal" href="#logging-in">Logging In</a></li>
+<li><a class="reference internal" href="#server">Server</a></li>
+<li><a class="reference internal" href="#services">Services</a></li>
+<li><a class="reference internal" href="#data">Data</a></li>
+<li><a class="reference internal" href="#demos">Demos</a></li>
+<li><a class="reference internal" href="#layer-preview">Layer Preview</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../index.html" title="previous chapter">Getting Started</a></li>
+            <li>다음: <a href="../shapefile-quickstart/index.html" title="next chapter">Publishing a Shapefile</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/gettingstarted/web-admin-quickstart/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

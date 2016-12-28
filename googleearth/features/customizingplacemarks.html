@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Customizing Placemarks &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Features" href="index.html" />
+      <link rel="next" title="KML Height and Time" href="kmlheighttime.html" />
+      <link rel="prev" title="Toggling Placemarks" href="togglingplacemarks.html" />
+</head>
+<body class="googleearth/features/customizingplacemarks">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Google Earth</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Features</a> &raquo;</li>
+  <li>Customizing Placemarks</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="kmlheighttime.html" title="KML Height and Time"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="togglingplacemarks.html" title="Toggling Placemarks"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="customizing-placemarks">
+<span id="ge-feature-customizing-placemarks"></span><h1>Customizing Placemarks<a class="headerlink" href="#customizing-placemarks" title="Permalink to this headline">¶</a></h1>
+<p>KML 산출물이 Google 어스의 강력한 시각화 기능의 일부를 차용할 수 있습니다.
+<strong>제목(title)</strong>을 모든 피처들 위에 표출할 수 있습니다.
+속성 데이터 뷰(view)를 사용자 지정하기 위해 <strong>설명(description)</strong>(피처를 클릭할 경우 보이는 사용자 지정 HTML)을 추가할 수 있습니다.
+또 Google 어스의 시간 막대(time slider)를 이용해서 <strong>시간(time)</strong>에 기반한 애니메이션을 생성할 수 있습니다.
+마지막으로 기본값인 지표면 오버레이(ground overlay) 대신 피처의 <strong>높이(height)</strong>를 설정할 수 있습니다.
+Freemarker 템플릿을 생성해서 이 모든 작업을 할 수 있습니다. Freemarker 템플릿은 (HTML 코드를 제한적으로 지원하는) 텍스트 파일로,
+<a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a>에 저장되며,
+데이터의 특정 속성과 연결되는 변수들을 활용합니다.</p>
+<div class="section" id="titles">
+<h2>Titles<a class="headerlink" href="#titles" title="Permalink to this headline">¶</a></h2>
+<p>템플릿을 통해 레이블을 설정하려면 <tt class="docutils literal"><span class="pre">title.ftl</span></tt>이라는 특별한 텍스트 파일을 생성하고
+<a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a>에 저장해서 데이터셋에 레이블을 부여합니다.
+예를 들어 <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어에 주(州) 명칭으로 레이블을 부여하는 템플릿을 생성하려면
+<tt class="docutils literal"><span class="pre">&lt;data_dir&gt;/workspaces/topp/states_shapefile/states/title.ftl</span></tt> 파일을 생성하고 다음 내용을 입력하면 됩니다.</p>
+<div class="highlight-python"><pre>${STATE_NAME.value}</pre>
+</div>
+</div>
+<div class="section" id="descriptions">
+<h2>Descriptions<a class="headerlink" href="#descriptions" title="Permalink to this headline">¶</a></h2>
+<p>KML으로 작업 시, 각 피처는 해당 피처를 클릭했을 경우 접근할 수 있는 설명(description)과 링크됩니다.
+GeoServer는 기본적으로 특정 피처의 모든 속성 및 속성값의 목록을 생성합니다.</p>
+<p>이 기본 동작을 변경할 수 있습니다. <tt class="docutils literal"><span class="pre">title.ftl</span></tt> 템플릿을 생성해서 피처형의 제목을 편집할 수 있는 것과 마찬가지로
+템플릿을 통해 설명을 설정하려면 <tt class="docutils literal"><span class="pre">description.ftl</span></tt>이라는 특별한 텍스트 파일을 생성하고
+<a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a> 안의 피처형 디렉터리에 저장하면 사용자 지정 설명을 이용할 수 있습니다.
+예를 들면 <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어의 설명 템플릿을
+<tt class="docutils literal"><span class="pre">&lt;data_dir&gt;/workspaces/topp/states_shapefile/states/description.ftl</span></tt> 경로에 저장합니다.
+이 파일의 내용은 다음과 같을 수 있습니다.</p>
+<div class="highlight-python"><pre>This is the state of ${STATE_NAME.value}.</pre>
+</div>
+<p>표출되는 설명은 다음과 같이 보일 것입니다.</p>
+<div class="figure align-center">
+<img alt="../_images/descriptionTemplate.png" src="../../_images/descriptionTemplate.png" />
+<p class="caption"><em>사용자 지정 설명</em></p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">&#8220;SS: A custom description&#8221;을 추가하십시오.</p>
+</div>
+<p>설정된 명칭공간에 속한 모든 피처형에 대해 하나의 설명 템플릿을 생성할 수도 있습니다.
+이렇게 하려면 앞과 같은 <tt class="docutils literal"><span class="pre">description.ftl</span></tt> 파일을 생성해서,
+<tt class="docutils literal"><span class="pre">&lt;data_dir&gt;/templates/&lt;namespace&gt;/description.ftl</span></tt> 로 저장하십시오.</p>
+<p>명칭공간의 설명 템플릿과 함께 해당 명칭공간에 속한 특정 레이어에 대한 설명 템플릿을 생성한 경우, 레이어 템플릿(즉 가장 특정한 템플릿)이 우선한다는 점을 유의하십시오.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="togglingplacemarks.html" title="previous chapter">Toggling Placemarks</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="kmlheighttime.html" title="next chapter">KML Height and Time</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Customizing Placemarks</a><ul>
+<li><a class="reference internal" href="#titles">Titles</a></li>
+<li><a class="reference internal" href="#descriptions">Descriptions</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="togglingplacemarks.html" title="previous chapter">Toggling Placemarks</a></li>
+            <li>다음: <a href="kmlheighttime.html" title="next chapter">KML Height and Time</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/googleearth/features/customizingplacemarks.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

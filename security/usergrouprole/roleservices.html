@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Role services &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Role system" href="index.html" />
+      <link rel="next" title="Role source and role calculation" href="rolesource.html" />
+      <link rel="prev" title="Roles" href="roles.html" />
+</head>
+<body class="security/usergrouprole/roleservices">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Role system</a> &raquo;</li>
+  <li>Role services</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="rolesource.html" title="Role source and role calculation"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="roles.html" title="Roles"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="role-services">
+<span id="sec-rolesystem-roleservices"></span><h1>Role services<a class="headerlink" href="#role-services" title="Permalink to this headline">¶</a></h1>
+<p><strong>롤 서비스(role service)</strong>는 다음과 같은 롤 정보를 제공합니다.</p>
+<ul class="simple">
+<li>롤의 목록</li>
+<li>어떤 사용자에 대한 롤 할당 계산(calculation of role assignments)</li>
+<li>시스템 롤 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>에 롤을 매핑(mapping)하기</li>
+<li>시스템 롤 <tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt>에 롤을 매핑하기</li>
+</ul>
+<p>사용자/그룹 서비스가 사용자 또는 그룹에 대한 정보를 로드할 경우, 해당 사용자 또는 그룹에 어떤 롤을 할당할 것인지 롤 서비스에 위임합니다.
+<a class="reference internal" href="usergroupservices.html#sec-rolesystem-usergroupservices"><em>사용자/그룹 서비스</em></a>와 달리, 어떤 경우든 활성화된 롤 서비스는 하나뿐입니다.</p>
+<p>기본적으로 GeoServer는 다음 2종류의 롤 서비스를 지원합니다.</p>
+<ul class="simple">
+<li>XML —<em>(기본값)</em> XML로 지속되는(persisted) 롤 서비스</li>
+<li>JDBC —JDBC를 통해 데이터베이스에서 지속되는 롤 서비스</li>
+</ul>
+<div class="section" id="mapping-roles-to-system-roles">
+<span id="sec-rolesystem-mapping"></span><h2>Mapping roles to system roles<a class="headerlink" href="#mapping-roles-to-system-roles" title="Permalink to this headline">¶</a></h2>
+<p>시스템 롤 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>를 사용자나 그룹에 할당하려면,
+다른 명칭을 가진 새로운 롤을 생성해서 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> 롤에 매핑해야 합니다.
+사스템 롤 <tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt>의 경우도 마찬가지입니다.
+이 매핑 작업은 서비스의 <tt class="docutils literal"><span class="pre">config.xml</span></tt> 파일 안에 저장되어 있습니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;roleService&gt;</span>
+  <span class="nt">&lt;id&gt;</span>471ed59f:13915c479bc:-7ffc<span class="nt">&lt;/id&gt;</span>
+  <span class="nt">&lt;name&gt;</span>default<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;className&gt;</span>org.geoserver.security.xml.XMLRoleService<span class="nt">&lt;/className&gt;</span>
+  <span class="nt">&lt;fileName&gt;</span>roles.xml<span class="nt">&lt;/fileName&gt;</span>
+  <span class="nt">&lt;checkInterval&gt;</span>10000<span class="nt">&lt;/checkInterval&gt;</span>
+  <span class="nt">&lt;validating&gt;</span>true<span class="nt">&lt;/validating&gt;</span>
+  <span class="nt">&lt;adminRoleName&gt;</span>ADMIN<span class="nt">&lt;/adminRoleName&gt;</span>
+  <span class="nt">&lt;groupAdminRoleName&gt;</span>GROUP_ADMIN<span class="nt">&lt;/groupAdminRoleName&gt;</span>
+<span class="nt">&lt;/roleService&gt;</span>
+</pre></div>
+</div>
+<p>이 예시에서 <tt class="docutils literal"><span class="pre">ADMIN</span></tt> 롤에 할당된 사용자나 그룹이 시스템 롤 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>에도 할당됩니다.
+<tt class="docutils literal"><span class="pre">GROUP_ADMIN</span></tt> 및 <tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt>의 경우도 마찬가지입니다.</p>
+</div>
+<div class="section" id="xml-role-service">
+<span id="sec-rolesystem-rolexml"></span><h2>XML role service<a class="headerlink" href="#xml-role-service" title="Permalink to this headline">¶</a></h2>
+<p>XML 롤 서비스는 XML 파일 형태로 롤 데이터베이스를 지속합니다. 이 서비스는 GeoServer의 기본값입니다.
+이 서비스는 사용자 데이터베이스를 XML로 표현하며,
+<a class="reference download internal" href="../../_downloads/roles.xsd"><tt class="xref download docutils literal"><span class="pre">XML schema</span></tt></a>를 따라야 합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">XML 롤 파일인 <tt class="file docutils literal"><span class="pre">roles.xml</span></tt>의 위치는 GeoServer 데이터 디렉터리의
+<tt class="docutils literal"><span class="pre">security/role/&lt;name&gt;/roles.xml</span></tt> 인데,
+이때 <tt class="docutils literal"><span class="pre">&lt;name&gt;</span></tt>은 롤 서비스의 명칭입니다.</p>
+</div>
+<p>이 서비스는 로컬 롤인 <tt class="docutils literal"><span class="pre">ADMIN</span></tt>을 시스템 롤인 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>에 매핑하도록 설정되었습니다.
+또, <tt class="docutils literal"><span class="pre">GROUP_ADMIN</span></tt>을 <tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt>에 매핑합니다.
+이 매핑 작업은 각 롤 서비스의 <tt class="docutils literal"><span class="pre">config.xml</span></tt> 파일에 저장되어 있습니다.</p>
+<p>다음은 GeoServer 기본 설정에 따라오는 <tt class="docutils literal"><span class="pre">roles.xml</span></tt>의 내용입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;roleRegistry</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.geoserver.org/security/roles&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;roleList&gt;</span>
+    <span class="nt">&lt;role</span> <span class="na">id=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;role</span> <span class="na">id=</span><span class="s">&quot;GROUP_ADMIN&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/roleList&gt;</span>
+  <span class="nt">&lt;userList&gt;</span>
+    <span class="nt">&lt;userRoles</span> <span class="na">username=</span><span class="s">&quot;admin&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;roleRef</span> <span class="na">roleID=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/userRoles&gt;</span>
+  <span class="nt">&lt;/userList&gt;</span>
+  <span class="nt">&lt;groupList/&gt;</span>
+<span class="nt">&lt;/roleRegistry&gt;</span>
+</pre></div>
+</div>
+<p>이 설정은  <tt class="docutils literal"><span class="pre">ADMIN</span></tt> 및 <tt class="docutils literal"><span class="pre">GROUP_ADMIN</span></tt>, 2개의 롤을 담고 있습니다.
+<tt class="docutils literal"><span class="pre">ADMIN</span></tt> 롤은 <tt class="docutils literal"><span class="pre">admin</span></tt> 사용자에게 할당되어 있습니다.
+<tt class="docutils literal"><span class="pre">ADMIN</span></tt> 롤이 시스템 롤 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>에 매핑되어 있기 때문에,
+롤 계산(role calculation)으로 두 롤 모두 <tt class="docutils literal"><span class="pre">admin</span></tt> 사용자에게 할당됩니다.</p>
+<p>더 자세한 정보를 알고 싶다면 <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의
+<a class="reference internal" href="../../webadmin/security/ugr.html#webadmin-sec-roleservices"><em>Configuring a role service</em></a>를 참조하십시오.</p>
+</div>
+<div class="section" id="j2ee-role-service">
+<span id="sec-rolesystem-rolej2ee"></span><h2>J2EE role service<a class="headerlink" href="#j2ee-role-service" title="Permalink to this headline">¶</a></h2>
+<p>J2EE 롤 서비스는 <tt class="docutils literal"><span class="pre">WEB-INF/web.xml</span></tt> 파일에서 롤을 파싱합니다. 결과적으로 이 서비스는 읽기 전용 롤 서비스가 됩니다.
+다음 XML 요소에서 롤을 추출합니다.</p>
+<div class="section" id="security-role">
+<h3><tt class="docutils literal"><span class="pre">&lt;security-role&gt;</span></tt><a class="headerlink" href="#security-role" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;security-role&gt;</span>
+   <span class="nt">&lt;role-name&gt;</span>role1<span class="nt">&lt;/role-name&gt;</span>
+<span class="nt">&lt;/security-role&gt;</span>
+<span class="nt">&lt;security-role&gt;</span>
+   <span class="nt">&lt;role-name&gt;</span>role2<span class="nt">&lt;/role-name&gt;</span>
+<span class="nt">&lt;/security-role&gt;</span>
+<span class="nt">&lt;security-role&gt;</span>
+   <span class="nt">&lt;role-name&gt;</span>employee<span class="nt">&lt;/role-name&gt;</span>
+<span class="nt">&lt;/security-role&gt;</span>
+</pre></div>
+</div>
+<p>다음과 같은 롤을 추출합니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">role1</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">role2</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">employee</span></tt></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="security-constraint">
+<h3><tt class="docutils literal"><span class="pre">&lt;security-constraint&gt;</span></tt><a class="headerlink" href="#security-constraint" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-xml"><div class="highlight"><pre> <span class="nt">&lt;security-constraint&gt;</span>
+    <span class="nt">&lt;web-resource-collection&gt;</span>
+        <span class="nt">&lt;web-resource-name&gt;</span>Protected Area<span class="nt">&lt;/web-resource-name&gt;</span>
+        <span class="nt">&lt;url-pattern&gt;</span>/jsp/security/protected/*<span class="nt">&lt;/url-pattern&gt;</span>
+        <span class="nt">&lt;http-method&gt;</span>PUT<span class="nt">&lt;/http-method&gt;</span>
+        <span class="nt">&lt;http-method&gt;</span>DELETE<span class="nt">&lt;/http-method&gt;</span>
+        <span class="nt">&lt;http-method&gt;</span>GET<span class="nt">&lt;/http-method&gt;</span>
+        <span class="nt">&lt;http-method&gt;</span>POST<span class="nt">&lt;/http-method&gt;</span>
+    <span class="nt">&lt;/web-resource-collection&gt;</span>
+    <span class="nt">&lt;auth-constraint&gt;</span>
+        <span class="nt">&lt;role-name&gt;</span>role1<span class="nt">&lt;/role-name&gt;</span>
+        <span class="nt">&lt;role-name&gt;</span>employee<span class="nt">&lt;/role-name&gt;</span>
+    <span class="nt">&lt;/auth-constraint&gt;</span>
+<span class="nt">&lt;/security-constraint&gt;</span>
+</pre></div>
+</div>
+<p>다음과 같은 롤을 추출합니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">role1</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">employee</span></tt></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="security-role-ref">
+<h3><tt class="docutils literal"><span class="pre">&lt;security-role-ref&gt;</span></tt><a class="headerlink" href="#security-role-ref" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;security-role-ref&gt;</span>
+    <span class="nt">&lt;role-name&gt;</span>MGR<span class="nt">&lt;/role-name&gt;</span>
+    <span class="c">&lt;!-- role name used in code --&gt;</span>
+    <span class="nt">&lt;role-link&gt;</span>employee<span class="nt">&lt;/role-link&gt;</span>
+  <span class="nt">&lt;/security-role-ref&gt;</span>
+</pre></div>
+</div>
+<p>다음과 같은 롤을 추출합니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">MGR</span></tt></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="jdbc-role-service">
+<span id="sec-rolesystem-rolejdbc"></span><h2>JDBC role service<a class="headerlink" href="#jdbc-role-service" title="Permalink to this headline">¶</a></h2>
+<p>JDBC 롤 서비스는 JDBC를 통해 롤 데이터베이스를 지속하면서 롤 정보를 다중 테이블에서 관리합니다. 이 롤 데이터베이스의 스키마는 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<caption>테이블: roles</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>parent</td>
+<td>varchar(64)</td>
+<td>YES</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: role_props</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>rolename</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>propname</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-even"><td>propvalue</td>
+<td>varchar(2048)</td>
+<td>YES</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: user_roles</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>username</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>rolename</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: group_roles</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>groupname</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>rolename</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal"><span class="pre">roles</span></tt> 테이블은 최초(primary) 테이블로 롤 목록을 담고 있습니다.
+GeoServer의 롤은 상속구조를 지원하기 때문에, 필수는 아니지만 롤이 상위 롤을 가리키는 링크를 가질 수도 있습니다.
+<tt class="docutils literal"><span class="pre">role_props</span></tt> 테이블은 추가적인 속성을 롤에 매핑합니다.
+(상세한 내용을 알고 싶다면 <a class="reference internal" href="roles.html#sec-rolesystem-roles"><em>Roles</em></a>를 참조하십시오.)
+<tt class="docutils literal"><span class="pre">user_roles</span></tt> 테이블은 사용자를 할당된 롤에 매핑합니다.
+마찬가지로 <tt class="docutils literal"><span class="pre">group_roles</span></tt> 테이블은 어떤 롤을 어떤 그룹에 할당했는지 보여줍니다.</p>
+<p>GeoServer의 기본적인 보안 설정은 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<caption>테이블: roles</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">name</th>
+<th class="head">parent</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: role_props</caption>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">rolename</th>
+<th class="head">propname</th>
+<th class="head">propvalue</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: user_roles</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">username</th>
+<th class="head">rolename</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: group_roles</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">groupname</th>
+<th class="head">rolename</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<p>더 자세한 정보를 알고 싶다면 <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의
+<a class="reference internal" href="../../webadmin/security/ugr.html#webadmin-sec-roleservices"><em>Configuring a role service</em></a>를 참조하십시오.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="roles.html" title="previous chapter">Roles</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="rolesource.html" title="next chapter">Role source and role calculation</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Role services</a><ul>
+<li><a class="reference internal" href="#mapping-roles-to-system-roles">Mapping roles to system roles</a></li>
+<li><a class="reference internal" href="#xml-role-service">XML role service</a></li>
+<li><a class="reference internal" href="#j2ee-role-service">J2EE role service</a><ul>
+<li><a class="reference internal" href="#security-role"><tt class="docutils literal"><span class="pre">&lt;security-role&gt;</span></tt></a></li>
+<li><a class="reference internal" href="#security-constraint"><tt class="docutils literal"><span class="pre">&lt;security-constraint&gt;</span></tt></a></li>
+<li><a class="reference internal" href="#security-role-ref"><tt class="docutils literal"><span class="pre">&lt;security-role-ref&gt;</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#jdbc-role-service">JDBC role service</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="roles.html" title="previous chapter">Roles</a></li>
+            <li>다음: <a href="rolesource.html" title="next chapter">Role source and role calculation</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/security/usergrouprole/roleservices.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Mapping File &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Application Schema Resolution" href="app-schema-resolution.html" />
+      <link rel="prev" title="Configuration" href="configuration.html" />
+</head>
+<body class="data/app-schema/mapping-file">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Mapping File</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="app-schema-resolution.html" title="Application Schema Resolution"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="configuration.html" title="Configuration"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="mapping-file">
+<span id="app-schema-mapping-file"></span><h1>Mapping File<a class="headerlink" href="#mapping-file" title="Permalink to this headline">¶</a></h1>
+<p>매핑 파일은 XML 산출물에서 피처의 데이터 소스 및 소스 데이터에서 XPath로의 매핑 작업을 정의하고, 응용 스키마(app-schema) 피처형을 정의합니다.</p>
+<div class="section" id="outline">
+<h2>Outline<a class="headerlink" href="#outline" title="Permalink to this headline">¶</a></h2>
+<p>매핑 파일의 개요는 다음과 같습니다.</p>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;as:AppSchemaDataAccess xmlns:as="http://www.geotools.org/app-schema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.geotools.org/app-schema AppSchemaDataAccess.xsd"&gt;
+    &lt;namespaces&gt;...&lt;/namespaces&gt;
+    &lt;includedTypes&gt;...&lt;/includedTypes&gt;
+    &lt;sourceDataStores&gt;...&lt;/sourceDataStores&gt;
+    &lt;catalog&gt;...&lt;/catalog&gt;
+    &lt;targetTypes...&lt;/targetTypes&gt;
+    &lt;typeMappings&gt;...&lt;/typeMappings&gt;
+&lt;/as:AppSchemaDataAccess&gt;</pre>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">namespaces</span></tt> —매핑 파일에 쓰이는 모든 namespace 접두사를 정의합니다.</li>
+<li><tt class="docutils literal"><span class="pre">includedTypes</span></tt> —매핑 파일 내에서 언급한, 포함된 모든 비(非)피처형 매핑 파일의 위치를 정의합니다. (필수는 아닙니다.)</li>
+<li><tt class="docutils literal"><span class="pre">sourceDataStores</span></tt> —소스 데이터 저장소에 대한 설정 정보를 제공합니다.</li>
+<li><tt class="docutils literal"><span class="pre">catalog</span></tt> —XML 스키마 위치를 해석하기 위한 OASIS Catalog의 위치입니다.</li>
+<li><tt class="docutils literal"><span class="pre">targetTypes</span></tt> —피처형을 정의하는 XML 스키마의 위치입니다.</li>
+<li><tt class="docutils literal"><span class="pre">typeMappings</span></tt> —소스 데이터 저장소의 항목과 복잡 피처 산출물의 요소 사이의 관계를 알려줍니다.</li>
+</ul>
+<div class="section" id="mapping-file-schema">
+<h3>Mapping file schema<a class="headerlink" href="#mapping-file-schema" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>GeoServer가 사용하지 않기 때문에, <tt class="docutils literal"><span class="pre">AppSchemaDataAccess.xsd</span></tt>가 꼭 있어야 하는 것은 아닙니다.
+<tt class="docutils literal"><span class="pre">AppSchemaDataAccess.xsd</span></tt>가 매핑 파일과 같은 폴더에 있으면, XML 편집기가 문법을 검증하고 오른쪽 클릭으로 도움말을 볼 수 있습니다.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="namespaces">
+<h3>namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">namespaces</span></tt> 섹션에서 매핑 파일에 쓰이는 모든 XML namespace를 정의합니다.</p>
+<div class="highlight-python"><pre>&lt;Namespace&gt;
+    &lt;prefix&gt;gsml&lt;/prefix&gt;
+    &lt;uri&gt;urn:cgi:xmlns:CGI:GeoSciML:2.0&lt;/uri&gt;
+&lt;/Namespace&gt;
+&lt;Namespace&gt;
+    &lt;prefix&gt;gml&lt;/prefix&gt;
+    &lt;uri&gt;http://www.opengis.net/gml&lt;/uri&gt;
+&lt;/Namespace&gt;
+&lt;Namespace&gt;
+    &lt;prefix&gt;xlink&lt;/prefix&gt;
+    &lt;uri&gt;http://www.w3.org/1999/xlink&lt;/uri&gt;
+&lt;/Namespace&gt;</pre>
+</div>
+</div>
+<div class="section" id="includedtypes-optional">
+<h3>includedTypes (optional)<a class="headerlink" href="#includedtypes-optional" title="Permalink to this headline">¶</a></h3>
+<p>비(非)피처형(예시: gsml:CompositionPart는 gsml:GeologicUnit에 내포된 데이터형입니다)은 재사용 가능성 때문에 별도로 매핑되었을 수 있지만,
+개별적으로 접근하지 않기 때문에 피처형으로 설정하지 않습니다.
+관련된 피처형을 여기에 분명하게 포함시키지 않아도 됩니다. GeoServer가 찾을 수 있도록 고유 작업공간 설정을 할 것이기 때문입니다.
+<tt class="docutils literal"><span class="pre">Include</span></tt> 태그의 위치 경로는 매핑 파일의 위치를 기준으로 합니다.
+예를 들어 gsml:CompositionPart 설정 파일이 gsml:GeologicUnit 설정 파일과 같은 디렉터리에 있다면 다음과 같이 표현됩니다.</p>
+<div class="highlight-python"><pre>&lt;includedTypes&gt;
+    &lt;Include&gt;gsml_CompositionPart.xml&lt;/Include&gt;
+&lt;/includedTypes&gt;</pre>
+</div>
+</div>
+<div class="section" id="sourcedatastores">
+<h3>sourceDataStores<a class="headerlink" href="#sourcedatastores" title="Permalink to this headline">¶</a></h3>
+<p>모든 매핑 파일은 피처를 위한 데이터를 제공할 데이터 저장소가 적어도 하나씩 필요합니다.
+응용 스키마는 GeoServer 데이터 저장소를 재사용할 수 있기 때문에, 많은 저장소형을 사용할 수 있습니다.
+데이터 저장소 설정에 대해서는 <a class="reference internal" href="data-stores.html#app-schema-data-stores"><em>Data Stores</em></a> 페이지를 참조하십시오.</p>
+<div class="highlight-python"><pre>&lt;sourceDataStores&gt;
+    &lt;DataStore&gt;
+        &lt;id&gt;datastore&lt;/id&gt;
+        &lt;parameters&gt;
+            ...
+        &lt;/parameters&gt;
+    &lt;/DataStore&gt;
+    ...
+&lt;/sourceDataStores&gt;</pre>
+</div>
+<p>매핑 파일에 <tt class="docutils literal"><span class="pre">DataStore</span></tt> 태그가 하나 이상 있다면
+각각 고유한 <tt class="docutils literal"><span class="pre">id</span></tt>를 가지도록 유의해주십시오.</p>
+</div>
+<div class="section" id="catalog-optional">
+<h3>catalog (optional)<a class="headerlink" href="#catalog-optional" title="Permalink to this headline">¶</a></h3>
+<p>이 OASIS XML Catalog 설정 파일의 위치 경로는 매핑 파일의 위치를 기준으로 하는 상대 경로입니다.
+더 자세히 알고 싶다면 <a class="reference internal" href="app-schema-resolution.html#app-schema-app-schema-resolution"><em>Application Schema Resolution</em></a>를 참조하십시오.</p>
+<div class="highlight-python"><pre>&lt;catalog&gt;../../../schemas/catalog.xml&lt;/catalog&gt;</pre>
+</div>
+</div>
+<div class="section" id="targettypes">
+<h3>targetTypes<a class="headerlink" href="#targettypes" title="Permalink to this headline">¶</a></h3>
+<p>매핑 작업을 정의하는 데 필요한 모든 응용 스키마의 목록을 <tt class="docutils literal"><span class="pre">targetTypes</span></tt> 섹션에서 정의합니다.
+일반적으로 하나만 있으면 됩니다.</p>
+<div class="highlight-python"><pre>&lt;targetTypes&gt;
+    &lt;FeatureType&gt;
+        &lt;schemaUri&gt;http://www.geosciml.org/geosciml/2.0/xsd/geosciml.xsd&lt;/schemaUri&gt;
+    &lt;/FeatureType&gt;
+&lt;/targetTypes&gt;</pre>
+</div>
+</div>
+</div>
+<div class="section" id="mappings">
+<h2>Mappings<a class="headerlink" href="#mappings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="typemappings-and-featuretypemapping">
+<h3>typeMappings and FeatureTypeMapping<a class="headerlink" href="#typemappings-and-featuretypemapping" title="Permalink to this headline">¶</a></h3>
+<p>응용 스키마 모듈에서 <tt class="docutils literal"><span class="pre">typeMappings</span></tt> 섹션이 가장 중요합니다.
+단순 피처에서 하나 이상의 단순 피처의 내포 구조로 매핑하는 작업을 정의합니다.
+<tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt> 요소의 목록으로 구성되는데, 각 요소가 각 피처형 산출물을 정의합니다.</p>
+<div class="highlight-python"><pre>&lt;typeMappings&gt;
+    &lt;FeatureTypeMapping&gt;
+        &lt;mappingName&gt;mappedfeature1&lt;/mappingName&gt;
+        &lt;sourceDataStore&gt;datastore&lt;/sourceDataStore&gt;
+        &lt;sourceType&gt;mappedfeature&lt;/sourceType&gt;
+        &lt;targetElement&gt;gsml:MappedFeature&lt;/targetElement&gt;
+        &lt;isDenormalised&gt;true&lt;/isDenormalised&gt;
+        &lt;attributeMappings&gt;
+            &lt;AttributeMapping&gt;
+                ...</pre>
+</div>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">mappingName</span></tt> —같은 형식에 대한 FeatureTypeMapping 인스턴스가 여러 개 있을 경우 <a class="reference internal" href="feature-chaining.html#app-schema-feature-chaining"><em>Feature Chaining</em></a>에 매핑 작업을 규정하는, 필수적이지 않은 태그입니다.
+이 태그는 Feature Chaining만을 위한 것으로, 최상위 피처를 규정하는 데 적합하지 않습니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">sourceDataStore</span></tt> —<tt class="docutils literal"><span class="pre">sourceDataStores</span></tt> 섹션에서 소스 데이터 저장소를 정의했을 때 사용자가 설정한 식별자(identifier)여야 합니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">sourceType</span></tt> —다음과 같은 단순 피처형의 명칭입니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li>테이블명 또는 뷰 명칭 (PostGIS의 경우 소문자, Oracle의 경우 대문자를 사용합니다.)</li>
+<li>속성 파일명 (확장자 .properties는 제외합니다.)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">targetElement</span></tt> —목표 응용 스키마 내부의 요소명입니다. WFS 피처형 명칭과 동일합니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">isDenormalised</span></tt> —이 형식이 비정규화된(denormalized) 데이터를 포함하는지 아닌지 알려주는 태그입니다. 기본값은 true이며, 필수적인 태그는 아닙니다.
+비정규화 데이터가 아니라면 데이터베이스 쿼리 작업 시 공통 피처 제약을 안전하게 적용할 수 있습니다.
+(<cite>Services &#8211;&gt; WFS</cite>를 통해) 낮은 공통 피처 제약을 받게 될 경우, 이 옵션을 false로 설정하면 쓸데없는 처리 과정 및 데이터베이스 검색을 방지할 수 있습니다.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="attributemappings-and-attributemapping">
+<h3>attributeMappings and AttributeMapping<a class="headerlink" href="#attributemappings-and-attributemapping" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">attributeMappings</span></tt>가 <tt class="docutils literal"><span class="pre">AttributeMapping</span></tt> 요소의 목록을 구성합니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;...&lt;/targetAttribute&gt;
+    &lt;idExpression&gt;...&lt;/idExpression&gt;
+    &lt;sourceExpression&gt;...&lt;/sourceExpression&gt;
+    &lt;targetAttributeNode&gt;...&lt;/targetAttributeNode&gt;
+    &lt;isMultiple&gt;...&lt;/isMultiple&gt;
+    &lt;ClientProperty&gt;...&lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+</div>
+<div class="section" id="targetattribute">
+<h3>targetAttribute<a class="headerlink" href="#targetattribute" title="Permalink to this headline">¶</a></h3>
+<p>목표 요소라는 맥락에서, <tt class="docutils literal"><span class="pre">targetAttribute</span></tt>는 산출물 요소를 가리키는 XPath입니다.
+예를 들어 피처 때문에 매핑 작업을 포함시킨 경우,
+다음과 같은 목표 속성을 설정해서 <tt class="docutils literal"><span class="pre">gml:name</span></tt> 속성을 매핑할 수 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt;targetAttribute&gt;gml:name&lt;/targetAttribute&gt;</pre>
+</div>
+<p><a class="reference internal" href="#app-schema-denormalised-sources"><em>Denormalised sources</em></a>에서 나온 복수의 값을 가진 속성들은 자동적으로 코드화됩니다.
+다른 입력 열에서 나온 복수의 값을 가진 속성들을 한 속성의 특정 인스턴스로서 코드화하려면 (숫자 기반) 지표를 사용할 수 있습니다.
+예를 들어 세번째 <tt class="docutils literal"><span class="pre">gml:name</span></tt>을 다음과 같이 설정할 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;targetAttribute&gt;gml:name[3]&lt;/targetAttribute&gt;</pre>
+</div>
+<p>XML로 코드화되지 않았지만 <a class="reference internal" href="feature-chaining.html#app-schema-feature-chaining"><em>Feature Chaining</em></a>에서 사용하기 위해
+필요한 데이터를 매핑하는 데에 보류된 명칭 <tt class="docutils literal"><span class="pre">FEATURE_LINK</span></tt>를 사용합니다.</p>
+</div>
+<div class="section" id="idexpression-optional">
+<h3>idExpression (optional)<a class="headerlink" href="#idexpression-optional" title="Permalink to this headline">¶</a></h3>
+<p>피처형 산출물의 사용자 지정 <tt class="docutils literal"><span class="pre">gml:id</span></tt>를 설정하는 데 쓰이는 CQL 표현식으로,
+고유 데이터베이스 열의 명칭이어야 합니다. GeoServer와 응용 스키마의 합동 실행 시 기본적으로 지원되지 않기 때문에 이 기능을 사용하면 예외가 발생할 수 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p>모든 피처는 <tt class="docutils literal"><span class="pre">gml:id</span></tt>를 가지고 있어야 하는데, GeoServer와 응용 스키마의 합동 실행 시 제약 때문입니다.
+(정확히 말하자면 <tt class="docutils literal"><span class="pre">gml:id</span></tt>은 GML에 필수가 아닙니다.)</p>
+<ul class="last simple">
+<li>idExpression이 설정되지 않으면 <tt class="docutils literal"><span class="pre">gml:id</span></tt>에 <tt class="docutils literal"><span class="pre">&lt;the table name&gt;.&lt;primary key&gt;</span></tt>값이 들어옵니다. 예시: <tt class="docutils literal"><span class="pre">MAPPEDFEATURE.1</span></tt>.</li>
+<li>primary key가 없을 경우, <tt class="docutils literal"><span class="pre">&lt;the table name&gt;.&lt;generated gml id&gt;</span></tt>값이 들어옵니다. 예시: <tt class="docutils literal"><span class="pre">MAPPEDFEATURE.fid--46fd41b8_1407138b56f_-7fe0</span></tt>.</li>
+<li>데이터베이스 테이블 대신 속성 파일을 사용하는 경우, <tt class="docutils literal"><span class="pre">gml:id</span></tt>의 기본값은 속성 파일에서 등호(&#8220;=&#8221;) 앞에 있는 row key가 됩니다. 예시: &#8220;mf1=Mudstone|POINT(1 2)|...&#8221; 행(row)을 가진 피처의 gml:id는 <tt class="docutils literal"><span class="pre">mf1</span></tt>이 됩니다.</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><tt class="docutils literal"><span class="pre">gml:id</span></tt>는 <a class="reference external" href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName">NCName</a>이어야 합니다.</p>
+</div>
+</div>
+<div class="section" id="sourceexpression-optional">
+<h3>sourceExpression (optional)<a class="headerlink" href="#sourceexpression-optional" title="Permalink to this headline">¶</a></h3>
+<p>소스 데이터에서 나온 요소를 설정하려면 <tt class="docutils literal"><span class="pre">sourceExpression</span></tt> 태그를 사용하십시오.
+ 예를 들어 <tt class="docutils literal"><span class="pre">DESCRIPTION</span></tt>이라는 열의 요소를 설정하는 방법은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>&lt;sourceExpression&gt;&lt;OCQL&gt;DESCRIPTION&lt;/OCQL&gt;&lt;/sourceExpression&gt;</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">sourceExpression</span></tt> 태그가 없다면 (다른 매핑 작업으로 설정되지 않는 한) 생성된 요소에 정보가 담기지 않습니다.</p>
+<p>요소의 내용을 계산하는 데 CQL 표현식을 쓸 수 있습니다. 다음은 두 열에서 나온 문자열과 상수(literal)를 연결하는 예시입니다.</p>
+<div class="highlight-python"><pre>&lt;sourceExpression&gt;
+    &lt;OCQL&gt;strConCat(FIRST , strConCat(' followed by ', SECOND))&lt;/OCQL&gt;
+&lt;/sourceExpression&gt;</pre>
+</div>
+<p>어휘를 번역하는 데에도 <a class="reference internal" href="cql-functions.html#app-schema-cql-functions"><em>CQL functions</em></a>를 사용할 수 있습니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">사용자가 쿼리할 속성에 CQL 표현식을 쓰지 않는 편이 좋습니다.
+현재 버전에서 이 표현식을 효과적인 SQL로 되돌릴 수 없기 때문입니다.
+대신 쿼리 필터에 맞는 피처를 찾기 위해 속성을 계산해야 할 모든 피처를 읽어들이게 됩니다.
+CQL로 계산된 표현식을 쿼리하면 이렇게 거친 검색으로 돌아가기 때문에 매우 느려집니다.
+요소의 내용을 생성하기 위해 문자열을 연결해야만 할 경우 사용자의 DB에서 직접 작업하는 편이 더 빠를 수 있습니다.</p>
+</div>
+</div>
+<div class="section" id="linkelement-and-linkfield-optional">
+<h3>linkElement and linkField (optional)<a class="headerlink" href="#linkelement-and-linkfield-optional" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">linkElement</span></tt>와 <tt class="docutils literal"><span class="pre">linkField</span></tt> 태그는
+<tt class="docutils literal"><span class="pre">sourceExpression</span></tt> 태그의 의미를
+<a class="reference internal" href="feature-chaining.html#app-schema-feature-chaining"><em>Feature Chaining</em></a> 매핑 작업으로 바꾸는 역할을 합니다.
+<a class="reference internal" href="feature-chaining.html#app-schema-feature-chaining"><em>Feature Chaining</em></a> 매핑 작업에서
+표현식에 맞는 <tt class="docutils literal"><span class="pre">linkField</span></tt> 속성을 가진
+<tt class="docutils literal"><span class="pre">linkElement</span></tt> 피처형이 그 작업 소스가 됩니다.
+예를 들면 다음 예시에서 <tt class="docutils literal"><span class="pre">sourceExpression</span></tt>은 (복수의 값을 가질 수도 있는)
+<tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>를 매핑 작업한 결과물로 사용하는데,
+이때 <tt class="docutils literal"><span class="pre">gml:name[2]</span></tt>는 소스 피처에서의 <tt class="docutils literal"><span class="pre">URN</span></tt> 값과
+동일합니다. 이는 외부 키 관계(foreign key relation)에 적용됩니다.</p>
+<div class="highlight-python"><pre>&lt;sourceExpression&gt;
+    &lt;OCQL&gt;URN&lt;/OCQL&gt;
+    &lt;linkElement&gt;gsml:MappedFeature&lt;/linkElement&gt;
+    &lt;linkField&gt;gml:name[2]&lt;/linkField&gt;
+&lt;/sourceExpression&gt;</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt> 피처형은 다른 매핑 파일에서 정의될 수도 있습니다.
+피처들을 XML에 드러내지 않고 속성을 통해 연결하고 싶을 경우, <tt class="docutils literal"><span class="pre">linkField</span></tt> 태그가
+<tt class="docutils literal"><span class="pre">FEATURE_LINK</span></tt> 속성이 될 수 있습니다.
+더 자세한 내용은 <a class="reference internal" href="feature-chaining.html#app-schema-feature-chaining"><em>Feature Chaining</em></a>을 참조하십시오.</p>
+<p>특수한 경우, <tt class="docutils literal"><span class="pre">linkElement</span></tt>가 OCQL 함수가 될 수 있으며,
+이때 <tt class="docutils literal"><span class="pre">linkField</span></tt>를 제외할 수 있습니다.
+자세한 정보를 알고 싶다면 <a class="reference internal" href="polymorphism.html#app-schema-polymorphism"><em>Polymorphism</em></a>을 참조하십시오.</p>
+</div>
+<div class="section" id="targetattributenode-optional">
+<span id="app-schema-mapping-file-targetattributenode"></span><h3>targetAttributeNode (optional)<a class="headerlink" href="#targetattributenode-optional" title="Permalink to this headline">¶</a></h3>
+<p>속성형이 추상(abstract) 요소를 담고 있고 응용 스키마(app-schema)가 내포된 속성형을 식별할 수 없을 경우,
+<tt class="docutils literal"><span class="pre">targetAttributeNode</span></tt>가 항상 필요합니다.</p>
+<p>다음 예시에서, <tt class="docutils literal"><span class="pre">om:result</span></tt>는 추상 요소인 <tt class="docutils literal"><span class="pre">xs:anyType</span></tt>을 담고 있습니다.
+이때 <tt class="docutils literal"><span class="pre">targetAttributeNode</span></tt>태그를 써서 속성형의 형식을 비(非)추상 요소를 담는 형식으로 설정할 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;om:result&lt;/targetAttribute&gt;
+      &lt;targetAttributeNode&gt;gml:MeasureType&lt;targetAttributeNode&gt;
+      &lt;sourceExpression&gt;
+          &lt;OCQL&gt;TOPAGE&lt;/OCQL&gt;
+      &lt;/sourceExpression&gt;
+      &lt;ClientProperty&gt;
+          &lt;name&gt;xsi:type&lt;/name&gt;
+          &lt;value&gt;'gml:MeasureType'&lt;/value&gt;
+      &lt;/ClientProperty&gt;
+      &lt;ClientProperty&gt;
+          &lt;name&gt;uom&lt;/name&gt;
+          &lt;value&gt;'http://www.opengis.net/def/uom/UCUM/0/Ma'&lt;/value&gt;
+      &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>캐스팅(casting) 형식이 복합적일 경우 특정 형식은 <tt class="docutils literal"><span class="pre">targetAttribute</span></tt> 안의 <tt class="docutils literal"><span class="pre">XPath</span></tt>를 통해 내적으로 식별되며, <tt class="docutils literal"><span class="pre">targetAttributeNode</span></tt>는 필요하지 않습니다.
+예를 들어 다음 예시에서 <tt class="docutils literal"><span class="pre">om:result</span></tt>는 자동적으로 <tt class="docutils literal"><span class="pre">MappedFeatureType</span></tt>으로 지정됩니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;om:result/gsml:MappedFeature/gml:name&lt;/targetAttribute&gt;
+      &lt;sourceExpression&gt;
+          &lt;OCQL&gt;NAME&lt;/OCQL&gt;
+      &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>필수적이지는 않지만 그래도 루트 노드를 위한 <tt class="docutils literal"><span class="pre">targetAttributeNode</span></tt>를 지정하고 일반적인 경우와 마찬가지로 하위 속성들(children attributes)을 매핑해야 할 수도 있습니다.
+이 매핑은 내포 요소를 매핑하기 전에 작업해야 합니다.
+이렇게 하면 <tt class="docutils literal"><span class="pre">targetAttributeNode</span></tt>에 지정된 형식을 위반하는 하위 속성이 매핑될 경우, 응용 스키마가 예외(exception) 발생을 보고하게 됩니다.
+다음은 그 예시입니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;om:result&lt;/targetAttribute&gt;
+      &lt;targetAttributeNode&gt;gsml:MappedFeatureType&lt;targetAttributeNode&gt;
+&lt;/AttributeMapping&gt;
+&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;om:result/gsml:MappedFeature/gml:name&lt;/targetAttribute&gt;
+      &lt;sourceExpression&gt;
+          &lt;OCQL&gt;NAME&lt;/OCQL&gt;
+      &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>GML 인코딩 규칙에 따르면 복합형(complex type)은 절대로 다른 복합형의 직접 속성(direct property)이 될 수 없다는 점을 주의하십시오.
+복합형은 항상 속성형에 포함되어 주위 요소로 형식이 코드화되어야 합니다.
+인코딩된 GML은 언제나 형식/속성/형식/속성 순서입니다. 이를 GML &#8220;줄무늬(striping)&#8221; 규칙이라고도 합니다.
+응용 스키마 매핑 파일에 이를 적용하면, <tt class="docutils literal"><span class="pre">targetAttributeNode</span></tt>는 반드시 속성에 적용되어야 하며
+이때 형식은 내포된 속성의 형식이 아니라 XSD 속성형으로 설정되어야 합니다.
+(<tt class="docutils literal"><span class="pre">gsml:CGI_TermValuePropertyType</span></tt> 태그입니다. <tt class="docutils literal"><span class="pre">gsml:CGI_TermValueType</span></tt> 태그가 아닙니다.)
+XPath는 속성형을 가리키지 코드화된 내용을 가리키는 것이 아니기 때문에 복합형과 함께 쓰일 경우
+<tt class="docutils literal"><span class="pre">targetAttributeNode</span></tt>는 매핑 작업 시 <tt class="docutils literal"><span class="pre">targetAttribute</span></tt>와 함께 나타나며
+다른 요소와 함께 쓰이지 않습니다.</p>
+</div>
+<div class="section" id="encodeifempty-optional">
+<h3>encodeIfEmpty (optional)<a class="headerlink" href="#encodeifempty-optional" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">encodeIfEmpty</span></tt> 요소는 속성이 null 값을 가졌거나 값이 없을 경우 해당 속성을 코드화할 것인지 결정합니다.
+기본적으로 <tt class="docutils literal"><span class="pre">encodeIfEmpty</span></tt>는 false로 설정되어, 값을 가지지 않은 속성은 코드화에서 제외됩니다.</p>
+<div class="highlight-python"><pre>&lt;encodeIfEmpty&gt;true&lt;/encodeIfEmpty&gt;</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">encodeIfEmpty</span></tt>는 <tt class="docutils literal"><span class="pre">xlink:title</span></tt>처럼
+클라이언트 속성만을 담은 속성을 호출하는 데 쓰일 수 있습니다.</p>
+</div>
+<div class="section" id="ismultiple-optional">
+<h3>isMultiple (optional)<a class="headerlink" href="#ismultiple-optional" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">isMultiple</span></tt> 요소는 해당 속성에 비정규화된 행에서 나온 복수의 값이 들어갈 것인지 설정합니다.
+기본값이 <tt class="docutils literal"><span class="pre">false</span></tt>이고 대개 사용되지 않기 때문에, 이 태그가 보일 때는 대부분 다음과 같은 형태일 겁니다.</p>
+<div class="highlight-python"><pre>&lt;isMultiple&gt;true&lt;/isMultiple&gt;</pre>
+</div>
+<p>예를 들면 다음은 <tt class="docutils literal"><span class="pre">NAME</span></tt> 열에 다중 값이 들어가면서 비정규화되는 테이블입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="37%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ID</th>
+<th class="head">NAME</th>
+<th class="head">DESCRIPTION</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>gu.25678</td>
+<td>Yaugher Volcanic Group 1</td>
+<td>Olivine basalt, tuff, microgabbro</td>
+</tr>
+<tr class="row-odd"><td>gu.25678</td>
+<td>Yaugher Volcanic Group 2</td>
+<td>Olivine basalt, tuff, microgabbro</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal"><span class="pre">NAME</span></tt> 열에 매핑된 <tt class="docutils literal"><span class="pre">gml:name</span></tt> 속성에 대해
+<tt class="docutils literal"><span class="pre">isMultiple</span></tt> 요소를 설정하는 설정 파일은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;gml:name&lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+        &lt;OCQL&gt;NAME&lt;/OCQL&gt;
+    &lt;/sourceExpression&gt;
+    &lt;isMultiple&gt;true&lt;/isMultiple&gt;
+    &lt;ClientProperty&gt;
+        &lt;name&gt;codeSpace&lt;/name&gt;
+        &lt;value&gt;'urn:ietf:rfc:2141'&lt;/value&gt;
+    &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>그 결과 ID에 따라 그룹화된 각 피처에 다음과 같이 다중 <tt class="docutils literal"><span class="pre">gml:name</span></tt> 속성을 부여하는 산출물이 생성됩니다.</p>
+<div class="highlight-python"><pre>&lt;gsml:GeologicUnit gml:id="gu.25678"&gt;
+    &lt;gml:description&gt;Olivine basalt, tuff, microgabbro&lt;/gml:description&gt;
+    &lt;gml:name codeSpace="urn:ietf:rfc:2141"&gt;Yaugher Volcanic Group 1&lt;/gml:name&gt;
+    &lt;gml:name codeSpace="urn:ietf:rfc:2141"&gt;Yaugher Volcanic Group 2&lt;/gml:name&gt;
+ ...</pre>
+</div>
+</div>
+<div class="section" id="islist-optional">
+<h3>isList (optional)<a class="headerlink" href="#islist-optional" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">isList</span></tt> 요소는 해당 속성에 목록으로 연결된 다중 값이 들어갈 것인지 설정합니다.
+사용법은 <tt class="docutils literal"><span class="pre">isMultiple</span></tt> 태그와 비슷한데,
+각 값이 개별 노드에 코드화되는 대신 단일 노드 안에 값들이 연결되어 표출된다는 점이 다릅니다.
+기본값이 <tt class="docutils literal"><span class="pre">false</span></tt>이고 대개 사용되지 않기 때문에, 이 태그가 보일 때는 대부분 다음과 같은 형태일 겁니다.</p>
+<div class="highlight-python"><pre>&lt;isList&gt;true&lt;/isList&gt;</pre>
+</div>
+<p>예를 들면 다음은 각 피처에 대해 다중 <tt class="docutils literal"><span class="pre">POSITION</span></tt> 값을 가지는 테이블입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ID</th>
+<th class="head">POSITION</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ID1.2</td>
+<td>1948-05</td>
+</tr>
+<tr class="row-odd"><td>ID1.2</td>
+<td>1948-06</td>
+</tr>
+<tr class="row-even"><td>ID1.2</td>
+<td>1948-07</td>
+</tr>
+<tr class="row-odd"><td>ID1.2</td>
+<td>1948-08</td>
+</tr>
+<tr class="row-even"><td>ID1.2</td>
+<td>1948-09</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal"><span class="pre">POSITION</span></tt> 열에 매핑된 <tt class="docutils literal"><span class="pre">timePositionList</span></tt> 속성에 대해
+<tt class="docutils literal"><span class="pre">isList</span></tt> 요소를 설정하는 설정 파일은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;csml:timePositionList&lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+        &lt;OCQL&gt;POSITION&lt;/OCQL&gt;
+    &lt;/sourceExpression&gt;
+    &lt;isList&gt;true&lt;/isList&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>생산되는 산출물은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>&lt;csml:pointSeriesDomain&gt;
+    &lt;csml:TimeSeries gml:id="ID1.2"&gt;
+        &lt;csml:timePositionList&gt;1949-05 1949-06 1949-07 1949-08 1949-09&lt;/csml:timePositionList&gt;
+    &lt;/csml:TimeSeries&gt;
+&lt;/csml:pointSeriesDomain&gt;</pre>
+</div>
+</div>
+<div class="section" id="clientproperty-optional-multivalued">
+<h3>ClientProperty (optional, multivalued)<a class="headerlink" href="#clientproperty-optional-multivalued" title="Permalink to this headline">¶</a></h3>
+<p>매핑 작업 시 매핑 목표에 대한 XML 속성을 설정하는 <tt class="docutils literal"><span class="pre">ClientProperty</span></tt> 요소가 하나 이상 있을 수 있습니다.
+각 <tt class="docutils literal"><span class="pre">ClientProperty</span></tt>는 <tt class="docutils literal"><span class="pre">name</span></tt>과 임의의 CQL 표현식인 <tt class="docutils literal"><span class="pre">value</span></tt>로 구성됩니다.
+<tt class="docutils literal"><span class="pre">value</span></tt> 안에는 어떤 <tt class="docutils literal"><span class="pre">OCQL</span></tt> 요소도 쓰이지 않습니다.</p>
+<p>다음 <tt class="docutils literal"><span class="pre">ClientProperty</span></tt> 요소의 예시에서
+문자열 상수(literal string) <tt class="docutils literal"><span class="pre">urn:ietf:rfc:2141</span></tt> 값으로
+<tt class="docutils literal"><span class="pre">codeSpace</span></tt> XML 속성을 설정합니다.
+문자열 상수를 구분하는 데 작은따옴표를 사용한 점에 주의하십시오. GML CodeType의 어느 목표 속성에도 적용될 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;ClientProperty&gt;
+    &lt;name&gt;codeSpace&lt;/name&gt;
+    &lt;value&gt;'urn:ietf:rfc:2141'&lt;/value&gt;
+&lt;/ClientProperty&gt;</pre>
+</div>
+<p>속성 코드화에 GML 연계 패턴이 참조 형태로 쓰일 경우,
+<tt class="docutils literal"><span class="pre">xlink:href</span></tt> 속성이 설정되며 요소의 값은 없게 됩니다.
+이 <tt class="docutils literal"><span class="pre">ClientProperty</span></tt> 요소가
+데이터 소스의 (예를 들면 Oracle DB 테이블의 1개 열) <tt class="docutils literal"><span class="pre">RELATED_FEATURE_URN</span></tt> 항목의 값으로
+<tt class="docutils literal"><span class="pre">xlink:href</span></tt> XML 속성을 설정합니다.
+이런 매핑 작업은 어떤 속성형에도 적용될 수 있는데, <tt class="docutils literal"><span class="pre">gml:FeaturePropertyType</span></tt>은 물론
+GML 연계 패턴에 기반해 모델링된 어떤 형식에도 가능합니다.</p>
+<div class="highlight-python"><pre>&lt;ClientProperty&gt;
+    &lt;name&gt;xlink:href&lt;/name&gt;
+    &lt;value&gt;RELATED_FEATURE_URN&lt;/value&gt;
+&lt;/ClientProperty&gt;</pre>
+</div>
+<p>다중 값을 가진 속성을 위해 <tt class="docutils literal"><span class="pre">xlink:href</span></tt>를 참조를 통해 생성하는 특별한 경우에 대해서는
+<a class="reference internal" href="feature-chaining.html#app-schema-feature-chaining"><em>Feature Chaining</em></a>를 참조하십시오.</p>
+</div>
+</div>
+<div class="section" id="cql">
+<h2>CQL<a class="headerlink" href="#cql" title="Permalink to this headline">¶</a></h2>
+<p>CQL 함수로 매핑 파일에 데이터 변환 및 상황에 따른 행동 양식(conditional behaviour)을 설정할 수 있습니다.</p>
+<ul>
+<li><p class="first">응용 스키마 확장 모듈이 제공하는 추가 함수에 대한 정보는 <a class="reference internal" href="cql-functions.html#app-schema-cql-functions"><em>CQL functions</em></a>를 참조하십시오.</p>
+</li>
+<li><p class="first">다음 uDig 매뉴얼이 CQL 함수 목록을 담고 있습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://udig.refractions.net/confluence/display/EN/Constraint+Query+Language">http://udig.refractions.net/confluence/display/EN/Constraint+Query+Language</a></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">CQL 문자열 상수는 <tt class="docutils literal"><span class="pre">'urn:ogc:def:nil:OGC:missing'</span></tt>처럼 작은따옴표로 구분됩니다.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="database-identifiers">
+<h2>Database identifiers<a class="headerlink" href="#database-identifiers" title="Permalink to this headline">¶</a></h2>
+<p>데이터베이스의 테이블이나 뷰 명칭을 사용하는 법은 다음과 같습니다.</p>
+<ul class="simple">
+<li>PostGIS의 경우 소문자를 씁니다.</li>
+<li>Oracle Spatial과 ArcSDE의 경우 대문자를 씁니다.</li>
+</ul>
+</div>
+<div class="section" id="denormalised-sources">
+<span id="app-schema-denormalised-sources"></span><h2>Denormalised sources<a class="headerlink" href="#denormalised-sources" title="Permalink to this headline">¶</a></h2>
+<p>(동일한 소스 피처 ID가 한 번 이상 표출되는) 비정규화된 소스에서 나온 다중 값을 가진 속성은 자동적으로 코드화됩니다.
+예를 들어 어떤 뷰에서 다양한 <tt class="docutils literal"><span class="pre">name</span></tt> 값을 가진 <tt class="docutils literal"><span class="pre">id</span></tt> 열이
+반복되면, 산출 피처에 임의의 많은 개수의 <tt class="docutils literal"><span class="pre">gml:name</span></tt> 속성이 인코딩될 수 있습니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">비정규화된 소스는 다른 피처가 끼어드는 일 없이 복제된 ID를 가진 피처를 생산하기 위해 그룹화되어야 합니다.
+이렇게 하려면 비정규화된 소스의 피처를 ID를 기준으로 정렬(sort)하면 됩니다.
+이 규정을 무시하면 데이터 변질(corruption)이 일어날 것입니다.
+그러나 <a class="reference internal" href="joining.html#app-schema-joining"><em>Joining Support For Performance</em></a>를 사용할 경우 이 규정은 필요없어지는데,
+자동적으로 ID 기준 정렬이 일어나기 때문입니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="configuration.html" title="previous chapter">Configuration</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="app-schema-resolution.html" title="next chapter">Application Schema Resolution</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Mapping File</a><ul>
+<li><a class="reference internal" href="#outline">Outline</a><ul>
+<li><a class="reference internal" href="#mapping-file-schema">Mapping file schema</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings">Settings</a><ul>
+<li><a class="reference internal" href="#namespaces">namespaces</a></li>
+<li><a class="reference internal" href="#includedtypes-optional">includedTypes (optional)</a></li>
+<li><a class="reference internal" href="#sourcedatastores">sourceDataStores</a></li>
+<li><a class="reference internal" href="#catalog-optional">catalog (optional)</a></li>
+<li><a class="reference internal" href="#targettypes">targetTypes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mappings">Mappings</a><ul>
+<li><a class="reference internal" href="#typemappings-and-featuretypemapping">typeMappings and FeatureTypeMapping</a></li>
+<li><a class="reference internal" href="#attributemappings-and-attributemapping">attributeMappings and AttributeMapping</a></li>
+<li><a class="reference internal" href="#targetattribute">targetAttribute</a></li>
+<li><a class="reference internal" href="#idexpression-optional">idExpression (optional)</a></li>
+<li><a class="reference internal" href="#sourceexpression-optional">sourceExpression (optional)</a></li>
+<li><a class="reference internal" href="#linkelement-and-linkfield-optional">linkElement and linkField (optional)</a></li>
+<li><a class="reference internal" href="#targetattributenode-optional">targetAttributeNode (optional)</a></li>
+<li><a class="reference internal" href="#encodeifempty-optional">encodeIfEmpty (optional)</a></li>
+<li><a class="reference internal" href="#ismultiple-optional">isMultiple (optional)</a></li>
+<li><a class="reference internal" href="#islist-optional">isList (optional)</a></li>
+<li><a class="reference internal" href="#clientproperty-optional-multivalued">ClientProperty (optional, multivalued)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cql">CQL</a></li>
+<li><a class="reference internal" href="#database-identifiers">Database identifiers</a></li>
+<li><a class="reference internal" href="#denormalised-sources">Denormalised sources</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="configuration.html" title="previous chapter">Configuration</a></li>
+            <li>다음: <a href="app-schema-resolution.html" title="next chapter">Application Schema Resolution</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/mapping-file.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Complex Features &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Installation" href="installation.html" />
+      <link rel="prev" title="Working with Application Schemas" href="index.html" />
+</head>
+<body class="data/app-schema/complex-features">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Complex Features</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="installation.html" title="Installation"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Working with Application Schemas"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="complex-features">
+<span id="app-schema-complex-features"></span><h1>Complex Features<a class="headerlink" href="#complex-features" title="Permalink to this headline">¶</a></h1>
+<p>복잡 피처 및 복잡 피처를 사용하려는 이유를 이해하기 위해 먼저 단순 피처에 대해 알아야 합니다.</p>
+<div class="section" id="simple-features">
+<h2>Simple features<a class="headerlink" href="#simple-features" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer WFS는 일반적으로 데이터베이스 같은 데이터 저장소와 연결해 하나 이상의 테이블에 접근하는데, 이때 각 테이블을 WFS 단순 피처형으로 취급합니다.
+단순 피처는 각각 문자열이나 숫자 같은 단순 정보 1개를 가지고 있는 속성(property)들의 목록을 담고 있습니다.
+(도형(geometry) 오브젝트를 단순 데이터를 가진 단일 아이템처럼 취급하는 특별 규정이 있습니다.)
+Open Geospatial Consortium(OGC)는 단순 피처 프로파일을 SF-0, SF-1, SF-2 3가지로 정의 합니다.
+GeoServer 단순 피처는 가장 간단한 OGC 프로파일인 OGC SF-0과 유사합니다.</p>
+<p>GeoServer WFS 단순 피처는 데이터베이스 테이블이나 이와 유사한 구조에서 &#8220;코드화되지 않은(flat)&#8221; XML 표현(representation)으로 직접 매핑하는데,
+이때 일반적으로 테이블의 모든 열이 더 심화된 구조를 담지 않는 XML 요소(element)로 매핑됩니다.
+GeoServer WFS가 단순 피처를 손쉽게 사용할 수 있는 이유 중 하나는 데이터베이스 테이블에서 XML 요소로 자동적으로 변환되기 때문입니다.
+데이터 저장소의 namespace에서, 각 열의 명칭이 각 요소명이 되고, 기본적으로 테이블명이 피처형 명칭이 됩니다.
+서비스하는 모든 단순 피처형에 대해 GeoServer WFS는 XSD 형식의 정의를 생산할 수 있습니다.
+이 정의를 확인하려면 DescribeFeatureType 요청을 보내십시오.</p>
+<div class="section" id="benefits-of-simple-features">
+<h3>Benefits of simple features<a class="headerlink" href="#benefits-of-simple-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>실행하기 쉽습니다.</li>
+<li>빠릅니다.</li>
+<li>도형에 대한 공간 쿼리를 포함하는 속성 쿼리를 지원합니다.</li>
+</ul>
+</div>
+<div class="section" id="drawbacks-of-simple-features">
+<h3>Drawbacks of simple features<a class="headerlink" href="#drawbacks-of-simple-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>GeoServer가 자동적으로 XSD를 생산할 때, XML 포맷이 데이터베이스 스키마에 연결됩니다.</li>
+<li>GeoServer 단순 피처 데이터를 공유하려면 참여자들이 동일한 데이터베이스 스키마를 사용하거나 서로 다른 스키마를 번역해야 합니다.</li>
+<li>참여자들이 동일한 데이터베이스 스키마를 사용한다고 해도 다른 데이터를 가진 참여자가 증가할수록 테이블의 많은 열들을 관리할 수 없게 됩니다.</li>
+<li>단순 피처가 스키마의 일부를 변경할 수 없기 때문에 호환성이 떨어집니다.</li>
+</ul>
+</div>
+<div class="section" id="simple-feature-example">
+<h3>Simple feature example<a class="headerlink" href="#simple-feature-example" title="Permalink to this headline">¶</a></h3>
+<p>예를 들어 GPS 기지국 정보를 담고 있는 <tt class="docutils literal"><span class="pre">stations</span></tt>이라는 DB 테이블이 있다고 하면,</p>
+<div class="highlight-python"><pre>| id | code |      name      |         location         |
++----+------+----------------+--------------------------+
+| 27 | ALIC | Alice Springs  | POINT(133.8855 -23.6701) |
+| 4  | NORF | Norfolk Island | POINT(167.9388 -29.0434) |
+| 12 | COCO | Cocos          | POINT(96.8339 -12.1883)  |
+| 31 | ALBY | Albany         | POINT(117.8102 -34.9502) |</pre>
+</div>
+<p>GeoServer가 다음과 같은 단순 피처 WFS 요청 조각을 생성할 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;gps:stations gml:id="stations.27"&gt;
+    &lt;gps:code&gt;ALIC&lt;/gps:code&gt;
+    &lt;gps:name&gt;Alice Springs&lt;/gps:name&gt;
+    &lt;gps:location&gt;
+        &lt;gml:Point srsName="urn:x-ogc:def:crs:EPSG:4326"&gt;
+            &lt;gml:pos&gt;-23.6701 133.8855&lt;/gml:pos&gt;
+        &lt;/gml:Point&gt;
+    &lt;/gps:location&gt;
+&lt;/gps:stations&gt;</pre>
+</div>
+<ul class="simple">
+<li>테이블의 모든 행이 피처 요청으로 변환됩니다.</li>
+<li>테이블의 모든 열이 해당 행의 값을 담은 요소로 변환됩니다.</li>
+<li>모든 요소가 데이터 저장소의 namespace에 있습니다.</li>
+<li>내부 구조가 있으며 GML로 정의된 요소를 포함하는 도형(geometry) 같은 몇몇 특별한 형식도 자동 변환됩니다.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Complex features<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>복잡 피처는 임의의 심도(depth)까지 내포된(nested) 속성을 포함할 수 있는 속성을 담고 있습니다.
+특히 복잡 피처는 다른 복잡 피처를 속성으로서 포함할 수 있습니다.
+복잡 피처는 단일 테이블의 XML 뷰가 아니라 서로 다른 형식의 관련 오브젝트들의 집합(collection)으로서 정보를 보여주는 데 쓰입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="53%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">단순 피처</th>
+<th class="head">복잡 피처</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>속성값이 텍스트, 숫자, 도형 같은 단일 데이터 항목입니다.</td>
+<td>속성값이 다른 복잡 피처까지 포함할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>단일 테이블의 XML 뷰입니다.</td>
+<td>개별적으로 식별할 수 있는 관련 오브젝트 집합입니다.</td>
+</tr>
+<tr class="row-even"><td>데이터베이스를 바탕으로 스키마를 자동 생산합니다.</td>
+<td>참여자들이 스키마를 결정합니다.</td>
+</tr>
+<tr class="row-odd"><td>단일한 형식(type)입니다.</td>
+<td>서로 다른 복수의 형식입니다.</td>
+</tr>
+<tr class="row-even"><td>간단(Straightforward)합니다.</td>
+<td>복합적인 데이터 표준을 보여줍니다.</td>
+</tr>
+<tr class="row-odd"><td>단순성 및 사용자 지정을 통해 호환성을 확보합니다.</td>
+<td>표준화를 통해 호환성을 확보합니다.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="benefits-of-complex-features">
+<h3>Benefits of complex features<a class="headerlink" href="#benefits-of-complex-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>오브젝트 지향 구조로 정보 모델을 정의할 수 있습니다. 이를 <em>응용 스키마(application schema)</em>라고 합니다.</li>
+<li>단일 테이블이 아니라 피처별로 관계(association) 및 형식(type)이 다를 수 있는,
+따라서 다형성(polymorphism)을 통해 콘텐츠의 복합적인 표현을 가능케 하는, 관련 오브젝트 집합으로서 정보 모델을 정의합니다.</li>
+<li>스키마를 독립 형식의 집합으로 쪼갤 수 있기 때문에 참여자들은 변경해야 하는 형식만 확장하면 됩니다.
+이를 통해 관리가 용이해지고 관련 커뮤니티 사이에 호환성이 높아집니다.
+참여자 커뮤니티들은 기본 형식에 대해서는 동의해야 하지만, 특정 응용 프로그램을 위한 하위 형식에 대해서까지 동의할 필요가 없습니다.</li>
+</ul>
+</div>
+<div class="section" id="drawbacks-of-complex-features">
+<h3>Drawbacks of complex features<a class="headerlink" href="#drawbacks-of-complex-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>상대적으로 실행하기 어렵습니다.</li>
+<li>각 피처에 대한 DB 쿼리가 필요할 경우 복잡한 응답으로 느려질 수 있습니다.</li>
+<li>응용 스키마를 표준화하기 위해 정보를 모델링해야 합니다. 장점도 있지만, 참여자 커뮤니티의 노력이 필요합니다.</li>
+</ul>
+</div>
+<div class="section" id="complex-feature-example">
+<h3>Complex feature example<a class="headerlink" href="#complex-feature-example" title="Permalink to this headline">¶</a></h3>
+<p>앞에서 나왔던 <tt class="docutils literal"><span class="pre">stations</span></tt> 테이블로 돌아가 GPS 기지국과 기지국이 물리적으로 위치한 지질 단위의 관계를 설명하는 외부 key 값인 <tt class="docutils literal"><span class="pre">gu_id</span></tt>를 추가합니다.</p>
+<div class="highlight-python"><pre>| id | code |      name      |         location         | gu_id |
++----+------+----------------+--------------------------+-------+
+| 27 | ALIC | Alice Springs  | POINT(133.8855 -23.6701) | 32785 |
+| 4  | NORF | Norfolk Island | POINT(167.9388 -29.0434) | 10237 |
+| 12 | COCO | Cocos          | POINT(96.8339 -12.1883)  | 19286 |
+| 31 | ALBY | Albany         | POINT(117.8102 -34.9502) | 92774 |</pre>
+</div>
+<p>지질 단위는 <tt class="docutils literal"><span class="pre">geologicunit</span></tt> 테이블에 저장되어 있습니다.</p>
+<div class="highlight-python"><pre>| gu_id |                       urn             |         text        |
++-------+---------------------------------------+---------------------+
+| 32785 | urn:x-demo:feature:GeologicUnit:32785 | Metamorphic bedrock |
+...</pre>
+</div>
+<p>단순 피처라면 <tt class="docutils literal"><span class="pre">stations</span></tt> 테이블과 <tt class="docutils literal"><span class="pre">geologicunit</span></tt> 테이블을 조인(join)해서
+하나의 뷰로 만든 다음 양쪽의 모든 속성을 담은 &#8220;코드화되지 않은(flat)&#8221; XML 표현을 전송하는 접근법을 사용할 것입니다.
+복잡 피처는 2개 테이블을 분리된 피처형으로 전송하는 접근법을 씁니다. 이렇게 하면 양쪽 테이블의 관계를 보여주면서도 개별적인 독자성을 지킬 수 있습니다.</p>
+<p>예를 들면 GPS station을 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>과 함께 <tt class="docutils literal"><span class="pre">sa:SamplingPoint</span></tt>에 매핑할 수 있습니다.
+다음 응용 스키마에서 이런 형식들을 각각 정의하고 있습니다.</p>
+<ul>
+<li><p class="first"><a class="reference external" href="http://schemas.opengis.net/sampling/1.0.0/sampling.xsd">http://schemas.opengis.net/sampling/1.0.0/sampling.xsd</a></p>
+<blockquote>
+<div><ul class="simple">
+<li>Documentation: OGC 07-002r3: <a class="reference external" href="http://portal.opengeospatial.org/files/?artifact_id=22467">http://portal.opengeospatial.org/files/?artifact_id=22467</a></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><a class="reference external" href="http://www.geosciml.org/geosciml/2.0/xsd/geosciml.xsd">http://www.geosciml.org/geosciml/2.0/xsd/geosciml.xsd</a></p>
+<blockquote>
+<div><ul class="simple">
+<li>Documentation: <a class="reference external" href="http://www.geosciml.org/geosciml/2.0/doc/">http://www.geosciml.org/geosciml/2.0/doc/</a></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>그렇다면 복잡 피처 WFS 응답 조각은 다음과 같이 코드화될 것입니다.</p>
+<div class="highlight-python"><pre>&lt;sa:SamplingPoint gml:id="stations.27&gt;
+  &lt;gml:name codeSpace="urn:x-demo:SimpleName"&gt;Alice Springs&lt;/gml:name&gt;
+  &lt;gml:name codeSpace="urn:x-demo:IGS:ID"&gt;ALIC&lt;/gml:name&gt;
+  &lt;sa:sampledFeature&gt;
+     &lt;gsml:GeologicUnit gml:id="geologicunit.32785"&gt;
+         &lt;gml:description&gt;Metamorphic bedrock&lt;/gml:description&gt;
+         &lt;gml:name codeSpace="urn:x-demo:Feature"&gt;urn:x-demo:feature:GeologicUnit:32785&lt;/gml:name&gt;
+     &lt;/gsml:GeologicUnit&gt;
+  &lt;/sa:sampledFeature&gt;
+  &lt;sa:relatedObservation xlink:href="urn:x-demo:feature:GeologicUnit:32785" /&gt;
+  &lt;sa:position&gt;
+      &lt;gml:Point srsName="urn:x-ogc:def:crs:EPSG:4326"&gt;
+          &lt;gml:pos&gt;-23.6701 133.8855&lt;/gml:pos&gt;
+      &lt;/gml:Point&gt;
+  &lt;/sa:position&gt;
+&lt;/sa:SamplingPoint&gt;</pre>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">sa:sampledFeature</span></tt> 속성은 응답에 포함된 인라인(inline) 또는
+<tt class="docutils literal"><span class="pre">xlink:href</span></tt> 형태의 URL이나 URN을 사용한 참조를 통해 다른 어떤 피처형도 참조할 수 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">sa:sampledFeature</span></tt> 속성과
+<tt class="docutils literal"><span class="pre">sa:relatedObservation</span></tt> 속성은
+동일한 GeologicUnit을 나타내지만 후자는 참조를 통해 나타냅니다.</li>
+<li>새로운 형식을 도입하면 확장 포인트(point)가 나타나는데, 이때 정보 모델을 재사용할 수 있고 옛 버전과의 호환성을 지원하는 방향으로 확장할 수도 있습니다.</li>
+<li>다수의 샘플링 포인트(sampling point)가 단일 GeologicUnit을 공유할 수 있습니다.
+응용 스키마가 복수의 값을 가진 속성을 다수 대 하나 또는 다수 대 다수 관계를 지원하도록 정의할 수 있습니다.</li>
+<li>각 GeologicUnit이 색상, 풍화 상태, 암석학 분류, 또는 관련된 지질학적 사건 등 암석의 속성을 자세히 설명하는 깊은 심도의 속성을 가질 수 있습니다.</li>
+<li>GeologicUnit 피처형을 따로 서비스할 수 있으며, SamplingPoint에서 보인 것과 같은 동일한 인스턴스처럼 속성을 통해 개별적으로 식별할 수도 있습니다.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Working with Application Schemas</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="installation.html" title="next chapter">Installation</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Complex Features</a><ul>
+<li><a class="reference internal" href="#simple-features">Simple features</a><ul>
+<li><a class="reference internal" href="#benefits-of-simple-features">Benefits of simple features</a></li>
+<li><a class="reference internal" href="#drawbacks-of-simple-features">Drawbacks of simple features</a></li>
+<li><a class="reference internal" href="#simple-feature-example">Simple feature example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id1">Complex features</a><ul>
+<li><a class="reference internal" href="#benefits-of-complex-features">Benefits of complex features</a></li>
+<li><a class="reference internal" href="#drawbacks-of-complex-features">Drawbacks of complex features</a></li>
+<li><a class="reference internal" href="#complex-feature-example">Complex feature example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Working with Application Schemas</a></li>
+            <li>다음: <a href="installation.html" title="next chapter">Installation</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/complex-features.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

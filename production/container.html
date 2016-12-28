@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Container Considerations &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Running in a Production Environment" href="index.html" />
+      <link rel="next" title="Configuration Considerations" href="config.html" />
+      <link rel="prev" title="Java Considerations" href="java.html" />
+</head>
+<body class="production/container">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Running in a Production Environment</a> &raquo;</li>
+  <li>Container Considerations</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="config.html" title="Configuration Considerations"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="java.html" title="Java Considerations"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="container-considerations">
+<span id="production-container"></span><h1>Container Considerations<a class="headerlink" href="#container-considerations" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://tomcat.apache.org">Tomcat</a>이나 <a class="reference external" href="http://www.mortbay.org/jetty/">Jetty</a> 같은 Java 웹 컨테이너는
+실행 시작(startup) 시간을 줄일 수 있는 설정을 갖추고 있습니다. (하지만 언제나 최상의 속도를 보장하지는 못 합니다.)</p>
+<div class="section" id="optimize-your-jvm">
+<h2>Optimize your JVM<a class="headerlink" href="#optimize-your-jvm" title="Permalink to this headline">¶</a></h2>
+<p>사용자의 컨테이너를 위한 JVM(Java virtual machine)의 다음 수행(performance) 설정을 설정하십시오. 특정 컨테이너에 특화된 설정은 아닙니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">-server</span></tt></td>
+<td>더 강력한 최적화로 바이트코드(bytecode)를 훨씬 빨리 컴파일하는 서버 JVM(Java Virtual Machine)을 활성화합니다.
+&#8220;JIT(just-in-time)&#8221; 컴파일 작업에 시간이 걸리기 때문에 실행 시작 및 초기 호출(initial call)은 느려지지만 다음(subsequent) 호출은 더 빨라집니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">-Xmx256M -Xms48m</span></tt></td>
+<td>사용자의 서버에 추가 메모리를 할당합니다. JVM은 기본적으로 64MB 크기의 메모리만 사용합니다.
+벡터 데이터만 서비스하는 경우 스트리밍 방식을 쓰기 때문에 메모리를 더 할당받아도 속도가 빨라지지 않습니다.
+그러나 커버리지를 서비스하는 경우, JAI가 디스크 캐시를 사용합니다. <tt class="docutils literal"><span class="pre">-Xmx256M</span></tt> 옵션으로 GeoServer에 256MB 크기의 메모리를 할당합니다.
+(메모리에 여유가 있다면 더 할당할 수도 있습니다.)
+JAI 타일 캐시 크기를 설정해서 (<a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 서버 설정 페이지를 참조하십시오)
+전체 메모리의 75%(0.75)를 사용하도록 설정하는 것도 좋은 방법입니다.
+<tt class="docutils literal"><span class="pre">-Xms48m</span></tt> 옵션으로 JVM 실행 시작 시 48MB 크기의 메모리를 확보하게 해서 대용량 데이터를 서비스하는 동안 더 안정적으로 메모리를 관리할 수 있습니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">-XX:SoftRefLRUPolicyMSPerMB=36000</span></tt></td>
+<td>GeoServer 안에서 &#8220;부드러운 참조(soft references)&#8221;의 수명을 연장합니다. GeoServer는 데이터 저장소 참조 및 다른 유사한 요청을 캐시하는 데 부드러운 참조를 사용합니다.
+부드러운 참조의 수명을 늘리면 이 캐시의 효용성이 증가합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">-XX:MaxPermSize=128m</span></tt></td>
+<td>GeoServer에 할당된 영구 생산(permanent generation 또는 &#8220;permgen&#8221;)의 최대 크기를 128MB로 늘립니다. 영구 생산은 클래스 바이트코드를 저장하는 메모리 부분입니다.
+GeoServer가 많은 클래스를 사용하기 때문에 영구 생산의 공간이 빠르게 차버릴 수도 있어서 메모리 용량 초과(out of memory) 오류를 일으킬 수 있습니다.
+동일 컨테이너에서 GeoServer를 다른 응용 프로그램과 함께 실행하는 경우나 동일 컨테이너에서 복수의 GeoServer 인스턴스를 실행하는 경우 이 옵션이 매우 중요합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">-XX:+UseParallelGC</span></tt></td>
+<td>처리량(throughput) 쓰레기 수거자(garbage collector)를 활성화합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>JVM 설정에 대해 더 자세한 정보를 알고 싶다면 <a class="reference external" href="http://www.petefreitag.com/articles/gctuning/">Performance tuning garbage collection in Java</a>를 참조하십시오.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="java.html" title="previous chapter">Java Considerations</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="config.html" title="next chapter">Configuration Considerations</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Container Considerations</a><ul>
+<li><a class="reference internal" href="#optimize-your-jvm">Optimize your JVM</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="java.html" title="previous chapter">Java Considerations</a></li>
+            <li>다음: <a href="config.html" title="next chapter">Configuration Considerations</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/production/container.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

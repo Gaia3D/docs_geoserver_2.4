@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Interaction between user/group and role services &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Role system" href="index.html" />
+      <link rel="next" title="Authentication" href="../auth/index.html" />
+      <link rel="prev" title="Role source and role calculation" href="rolesource.html" />
+</head>
+<body class="security/usergrouprole/interaction">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Role system</a> &raquo;</li>
+  <li>Interaction between user/group and role services</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../auth/index.html" title="Authentication"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="rolesource.html" title="Role source and role calculation"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="interaction-between-user-group-and-role-services">
+<span id="sec-rolesystem-interaction"></span><h1>Interaction between user/group and role services<a class="headerlink" href="#interaction-between-user-group-and-role-services" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 <a class="reference internal" href="usergroupservices.html#sec-rolesystem-usergroupservices"><em>사용자/그룹 서비스</em></a>와
+<a class="reference internal" href="roleservices.html#sec-rolesystem-roleservices"><em>롤 서비스</em></a> 간의 상호작용을 설명합니다.</p>
+<div class="section" id="calculating-the-roles-of-a-user">
+<h2>Calculating the roles of a user<a class="headerlink" href="#calculating-the-roles-of-a-user" title="Permalink to this headline">¶</a></h2>
+<p>다음은 사용자/그룹 서비스와 롤 서비스가 사용자 롤을 계산하기 위해 어떻게 상호작용하는지 보여주는 다이어그램입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/usergrouprole1.png" src="../../_images/usergrouprole1.png" />
+<p class="caption"><em>사용자 롤 계산을 위해 상호작용하는 사용자/그룹 서비스와 롤 서비스</em></p>
+</div>
+<p>사용자/그룹 서비스에서 활성화된 사용자를 불러올 때, 해당 사용자에게 할당된 롤(들)을 식별해야만 합니다. 이 식별 과정은 다음과 같습니다.</p>
+<ol class="arabic simple">
+<li>사용자가 소속된 모든 활성화된 그룹을 불러옵니다. 그룹이 비활성화되어 있는 경우 무시합니다.</li>
+<li>사용자와 연결된 모든 롤을 불러와서 추가합니다.</li>
+<li>사용자가 소속된 활성화된 각 그룹에 대해 그룹과 연결된 모든 롤을 불러와서 추가합니다.</li>
+<li>추가된 각 롤에 대해 모든 원형(ancestor) 롤을 불러와서 추가합니다.</li>
+<li>필요하다면 추가된 각 롤을 개인화(personalize)합니다.</li>
+<li>그 결과 나온 롤 집합에 로컬 관리자(admin) 롤이 있을 경우, <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> 롤을 추가합니다.</li>
+<li>그 결과 나온 롤 집합에 로컬 그룹 관리자(group admin) 롤이 있을 경우, <tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt> 롤을 추가합니다.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">롤 개인화(role personalization)은 각 롤에 대해 롤 파라미터(키/값 쌍)를 검색하고 사용자 속성(키/값 쌍)에 동일한 키가 담겨 있는지 확인합니다.
+일치하는 키가 있을 경우 롤 파라미터의 값을 사용자 속성의 값으로 대체합니다.</p>
+</div>
+</div>
+<div class="section" id="authentication-of-user-credentials">
+<h2>Authentication of user credentials<a class="headerlink" href="#authentication-of-user-credentials" title="Permalink to this headline">¶</a></h2>
+<p>사용자/그룹 서비스는 인증 작업 시 주로 쓰입니다.
+<a class="reference internal" href="../auth/chain.html#sec-auth-chain"><em>인증 사슬(Authentication chain)</em></a>의 인증 제공자는 사용자 자격(user credentials)을 인증하기 위해 사용자/그룹 서비스를 이용할 수도 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/usergrouprole2.png" src="../../_images/usergrouprole2.png" />
+<p class="caption"><em>인증을 위해 사용자/그룹 서비스 이용하기</em></p>
+</div>
+</div>
+<div class="section" id="geoserver-defaults">
+<h2>GeoServer defaults<a class="headerlink" href="#geoserver-defaults" title="Permalink to this headline">¶</a></h2>
+<p>다음은 GeoServer의 기본 사용자/그룹 서비스, 롤 서비스, 인증 제공자를 보여주는 다이어그램입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/usergrouprole3.png" src="../../_images/usergrouprole3.png" />
+<p class="caption"><em>GeoServer의 기본 보안 설정</em></p>
+</div>
+<p><em>루트(root)</em> 제공자와 <em>사용자명/비밀번호(username/password)</em> 제공자, 2개의 인증 제공자가 설정되어 있습니다.
+<em>루트</em> 제공자는 GeoServer의 <a class="reference internal" href="../root.html#sec-root"><em>루트 계정(root account)</em></a>을 인증하는데, 사용자/그룹 서비스를 이용하지 않습니다.
+<em>사용자명/비밀번호</em> 제공자는 기본 제공자로 사용자명 및 비밀번호 자격 증명을 사용자/그룹 서비스에 전달합니다.</p>
+<p>XML 파일로 사용자 데이터베이스를 지속하는 단일 사용자/그룹 서비스가 존재합니다.
+이 데이터베이스는 <tt class="docutils literal"><span class="pre">admin</span></tt>이라는 단일 사용자를 담고 있으며, 그룹은 담고 있지 않습니다.
+롤 서비스도 마찬가지로 XML 파일로 롤 데이터베이스를 지속합니다. 기본적으로 이 롤 서비스는 <tt class="docutils literal"><span class="pre">admin</span></tt> 사용자와
+연결된 <tt class="docutils literal"><span class="pre">ADMIN</span></tt>이라는 단일 롤을 담고 있습니다.
+<tt class="docutils literal"><span class="pre">ADMIN</span></tt>롤은 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> 롤에 매핑되어 있어서,
+그 결과 롤 계산 시 <tt class="docutils literal"><span class="pre">admin</span></tt> 사용자는 시스템 관리자 롤(system administrator role)과 연결됩니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="rolesource.html" title="previous chapter">Role source and role calculation</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../auth/index.html" title="next chapter">Authentication</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Interaction between user/group and role services</a><ul>
+<li><a class="reference internal" href="#calculating-the-roles-of-a-user">Calculating the roles of a user</a></li>
+<li><a class="reference internal" href="#authentication-of-user-credentials">Authentication of user credentials</a></li>
+<li><a class="reference internal" href="#geoserver-defaults">GeoServer defaults</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="rolesource.html" title="previous chapter">Role source and role calculation</a></li>
+            <li>다음: <a href="../auth/index.html" title="next chapter">Authentication</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/security/usergrouprole/interaction.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

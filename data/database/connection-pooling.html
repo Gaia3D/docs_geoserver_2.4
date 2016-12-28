@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Database Connection Pooling &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="JNDI" href="jndi.html" />
+      <link rel="prev" title="Teradata" href="teradata.html" />
+</head>
+<body class="data/database/connection-pooling">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>Database Connection Pooling</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="jndi.html" title="JNDI"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="teradata.html" title="Teradata"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="database-connection-pooling">
+<span id="connection-pooling"></span><h1>Database Connection Pooling<a class="headerlink" href="#database-connection-pooling" title="Permalink to this headline">¶</a></h1>
+<p>공간DB에서 데이터를 서비스할 경우 성능 향상 면에서 <em>connection pooling</em>이 매우 중요합니다.
+GeoServer가 DB 테이블에서 데이터를 로딩해야 하는 요청을 받았을 때 먼저 DB와 연결해야 하는데, 이런 연결을 설정하는 데에는 시간이 걸립니다.</p>
+<p>Connection pool의 목적은 이런 요청 사이사이의 시간에 기본(underlying) DB와 연결을 유지하는 데 있습니다.
+첫번째 요청 때에만 연결을 설정하면 된다는 장점이 있습니다.
+이어지는 요청은 기존 연결을 통해 이루어지기 때문에 결과적으로 성능이 향상됩니다.</p>
+<p>GeoServer가 DB 기반 데이터 저장소를 추가할 때마다 내부적으로 connection pool을 생성합니다. 이런 connection pool은 설정 가능합니다.</p>
+<div class="section" id="connection-pool-options">
+<h2>Connection pool options<a class="headerlink" href="#connection-pool-options" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>max connections</td>
+<td>Pool이 유지할 수 있는 최대 연결 개수를 말합니다.
+최대 연결 개수를 초과할 경우, pool을 다시 사용할 수 있을 때까지 DB 연결이 필요한 추가 요청 처리를 중단합니다.
+최대 연결 개수 옵션은 DB에 동시에 보낼 수 있는 요청의 개수를 제한합니다.</td>
+</tr>
+<tr class="row-even"><td>min connections</td>
+<td>Pool이 유지할 최소 연결 개수를 말합니다. 활성화된 요청이 없을 겨우에도 유지하는 연결의 개수입니다.
+요청 처리 작업 때문에 이 연결 개수를 초과하게 되면 pool이 (위에서 설명한) 최대 수용량에 도달할 때까지 계속 추가 연결을 열게 됩니다.</td>
+</tr>
+<tr class="row-odd"><td>validate connections</td>
+<td>이 옵션은 pool이 연 연결을 사용하기 전에 확인 작업을 거칠 것인지 결정합니다.
+Pool이 유지하고 있는 연결은 네트워크 고장이나 DB 서버의 시간 제한 등 여러 가지 이유로 닫히게 됩니다.
+이 옵션을 켤 경우 클라이언트의 오류를 발생시킬 수도 있는 닫힌 연결을 사용하는 일이 사라진다는 장점이 있습니다.
+다만 연결 확인 작업에 걸리는 시간 때문에 성능이 떨어질 수 있다는 단점도 있습니다.</td>
+</tr>
+<tr class="row-even"><td>fetch size</td>
+<td>네트워크 상에서 요청/응답이 이루어질 때 DB에서 읽어올 레코드의 개수를 말합니다.
+너무 적게 (&lt;50) 설정하면 네트워크 대기 시간(latency)이 성능에 악영향을 미칩니다.
+너무 높게 설정하면 GeoServer 메모리의 상당량을 점유해서 <tt class="docutils literal"><span class="pre">Out Of Memory</span></tt> 오류를 발생시킬 수 있습니다.
+기본값은 1,000입니다.</td>
+</tr>
+<tr class="row-odd"><td>connection timeout</td>
+<td>Connection pool이 DB와 새 연결을 여는 작업을 포기하기 전에 기다리는 시간을 초 단위로 설정합니다. 기본값은 20초입니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="teradata.html" title="previous chapter">Teradata</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="jndi.html" title="next chapter">JNDI</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Database Connection Pooling</a><ul>
+<li><a class="reference internal" href="#connection-pool-options">Connection pool options</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="teradata.html" title="previous chapter">Teradata</a></li>
+            <li>다음: <a href="jndi.html" title="next chapter">JNDI</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/connection-pooling.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

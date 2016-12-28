@@ -1,0 +1,900 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Lines &mdash; GeoServer 2.4.0 User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
+      <link rel="up" title="CSS Cookbook" href="cookbook.html" />
+      <link rel="next" title="Polygons" href="cookbook_polygon.html" />
+      <link rel="prev" title="Points" href="cookbook_point.html" />
+</head>
+<body class="extensions/css/cookbook_line">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Extensions</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">CSS Styling</a> &raquo;</li>
+  <li><a href="cookbook.html" accesskey="U">CSS Cookbook</a> &raquo;</li>
+  <li>Lines</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="cookbook_polygon.html" title="Polygons"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="cookbook_point.html" title="Points"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="lines">
+<span id="css-cookbook-lines"></span><h1>Lines<a class="headerlink" href="#lines" title="Permalink to this headline">¶</a></h1>
+<p>While lines can also seem to be simple shapes, having length but no width, there are many options and tricks for making
+lines display nicely.</p>
+<div class="section" id="example-lines-layer">
+<span id="css-cookbook-lines-attributes"></span><h2>Example lines layer<a class="headerlink" href="#example-lines-layer" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference download internal" href="../../_downloads/sld_cookbook_line.zip"><tt class="xref download docutils literal"><span class="pre">lines</span> <span class="pre">layer</span></tt></a> used in the examples below contains road information for a
+fictional country.  For reference, the attribute table for the points in this layer is included below.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="40%" />
+<col width="30%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>fid</strong> (Feature ID)</td>
+<td><strong>name</strong> (Road name)</td>
+<td><strong>type</strong> (Road class)</td>
+</tr>
+<tr class="row-even"><td>line.1</td>
+<td>Latway</td>
+<td>highway</td>
+</tr>
+<tr class="row-odd"><td>line.2</td>
+<td>Crescent Avenue</td>
+<td>secondary</td>
+</tr>
+<tr class="row-even"><td>line.3</td>
+<td>Forest Avenue</td>
+<td>secondary</td>
+</tr>
+<tr class="row-odd"><td>line.4</td>
+<td>Longway</td>
+<td>highway</td>
+</tr>
+<tr class="row-even"><td>line.5</td>
+<td>Saxer Avenue</td>
+<td>secondary</td>
+</tr>
+<tr class="row-odd"><td>line.6</td>
+<td>Ridge Avenue</td>
+<td>secondary</td>
+</tr>
+<tr class="row-even"><td>line.7</td>
+<td>Holly Lane</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.8</td>
+<td>Mulberry Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.9</td>
+<td>Nathan Lane</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.10</td>
+<td>Central Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.11</td>
+<td>Lois Lane</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.12</td>
+<td>Rocky Road</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.13</td>
+<td>Fleet Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.14</td>
+<td>Diane Court</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.15</td>
+<td>Cedar Trail</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.16</td>
+<td>Victory Road</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.17</td>
+<td>Highland Road</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.18</td>
+<td>Easy Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.19</td>
+<td>Hill Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.20</td>
+<td>Country Road</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.21</td>
+<td>Main Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.22</td>
+<td>Jani Lane</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.23</td>
+<td>Shinbone Alley</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.24</td>
+<td>State Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.25</td>
+<td>River Road</td>
+<td>local-road</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference download internal" href="../../_downloads/sld_cookbook_line.zip"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">lines</span> <span class="pre">shapefile</span></tt></a></p>
+</div>
+<div class="section" id="simple-line">
+<span id="css-cookbook-lines-simpleline"></span><h2>Simple line<a class="headerlink" href="#simple-line" title="Permalink to this headline">¶</a></h2>
+<p>This example specifies lines be colored black with a thickness of 3 pixels.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_simpleline.png" src="../../_images/line_simpleline.png" />
+<p class="caption"><em>Simple line</em></p>
+</div>
+<div class="section" id="code">
+<h3>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">3px</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="details">
+<h3>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h3>
+<p>The only rule asks for a black stroke (this attribute is mandatory to get strokes to actually show up), 3 pixels wide.</p>
+</div>
+</div>
+<div class="section" id="line-with-border">
+<h2>Line with border<a class="headerlink" href="#line-with-border" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to draw lines with borders (sometimes called &#8220;cased lines&#8221;).
+In this case the lines are drawn with a 3 pixel blue center and a 1 pixel wide gray border.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_linewithborder.png" src="../../_images/line_linewithborder.png" />
+<p class="caption"><em>Line with border</em></p>
+</div>
+<div class="section" id="id1">
+<h3>Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#333333</span><span class="o">,</span> <span class="m">#6699FF</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">5px</span><span class="o">,</span> <span class="m">3px</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="n">linecap</span><span class="o">:</span> <span class="n">round</span><span class="p">;</span>
+   <span class="k">z-index</span><span class="o">:</span> <span class="m">0</span><span class="o">,</span> <span class="m">1</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id2">
+<h3>Details<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Lines in CSS have no notion of a &#8220;fill&#8221;, only &#8220;stroke&#8221;. Thus, unlike points or polygons, it is not possible to style the
+&#8220;edge&#8221; of the line geometry. It is, however, possible to achieve this effect by drawing each line twice: once with a
+certain width and again with a slightly smaller width.  This gives the illusion of fill and stroke by obscuring the
+larger lines everywhere except along the edges of the smaller lines.</p>
+<p>The style uses the &#8220;multi-valued properties&#8221; CSS support by specifying two strokes and two stroke-widths.
+This causes each feature to be painted twice, first with a dark gray (<tt class="docutils literal"><span class="pre">#333333</span></tt>) line 5 pixels wide, and then a thinner
+blue (<tt class="docutils literal"><span class="pre">#6699FF</span></tt>) line 3 pixels wide.</p>
+<p>Since every line is drawn twice, the order of the rendering is <em>very</em> important.
+Without the z-index indication, each feature would first draw the gray stroke and then the blue one, and then the rendering engine
+would move to the next feature, and so on. This would result in ugly overlaps when lines do cross.
+By using the z-index property (<strong>Line 3</strong>) instead, all gray lines will be painted first, and then all blue lines will painted on top,
+thus making sure the blue lines visually connect.</p>
+<p>The &#8220;stroke-linecap&#8221; property is the only one having a single value, this is because the value is the same for both the gray and blue line.</p>
+<p>The result is a 3 pixel blue line with a 1 pixel gray border, since the 5 pixel gray line will display 1 pixel on each
+side of the 3 pixel blue line.</p>
+</div>
+</div>
+<div class="section" id="dashed-line">
+<h2>Dashed line<a class="headerlink" href="#dashed-line" title="Permalink to this headline">¶</a></h2>
+<p>This example alters the <a class="reference internal" href="#css-cookbook-lines-simpleline"><em>Simple line</em></a> to create a dashed line consisting of 5 pixels of drawn
+line alternating with 2 pixels of blank space.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_dashedline.png" src="../../_images/line_dashedline.png" />
+<p class="caption"><em>Dashed line</em></p>
+</div>
+<div class="section" id="id3">
+<h3>Code<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">3px</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="n">dasharray</span><span class="o">:</span> <span class="m">5</span> <span class="m">2</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id4">
+<h3>Details<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>In this example the we create a blue line, 3 pixels wide, and specify a dash array with value &#8220;5 2&#8221;, which creates a
+repeating pattern of 5 pixels of drawn line, followed by 2 pixels of omitted line.</p>
+</div>
+</div>
+<div class="section" id="railroad-hatching">
+<h2>Railroad (hatching)<a class="headerlink" href="#railroad-hatching" title="Permalink to this headline">¶</a></h2>
+<p>This example uses hatching to create a railroad style.  Both the line and the hatches are black, with a 2 pixel
+thickness for the main line and a 1 pixel width for the perpendicular hatches.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_railroad.png" src="../../_images/line_railroad.png" />
+<p class="caption"><em>Railroad (hatching)</em></p>
+</div>
+<div class="section" id="id5">
+<h3>Code<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#333333</span><span class="o">,</span> <span class="n">symbol</span><span class="p">(</span><span class="s2">&quot;shape://vertline&quot;</span><span class="p">);</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">3px</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="nd">:nth-stroke</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span> <span class="p">{</span>
+   <span class="k">size</span><span class="o">:</span> <span class="m">12</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#333333</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">1px</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id6">
+<h3>Details<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>In this example a multi-valued stroke is used: the fist value makes the renderer paint a dark gray line (3 pixels wide, according to the &#8220;stroke-width&#8221; attribute),
+whilst the second value makes the line be painted by repeating the &#8220;shape://vertline&#8221; symbol over and over, creating the hatching effect.</p>
+<p>In order to specify how the symbol itself should be painted, the &#8221;:nth-stroke(2)&#8221; pseudo-selector is used at <strong>Line 6</strong> to specify the options for the repeated symbol:
+in particular with are instructing the renderer to create a 12px wide symbol, with a dark gray stroke 1 pixel wide.</p>
+</div>
+</div>
+<div class="section" id="spaced-graphic-symbols">
+<h2>Spaced graphic symbols<a class="headerlink" href="#spaced-graphic-symbols" title="Permalink to this headline">¶</a></h2>
+<p>This example uses a graphic stroke along with dash arrays to create a &#8220;dot and space&#8221; line type.
+Adding the dash array specification allows to control the amount of space between one symbol and the next one.
+Without using the dash array the lines would be densely populated with dots, each one touching the previous one.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_dashspace.png" src="../../_images/line_dashspace.png" />
+<p class="caption"><em>Spaced symbols along a line</em></p>
+</div>
+<div class="section" id="id7">
+<h3>Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="n">symbol</span><span class="p">(</span><span class="k">circle</span><span class="p">);</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="n">dasharray</span><span class="o">:</span> <span class="m">4</span> <span class="m">6</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="nd">:stroke</span> <span class="p">{</span>
+   <span class="k">size</span><span class="o">:</span> <span class="m">4</span><span class="p">;</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#666666</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#333333</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">1px</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id8">
+<h3>Details<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>This example, like others before, uses <tt class="docutils literal"><span class="pre">symbol(circle)</span></tt> to place a graphic symbol along a line.</p>
+<p>The symbol details are specified in the rule at <strong>Line 6</strong> using
+the &#8221;:stroke&#8221; pseudo-selector, creating a gray fill circle, 4 pixels wide, with a dark gray outline.</p>
+<p>The spacing between symbols is controlled with the <tt class="docutils literal"><span class="pre">stroke-dasharray</span></tt> at <strong>line 3</strong>, which specifies 4 pixels of pen-down (just enough to draw the circle) and 6 pixels of pen-up,
+to provide the spacing.</p>
+</div>
+</div>
+<div class="section" id="alternating-symbols-with-dash-offsets">
+<span id="css-cookbook-lines-dashoffset"></span><h2>Alternating symbols with dash offsets<a class="headerlink" href="#alternating-symbols-with-dash-offsets" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to create a complex line style which alternates a dashed line and a graphic symbol.
+The code builds on features shown in the previous examples:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">stroke-dasharray</span></tt> controls pen-down/pen-up behavior to generate dashed lines</li>
+<li><tt class="docutils literal"><span class="pre">symbol(...)</span></tt> places symbols along a line combining the two allows control of symbol spacing</li>
+</ul>
+</div></blockquote>
+<p>This also shows the usage of a <cite>dash offset</cite>, which controls where rendering starts
+in the dash array.
+For example, with a dash array of <tt class="docutils literal"><span class="pre">5</span> <span class="pre">10</span></tt> and a dash offset of <tt class="docutils literal"><span class="pre">7</span></tt> the
+renderer starts drawing the pattern 7 pixels from the beginning.  It skips the 5 pixels pen-down
+section and 2 pixels of the pen-up section, then draws the remaining 8 pixels of pen-up, then 5 down, 10 up, and so on.</p>
+<p>The example shows how to use these features to create two synchronized sequences of dash arrays,
+one drawing line segments and the other symbols.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_dashdot.png" src="../../_images/line_dashdot.png" />
+<p class="caption"><em>Alternating dash and symbol</em></p>
+</div>
+<div class="section" id="id9">
+<h3>Code<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">blue</span><span class="o">,</span> <span class="n">symbol</span><span class="p">(</span><span class="k">circle</span><span class="p">);</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">1px</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="n">dasharray</span><span class="o">:</span> <span class="m">10</span> <span class="m">10</span><span class="o">,</span> <span class="m">5</span> <span class="m">15</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="n">dashoffset</span><span class="o">:</span> <span class="m">0</span><span class="o">,</span> <span class="m">7</span><span class="o">.</span><span class="m">5</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="nd">:nth-stroke</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#000033</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">1px</span><span class="p">;</span>
+   <span class="k">size</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id10">
+<h3>Details<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">This example uses again multi-valued properties to create two subsequent strokes applied to the same lines.</div>
+<div class="line">The first stroke is a solid blue line, 1 pixel wide, with a dash array of &#8220;10 10&#8221;.</div>
+<div class="line">The second one instead is a repeated circle, using a dash array of &#8220;5 15&#8221; and with a dash offset of 7.5. This makes the sequence start with 12.5 pixels of white space, then a circle (which is then centered between the two line segments of the other pattern), then 15 pixels of white space, and so on.</div>
+</div>
+<p>The circle portrayal details are specified using the pseudo selector &#8220;nth-stroke(2)&#8221; at <strong>line 8</strong>, asking for circles that
+are 5 pixels wide, not filled, and with a dark blue outline.</p>
+</div>
+</div>
+<div class="section" id="line-with-default-label">
+<span id="css-cookbook-lines-defaultlabel"></span><h2>Line with default label<a class="headerlink" href="#line-with-default-label" title="Permalink to this headline">¶</a></h2>
+<p>This example shows a text label on the simple line.  This is how a label will be displayed in the absence of any other
+customization.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_linewithdefaultlabel.png" src="../../_images/line_linewithdefaultlabel.png" />
+<p class="caption"><em>Line with default label</em></p>
+</div>
+<div class="section" id="id11">
+<h3>Code<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+   <span class="n">label</span><span class="o">:</span> <span class="p">[</span><span class="n">name</span><span class="p">];</span>
+   <span class="k">font</span><span class="o">-</span><span class="n">fill</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id12">
+<h3>Details<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>This example paints lines with a red stroke, and then adds horizontal black labels at the center of the line, using the &#8220;name&#8221; attribute to fill the label.</p>
+<p>_css_line_</p>
+</div>
+</div>
+<div class="section" id="labels-along-line-with-perpendicular-offset">
+<span id="css-cookbook-lines-perpendicularlabel"></span><h2>Labels along line with perpendicular offset<a class="headerlink" href="#labels-along-line-with-perpendicular-offset" title="Permalink to this headline">¶</a></h2>
+<p>This example shows a text label on the simple line, just like the previous example, but will force the label to be parallel to the lines, and will offset them a few pixels away.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_labelwithoffset.png" src="../../_images/line_labelwithoffset.png" />
+<p class="caption"><em>Line with default label</em></p>
+</div>
+<div class="section" id="id13">
+<h3>Code<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+   <span class="n">label</span><span class="o">:</span> <span class="p">[</span><span class="n">name</span><span class="p">];</span>
+   <span class="n">label</span><span class="o">-</span><span class="n">offset</span><span class="o">:</span> <span class="m">7px</span><span class="p">;</span>
+   <span class="k">font</span><span class="o">-</span><span class="n">fill</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id14">
+<h3>Details<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>This example is line by line identical to the previous one, but it add a new attribute &#8220;label-offset&#8221;, which in the case of lines, when having a single value, is intepreted as a perpendicular
+offset from the line. The label is painted along a straight line, parallel to the line orientation in the center point of the label.</p>
+</div>
+</div>
+<div class="section" id="label-following-line">
+<span id="css-cookbook-lines-labelfollowingline"></span><h2>Label following line<a class="headerlink" href="#label-following-line" title="Permalink to this headline">¶</a></h2>
+<p>This example renders the text label to follow the contour of the lines.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_labelfollowingline.png" src="../../_images/line_labelfollowingline.png" />
+<p class="caption"><em>Label following line</em></p>
+</div>
+<div class="section" id="id15">
+<h3>Code<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+   <span class="n">label</span><span class="o">:</span> <span class="p">[</span><span class="n">name</span><span class="p">];</span>
+   <span class="k">font</span><span class="o">-</span><span class="n">fill</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="n">follow</span><span class="o">-</span><span class="n">line</span><span class="o">:</span> <span class="n">true</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id16">
+<h3>Details<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>As the <a class="reference internal" href="#css-cookbook-lines-defaultlabel"><em>Line with default label</em></a> example showed, the default label behavior isn&#8217;t optimal.</p>
+<p>This example is similar to the <a class="reference internal" href="#css-cookbook-lines-defaultlabel"><em>Line with default label</em></a> example with the exception of <strong>line 5</strong> where the
+&#8220;-gt-label-follow-line&#8221; option is specified, which forces the labels to strickly follow the line.</p>
+<p>Not all labels are visible partly because of conflict resolution, and partly because the renderer cannot find a line
+segment long and &#8220;straight&#8221; enough to paint the label (labels are not painted over sharp turns by default).</p>
+</div>
+</div>
+<div class="section" id="optimized-label-placement">
+<span id="css-cookbook-lines-optimizedlabel"></span><h2>Optimized label placement<a class="headerlink" href="#optimized-label-placement" title="Permalink to this headline">¶</a></h2>
+<p>This example optimizes label placement for lines such that the maximum number of labels are displayed.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_optimizedlabel.png" src="../../_images/line_optimizedlabel.png" />
+<p class="caption"><em>Optimized label</em></p>
+</div>
+<div class="section" id="id17">
+<h3>Code<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+   <span class="n">label</span><span class="o">:</span> <span class="p">[</span><span class="n">name</span><span class="p">];</span>
+   <span class="k">font</span><span class="o">-</span><span class="n">fill</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="n">follow</span><span class="o">-</span><span class="n">line</span><span class="o">:</span> <span class="n">true</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="n">max</span><span class="o">-</span><span class="n">angle</span><span class="o">-</span><span class="n">delta</span><span class="o">:</span> <span class="m">90</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="n">max</span><span class="o">-</span><span class="n">displacement</span><span class="o">:</span> <span class="m">400</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="k">repeat</span><span class="o">:</span> <span class="m">150</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id18">
+<h3>Details<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>This example is similar to the previous example, <a class="reference internal" href="#css-cookbook-lines-labelfollowingline"><em>Label following line</em></a>.  The only differences are contained in <strong>lines 6-8</strong>.  <strong>Line 6</strong> sets the maximum angle that the label will follow.  This sets the label to never bend more than 90 degrees to prevent the label from becoming illegible due to a pronounced curve or angle.  <strong>Line 7</strong> sets the maximum displacement of the label to be 400 pixels.  In order to resolve conflicts with overlapping labels, GeoServer will attempt to move the labels such that they are no longer overlapping.  This value sets how far the label can be moved relative to its original placement.  Finally, <strong>line 8</strong> sets the labels to be repeated every 150 pixels.  A feature will typically receive only one label, but this can cause confusion for long lines. Setting the label to repeat ensures that the line is always labeled locally.</p>
+</div>
+</div>
+<div class="section" id="optimized-and-styled-label">
+<span id="css-cookbook-lines-optimizedstyledlabel"></span><h2>Optimized and styled label<a class="headerlink" href="#optimized-and-styled-label" title="Permalink to this headline">¶</a></h2>
+<p>This example improves the style of the labels from the <a class="reference internal" href="#css-cookbook-lines-optimizedlabel"><em>Optimized label placement</em></a> example.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_optimizedstyledlabel_with_halo.png" src="../../_images/line_optimizedstyledlabel_with_halo.png" />
+<p class="caption"><em>Optimized and styled label</em></p>
+</div>
+<div class="section" id="id19">
+<h3>Code<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+   <span class="n">label</span><span class="o">:</span> <span class="p">[</span><span class="n">name</span><span class="p">];</span>
+   <span class="k">font-family</span><span class="o">:</span> <span class="n">Arial</span><span class="p">;</span>
+   <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
+   <span class="k">font</span><span class="o">-</span><span class="n">fill</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+   <span class="k">font-size</span><span class="o">:</span> <span class="m">10</span><span class="p">;</span>
+   <span class="n">halo</span><span class="o">-</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+   <span class="n">halo</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">1</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="n">follow</span><span class="o">-</span><span class="n">line</span><span class="o">:</span> <span class="n">true</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="n">max</span><span class="o">-</span><span class="n">angle</span><span class="o">-</span><span class="n">delta</span><span class="o">:</span> <span class="m">90</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="n">max</span><span class="o">-</span><span class="n">displacement</span><span class="o">:</span> <span class="m">400</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="k">repeat</span><span class="o">:</span> <span class="m">150</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id20">
+<h3>Details<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>This example is similar to the <a class="reference internal" href="#css-cookbook-lines-optimizedlabel"><em>Optimized label placement</em></a>.  The only differences are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The font family and weight have been specified</li>
+<li>In order to make the labels easier to read, a white &#8220;halo&#8221; has been added. The halo draws a thin 1 pixel white border around the text, making it stand out from the background.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="attribute-based-line">
+<h2>Attribute-based line<a class="headerlink" href="#attribute-based-line" title="Permalink to this headline">¶</a></h2>
+<p>This example styles the lines differently based on the &#8220;type&#8221; (Road class) attribute.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_attributebasedline.png" src="../../_images/line_attributebasedline.png" />
+<p class="caption"><em>Attribute-based line</em></p>
+</div>
+<div class="section" id="id21">
+<h3>Code<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">[</span><span class="nt">type</span> <span class="o">=</span> <span class="s1">&#39;local-road&#39;</span><span class="o">]</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#009933</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">2</span><span class="p">;</span>
+   <span class="k">z-index</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="nt">type</span> <span class="o">=</span> <span class="s1">&#39;secondary&#39;</span><span class="o">]</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#0055CC</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">3</span><span class="p">;</span>
+   <span class="k">z-index</span><span class="o">:</span> <span class="m">1</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="nt">type</span> <span class="o">=</span> <span class="s1">&#39;highway&#39;</span><span class="o">]</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#FF0000</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">6</span><span class="p">;</span>
+   <span class="k">z-index</span><span class="o">:</span> <span class="m">2</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id22">
+<h3>Details<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Refer to the <a class="reference internal" href="#css-cookbook-lines-attributes"><em>Example lines layer</em></a> to see the attributes for the layer.  This example has eschewed labels in order to simplify the style, but you can refer to the example <a class="reference internal" href="#css-cookbook-lines-optimizedstyledlabel"><em>Optimized and styled label</em></a> to see which attributes correspond to which points.</p>
+</div>
+<p>There are three types of road classes in our fictional country, ranging from back roads to high-speed freeways:
+&#8220;highway&#8221;, &#8220;secondary&#8221;, and &#8220;local-road&#8221;.  In order to make sure the roads are rendered in the proper order of importance, a &#8220;z-index&#8221; attribute has been placed in each rule.</p>
+<p>The three rules are designed as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="30%" />
+<col width="20%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Rule order</strong></td>
+<td><strong>Rule name / type</strong></td>
+<td><strong>Color</strong></td>
+<td><strong>Size</strong></td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>local-road</td>
+<td><tt class="docutils literal"><span class="pre">#009933</span></tt> (green)</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>secondary</td>
+<td><tt class="docutils literal"><span class="pre">#0055CC</span></tt> (blue)</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>highway</td>
+<td><tt class="docutils literal"><span class="pre">#FF0000</span></tt> (red)</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lines 1-5</strong> comprise the first rule, the filter matches all roads that the &#8220;type&#8221; attribute has a value of &#8220;local-road&#8221;.  If this condition is true for a particular line, the rule renders it dark green, 2 pixels wide. All these lines are rendered first, and thus sit at the bottom of the final map.</p>
+<p><strong>Lines 7-11</strong> match the &#8220;secondary&#8221; roads, painting them dark blue, 3 pixels wide. Given the &#8220;z-index&#8221; is 1, they are rendered after the local roads, but below the highways.</p>
+<p><strong>Lines 13-17</strong> match the &#8220;highway&#8221; roads, painting them red 6 pixels wide. These roads are pained last, thus, on top of all others.</p>
+</div>
+</div>
+<div class="section" id="zoom-based-line">
+<h2>Zoom-based line<a class="headerlink" href="#zoom-based-line" title="Permalink to this headline">¶</a></h2>
+<p>This example alters the <a class="reference internal" href="#css-cookbook-lines-simpleline"><em>Simple line</em></a> style at different zoom levels.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_zoombasedlinelarge.png" src="../../_images/line_zoombasedlinelarge.png" />
+<p class="caption"><em>Zoom-based line: Zoomed in</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/line_zoombasedlinemedium.png" src="../../_images/line_zoombasedlinemedium.png" />
+<p class="caption"><em>Zoom-based line: Partially zoomed</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/line_zoombasedlinesmall.png" src="../../_images/line_zoombasedlinesmall.png" />
+<p class="caption"><em>Zoom-based line: Zoomed out</em></p>
+</div>
+<div class="section" id="id23">
+<h3>Code<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#009933</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="k">@scale</span> <span class="o">&lt;</span> <span class="nt">180000000</span><span class="o">]</span> <span class="p">{</span>
+   <span class="nt">stroke-width</span><span class="o">:</span> <span class="nt">6</span><span class="o">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="k">@scale</span> <span class="o">&gt;</span> <span class="nt">180000000</span><span class="o">]</span> <span class="o">[</span><span class="k">@scale</span> <span class="o">&lt;</span> <span class="nt">360000000</span><span class="o">]</span> <span class="p">{</span>
+   <span class="nt">stroke-width</span><span class="o">:</span> <span class="nt">4</span><span class="o">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="k">@scale</span> <span class="o">&gt;</span> <span class="nt">360000000</span><span class="o">]</span> <span class="p">{</span>
+   <span class="nt">stroke-width</span><span class="o">:</span> <span class="nt">2</span><span class="o">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id24">
+<h3>Details<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<p>It is often desirable to make shapes larger at higher zoom levels when creating a natural-looking map. This example
+varies the thickness of the lines according to the zoom level (or more accurately, scale denominator).  Scale
+denominators refer to the scale of the map.  A scale denominator of 10,000 means the map has a scale of 1:10,000 in the
+units of the map projection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Determining the appropriate scale denominators (zoom levels) to use is beyond the scope of this example.</p>
+</div>
+<p>This style contains three rules.  The three rules are designed as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="25%" />
+<col width="40%" />
+<col width="20%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Rule order</strong></td>
+<td><strong>Rule name</strong></td>
+<td><strong>Scale denominator</strong></td>
+<td><strong>Line width</strong></td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>Large</td>
+<td>1:180,000,000 or less</td>
+<td>6</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Medium</td>
+<td>1:180,000,000 to 1:360,000,000</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>Small</td>
+<td>Greater than 1:360,000,000</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>The order of these rules does not matter since the scales denominated in each rule do not overlap.</p>
+<p>The first rule provides the stroke color used at all zoom levels, dark gray, while the other three rules cascade over it applying the different stroke widths based on the current zoom level leveraging the &#8220;&#64;scale&#8221; pseudo attribute. The &#8220;&#64;scale&#8221; pseudo attribute can only be compared using the &#8220;&lt;&#8221; and &#8220;&gt;&#8221; operators, using any other operator will result in errors.</p>
+<p>The result of this style is that lines are drawn with larger widths as one zooms in and smaller widths as one zooms out.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="cookbook_point.html" title="previous chapter">Points</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="cookbook_polygon.html" title="next chapter">Polygons</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Lines</a><ul>
+<li><a class="reference internal" href="#example-lines-layer">Example lines layer</a></li>
+<li><a class="reference internal" href="#simple-line">Simple line</a><ul>
+<li><a class="reference internal" href="#code">Code</a></li>
+<li><a class="reference internal" href="#details">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#line-with-border">Line with border</a><ul>
+<li><a class="reference internal" href="#id1">Code</a></li>
+<li><a class="reference internal" href="#id2">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dashed-line">Dashed line</a><ul>
+<li><a class="reference internal" href="#id3">Code</a></li>
+<li><a class="reference internal" href="#id4">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#railroad-hatching">Railroad (hatching)</a><ul>
+<li><a class="reference internal" href="#id5">Code</a></li>
+<li><a class="reference internal" href="#id6">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spaced-graphic-symbols">Spaced graphic symbols</a><ul>
+<li><a class="reference internal" href="#id7">Code</a></li>
+<li><a class="reference internal" href="#id8">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#alternating-symbols-with-dash-offsets">Alternating symbols with dash offsets</a><ul>
+<li><a class="reference internal" href="#id9">Code</a></li>
+<li><a class="reference internal" href="#id10">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#line-with-default-label">Line with default label</a><ul>
+<li><a class="reference internal" href="#id11">Code</a></li>
+<li><a class="reference internal" href="#id12">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#labels-along-line-with-perpendicular-offset">Labels along line with perpendicular offset</a><ul>
+<li><a class="reference internal" href="#id13">Code</a></li>
+<li><a class="reference internal" href="#id14">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#label-following-line">Label following line</a><ul>
+<li><a class="reference internal" href="#id15">Code</a></li>
+<li><a class="reference internal" href="#id16">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optimized-label-placement">Optimized label placement</a><ul>
+<li><a class="reference internal" href="#id17">Code</a></li>
+<li><a class="reference internal" href="#id18">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optimized-and-styled-label">Optimized and styled label</a><ul>
+<li><a class="reference internal" href="#id19">Code</a></li>
+<li><a class="reference internal" href="#id20">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attribute-based-line">Attribute-based line</a><ul>
+<li><a class="reference internal" href="#id21">Code</a></li>
+<li><a class="reference internal" href="#id22">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zoom-based-line">Zoom-based line</a><ul>
+<li><a class="reference internal" href="#id23">Code</a></li>
+<li><a class="reference internal" href="#id24">Details</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="cookbook_point.html" title="previous chapter">Points</a></li>
+            <li>Next: <a href="cookbook_polygon.html" title="next chapter">Polygons</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/extensions/css/cookbook_line.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

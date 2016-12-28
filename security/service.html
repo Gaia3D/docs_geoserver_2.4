@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Service Security &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Security" href="index.html" />
+      <link rel="next" title="Layer security" href="layer.html" />
+      <link rel="prev" title="Root account" href="root.html" />
+</head>
+<body class="security/service">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Security</a> &raquo;</li>
+  <li>Service Security</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="layer.html" title="Layer security"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="root.html" title="Root account"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="service-security">
+<span id="sec-service"></span><h1>Service Security<a class="headerlink" href="#service-security" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer는 서비스 레벨에서 특정 롤을 할당받은 인증된 사용자에게만 서비스 작업을 할 수 있게 해주는 접근 제어를 지원합니다.
+GeoServer의 서비스는 크게 2개의 카테고리로 나뉩니다. 첫번째는 WMS와 WFS 같은 <a class="reference internal" href="../services/index.html#services"><em>OWS 서비스</em></a>입니다.
+두번째는 GeoServer <a class="reference internal" href="../rest/index.html#rest"><em>REST configuration</em></a> 같은 RESTful 서비스입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">서비스 레벨의 보안과 <a class="reference internal" href="layer.html#sec-layer"><em>Layer security</em></a>를 결합할 수 없습니다.
+예를 들어 특정 OWS 서비스에 단 하나의 특정 레이어만을 위해 접근하도록 설정할 수는 없습니다.</p>
+</div>
+<div class="section" id="ows-services">
+<h2>OWS services<a class="headerlink" href="#ows-services" title="Permalink to this headline">¶</a></h2>
+<p>OWS 서비스는 특정 서비스에 대해, 또는 서비스 내 특정 작업에 대해 공통적으로 보안 접근 제한 설정을 지원합니다. 다음은 그 일부 예시입니다.</p>
+<ul class="simple">
+<li>전체 WFS 서비스에 보안을 적용해서 인증받은 사용자만 모든 WFS 작업에 접근할 수 있도록 합니다.</li>
+<li>GetCapabilities 같은 읽기 전용 WFS 작업에 익명 접근을 허용하지만, Transaction 같은 쓰기(write) 작업에는 보안을 적용합니다.</li>
+<li>모든 작업에 보안을 적용하고 어떤 사용자에게도 적합한 롤을 할당하지 않음으로써 실질적으로 WFS 서비스를 비활성화합니다.</li>
+</ul>
+<p>OWS 서비스의 보안 접근 규칙은 GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pre">security</span></tt> 디렉터리에 있는
+<tt class="file docutils literal"><span class="pre">services.properties</span></tt> 파일에 설정됩니다.
+이 파일은 서비스 작업을 정의된 롤에 매핑하는 규칙 목록을 담고 있습니다. 규칙을 설정하는 문법(syntax)은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>&lt;service&gt;.&lt;operation|*&gt;=&lt;role&gt;[,&lt;role2&gt;,...]</pre>
+</div>
+<p>다음과 같은 파라미터를 포함합니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[]</span></tt> —선택적인 파라미터를 구분합니다.</li>
+<li><tt class="docutils literal"><span class="pre">|</span></tt> —&#8220;or&#8221;를 뜻하는 구분 문자입니다.</li>
+<li><tt class="docutils literal"><span class="pre">service</span></tt> —<tt class="docutils literal"><span class="pre">wfs</span></tt>나 <tt class="docutils literal"><span class="pre">wms</span></tt>,
+<tt class="docutils literal"><span class="pre">wcs</span></tt> 같은 OGC 서비스 식별자입니다.</li>
+<li><tt class="docutils literal"><span class="pre">operation</span></tt> —서비스가 지원하는 모든 작업입니다. WFS의 경우 <tt class="docutils literal"><span class="pre">GetFeature</span></tt>,
+WMS의 경우 <tt class="docutils literal"><span class="pre">GetMap</span></tt>, 모든 작업을 의미하는 <tt class="docutils literal"><span class="pre">*</span></tt> 등이 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">role[,role2,...]</span></tt> —미리 정의된 롤의 명칭 목록입니다.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">설정된 롤이 실제 사용자와 연결되는 것이 중요합니다. 그렇지 않으면 <a class="reference internal" href="root.html#sec-root"><em>루트 계정</em></a>을 제외하고
+어떤 사용자도 전체 서비스/작업에 접근할 수 없게 됩니다. 그러나 어떤 상황에서는 이런 상태가 바람직한 경우도 있습니다.</p>
+</div>
+<p>GeoServer의 기본 서비스 보안 설정은 어떤 규칙도 담고 있지 않으며 익명 사용자가 모든 서비스의 모든 작업에 접근할 수 있습니다.
+다음은 바람직한 보안 제한 및 연관 규칙의 몇 가지 예시입니다.</p>
+<div class="section" id="securing-the-entire-wfs-service">
+<h3>Securing the entire WFS service<a class="headerlink" href="#securing-the-entire-wfs-service" title="Permalink to this headline">¶</a></h3>
+<p>다음은 <tt class="docutils literal"><span class="pre">ROLE_WFS</span></tt> 롤을 할당받은 인증된 사용자만 모든 WFS 작업에 접근을 허용하는 규칙입니다.</p>
+<div class="highlight-python"><pre>wfs.*=ROLE_WFS</pre>
+</div>
+</div>
+<div class="section" id="anonymous-wfs-access-only-for-read-only-operations">
+<h3>Anonymous WFS access only for read-only operations<a class="headerlink" href="#anonymous-wfs-access-only-for-read-only-operations" title="Permalink to this headline">¶</a></h3>
+<p>다음은 (GetCapabilities 및 GetFeature 같은) 다른 모든 WFS 작업에 익명 접근을 허용하지만
+<tt class="docutils literal"><span class="pre">ROLE_WFS_WRITE</span></tt> 롤을 할당받은 인증된 사용자만 Transaction 요청을 보낼 수 있도록 제한하는 규칙입니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">wfs</span><span class="o">.</span><span class="n">Transaction</span><span class="o">=</span><span class="n">ROLE_WFS_WRITE</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="securing-data-accessing-wfs-operations-and-write-operations">
+<h3>Securing data-accessing WFS operations and write operations<a class="headerlink" href="#securing-data-accessing-wfs-operations-and-write-operations" title="Permalink to this headline">¶</a></h3>
+<p>WFS의 데이터 접근 작업과 쓰기 작업에 동시에 보안을 적용하면 GetCapabilities와 DescribeFeatureType 작업에 익명 접근을 허용하지만
+<tt class="docutils literal"><span class="pre">ROLE_WFS_READ</span></tt> 롤을 할당받은 인증된 사용자만 GetFeature 작업을 할 수 있고,
+<tt class="docutils literal"><span class="pre">ROLE_WFS_WRITE</span></tt> 롤을 할당받은 인증된 사용자만 Transaction 작업을 할 수 있습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">wfs</span><span class="o">.</span><span class="n">GetFeature</span><span class="o">=</span><span class="n">ROLE_WFS_READ</span>
+<span class="n">wfs</span><span class="o">.</span><span class="n">Transaction</span><span class="o">=</span><span class="n">ROLE_WFS_WRITE</span>
+</pre></div>
+</div>
+<p>이 예시에서 Transaction에 접근할 수 있는 사용자가 GetFeature에도 접근할 수 있다고 설정하지 않은 점을 유의하십시오.</p>
+</div>
+</div>
+<div class="section" id="rest-services">
+<h2>REST services<a class="headerlink" href="#rest-services" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 OWS 서비스는 물론 RESTful 서비스에도 보안을 적용할 수 있습니다.</p>
+<p>REST 서비스의 보안 접근 규칙은 GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pre">security</span></tt> 디렉터리에 있는
+<tt class="file docutils literal"><span class="pre">rest.properties</span></tt> 파일에 설정됩니다.
+이 파일은 요청 URI를 정의된 롤에 매핑하는 규칙 목록을 담고 있습니다. 규칙을 설정하는 문법(syntax)은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>&lt;uriPattern&gt;;&lt;method&gt;[,&lt;method&gt;,...]=&lt;role&gt;[,&lt;role&gt;,...]</pre>
+</div>
+<p>다음과 같은 파라미터를 포함합니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[]</span></tt> —선택적인 파라미터를 구분합니다.</li>
+<li><tt class="docutils literal"><span class="pre">uriPattern</span></tt> —요청 URI 집합과 일치하는 <a class="reference internal" href="#sec-service-ant-patterns"><em>개미 패턴(ant pattern)</em></a>입니다.</li>
+<li><tt class="docutils literal"><span class="pre">method</span></tt> —HTTP 요청 방식입니다. <tt class="docutils literal"><span class="pre">GET</span></tt>, <tt class="docutils literal"><span class="pre">POST</span></tt>,
+<tt class="docutils literal"><span class="pre">PUT</span></tt>, <tt class="docutils literal"><span class="pre">DELETE</span></tt>, <tt class="docutils literal"><span class="pre">HEAD</span></tt> 가운데 하나입니다.</li>
+<li><tt class="docutils literal"><span class="pre">role</span></tt> —미리 정의된 롤의 명칭입니다. 임의 문자 기호(wildcard) <tt class="docutils literal"><span class="pre">*</span></tt>는 익명 사용자를 포함한 모든 사용자를 가리킬 때 쓰입니다.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<ul class="last simple">
+<li>URI 패턴이 REST 경로의 첫번째 구성 요소가 되어야 합니다. 일반적으로 <tt class="docutils literal"><span class="pre">rest</span></tt> 또는 <tt class="docutils literal"><span class="pre">api</span></tt>입니다.</li>
+<li><tt class="docutils literal"><span class="pre">method</span></tt>와 <tt class="docutils literal"><span class="pre">role</span></tt> 목록에 공백이 포함되면 <strong>안 됩니다</strong>.</li>
+</ul>
+</div>
+<div class="section" id="ant-patterns">
+<span id="sec-service-ant-patterns"></span><h3>Ant patterns<a class="headerlink" href="#ant-patterns" title="Permalink to this headline">¶</a></h3>
+<p>패턴과 일치하는 디렉터리 및 파일 경로를 찾기 위해 흔히 개미 패턴(ant pattern)을 사용합니다. 다음 예시에서 몇몇 기본적인 설명을 제공합니다.
+Apache의 <a class="reference external" href="http://ant.apache.org/manual/dirtasks.html">개미 사용자 매뉴얼</a>이 좀 더 깊이 있는 활용례를 담고 있습니다.</p>
+<p>이 예시들은 GeoServer의 <a class="reference internal" href="../rest/index.html#rest"><em>REST configuration</em></a>에 특화되어 있지만, 모든 RESTful GeoServer 서비스를 같은 방법으로 설정할 수 있습니다.</p>
+</div>
+<div class="section" id="disabling-anonymous-access-to-services">
+<h3>Disabling anonymous access to services<a class="headerlink" href="#disabling-anonymous-access-to-services" title="Permalink to this headline">¶</a></h3>
+<p>가장 보안 수준이 높은 설정은 REST건 뭐건 모든 요청에 인증을 받도록 요구하는 것입니다.
+다음은 모든 요청에 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> 롤을 할당받은 사용자만 접근할 수 있도록 허용하는 규칙입니다.</p>
+<div class="highlight-python"><pre>/**;GET,POST,PUT,DELETE=ROLE_ADMINISTRATOR</pre>
+</div>
+<p>조금 보안 수준이 낮은 설정은 <tt class="docutils literal"><span class="pre">/rest</span></tt> 경로 아래 떨어지는 작업에
+<tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> 롤을 할당받은 사용자만 접근하도록 허용하지만,
+(<tt class="docutils literal"><span class="pre">/api</span></tt> 같은) 다른 경로 아래 떨어지는 요청에 익명으로 접근하는 것을 허용하는 규칙입니다.</p>
+<div class="highlight-python"><pre>/rest/**;GET,POST,PUT,DELETE=ROLE_ADMINISTRATOR</pre>
+</div>
+</div>
+<div class="section" id="allowing-anonymous-read-only-access">
+<h3>Allowing anonymous read-only access<a class="headerlink" href="#allowing-anonymous-read-only-access" title="Permalink to this headline">¶</a></h3>
+<p>다음은 <tt class="docutils literal"><span class="pre">GET</span></tt> 방식을 사용할 경우 익명 접근을 허용하지만
+<tt class="docutils literal"><span class="pre">POST</span></tt>, <tt class="docutils literal"><span class="pre">PUT</span></tt>,
+<tt class="docutils literal"><span class="pre">DELETE</span></tt> 방식의 경우 인증을 받도록 만드는 규칙입니다.</p>
+<div class="highlight-python"><pre>/**;GET=IS_AUTHENTICATED_ANONYMOUSLY
+/**;POST,PUT,DELETE=TRUSTED_ROLE</pre>
+</div>
+</div>
+<div class="section" id="securing-a-specific-resource">
+<h3>Securing a specific resource<a class="headerlink" href="#securing-a-specific-resource" title="Permalink to this headline">¶</a></h3>
+<p>다음은 특정 리소스(이 경우 <tt class="docutils literal"><span class="pre">states</span></tt> 피처형)에 접근할 경우 인증을 받도록 만드는 규칙입니다.</p>
+<div class="highlight-python"><pre>/rest/**/states*;GET=TRUSTED_ROLE
+/rest/**;POST,PUT,DELETE=TRUSTED_ROLE</pre>
+</div>
+<p>다음은 리소스 집합(이 경우 모든 데이터 저장소)으로의 접근에 보안을 적용하는 규칙입니다.</p>
+<div class="highlight-python"><pre>/rest/**/datastores/*;GET=TRUSTED_ROLE
+/rest/**/datastores/*.*;GET=TRUSTED_ROLE
+/rest/**;POST,PUT,DELETE=TRUSTED_ROLE</pre>
+</div>
+<p>뒤에 붙는 임의 문자 기호 <tt class="docutils literal"><span class="pre">/*</span></tt>와 <tt class="docutils literal"><span class="pre">/*.*</span></tt>를 유의하십시오.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="root.html" title="previous chapter">Root account</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="layer.html" title="next chapter">Layer security</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Service Security</a><ul>
+<li><a class="reference internal" href="#ows-services">OWS services</a><ul>
+<li><a class="reference internal" href="#securing-the-entire-wfs-service">Securing the entire WFS service</a></li>
+<li><a class="reference internal" href="#anonymous-wfs-access-only-for-read-only-operations">Anonymous WFS access only for read-only operations</a></li>
+<li><a class="reference internal" href="#securing-data-accessing-wfs-operations-and-write-operations">Securing data-accessing WFS operations and write operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rest-services">REST services</a><ul>
+<li><a class="reference internal" href="#ant-patterns">Ant patterns</a></li>
+<li><a class="reference internal" href="#disabling-anonymous-access-to-services">Disabling anonymous access to services</a></li>
+<li><a class="reference internal" href="#allowing-anonymous-read-only-access">Allowing anonymous read-only access</a></li>
+<li><a class="reference internal" href="#securing-a-specific-resource">Securing a specific resource</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="root.html" title="previous chapter">Root account</a></li>
+            <li>다음: <a href="layer.html" title="next chapter">Layer security</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/security/service.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

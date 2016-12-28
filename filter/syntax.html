@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Supported filter languages &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Filtering in GeoServer" href="index.html" />
+      <link rel="next" title="Filter Encoding Reference" href="filter_reference.html" />
+      <link rel="prev" title="Filtering in GeoServer" href="index.html" />
+</head>
+<body class="filter/syntax">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Filtering in GeoServer</a> &raquo;</li>
+  <li>Supported filter languages</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="filter_reference.html" title="Filter Encoding Reference"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Filtering in GeoServer"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="supported-filter-languages">
+<span id="filter-syntax"></span><h1>Supported filter languages<a class="headerlink" href="#supported-filter-languages" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer의 데이터 필터링은 <a class="reference external" href="http://www.opengeospatial.org/standards/filter">OGC Filter Encoding Specification</a>에서 찾을 수 있는 콘셉트에 기반하고 있습니다.</p>
+<p>GeoServer는 <em>Filter Encoding</em> 및 <em>Common Query Language</em>, 2개 언어로 코드화된 필터를 사용할 수 있습니다.</p>
+<div class="section" id="filter-encoding">
+<h2>Filter Encoding<a class="headerlink" href="#filter-encoding" title="Permalink to this headline">¶</a></h2>
+<p><strong>Filter Encoding</strong> 언어는 필터를 정위하기 위한 XML 기반 방식입니다.
+다음과 같은 경우 GeoServer에서 XML 필터를 쓸 수 있습니다.</p>
+<ul class="simple">
+<li>WMS <tt class="docutils literal"><span class="pre">GetMap</span></tt> 요청에서 <tt class="docutils literal"><span class="pre">filter</span></tt> 파라미터를 사용할 경우</li>
+<li>WFS <tt class="docutils literal"><span class="pre">GetFeature</span></tt> 요청에서 <tt class="docutils literal"><span class="pre">filter</span></tt> 파라미터를 사용할 경우</li>
+<li>SLD 규칙의 <a class="reference internal" href="../styling/sld-introduction.html#sld-intro"><em>Filter</em></a> 요소가 쓰일 경우</li>
+</ul>
+<p>다음 OGC 사양(specification)이 Filter Encoding 언어를 정의합니다.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://portal.opengeospatial.org/files/?artifact_id=1171">OGC Filter encoding specification v 1.0</a>, used in WFS 1.0 and SLD 1.0</li>
+<li><a class="reference external" href="http://portal.opengeospatial.org/files/?artifact_id=8340">OGC Filter encoding specification v 1.1</a>, used in WFS 1.1</li>
+</ul>
+</div>
+<div class="section" id="cql-ecql">
+<h2>CQL/ECQL<a class="headerlink" href="#cql-ecql" title="Permalink to this headline">¶</a></h2>
+<p><strong>CQL(Common Query Language)</strong>은 <em>OGC Catalog</em> 사양을 위해 만들어진, 사람이 읽을 수 있는(plain-text) 언어입니다.
+GeoServer는 사용하기 쉬운 필터링 메커니즘으로서 이 언어를 지원하기 시작했습니다.
+실제로 <em>OGC Filter 1.1</em>이 코드화할 수 있는 모든 범위의 필터를 쓸 수 있는 더 강력한 확장 모듈 <strong>ECQL(Extended CQL)</strong>을 지원하고 있습니다.
+다음과 같은 경우 GeoServer에서 ECQL을 쓸 수 있습니다.</p>
+<ul class="simple">
+<li>WMS <tt class="docutils literal"><span class="pre">GetMap</span></tt> 요청에서 <a class="reference internal" href="../services/wms/vendor.html#wms-vendor-parameters"><em>cql_filter</em></a> 파라미터를 사용할 경우</li>
+<li>WFS <tt class="docutils literal"><span class="pre">GetFeature</span></tt> 요청에서 <a class="reference internal" href="../services/wfs/vendor.html#wfs-vendor-parameters"><em>cql_filter</em></a> 파라미터를 사용할 경우</li>
+<li>SLD의 <a class="reference internal" href="../styling/sld-extensions/pointsymbols.html#pointsymbols"><em>dynamic symbolizers</em></a> 경우</li>
+</ul>
+<p><a class="reference internal" href="ecql_reference.html#filter-ecql-reference"><em>ECQL Reference</em></a> 페이지에서 ECQL 언어의 기능을 설명하고 있습니다.
+<a class="reference internal" href="../tutorials/cql/cql_tutorial.html#cql-tutorial"><em>CQL and ECQL</em></a> 예제에서 필터를 정의하는 예시를 보여주고 있습니다.</p>
+<p>다음 문서에서 CQL 및 ECQL 언어를 정의하고 있습니다.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://portal.opengeospatial.org/files/?artifact_id=3843">OpenGIS Catalog Services Specification</a>은 CQL의 표준 정의를 담고 있습니다.</li>
+<li><a class="reference external" href="http://docs.codehaus.org/display/GEOTOOLS/ECQL+Parser+Design">ECQL Grammar</a>는 GeoTools에서 ECQL을 실행하기 위한 문법을 정의하고 있습니다.</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Filtering in GeoServer</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="filter_reference.html" title="next chapter">Filter Encoding Reference</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Supported filter languages</a><ul>
+<li><a class="reference internal" href="#filter-encoding">Filter Encoding</a></li>
+<li><a class="reference internal" href="#cql-ecql">CQL/ECQL</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Filtering in GeoServer</a></li>
+            <li>다음: <a href="filter_reference.html" title="next chapter">Filter Encoding Reference</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/filter/syntax.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

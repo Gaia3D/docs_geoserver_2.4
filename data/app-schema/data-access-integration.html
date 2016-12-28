@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Data Access Integration &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="WMS Support" href="wms-support.html" />
+      <link rel="prev" title="Polymorphism" href="polymorphism.html" />
+</head>
+<body class="data/app-schema/data-access-integration">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Data Access Integration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="wms-support.html" title="WMS Support"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="polymorphism.html" title="Polymorphism"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="data-access-integration">
+<span id="app-schema-data-access-integration"></span><h1>Data Access Integration<a class="headerlink" href="#data-access-integration" title="Permalink to this headline">¶</a></h1>
+<p>이 페이지에서는 사용자가 <a class="reference internal" href="index.html#app-schema"><em>Working with Application Schemas</em></a>와
+<a class="reference internal" href="feature-chaining.html#app-schema-feature-chaining"><em>Feature Chaining</em></a>에 대해 알고 있다고 가정합니다.
+피처 연쇄 처리(feature chaining)를 사용하려면, 다음 조건을 만족하는 한 어느 복잡 피처 데이터 접근에서도 내포된 피처가 나올 수 있다고 가정합니다.</p>
+<div><ul class="simple">
+<li>&#8220;컨테이너(container)&#8221; 피처형이 유효한 데이터를 참조하고 있고,</li>
+<li><tt class="docutils literal"><span class="pre">DataAccessRegistry</span></tt>를 통해 데이터 접근을 등록하며,</li>
+<li>링크 항목으로 FEATURE_LINK를 이용하는 경우 <tt class="docutils literal"><span class="pre">ComplexFeatureTypeFactoryImpl</span></tt>를 통해 피처형을 생성합니다.</li>
+</ul>
+</div>
+<p>하지만 &#8220;컨테이너&#8221; 피처가 응용 프로그램 스키마 데이터 접근에서 나와야 합니다.
+이 다음부터 피처를 &#8220;연쇄 처리&#8221;하기 위해 기존의 비(非) 응용 프로그램 스키마 데이터 접근에서 응용 프로그램 데이터 접근을 생성할 수 있는 방법을 설명합니다.
+이 페이지에서 언급하는 입력 데이터 접근을 비(非) 응용 프로그램 스키마 데이터 접근이라고 가정합니다.</p>
+<div class="section" id="how-to-connect-to-the-input-data-access">
+<h2>How to connect to the input data access<a class="headerlink" href="#how-to-connect-to-the-input-data-access" title="Permalink to this headline">¶</a></h2>
+<p>일반적인 경우와 마찬가지로 <tt class="docutils literal"><span class="pre">sourceDataStores</span></tt> 태그 안에 데이터 저장소 연결을 설정하십시오.
+하지만 추가로 <tt class="docutils literal"><span class="pre">isDataAccess</span></tt> 태그도 설정합니다.
+소스 데이터 저장소를 처리하는 과정에서 이 플래그(flag)를 통해 설정된 <tt class="docutils literal"><span class="pre">sourceType</span></tt>의 등록된 복잡 피처 소스를 얻으려 한다는 사실을 표시합니다.
+데이터 접근 생성 시 시스템이 이를 찾을 수 있도록 <tt class="docutils literal"><span class="pre">DataAccessRegistry</span></tt>에 입력 데이터 접근을 등록한다고 가정합니다.</p>
+<p><strong>예시</strong>:</p>
+<div class="highlight-python"><pre>&lt;sourceDataStores&gt;
+  &lt;DataStore&gt;
+      &lt;id&gt;EarthResource&lt;/id&gt;
+      &lt;parameters&gt;
+         &lt;Parameter&gt;
+           &lt;name&gt;directory&lt;/name&gt;
+           &lt;value&gt;file:./&lt;/value&gt;
+         &lt;/Parameter&gt;
+      &lt;/parameters&gt;
+      &lt;isDataAccess&gt;true&lt;/isDataAccess&gt;
+  &lt;/DataStore&gt;
+&lt;/sourceDataStores&gt;
+...
+&lt;typeMappings&gt;
+  &lt;FeatureTypeMapping&gt;
+    &lt;sourceDataStore&gt;EarthResource&lt;/sourceDataStore&gt;
+      &lt;sourceType&gt;EarthResource&lt;/sourceType&gt;
+...</pre>
+</div>
+</div>
+<div class="section" id="how-to-configure-the-mapping">
+<h2>How to configure the mapping<a class="headerlink" href="#how-to-configure-the-mapping" title="Permalink to this headline">¶</a></h2>
+<p>입력 <tt class="docutils literal"><span class="pre">XPath</span></tt> 표현식을 설정하는 데
+<tt class="docutils literal"><span class="pre">sourceExpression</span></tt> 안의 <tt class="docutils literal"><span class="pre">OCQL</span></tt> 태그 자리에
+<tt class="docutils literal"><span class="pre">inputAttribute</span></tt>를 사용하십시오.</p>
+<p><strong>예시</strong>:</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gsml:classifier/gsml:ControlledConcept/gsml:preferredName&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+      &lt;inputAttribute&gt;mo:classification/mo:MineralDepositModel/mo:mineralDepositGroup&lt;/inputAttribute&gt;
+  &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+</div>
+<div class="section" id="how-to-chain-features">
+<h2>How to chain features<a class="headerlink" href="#how-to-chain-features" title="Permalink to this headline">¶</a></h2>
+<p>피처 연쇄 처리 작업은 다시 매핑된 복잡 피처에 대해 양방향으로 동작합니다. 해당 복잡 피처에 내포된 다른 피처를 연쇄 처리할 수 있고, 그 반대도 가능합니다.
+다른 점이라면 입력 <tt class="docutils literal"><span class="pre">XPath</span></tt> 표현식에 대해
+앞에서 언급한 <tt class="docutils literal"><span class="pre">OCQL</span></tt> 대신 <tt class="docutils literal"><span class="pre">inputAttribute</span></tt>를 이용한다는 것뿐입니다.</p>
+<p><strong>예시</strong>:</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gsml:occurence&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+      &lt;inputAttribute&gt;mo:commodityDescription&lt;/inputAttribute&gt;
+      &lt;linkElement&gt;gsml:MappedFeature&lt;/linkElement&gt;
+      &lt;linkField&gt;gml:name[2]&lt;/linkField&gt;
+  &lt;/sourceExpression&gt;
+  &lt;isMultiple&gt;true&lt;/isMultiple&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+</div>
+<div class="section" id="how-to-use-filters">
+<h2>How to use filters<a class="headerlink" href="#how-to-use-filters" title="Permalink to this headline">¶</a></h2>
+<p>사용자 입장에서 볼 때, 매핑된/산출된 목표 속성 <tt class="docutils literal"><span class="pre">XPath</span></tt> 표현식을 사용해서 일반적인 경우와 마찬가지로 필터를 설정합니다.
+그러나 표현식 안의 하나 이상의 속성이 다중 값을 가지는 경우, 필터 안에 &#8220;contains_text&#8221;와 같은 함수를 설정해야 합니다.
+다중 값을 반환하는 경우 이 값들을 단일 값과 비교하면 오직 하나의 값만을 반환하는 경우에만 참을 반환하는데, 이것이 동일한 값이기 때문입니다.
+다음 에시에 쓰이는 &#8220;contains_text&#8221; 함수를 Geoserver API에서 사용할 수 없으며 데이터베이스 내부에서 정의된다는 점을 유의하십시오.</p>
+<p><strong>예시</strong>:</p>
+<p>다중 값을 가지는 속성을 다음과 같이 통합합니다.</p>
+<div class="highlight-python"><pre>&lt;ogc:Filter&gt;
+  &lt;ogc:PropertyIsEqualTo&gt;
+    &lt;ogc:Function name="contains_text"&gt;
+        &lt;ogc:PropertyName&gt;gsml:composition/gsml:CompositionPart/gsml:proportion/gsml:CGI_TermValue/gsml:value&lt;/ogc:PropertyName&gt;
+        &lt;ogc:Literal&gt;Olivine basalt, tuff, microgabbro, minor sedimentary rocks&lt;/ogc:Literal&gt;
+    &lt;/ogc:Function&gt;
+    &lt;ogc:Literal&gt;1&lt;/ogc:Literal&gt;
+  &lt;/ogc:PropertyIsEqualTo&gt;
+&lt;/ogc:Filter&gt;</pre>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="polymorphism.html" title="previous chapter">Polymorphism</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="wms-support.html" title="next chapter">WMS Support</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Data Access Integration</a><ul>
+<li><a class="reference internal" href="#how-to-connect-to-the-input-data-access">How to connect to the input data access</a></li>
+<li><a class="reference internal" href="#how-to-configure-the-mapping">How to configure the mapping</a></li>
+<li><a class="reference internal" href="#how-to-chain-features">How to chain features</a></li>
+<li><a class="reference internal" href="#how-to-use-filters">How to use filters</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="polymorphism.html" title="previous chapter">Polymorphism</a></li>
+            <li>다음: <a href="wms-support.html" title="next chapter">WMS Support</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/data-access-integration.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

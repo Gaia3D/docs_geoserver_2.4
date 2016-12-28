@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Catalog Services for the Web (CSW) features &mdash; GeoServer 2.4.0 User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
+      <link rel="up" title="Catalog Services for the Web (CSW)" href="index.html" />
+      <link rel="next" title="Catalog Services for the Web (CSW) tutorial" href="tutorial.html" />
+      <link rel="prev" title="Installing Catalog Services for Web (CSW)" href="installing.html" />
+</head>
+<body class="extensions/csw/features">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Extensions</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Catalog Services for the Web (CSW)</a> &raquo;</li>
+  <li>Catalog Services for the Web (CSW) features</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="tutorial.html" title="Catalog Services for the Web (CSW) tutorial"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="installing.html" title="Installing Catalog Services for Web (CSW)"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="catalog-services-for-the-web-csw-features">
+<span id="community-csw-features"></span><h1>Catalog Services for the Web (CSW) features<a class="headerlink" href="#catalog-services-for-the-web-csw-features" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="supported-operations">
+<h2>Supported operations<a class="headerlink" href="#supported-operations" title="Permalink to this headline">¶</a></h2>
+<p>The following standard CSW operations are currently supported:</p>
+<ul class="simple">
+<li>GetCapabilities</li>
+<li>GetRecords</li>
+<li>GetRecordById</li>
+<li>GetDomain</li>
+<li>DescribeRecord</li>
+</ul>
+<p>The Internal Catalog Store supports filtering on both full x-paths as well as the &#8220;Queryables&#8221; specified in GetCapabilities.</p>
+</div>
+<div class="section" id="catalog-stores">
+<h2>Catalog stores<a class="headerlink" href="#catalog-stores" title="Permalink to this headline">¶</a></h2>
+<p>The default catalog store is the Internal Catalog Store, which retrieves information from the GeoServer&#8217;s internal catalog. The Simple Catalog Store (<tt class="docutils literal"><span class="pre">simple-store</span></tt> module) adds an alternative simple store which reads the catalog data directly from files (mainly used for testing).</p>
+<p>If there are multiple catalog stores present (for example, when the Simple Catalog Store module is loaded), set the Java system property <tt class="docutils literal"><span class="pre">DefaultCatalogStore</span></tt> to make sure that the correct catalog store will be used. To use the Internal Catalog Store, this property must be set to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DefaultCatalogStore</span><span class="o">=</span><span class="n">org</span><span class="o">.</span><span class="n">geoserver</span><span class="o">.</span><span class="n">csw</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">GeoServerInternalCatalogStore</span>
+</pre></div>
+</div>
+<p>To use the Simple Catalog Store:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DefaultCatalogStore</span><span class="o">=</span><span class="n">org</span><span class="o">.</span><span class="n">geoserver</span><span class="o">.</span><span class="n">csw</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">simple</span><span class="o">.</span><span class="n">GeoServerSimpleCatalogStore</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="supported-schemes">
+<h2>Supported schemes<a class="headerlink" href="#supported-schemes" title="Permalink to this headline">¶</a></h2>
+<p>The Internal Catalog Store supports two metadata schemes:</p>
+<ul class="simple">
+<li>Dublin Core</li>
+<li>ISO Metadata Profile</li>
+</ul>
+</div>
+<div class="section" id="mapping-files">
+<h2>Mapping Files<a class="headerlink" href="#mapping-files" title="Permalink to this headline">¶</a></h2>
+<p>Mapping files are located in the <tt class="docutils literal"><span class="pre">csw</span></tt> directory inside the <a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a>. Every mapping file must have the exact name of the record type name. For example:</p>
+<ul class="simple">
+<li>Dublin Core mapping can be found in the file <tt class="docutils literal"><span class="pre">csw/Record</span></tt> inside the data directory.</li>
+<li>ISO Metadata mapping can be found in the file <tt class="docutils literal"><span class="pre">csw/MD_Metadata</span></tt> inside the data directory.</li>
+</ul>
+<p>The mapping files take the syntax from Java properties files. The left side of the equals sign specifies the target field name or path in the metadata record, paths being separated with dots. The right side of the equals sign specifies any CQL expression that denotes the value of the target property. The CQL expression is applied to each <tt class="docutils literal"><span class="pre">ResourceInfo</span></tt> object in the catalog and can retrieve all properties from this object. These expressions can make use of literals, attributes present in the <tt class="docutils literal"><span class="pre">ResourceInfo</span></tt> object, and all normal CQL operators and functions. (Example mapping files are given below.)</p>
+<p>Placing the <tt class="docutils literal"><span class="pre">&#64;</span></tt> symbol in front of the field will set that to use as identifier for each metadata record. This may be useful for ID filters.  Use a <tt class="docutils literal"><span class="pre">$</span></tt> sign in front of fields that are required to make sure the mapping is aware of the requirement (specifically for the purpose of property selection).</p>
+<div class="section" id="dublin-core">
+<h3>Dublin Core<a class="headerlink" href="#dublin-core" title="Permalink to this headline">¶</a></h3>
+<p>Below is an example of a Dublin Core mapping file:</p>
+<div class="highlight-python"><pre>@identifier.value=id
+title.value=title
+creator.value='GeoServer Catalog'
+subject.value=keywords
+subject.scheme='http://www.digest.org/2.1'
+abstract.value=abstract
+description.value=strConcat('description about ' , title)
+date.value="metadata.csw.date"
+type.value='http://purl.org/dc/dcmitype/Dataset'
+publisher.value='Niels Charlier'
+#format.value=
+#language.value=
+#coverage.value=
+#source.value=
+#relation.value=
+#rights.value=
+#contributor.value=</pre>
+</div>
+<p>All fields have the form of <tt class="docutils literal"><span class="pre">&lt;fieldname&gt;.value</span></tt> for the actual value in the field. Additionally <tt class="docutils literal"><span class="pre">&lt;fieldname&gt;.scheme</span></tt> can be specified for the <tt class="docutils literal"><span class="pre">&#64;scheme</span></tt> attribute of this field.</p>
+<p>Examples of attributes extracted from the ResourceInfo are <tt class="docutils literal"><span class="pre">id</span></tt>, <tt class="docutils literal"><span class="pre">title</span></tt>, and <tt class="docutils literal"><span class="pre">keywords</span></tt>, etc. The attribute <tt class="docutils literal"><span class="pre">metadata.csw.date</span></tt> uses the metadata (<tt class="docutils literal"><span class="pre">java.util.</span></tt>)Map from the Resource object. In this map, it searches for the keyword &#8220;csw&#8221;, which in return also returns a (<tt class="docutils literal"><span class="pre">java.util.</span></tt>)Map from which the value for the keyword &#8220;date&#8221; is extracted.</p>
+<p>Note that double quotes are necessary in order to preserve this meaning of the dots.</p>
+</div>
+<div class="section" id="iso-metadata-profile">
+<h3>ISO Metadata Profile<a class="headerlink" href="#iso-metadata-profile" title="Permalink to this headline">¶</a></h3>
+<p>Below is an example of an ISO Metadata Profile Mapping File:</p>
+<div class="highlight-python"><pre>@fileIdentifier.CharacterString=id
+identificationInfo.AbstractMD_Identification.citation.CI_Citation.title.CharacterString=title
+identificationInfo.AbstractMD_Identification.descriptiveKeywords.MD_Keywords.keyword.CharacterString=keywords
+identificationInfo.AbstractMD_Identification.abstract.CharacterString=abstract
+$dateStamp.Date= if_then_else ( isNull("metadata.csw.date") , 'Unknown', "metadata.csw.date")
+hierarchyLevel.MD_ScopeCode.@codeListValue='http://purl.org/dc/dcmitype/Dataset'
+$contact.CI_ResponsibleParty.individualName.CharacterString='Niels Charlier'</pre>
+</div>
+<p>The full path of each field must be specified (separated with dots). XML attributes are specified with the <tt class="docutils literal"><span class="pre">&#64;</span></tt> symbol, similar to the usual XML X-path notation.</p>
+<p>To keep the result XSD compliant, the parameters <tt class="docutils literal"><span class="pre">dateStamp.Date</span></tt> and <tt class="docutils literal"><span class="pre">contact.CI_ResponsibleParty.individualName.CharacterString</span></tt> must be preceded by a <tt class="docutils literal"><span class="pre">$</span></tt> sign to make sure that they are always included even when using property selection.</p>
+<p>For more information on the ISO Metadata standard, please see the <a class="reference external" href="http://www.opengeospatial.org/standards/specifications/catalog">OGC Implementation Specification 07-045</a>.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="installing.html" title="previous chapter">Installing Catalog Services for Web (CSW)</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="tutorial.html" title="next chapter">Catalog Services for the Web (CSW) tutorial</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Catalog Services for the Web (CSW) features</a><ul>
+<li><a class="reference internal" href="#supported-operations">Supported operations</a></li>
+<li><a class="reference internal" href="#catalog-stores">Catalog stores</a></li>
+<li><a class="reference internal" href="#supported-schemes">Supported schemes</a></li>
+<li><a class="reference internal" href="#mapping-files">Mapping Files</a><ul>
+<li><a class="reference internal" href="#dublin-core">Dublin Core</a></li>
+<li><a class="reference internal" href="#iso-metadata-profile">ISO Metadata Profile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="installing.html" title="previous chapter">Installing Catalog Services for Web (CSW)</a></li>
+            <li>Next: <a href="tutorial.html" title="next chapter">Catalog Services for the Web (CSW) tutorial</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/extensions/csw/features.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

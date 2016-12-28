@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WCS output formats &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Coverage Service" href="index.html" />
+      <link rel="next" title="WCS Vendor Parameters" href="vendor.html" />
+      <link rel="prev" title="WCS reference" href="reference.html" />
+</head>
+<body class="services/wcs/outputformats">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Coverage Service</a> &raquo;</li>
+  <li>WCS output formats</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="vendor.html" title="WCS Vendor Parameters"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="reference.html" title="WCS reference"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wcs-output-formats">
+<span id="id1"></span><h1>WCS output formats<a class="headerlink" href="#wcs-output-formats" title="Permalink to this headline">¶</a></h1>
+<p>WCS 산출물 형식은 각 커버리지별로 설정됩니다. 현재 지원하는 산출물 형식은 다음과 같습니다.</p>
+<p>이미지 형식은 다음과 같습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li>JPEG : format=jpeg</li>
+<li>GIF : format=gif</li>
+<li>PNG : format=png</li>
+<li>Tiff : format=tif</li>
+<li>BMP : format=bmp</li>
+</ul>
+</div></blockquote>
+<p>지리 참조(georeferenced) 형식은 다음과 같습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li>GeoTiff : format=geotiff</li>
+<li>GTopo30 : format=gtopo30</li>
+<li>ArcGrid : format=ArcGrid</li>
+<li>GZipped ArcGrid : format=ArcGrid-GZIP</li>
+</ul>
+</div></blockquote>
+<p>ArcGrid의 경우 <tt class="docutils literal"><span class="pre">GetCoverage</span></tt> 요청에서 x와 y 해상도를 동일하게 설정하지 않으면 예외가 발생하므로 조심해야 합니다.
+(ArcGrid는 정사각형 셀(cell)로 설계되었습니다.)</p>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="reference.html" title="previous chapter">WCS reference</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="vendor.html" title="next chapter">WCS Vendor Parameters</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="reference.html" title="previous chapter">WCS reference</a></li>
+            <li>다음: <a href="vendor.html" title="next chapter">WCS Vendor Parameters</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wcs/outputformats.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

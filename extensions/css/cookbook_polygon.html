@@ -1,0 +1,664 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Polygons &mdash; GeoServer 2.4.0 User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
+      <link rel="up" title="CSS Cookbook" href="cookbook.html" />
+      <link rel="next" title="Rasters" href="cookbook_raster.html" />
+      <link rel="prev" title="Lines" href="cookbook_line.html" />
+</head>
+<body class="extensions/css/cookbook_polygon">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Extensions</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">CSS Styling</a> &raquo;</li>
+  <li><a href="cookbook.html" accesskey="U">CSS Cookbook</a> &raquo;</li>
+  <li>Polygons</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="cookbook_raster.html" title="Rasters"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="cookbook_line.html" title="Lines"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="polygons">
+<span id="css-cookbook-polygons"></span><h1>Polygons<a class="headerlink" href="#polygons" title="Permalink to this headline">¶</a></h1>
+<p>Polygons are two dimensional shapes that contain both an outer edge (or &#8220;stroke&#8221;) and an inside (or &#8220;fill&#8221;).  A polygon can be thought of as an irregularly-shaped point and is styled in similar ways to points.</p>
+<div class="section" id="example-polygons-layer">
+<span id="css-cookbook-polygons-attributes"></span><h2>Example polygons layer<a class="headerlink" href="#example-polygons-layer" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference download internal" href="../../_downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">polygons</span> <span class="pre">layer</span></tt></a> used below contains county information for a fictional country. For reference, the attribute table for the polygons is included below.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="40%" />
+<col width="30%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>fid</strong> (Feature ID)</td>
+<td><strong>name</strong> (County name)</td>
+<td><strong>pop</strong> (Population)</td>
+</tr>
+<tr class="row-even"><td>polygon.1</td>
+<td>Irony County</td>
+<td>412234</td>
+</tr>
+<tr class="row-odd"><td>polygon.2</td>
+<td>Tracker County</td>
+<td>235421</td>
+</tr>
+<tr class="row-even"><td>polygon.3</td>
+<td>Dracula County</td>
+<td>135022</td>
+</tr>
+<tr class="row-odd"><td>polygon.4</td>
+<td>Poly County</td>
+<td>1567879</td>
+</tr>
+<tr class="row-even"><td>polygon.5</td>
+<td>Bearing County</td>
+<td>201989</td>
+</tr>
+<tr class="row-odd"><td>polygon.6</td>
+<td>Monte Cristo County</td>
+<td>152734</td>
+</tr>
+<tr class="row-even"><td>polygon.7</td>
+<td>Massive County</td>
+<td>67123</td>
+</tr>
+<tr class="row-odd"><td>polygon.8</td>
+<td>Rhombus County</td>
+<td>198029</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference download internal" href="../../_downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">polygons</span> <span class="pre">shapefile</span></tt></a></p>
+</div>
+<div class="section" id="simple-polygon">
+<span id="css-cookbook-polygons-simplepolygon"></span><h2>Simple polygon<a class="headerlink" href="#simple-polygon" title="Permalink to this headline">¶</a></h2>
+<p>This example shows a polygon filled in blue.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_simplepolygon.png" src="../../_images/polygon_simplepolygon.png" />
+<p class="caption"><em>Simple polygon</em></p>
+</div>
+<div class="section" id="code">
+<h3>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#000080</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="details">
+<h3>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h3>
+<p>This simple rule applies a dark blue (<tt class="docutils literal"><span class="pre">#000080</span></tt>) fill to all the polygons in the dataset.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The light-colored borders around the polygons in the figure are artifacts of the renderer caused by the polygons being adjacent. There is no border in this style.</p>
+</div>
+</div>
+</div>
+<div class="section" id="simple-polygon-with-stroke">
+<span id="css-cookbook-polygons-simplepolygonwithstroke"></span><h2>Simple polygon with stroke<a class="headerlink" href="#simple-polygon-with-stroke" title="Permalink to this headline">¶</a></h2>
+<p>This example adds a 2 pixel white stroke to the <a class="reference internal" href="#css-cookbook-polygons-simplepolygon"><em>Simple polygon</em></a> example.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_simplepolygonwithstroke.png" src="../../_images/polygon_simplepolygonwithstroke.png" />
+<p class="caption"><em>Simple polygon with stroke</em></p>
+</div>
+<div class="section" id="id1">
+<h3>Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#000080</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#FFFFFF</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">2</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id2">
+<h3>Details<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>This example is similar to the <a class="reference internal" href="#css-cookbook-polygons-simplepolygon"><em>Simple polygon</em></a> example above, with the addition of the &#8220;stroke&#8221; and &#8220;stroke-width&#8221; attributes, that add a white, 2 pixels wide border around each polygon.</p>
+</div>
+</div>
+<div class="section" id="transparent-polygon">
+<h2>Transparent polygon<a class="headerlink" href="#transparent-polygon" title="Permalink to this headline">¶</a></h2>
+<p>This example builds on the <a class="reference internal" href="#css-cookbook-polygons-simplepolygonwithstroke"><em>Simple polygon with stroke</em></a> example and makes the fill partially transparent by setting the opacity to 50%.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_transparentpolygon.png" src="../../_images/polygon_transparentpolygon.png" />
+<p class="caption"><em>Transparent polygon</em></p>
+</div>
+<div class="section" id="id3">
+<h3>Code<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#000080</span><span class="p">;</span>
+   <span class="n">fill</span><span class="o">-</span><span class="k">opacity</span><span class="o">:</span> <span class="m">0</span><span class="o">.</span><span class="m">5</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#FFFFFF</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">2</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id4">
+<h3>Details<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>This example is similar to the <a class="reference internal" href="#css-cookbook-polygons-simplepolygonwithstroke"><em>Simple polygon with stroke</em></a> example, save for defining the fill&#8217;s opacity in <strong>line 3</strong>. The value of 0.5 results in partially transparent fill that is 50% opaque.  An opacity value of 1 would draw the fill as 100% opaque, while an opacity value of 0 would result in a completely transparent (0% opaque) fill.  In this example, since the background is white, the dark blue looks lighter.  Were the points imposed on a dark background, the resulting color would be darker.</p>
+</div>
+</div>
+<div class="section" id="graphic-fill">
+<span id="css-cookbook-polygons-graphicfill"></span><h2>Graphic fill<a class="headerlink" href="#graphic-fill" title="Permalink to this headline">¶</a></h2>
+<p>This example fills the polygons with a tiled graphic.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_graphicfill.png" src="../../_images/polygon_graphicfill.png" />
+<p class="caption"><em>Graphic fill</em></p>
+</div>
+<div class="section" id="id5">
+<h3>Code<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="sx">url(&quot;colorblocks1.png&quot;)</span><span class="p">;</span>
+   <span class="n">fill</span><span class="o">-</span><span class="n">mime</span><span class="o">:</span> <span class="s1">&#39;image/png&#39;</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id6">
+<h3>Details<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>This style fills the polygon with a tiled graphic.
+The graphic is selected providing a url for the fill, which in this case is meant to the relative to the <tt class="docutils literal"><span class="pre">styles</span></tt> directory contained within the data directory (an absolute path could have been provided, as well as a internet reference). <strong>Line 3</strong> specifies that the image itself is a png (by default the code assumes jpegs are used and will fail to parse the file unless we specify its mime type).
+The size of the image is not specified, meaning the native size is going to be used. In case a rescale is desired, the &#8220;fill-size&#8221; attribute can be used to force a different size.</p>
+<div class="figure align-center">
+<img alt="../../_images/colorblocks.png" src="../../_images/colorblocks.png" />
+<p class="caption"><em>Graphic used for fill</em></p>
+</div>
+</div>
+</div>
+<div class="section" id="hatching-fill">
+<h2>Hatching fill<a class="headerlink" href="#hatching-fill" title="Permalink to this headline">¶</a></h2>
+<p>This example fills the polygons with a hatching pattern.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_hatchingfill.png" src="../../_images/polygon_hatchingfill.png" />
+<p class="caption"><em>Hatching fill</em></p>
+</div>
+<div class="section" id="id7">
+<h3>Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="n">symbol</span><span class="p">(</span><span class="s2">&quot;shape://times&quot;</span><span class="p">);</span>
+ <span class="p">}</span>
+
+ <span class="nd">:nth-fill</span><span class="o">(</span><span class="nt">1</span><span class="o">)</span> <span class="p">{</span>
+   <span class="k">size</span><span class="o">:</span> <span class="m">16</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="m">#990099</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">1px</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id8">
+<h3>Details<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>In this example the fill is specified to be the &#8220;shape://times&#8221; symbol, which is going to be tiled creating a cross-hatch effect.</p>
+<p>The details of the hatch are specified at <strong>line 5*</strong>, where the pseudo-selector &#8221;:nth-fill(1)&#8221; is used to match the contents of the first fill, and specify that we want a symbol large 16 pixels (the larger the symbol, the coarser the cross hatch will be), and painted with a 1 pixel wide purple stroke.</p>
+</div>
+</div>
+<div class="section" id="polygon-with-default-label">
+<span id="css-cookbook-polygons-polygonwithdefaultlabel"></span><h2>Polygon with default label<a class="headerlink" href="#polygon-with-default-label" title="Permalink to this headline">¶</a></h2>
+<p>This example shows a text label on the polygon.  In the absence of any other customization, this is how a label will be displayed.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_polygonwithdefaultlabel.png" src="../../_images/polygon_polygonwithdefaultlabel.png" />
+<p class="caption"><em>Polygon with default label</em></p>
+</div>
+<div class="section" id="id9">
+<h3>Code<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#40FF40</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">2</span><span class="p">;</span>
+   <span class="n">label</span><span class="o">:</span> <span class="p">[</span><span class="n">name</span><span class="p">];</span>
+   <span class="k">font</span><span class="o">-</span><span class="n">fill</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id10">
+<h3>Details<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>The single rule in the CSS applies to all feature: first it fills all polygons a light green with white outline, and thn applies the &#8220;name&#8221; attribute as the label, using the default font (Times), with black color and default font size (10 px).</p>
+</div>
+</div>
+<div class="section" id="label-halo">
+<h2>Label halo<a class="headerlink" href="#label-halo" title="Permalink to this headline">¶</a></h2>
+<p>This example alters the look of the <a class="reference internal" href="#css-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a> by adding a white halo to the label.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_labelhalo.png" src="../../_images/polygon_labelhalo.png" />
+<p class="caption"><em>Label halo</em></p>
+</div>
+<div class="section" id="id11">
+<h3>Code<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#40FF40</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">2</span><span class="p">;</span>
+   <span class="n">label</span><span class="o">:</span> <span class="p">[</span><span class="n">name</span><span class="p">];</span>
+   <span class="k">font</span><span class="o">-</span><span class="n">fill</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+   <span class="n">halo</span><span class="o">-</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+   <span class="n">halo</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">3</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id12">
+<h3>Details<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>This example builds on <a class="reference internal" href="#css-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a>, with the addition of a halo around the labels on <strong>lines 7-8</strong>.  A halo creates a color buffer around the label to improve label legibility.  <strong>Line 9</strong> sets the radius of the halo, extending the halo 3 pixels around the edge of the label, and <strong>line 8</strong> sets the color of the halo to white. Since halos are most useful when set to a sharp contrast relative to the text color, this example uses a white halo around black text to ensure optimum readability.</p>
+</div>
+</div>
+<div class="section" id="polygon-with-styled-label">
+<span id="css-cookbook-polygons-polygonwithstyledlabel"></span><h2>Polygon with styled label<a class="headerlink" href="#polygon-with-styled-label" title="Permalink to this headline">¶</a></h2>
+<p>This example improves the label style from the <a class="reference internal" href="#css-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a> example by centering the label on the polygon, specifying a different font name and size, and setting additional label placement optimizations.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_polygonwithstyledlabel.png" src="../../_images/polygon_polygonwithstyledlabel.png" />
+<p class="caption"><em>Polygon with styled label</em></p>
+</div>
+<div class="section" id="id13">
+<h3>Code<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#40FF40</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">-</span><span class="k">width</span><span class="o">:</span> <span class="m">2</span><span class="p">;</span>
+   <span class="n">label</span><span class="o">:</span> <span class="p">[</span><span class="n">name</span><span class="p">];</span>
+   <span class="k">font-family</span><span class="o">:</span> <span class="n">Arial</span><span class="p">;</span>
+   <span class="k">font-size</span><span class="o">:</span> <span class="m">11px</span><span class="p">;</span>
+   <span class="k">font-style</span><span class="o">:</span> <span class="k">normal</span><span class="p">;</span>
+   <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
+   <span class="k">font</span><span class="o">-</span><span class="n">fill</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+   <span class="n">label</span><span class="o">-</span><span class="n">anchor</span><span class="o">:</span> <span class="m">0</span><span class="o">.</span><span class="m">5</span> <span class="m">0</span><span class="o">.</span><span class="m">5</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="k">auto</span><span class="o">-</span><span class="n">wrap</span><span class="o">:</span> <span class="m">60</span><span class="p">;</span>
+   <span class="o">-</span><span class="n">gt</span><span class="o">-</span><span class="n">label</span><span class="o">-</span><span class="n">max</span><span class="o">-</span><span class="n">displacement</span><span class="o">:</span> <span class="m">150</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id14">
+<h3>Details<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>This example is similar to the <a class="reference internal" href="#css-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a> example, with additional styling options for the labels.</p>
+<p>The font is setup to be Arial, 11 pixels, &#8220;normal&#8221; (as opposed to &#8220;italic&#8221;) and bold.</p>
+<p>The &#8220;label-anchor&#8221; affects where the label is placed relative to the centroid of the polygon, centering the label by positioning it 50% (or 0.5) of the way horizontally along the centroid of the polygon, as well as vertically in exactly the same way.</p>
+<p>Finally, there are two added touches for label placement optimization: The &#8220;gt-label-auto-wrap&#8221; attribute ensures that long labels are split across multiple lines by setting line wrapping on the labels to 60 pixels, whilst the &#8220;-gt-label-max-displacement&#8221; allows the label to be displaced by up to 150 pixels. This ensures that labels are compacted and less likely to spill over polygon boundaries. Notice little Massive County in the corner, whose label is now displayed.</p>
+</div>
+</div>
+<div class="section" id="attribute-based-polygon">
+<h2>Attribute-based polygon<a class="headerlink" href="#attribute-based-polygon" title="Permalink to this headline">¶</a></h2>
+<p>This example styles the polygons differently based on the &#8220;pop&#8221; (Population) attribute.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_attributebasedpolygon.png" src="../../_images/polygon_attributebasedpolygon.png" />
+<p class="caption"><em>Attribute-based polygon</em></p>
+</div>
+<div class="section" id="id15">
+<h3>Code<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">[</span><span class="nt">parseLong</span><span class="o">(</span><span class="nt">pop</span><span class="o">)</span> <span class="o">&lt;</span> <span class="nt">200000</span><span class="o">]</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#66FF66</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="nt">parseLong</span><span class="o">(</span><span class="nt">pop</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="nt">200000</span><span class="o">]</span> <span class="o">[</span><span class="nt">parseLong</span><span class="o">(</span><span class="nt">pop</span><span class="o">)</span> <span class="o">&lt;</span> <span class="nt">500000</span><span class="o">]</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#33CC33</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="nt">parseLong</span><span class="o">(</span><span class="nt">pop</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="nt">500000</span><span class="o">]</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#009900</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id16">
+<h3>Details<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Refer to the <a class="reference internal" href="#css-cookbook-polygons-attributes"><em>Example polygons layer</em></a> to see the attributes for the layer.  This example has eschewed labels in order to simplify the style, but you can refer to the example <a class="reference internal" href="#css-cookbook-polygons-polygonwithstyledlabel"><em>Polygon with styled label</em></a> to see which attributes correspond to which polygons.</p>
+</div>
+<p>Each polygon in our fictional country has a population that is represented by the population (&#8220;pop&#8221;) attribute. This style contains three rules that alter the fill based on the value of &#8220;pop&#8221; attribute, with smaller values yielding a lighter color and larger values yielding a darker color.</p>
+<p>The three rules are designed as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="30%" />
+<col width="30%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Rule order</strong></td>
+<td><strong>Rule name</strong></td>
+<td><strong>Population</strong> (&#8220;pop&#8221;)</td>
+<td><strong>Color</strong></td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>SmallPop</td>
+<td>Less than 200,000</td>
+<td><tt class="docutils literal"><span class="pre">#66FF66</span></tt></td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>MediumPop</td>
+<td>200,000 to 500,000</td>
+<td><tt class="docutils literal"><span class="pre">#33CC33</span></tt></td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>LargePop</td>
+<td>Greater than 500,000</td>
+<td><tt class="docutils literal"><span class="pre">#009900</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>The order of the rules does not matter in this case, since each shape is only rendered by a single rule.</p>
+<p>The first rule fills light green all polygons whose &#8220;pop&#8221; attribute is below 200,000, the second paints medium green all poygons whose &#8220;pop&#8221; attribute is between 200,000 and 500,000, while the third rule paints dark green the remaining polygons.</p>
+<p>What&#8217;s interesting in the filters is the use of the &#8220;parseLong&#8221; filter function: this function is necessary because the &#8220;pop&#8221; attribute is a string, leaving it as is we would have a string comparison, whilst the function turns it into a number, ensuring proper numeric comparisons instead.</p>
+</div>
+</div>
+<div class="section" id="zoom-based-polygon">
+<h2>Zoom-based polygon<a class="headerlink" href="#zoom-based-polygon" title="Permalink to this headline">¶</a></h2>
+<p>This example alters the style of the polygon at different zoom levels.</p>
+<div class="figure align-center">
+<img alt="../../_images/polygon_zoombasedpolygonlarge.png" src="../../_images/polygon_zoombasedpolygonlarge.png" />
+<p class="caption"><em>Zoom-based polygon: Zoomed in</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/polygon_zoombasedpolygonmedium.png" src="../../_images/polygon_zoombasedpolygonmedium.png" />
+<p class="caption"><em>Zoom-based polygon: Partially zoomed</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/polygon_zoombasedpolygonsmall.png" src="../../_images/polygon_zoombasedpolygonsmall.png" />
+<p class="caption"><em>Zoom-based polygon: Zoomed out</em></p>
+</div>
+<div class="section" id="id17">
+<h3>Code<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-css"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
+   <span class="n">fill</span><span class="o">:</span> <span class="m">#0000CC</span><span class="p">;</span>
+   <span class="n">stroke</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="k">@scale</span> <span class="o">&lt;</span> <span class="nt">100000000</span><span class="o">]</span> <span class="p">{</span>
+    <span class="nt">stroke-width</span><span class="o">:</span> <span class="nt">7</span><span class="o">;</span>
+    <span class="nt">label</span><span class="o">:</span> <span class="o">[</span><span class="nt">name</span><span class="o">];</span>
+    <span class="nt">label-anchor</span><span class="o">:</span> <span class="nt">0</span><span class="nc">.5</span> <span class="nt">0</span><span class="nc">.5</span><span class="o">;</span>
+    <span class="nt">font-fill</span><span class="o">:</span> <span class="nt">white</span><span class="o">;</span>
+    <span class="nt">font-family</span><span class="o">:</span> <span class="nt">Arial</span><span class="o">;</span>
+    <span class="nt">font-size</span><span class="o">:</span> <span class="nt">14</span><span class="o">;</span>
+    <span class="nt">font-weight</span><span class="o">:</span> <span class="nt">bold</span><span class="o">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="k">@scale</span> <span class="o">&gt;</span> <span class="nt">100000000</span><span class="o">]</span> <span class="o">[</span><span class="k">@scale</span> <span class="o">&lt;</span> <span class="nt">200000000</span><span class="o">]</span> <span class="p">{</span>
+    <span class="nt">stroke-width</span><span class="o">:</span> <span class="nt">4</span><span class="o">;</span>
+ <span class="p">}</span>
+
+ <span class="o">[</span><span class="k">@scale</span> <span class="o">&gt;</span> <span class="nt">200000000</span><span class="o">]</span> <span class="p">{</span>
+    <span class="nt">stroke-width</span><span class="o">:</span> <span class="nt">1</span><span class="o">;</span>
+ <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id18">
+<h3>Details<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>It is often desirable to make shapes larger at higher zoom levels when creating a natural-looking map. This example varies the thickness of the lines according to the zoom level. Polygons already do this by nature of being two dimensional, but another way to adjust styling of polygons based on zoom level is to adjust the thickness of the stroke (to be larger as the map is zoomed in) or to limit labels to only certain zoom levels. This is ensures that the size and quantity of strokes and labels remains legible and doesn&#8217;t overshadow the polygons themselves.</p>
+<p>Zoom levels (or more accurately, scale denominators) refer to the scale of the map. A scale denominator of 10,000 means the map has a scale of 1:10,000 in the units of the map projection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Determining the appropriate scale denominators (zoom levels) to use is beyond the scope of this example.</p>
+</div>
+<p>This style contains three rules, defined as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="15%" />
+<col width="40%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Rule order</strong></td>
+<td><strong>Rule name</strong></td>
+<td><strong>Scale denominator</strong></td>
+<td><strong>Stroke width</strong></td>
+<td><strong>Label display?</strong></td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>Large</td>
+<td>1:100,000,000 or less</td>
+<td>7</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Medium</td>
+<td>1:100,000,000 to 1:200,000,000</td>
+<td>4</td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>Small</td>
+<td>Greater than 1:200,000,000</td>
+<td>2</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>The first rule (<strong>lines 1-4</strong>) defines the attributes that are not scale dependent: dark blue fill, black outline.</p>
+<p>The second (<strong>lines 6-14</strong>) rule provides specific overrides for the higher zoom levels, asking for a large stroke (7 pixels) and a label, which is only visible at this zoom level. The label is white, bold, Arial 14 pixels, its contents are coming form the &#8220;name&#8221; attribute.</p>
+<p>The third rule (<strong>lines 16-18</strong>) specifies a stroke width of 4 pixels for medium zoom levels, whilst for low zoom levels the stroke width is set to 1 pixel by the last rule (<strong>lines 20-22</strong>).</p>
+<p>The resulting style produces a polygon stroke that gets larger as one zooms in and labels that only display when zoomed in to a sufficient level.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="cookbook_line.html" title="previous chapter">Lines</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="cookbook_raster.html" title="next chapter">Rasters</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Polygons</a><ul>
+<li><a class="reference internal" href="#example-polygons-layer">Example polygons layer</a></li>
+<li><a class="reference internal" href="#simple-polygon">Simple polygon</a><ul>
+<li><a class="reference internal" href="#code">Code</a></li>
+<li><a class="reference internal" href="#details">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#simple-polygon-with-stroke">Simple polygon with stroke</a><ul>
+<li><a class="reference internal" href="#id1">Code</a></li>
+<li><a class="reference internal" href="#id2">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#transparent-polygon">Transparent polygon</a><ul>
+<li><a class="reference internal" href="#id3">Code</a></li>
+<li><a class="reference internal" href="#id4">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#graphic-fill">Graphic fill</a><ul>
+<li><a class="reference internal" href="#id5">Code</a></li>
+<li><a class="reference internal" href="#id6">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hatching-fill">Hatching fill</a><ul>
+<li><a class="reference internal" href="#id7">Code</a></li>
+<li><a class="reference internal" href="#id8">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#polygon-with-default-label">Polygon with default label</a><ul>
+<li><a class="reference internal" href="#id9">Code</a></li>
+<li><a class="reference internal" href="#id10">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#label-halo">Label halo</a><ul>
+<li><a class="reference internal" href="#id11">Code</a></li>
+<li><a class="reference internal" href="#id12">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#polygon-with-styled-label">Polygon with styled label</a><ul>
+<li><a class="reference internal" href="#id13">Code</a></li>
+<li><a class="reference internal" href="#id14">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attribute-based-polygon">Attribute-based polygon</a><ul>
+<li><a class="reference internal" href="#id15">Code</a></li>
+<li><a class="reference internal" href="#id16">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zoom-based-polygon">Zoom-based polygon</a><ul>
+<li><a class="reference internal" href="#id17">Code</a></li>
+<li><a class="reference internal" href="#id18">Details</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="cookbook_line.html" title="previous chapter">Lines</a></li>
+            <li>Next: <a href="cookbook_raster.html" title="next chapter">Rasters</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/extensions/css/cookbook_polygon.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

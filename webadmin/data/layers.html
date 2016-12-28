@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Layers &mdash; GeoServer 2.4.0 User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Data" href="index.html" />
+      <link rel="next" title="Layer Groups" href="layergroups.html" />
+      <link rel="prev" title="Stores" href="stores.html" />
+</head>
+<body class="webadmin/data/layers">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Data</a> &raquo;</li>
+  <li>Layers</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="layergroups.html" title="Layer Groups"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="stores.html" title="Stores"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="layers">
+<span id="webadmin-layers"></span><h1>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h1>
+<p>Geoserver에서 레이어(layer)란 지리 관련 피처(feature)를 담고 있는 래스터 혹은 벡터 데이터를 말합니다. 벡터 레이어는 피처형(feature type)과 유사하며 래스터 레이어는 커버리지(coverage)와 유사합니다.
+레이어는 지도 위에 표출되어야 하는 각 피처를 나타냅니다. 모든 레이어는 저장소(store)라는 데이터 소스를 가지고 있습니다.</p>
+<p>이번 레이어 섹션에서 기존 레이어를 보거나 편집하고, 새로운 레이어를 추가하거나 삭제(등록 취소)하는 방법을 설명합니다.
+이전 페이지에서 설명한 바와 같이 작업공간 내의 저장소 내의 레이어라는 관계에 따라, Layer View 페이지에 표출되는 내용들도 달라질 수 있습니다.
+레이어 Status 및 Native SRS 정보도 View 페이지에 표출됩니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers1.png" src="../../_images/data_layers1.png" />
+<p class="caption"><em>Layers View 페이지</em></p>
+</div>
+<div class="section" id="layer-types">
+<h2>Layer Types<a class="headerlink" href="#layer-types" title="Permalink to this headline">¶</a></h2>
+<p>레이어는 크게 래스터와 벡터라는 2가지 데이터형으로 나뉩니다. 이 두 포맷의 차이점은 공간 정보를 어떻게 저장하느냐에 있습니다.
+벡터형은 피처형에 대한 정보를 수학적인 경로로—점(point)은 하나의 x,y 좌표로, 선(line)은 일련의 x,y 좌표로, 면(polygon)은 시작점과 끝점이 동일한 일련의 x,y 좌표로—저장합니다.
+래스터 포맷 데이터는 지표면상의 피처를 셀(cell) 기반 형태로 대체합니다. 각 셀은 특정(distinct) 값을 가지고 있으며, 동일 값을 가진 모든 셀은 특정 피처를 나타냅니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>데이터형 아이콘</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/data_layers_type1.png" class="first last" src="../../_images/data_layers_type1.png" />
+</td>
+<td>래스터 (그리드)</td>
+</tr>
+<tr class="row-odd"><td><img alt="../../_images/data_layers_type2.png" class="first last" src="../../_images/data_layers_type2.png" />
+</td>
+<td>벡터 (피처)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="edit-layer-data">
+<span id="id1"></span><h2>Edit Layer Data<a class="headerlink" href="#edit-layer-data" title="Permalink to this headline">¶</a></h2>
+<p>레이어명을 클릭하면 레이어 설정 패널이 열립니다. 첫 페이지는 기본적으로 <em class="guilabel">Data</em> 탭인데, 이 탭에서 레이어의 데이터 파라미터를 설정·변경할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_edit_data.png" src="../../_images/data_layers_edit_data.png" />
+<p class="caption"><em>Layers Data View 페이지</em></p>
+</div>
+<div class="section" id="basic-info">
+<h3>Basic Info<a class="headerlink" href="#basic-info" title="Permalink to this headline">¶</a></h3>
+<p>처음 섹션들&#8211;Basic Resource Info, Keywords와 Metadata 링크는 WCS, WFS, WMS의 <a class="reference internal" href="../services/WCS.html#service-metadata"><em>Service Metadata</em></a> 섹션과 유사합니다.
+이 섹션들은 &#8220;데이터에 대한 데이터(data about the data)&#8221;, 그 가운데에서도 특히 원본(textual) 정보를 제공해서 레이어를 더 쉽게 다룰 수 있도록 해줍니다.</p>
+<p><strong>Name</strong>—WMS 요청에서 레이어를 참조하는 데 쓰이는 식별자입니다.</p>
+<p><strong>Title</strong>—클라이언트가 레이어를 간단하게 식별할 수 있도록 하는, 사람이 바로 읽을 수 있는 설명을 말합니다. (필수)</p>
+<p><strong>Abstract</strong>—레이어에 대한 설명입니다.</p>
+<p><strong>Keywords</strong>—카탈로그 검색을 지원하기 위한, 해당 레이어와 관련된 짦은 단어 목록입니다.</p>
+<p><strong>Metadata Link</strong>—데이터 레이어를 설명해주는 외부 문서로 링크됩니다. 사용할 수 있는 표준 포맷은 현재, TC211과 FGDC 2가지입니다.
+TC211은 <a class="reference external" href="http://www.isotc211.org/">ISO Technical Committee for Geographic Information/Geomatics</a>(ISO/TC211)가 제정한 메타데이터 구조이며, FGDC는 미국 <a class="reference external" href="http://www.fgdc.gov/">Federal Geographic Data Committee</a>(FGDC)가 제정한 메타데이터 구조입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_meta.png" src="../../_images/data_layers_meta.png" />
+<p class="caption"><em>FGDC 포맷으로 메타데이터 링크 추가하기</em></p>
+</div>
+</div>
+<div class="section" id="coordinate-reference-systems">
+<h3>Coordinate Reference Systems<a class="headerlink" href="#coordinate-reference-systems" title="Permalink to this headline">¶</a></h3>
+<p>Coordinate Reference System(CRS)은 물리적 좌표를 부여받은(georeferenced) 공간 데이터가 어떻게 지표면의 실제 위치에 연결되는지 정의합니다.
+CRS는 Spatial Reference System(SRS)라는 좀 더 일반적인 모델 안에 포함됩니다. SRS는 좌표 및 지리적 식별자를 기준으로 삼는 시스템입니다.
+Geoserver는 사용자의 데이터가 어떤 CRS를 사용하는지 알아야만 합니다.
+이 정보는 Bounding Box의 위도/경도를 계산하거나 WMS나 WFS 요청을 처리해서 데이터를 다시 투영할 때 사용됩니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_CRS.png" src="../../_images/data_layers_CRS.png" />
+<p class="caption"><em>Coordinate Reference Systems 설정</em></p>
+</div>
+<p><strong>Native SRS</strong>—레이어가 저장되어 있는 투영체(projection)를 말합니다. Projection 링크를 클릭하면 해당 SRS의 설명을 볼 수 있습니다.</p>
+<p><strong>Declared SRS</strong>—GeoServer가 클라이언트에게 알려주는 SRS를 말합니다.</p>
+<p><strong>SRS Handling</strong>—2가지 SRS가 서로 다를 때 GeoServer가 어떻게 투영할 것인지를 정합니다.</p>
+</div>
+<div class="section" id="bounding-boxes">
+<h3>Bounding Boxes<a class="headerlink" href="#bounding-boxes" title="Permalink to this headline">¶</a></h3>
+<p>Bounding Box는 레이어의 범위를 결정합니다. <em class="guilabel">Native Bounding Box</em>는 Native SRS에 투영된 데이터의 범위입니다.
+<em class="guilabel">Compute from data</em> 버튼을 클릭해서 이 범위를 생성할 수 있습니다.
+<em class="guilabel">Lat/Long Bounding Box</em>는 표준 위도/경도를 기준으로 범위를 게산합니다.
+<em class="guilabel">Compute from native bounds</em> 버튼을 클릭해서 이 범위를 생성할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_BB.png" src="../../_images/data_layers_BB.png" />
+<p class="caption"><em>sf:archsites 레이어의 Bounding Box</em></p>
+</div>
+</div>
+<div class="section" id="coverage-parameters-raster">
+<h3>Coverage Parameters (Raster)<a class="headerlink" href="#coverage-parameters-raster" title="Permalink to this headline">¶</a></h3>
+<p>특정 형식의 래스터 데이터에 대한 커버리지 파라미터를 설정할 수 있는 옵션이 있습니다.
+WorldImage 포맷은 <em class="guilabel">ReadGridGeometry2D</em>라는 유효한 2차원 격자 좌표 범위가 필요합니다.
+ImageMosaic 포맷의 경우, Thresholding 및 Transparency 설정으로 모자이크 렌더링을 제어하기 위해 사용자가 <em class="guilabel">InputImageThresholdValue</em>, <em class="guilabel">InputTransparentColor</em>, <em class="guilabel">OutputTransparentColor</em>를 설정할 수 있습니다.</p>
+</div>
+<div class="section" id="feature-type-details-vector">
+<h3>Feature Type Details (Vector)<a class="headerlink" href="#feature-type-details-vector" title="Permalink to this headline">¶</a></h3>
+<p>벡터 레이어는 커버리지 파라미터 대신 <em class="guilabel">Feature Type Details</em> 목록을 사용하는데, 데이터 소스의 <em class="guilabel">Property</em> 및 <em class="guilabel">Type</em> 항목이 포함됩니다.
+예를 들어 다음 <tt class="docutils literal"><span class="pre">sf:archsites</span></tt> 레이어는 Type에 point, Property에 <tt class="docutils literal"><span class="pre">the_geom</span></tt>이라는 기하 구조를 포함하고 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_feature.png" src="../../_images/data_layers_feature.png" />
+<p class="caption"><em>sf:archsites 레이어의 Feature Type Details</em></p>
+</div>
+<p><em class="guilabel">Nillable</em> 항목은 Property 항목에 값(value)이 필요한지, 아니면 null 값으로 표시될 수 있는지를 나타냅니다.
+그리고 <em class="guilabel">Min/Max Occurrences</em> 항목은 필드(field)에 얼마나 많은 값을 저장할 수 있는지를 나타냅니다.
+현재 <em class="guilabel">Nillable</em>과 <em class="guilabel">Min/Max Occurrences</em> 항목이 <tt class="docutils literal"><span class="pre">true</span></tt> 값과 <tt class="docutils literal"><span class="pre">0/1</span></tt> 값으로 설정되어 있지만, 향후 complex features 작업 시 확장될 수 있습니다.</p>
+</div>
+</div>
+<div class="section" id="edit-publishing-information">
+<h2>Edit Publishing Information<a class="headerlink" href="#edit-publishing-information" title="Permalink to this headline">¶</a></h2>
+<p>Publishing 탭에서 HTTP 및 WCS 세팅을 설정합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_edit_publish.png" src="../../_images/data_layers_edit_publish.png" />
+<p class="caption"><em>Publishing Data 편집하기</em></p>
+</div>
+<ul class="simple">
+<li><em>Enabled</em>—여기에 체크되지 않은 레이어는 어떤 요청에도 대응할 수 없으며, 설정 페이지에 (그리고 REST-config 페이지에) 목록으로 표시될 뿐입니다.</li>
+<li><em>Additional styles</em>—레이어는 기본적으로 자신의 존재를 알리고(advertise) 있습니다.
+그렇지 않은 레이어는 모든 데이터 접속 요청(예를 들어 WMS GetMap, WMS GetFeature 등)에 대응할 수 있지만, 어떤 역량 문서(capabilities document)나 레이어 미리 보기에서도 보이지 않게 됩니다.</li>
+</ul>
+<p><strong>HTTP Settings</strong>—클라이언트 요청에 대한 HTTP 응답에 적용되는 캐시(cache) 파라미터입니다.
+<em class="guilabel">Response Cache Headers</em>를 선택하면, GeoServer가 <em class="guilabel">Cache Time</em>에 설정된 시간 내에 동일한 타일을 다시 요청하지 않습니다.
+<em class="guilabel">Cache Time</em> 항목의 기본값은 1시간으로, 초 단위(3600초)로 입력합니다.</p>
+<p><strong>WMS Settings</strong>—WMS에 특화된 Publishing 파라미터를 설정합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/wms_settings.png" src="../../_images/wms_settings.png" />
+<p class="caption"><em>WMS Settings 페이지</em></p>
+</div>
+<ul class="simple">
+<li><em>Default style</em>—GetMap 요청 시 클라이언트가 특정 스타일을 규정하지 않았을 경우 사용되는 스타일입니다.</li>
+<li><em>Additional styles</em>—해당 레이어에 적용될 수 있는 스타일들입니다. 일부 클라이언트(GeoServer 자체 미리 보기 포함)는 이 스타일들을 해당 레이어를 최종 사용자에게 보낼 경우 선택할 수 있는 대안으로서 표출합니다.</li>
+<li><em>Default rendering buffer</em> (2.0.3 버전부터 적용)—GetMap/GetFeatureInfo vendor 파라미터의 기본 <tt class="docutils literal"><span class="pre">buffer</span></tt> 값입니다.
+자세한 내용은 <a class="reference internal" href="../../services/wms/vendor.html#wms-vendor-parameters"><em>WMS vendor parameters</em></a> 페이지를 참조하십시오.</li>
+<li><em>Default WMS path</em>—해당 레이어가 WMS 역량 레이어 구조(WMS capabilities layer tree) 내에서 어디에 위치하는지 나타냅니다. 투명값을 가진(non-opaque) 레이어 그룹을 만드는 데 유용합니다.</li>
+</ul>
+<p><strong>WMS Attribution</strong>—데이터 제공자(data providers)에 대한 publishing 정보를 설정합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_WMS.png" src="../../_images/data_layers_WMS.png" />
+<p class="caption"><em>WMS Attribution 섹션</em></p>
+</div>
+<ul class="simple">
+<li><em>Attribution Text</em>—데이터 제공자에 대한, 사람이 바로 읽을 수 있는 설명입니다. 데이터 제공자의 웹사이트로 연결되는 하이퍼링크로 사용할 수도 있습니다.</li>
+<li><em>Attribution Link</em>—데이터 제공자의 웹사이트 URL을 설정합니다.</li>
+<li><em>Logo URL</em>—데이터 제공자의 로고로 사용되는 이미지의 URL을 설정합니다.</li>
+<li><em>Logo Content Type, Width, and Height</em>—클라이언트가 레이아웃을 보조하기 위해 사용할 수도 있는 로고 이미지에 대한 정보를 설정하는 항목들입니다.
+이 섹션 최하단의 <em class="guilabel">Auto-detect image size and type</em> 링크를 클릭하면 GeoServer가 이 값들을 자동으로 감지합니다.</li>
+</ul>
+<p>이 Text, Link, URL 값을 설정할 경우, 각각 WMS 역량 문서 내에 기록됩니다.
+일부 WMS 클라이언트는 사용자에게 어떤 데이터 제공자가 어떤 데이터셋을 제공하는지 알리기 위해 이 정보를 표출하기도 합니다.
+일부 항목을 설정하지 않을 경우, 설정한 항목은 역량 문서에 기록되고 설정하지 않은 항목은 제외됩니다.</p>
+<p><strong>WFS Settings</strong>—(실제 들어온 쿼리 개수에 상관없이) 해당 레이어에서 WFS GetFeature 작업으로 생성되는 최대 피처 개수를 설정합니다.</p>
+<p><strong>WCS Settings</strong>—해당 레이어를 변환할 수 있는 SRS의 목록을 제공합니다. <em class="guilabel">New Request SRS</em>에서 새로운 SRS를 목록에 추가할 수 있습니다.</p>
+<p><strong>Interpolation Methods</strong>—래스터 렌더링 프로세스를 설정합니다.</p>
+<p><strong>Formats</strong>—해당 레이어가 지원하는 산출물 포맷 목록입니다.</p>
+<p><strong>Default Style</strong>—해당 레이어에 스타일을 적용합니다. 추가 스타일들은 역량 문서 안에 해당 레이어와 함께 기록됩니다.</p>
+<p><strong>Geosearch</strong>—선택할 경우 Google Geo search crawler가 해당 레이어에 색인을 달 수 있습니다.
+자세한 정보는 <a class="reference external" href="https://support.google.com/webmasters/answer/94555">What is a Geo Sitemap?</a> 페이지를 참조하십시오.</p>
+<p><strong>KML Format Settings</strong>—<em>Regionation</em>으로 알려진, 특정 경계를 기준으로 피처를 제한하는 기능입니다.
+<em class="guilabel">Default Regionating Attribute</em></cite>으로 어떤 피처를 다른 피처보다 더 두드러지게 표출할 것인지 선택합니다.
+<em class="guilabel">Regionating Methods</em>에는 다음 4가지 형식이 있습니다.</p>
+<ul class="simple">
+<li><em>external-sorting</em>—GeoServer 내에 임시 보조 데이터베이스를 생성합니다. 인덱스를 만들기 위한 처음 요청이 이후 요청들보다 오래 걸립니다.</li>
+<li><em>geometry</em>—Line 형태일 경우 길이를, Polygon일 경우 면적을 기준으로 외부에서 분류합니다.</li>
+<li><em>native-sorting</em>—데이터가 저장된 시스템의 기본 백엔드(backend) 분류 알고리듬을 사용합니다. 외부 분류보다 빠르지만 PostGIS 데이터 저장소일 경우에만 사용할 수 있습니다.</li>
+<li><em>random</em>—기존 데이터 순서를 사용하며, 분류하지 않습니다.</li>
+</ul>
+</div>
+<div class="section" id="add-or-delete-a-layer">
+<h2>Add or Delete a Layer<a class="headerlink" href="#add-or-delete-a-layer" title="Permalink to this headline">¶</a></h2>
+<p>Layers View 페이지의 좌상단에 레이어를 추가·삭제할 수 있는 버튼이 있습니다.
+녹색 더하기 버튼으로 새 레이어를 추가할 수 있는데, 레이어를 Resource라고 표현하고 있습니다.
+빨간색 빼기 버튼으로 선택한 레이어를 제거할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_add_remove.png" src="../../_images/data_layers_add_remove.png" />
+<p class="caption"><em>레이어 추가·삭제 버튼</em></p>
+</div>
+<p><em class="guilabel">Add a new resource</em> 버튼을 클릭하면 <em class="guilabel">New Layer Chooser</em> 패널이 뜹니다.
+메뉴에 현재 사용 가능한 모든 저장소가 표출됩니다. 이 메뉴에서 레이어를 추가할 저장소를 선택하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_add_chooser.png" src="../../_images/data_layers_add_chooser.png" />
+<p class="caption"><em>현재 사용 가능한 모든 저장소 목록</em></p>
+</div>
+<p>저장소를 선택하면, 선택한 저장소 내에 있는 레이어들을 볼 수 있는 표가 뜹니다.
+이번 예제에서는 NYC 저장소 내에 <tt class="docutils literal"><span class="pre">giant_polygon</span></tt>, <tt class="docutils literal"><span class="pre">poi</span></tt>, <tt class="docutils literal"><span class="pre">poly_landmarks</span></tt>, <tt class="docutils literal"><span class="pre">tiger_roads</span></tt> 레이어가 존재합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_add_view.png" src="../../_images/data_layers_add_view.png" />
+<p class="caption"><em>저장소 내의 레이어 표</em></p>
+</div>
+<p>레이어명을 선택하면, 해당 레이어를 편집할 수 있는 <a class="reference internal" href="#edit-layer-data"><em>Edit Layer Data</em></a> 페이지로 이동합니다.</p>
+<p>레이어를 삭제하려면 각 레이어 행의 왼편에 있는 체크박스를 클릭합니다. 다음 그림에서처럼 한 페이지 안에서 여러 레이어를 중복 선택하여 제거할 수 있습니다.
+하지만 다음 페이지로 넘어갈 경우 현재 페이지에서 선택한 체크박스는 모두 취소된다는 점에 유의하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_delete.png" src="../../_images/data_layers_delete.png" />
+<p class="caption"><em>삭제를 위해 nurc:Img_Sample, sf:restricted, sf:streams 레이어 선택</em></p>
+</div>
+<p>머리부 행에 있는 체크박스를 클릭하면 모든 레이어를 한번에 선택할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_delete_all.png" src="../../_images/data_layers_delete_all.png" />
+<p class="caption"><em>삭제를 위해 모든 레이어 선택</em></p>
+</div>
+<p>레이어(들)을 선택해야 <em class="guilabel">Remove selected resources</em> 링크가 활성화됩니다.
+이 링크를 클릭하면 삭제 확인·취소를 묻습니다. <em class="guilabel">OK</em> 버튼을 클릭하면 레이어를 삭제합니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="stores.html" title="previous chapter">Stores</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="layergroups.html" title="next chapter">Layer Groups</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Layers</a><ul>
+<li><a class="reference internal" href="#layer-types">Layer Types</a></li>
+<li><a class="reference internal" href="#edit-layer-data">Edit Layer Data</a><ul>
+<li><a class="reference internal" href="#basic-info">Basic Info</a></li>
+<li><a class="reference internal" href="#coordinate-reference-systems">Coordinate Reference Systems</a></li>
+<li><a class="reference internal" href="#bounding-boxes">Bounding Boxes</a></li>
+<li><a class="reference internal" href="#coverage-parameters-raster">Coverage Parameters (Raster)</a></li>
+<li><a class="reference internal" href="#feature-type-details-vector">Feature Type Details (Vector)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#edit-publishing-information">Edit Publishing Information</a></li>
+<li><a class="reference internal" href="#add-or-delete-a-layer">Add or Delete a Layer</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="stores.html" title="previous chapter">Stores</a></li>
+            <li>다음: <a href="layergroups.html" title="next chapter">Layer Groups</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/data/layers.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

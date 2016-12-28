@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Layer security &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Security" href="index.html" />
+      <link rel="next" title="REST Security" href="rest.html" />
+      <link rel="prev" title="Service Security" href="service.html" />
+</head>
+<body class="security/layer">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Security</a> &raquo;</li>
+  <li>Layer security</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="rest.html" title="REST Security"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="service.html" title="Service Security"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="layer-security">
+<span id="sec-layer"></span><h1>Layer security<a class="headerlink" href="#layer-security" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer는 레이어별로 접근을 결정할 수 있도록 지원합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">레이어 보안과 <a class="reference internal" href="service.html#sec-service"><em>서비스 보안(Service Security)</em></a>은 결합할 수 없습니다.
+예를 들어 특정 OWS 서비스에 단 하나의 특정 레이어만을 위해 접근하도록 설정할 수는 없습니다.</p>
+</div>
+<p>레이어에 접근을 허용하는 작업은 <a class="reference internal" href="usergrouprole/roles.html#sec-rolesystem-roles"><em>롤</em></a>과 연계되어 있습니다.
+레이어와 롤은 GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pre">security</span></tt> 디렉터리에 있는
+<tt class="file docutils literal"><span class="pre">layers.properties</span></tt> 파일에서 연결됩니다. 이 파일은 작업공간 및 레이어로의 접근을 제어하는 규칙을 담고 있습니다.</p>
+<div class="section" id="rules">
+<h2>Rules<a class="headerlink" href="#rules" title="Permalink to this headline">¶</a></h2>
+<p>레이어 보안 규칙의 문법(syntax)은 다음과 같습니다. (<tt class="docutils literal"><span class="pre">[]</span></tt>는 선택적인 파라미터를 구분합니다.)</p>
+<div class="highlight-python"><pre>workspace.layer.permission=role[,role2,...]</pre>
+</div>
+<p>다음과 같은 파라미터를 포함합니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">workspace</span></tt> —작업공간명입니다. 임의 문자 기호 <tt class="docutils literal"><span class="pre">*</span></tt>를 쓰면 모든 작업공간을 의미합니다.</li>
+<li><tt class="docutils literal"><span class="pre">layer</span></tt> —리소스(피처형, 커버리지, 등등)의 명칭입니다. 임의 문자 기호 <tt class="docutils literal"><span class="pre">*</span></tt>를 쓰면 모든 레이어를 의미합니다.</li>
+<li><tt class="docutils literal"><span class="pre">permission</span></tt> —접근 퍼미션/모드의 형식입니다.</li>
+<ul><li><tt class="docutils literal"><span class="pre">r</span></tt> —읽기 접근</li>
+<li><tt class="docutils literal"><span class="pre">w</span></tt> —쓰기 접근</li>
+<li><tt class="docutils literal"><span class="pre">a</span></tt> —관리자(admin) 접근</li></ul>
+</ul>
+<p>더 자세히 알고 싶다면 <a class="reference internal" href="#access-mode"><em>접근 모드(Access modes)</em></a>를 참조하십시오.</p>
+</div></blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">role[,role2,...]</span></tt>는 미리 정의된 롤의 명칭(들)입니다.
+임의 문자 기호 <tt class="docutils literal"><span class="pre">*</span></tt>를 쓰면 익명 사용자를 포함한 모든 사용자를 허용한다는 의미입니다.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p>작업공간명이나 레이어명이 점을 포함해야 할 경우 2중 역슬래시(<tt class="docutils literal"><span class="pre">\\</span></tt>)를 쓰면 됩니다.
+예를 들어 레이어명이 <tt class="docutils literal"><span class="pre">layer.with.dots</span></tt>라면 다음과 같이 규칙을 쓸 수 있습니다.</p>
+<div class="last highlight-python"><pre>topp.layer\\.with\\.dots.r=role[,role2,...]</pre>
+</div>
+</div>
+<p>각 항목의 작업공간, 레이어, 퍼미션 값의 조합이 다른 항목과 겹치지 않아야 합니다.
+공통 레벨에서 퍼미션을 설정하지 않은 경우 공통 퍼미션이 적용되어 읽기/쓰기 접근을 허용합니다.
+작업공간에 대한 퍼미션을 설정하지 않은 경우 공통 설정에서 퍼미션을 상속받습니다.
+레이어에 대한 퍼미션을 설정하지 않은 경우 작업공간 설정에서 퍼미션을 상속받습니다.
+사용자에게 복수의 롤이 할당된 경우 롤들이 상속받은 퍼미션 가운데 <strong>가장 제한이 적은</strong> 퍼미션이 적용됩니다.</p>
+</div>
+<div class="section" id="catalog-mode">
+<h2>Catalog Mode<a class="headerlink" href="#catalog-mode" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">layers.properties</span></tt> 파일이 GeoServer가 보안된 레이어를 어떻게 외부에 알리고,
+필요 권한 없이 보안된 레이어에 접근할 경우 어떻게 동작하는지 설정하는 지시 사항을 담고 있을 수도 있습니다.
+이 파라미터가 <tt class="docutils literal"><span class="pre">mode</span></tt>이며 보통 &#8220;카탈로그 모드(catalog mode)&#8221;라고 합니다.</p>
+<p>문법은 다음과 같습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mode</span><span class="o">=</span><span class="n">option</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">option</span></tt>은 다음 3가지 값 가운데 하나입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">hide</span></tt></td>
+<td><em>(기본값)</em> 사용자가 읽기 퍼미션을 가지고 있지 않으면 레이어를 표출하지 않고, 쓰기 퍼미션을 가지고 있지 않으면 레이어를 읽기 전용으로 취급합니다.
+역량 문서도 현재 사용자가 접근할 수 없는 레이어를 제외합니다. 최고 보안 모드입니다. 따라서 uDig이나 구글어스(Google Earth) 같은 클라이언트와는 잘 맞지 않을 수도 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">challenge</span></tt></td>
+<td>메타데이터에 자유롭게 접근할 수 있지만 실제 데이터에 접근하려 하면 (대부분의 클라이언트가 인증 대화창을 표출하게 만드는) HTTP 401 코드를 반환합니다.
+역량 문서는 전체 레이어 목록을 담습니다. DescribeFeatureType 및 DescribeCoverage 작업이 성공적으로 이루어집니다. 이 모드는 uDig이나 구글어스(Google Earth) 같은 클라이언트와 잘 맞습니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">mixed</span></tt></td>
+<td>사용자가 역량 문서에서 읽을 수 없는 레이어를 표출하지도 않고, 데이터나 메타데이터에 접근하려는 어떤 시도에 대해서도 인증 작업을 호출합니다.
+이 옵션은 일부 데이터의 존재를 알리고 싶지 않지만 몇몇 선별된 인물들에게 인증 후 데이터에 접근할 수 있는 링크를 주고 싶을 때 유용합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="access-modes">
+<span id="access-mode"></span><h2>Access modes<a class="headerlink" href="#access-modes" title="Permalink to this headline">¶</a></h2>
+<p>접근 모드(access mode)는 특정 작업공간/레이어에 대해 특정 롤에게 어떤 수준의 접근을 허용해야 할지 정의합니다. 다음과 같은 3가지 접근 모드가 있습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">r</span></tt> —<strong>읽기 모드</strong> (작업공간/레이어에서 데이터 읽기)</li>
+<li><tt class="docutils literal"><span class="pre">w</span></tt> —<strong>쓰기 모드</strong> (작업공간/레이어에 데이터 쓰기)</li>
+<li><tt class="docutils literal"><span class="pre">a</span></tt> —<strong>관리자 모드</strong> (작업공간/레이어의 설정에 접근 및 변경)</li>
+</ul>
+<p>접근 모드에서 주의할 점은 다음과 같습니다.</p>
+<ul class="simple">
+<li>쓰기 모드라고 해서 읽을 수도 있는 것은 아니지만, 관리자 모드는 쓰기 <em>및</em> 읽기 모두 가능합니다.</li>
+<li>읽기 및 쓰기 모드는 레이어의 데이터를 대상으로 하지만 관리자 모드는 레이어의 설정을 대상으로 합니다.</li>
+<li>관리자 모드가 레이어의 설정만을 대상으로 하기 때문에 어떤 OGC 요청도 이 모드를 필요로 하지 않습니다.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">현재 버전에서 관리자 퍼미션을 특정 레이어가 아니라 전체 작업공간에 부여할 수 있습니다.</p>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>다음은 가능한 몇몇 레이어 제한 및 연계 규칙을 보여주는 예시입니다.</p>
+<div class="section" id="protecting-a-single-workspace-and-a-single-layer">
+<h3>Protecting a single workspace and a single layer<a class="headerlink" href="#protecting-a-single-workspace-and-a-single-layer" title="Permalink to this headline">¶</a></h3>
+<p>다음은 GeoServer를 어떻게 읽기 전용 서버로 설정하는지 보여주는 예시입니다.</p>
+<div class="highlight-python"><pre>*.*.r=*
+*.*.w=NO_ONE
+private.*.r=TRUSTED_ROLE
+private.*.w=TRUSTED_ROLE
+topp.congress_district.w=STATE_LEGISLATORS</pre>
+</div>
+<p>롤과 퍼미션의 매핑은 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">롤</th>
+<th class="head">private.*</th>
+<th class="head">topp.*</th>
+<th class="head">topp.congress_district</th>
+<th class="head">(그 외 모든 작업공간)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">NO_ONE</span></tt></td>
+<td>(none)</td>
+<td>w</td>
+<td>(none)</td>
+<td>w</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">TRUSTED_ROLE</span></tt></td>
+<td>r/w</td>
+<td>r</td>
+<td>r</td>
+<td>r</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">STATE_LEGISLATURES</span></tt></td>
+<td>(none)</td>
+<td>r</td>
+<td>r/w</td>
+<td>r</td>
+</tr>
+<tr class="row-odd"><td>(그 외 모든 사용자)</td>
+<td>r</td>
+<td>r</td>
+<td>r</td>
+<td>r</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="locking-down-geoserver">
+<h3>Locking down GeoServer<a class="headerlink" href="#locking-down-geoserver" title="Permalink to this headline">¶</a></h3>
+<p>다음은 GeoServer를 어떻게 차단하는지(lock down) 보여주는 예시입니다.</p>
+<div class="highlight-python"><pre>*.*.r=TRUSTED_ROLE
+*.*.w=TRUSTED_ROLE
+topp.*.r=*
+army.*.r=MILITARY_ROLE,TRUSTED_ROLE
+army.*.w=MILITARY_ROLE,TRUSTED_ROLE</pre>
+</div>
+<p>롤과 퍼미션의 매핑은 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">롤</th>
+<th class="head">topp.*</th>
+<th class="head">army.*</th>
+<th class="head">(그 외 모든 작업공간)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">TRUSTED_ROLE</span></tt></td>
+<td>r/w</td>
+<td>r/w</td>
+<td>r/w</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">MILITARY_ROLE</span></tt></td>
+<td>r</td>
+<td>r/w</td>
+<td>(none)</td>
+</tr>
+<tr class="row-even"><td>(그 외 모든 사용자)</td>
+<td>r</td>
+<td>(none)</td>
+<td>(none)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="providing-restricted-administrative-access">
+<h3>Providing restricted administrative access<a class="headerlink" href="#providing-restricted-administrative-access" title="Permalink to this headline">¶</a></h3>
+<p>다음은 전체 관리자 롤은 물론 특정 롤에 단일 작업공간에 접근할 수 있는 관리자 권한을 부여하는 예시입니다.</p>
+<div class="highlight-python"><pre>*.*.a=ROLE_ADMINISTRATOR
+topp.*.a=ROLE_TOPP_ADMIN,ROLE_ADMINISTRATOR</pre>
+</div>
+</div>
+<div class="section" id="managing-multi-level-permissions">
+<h3>Managing multi-level permissions<a class="headerlink" href="#managing-multi-level-permissions" title="Permalink to this headline">¶</a></h3>
+<p>다음은 GeoServer에서 어떻게 공통/작업공간/레이어 수준의 퍼미션을 설정하는지 모여주는 예시입니다.</p>
+<div class="highlight-python"><pre>*.*.r=TRUSTED_ROLE
+*.*.w=NO_ONE
+topp.*.r=*
+topp.states.r=USA_CITIZEN_ROLE,LAND_MANAGER_ROLE,TRUSTED_ROLE
+topp.states.w=NO_ONE
+topp.poly_landmarks.w=LAND_MANAGER_ROLE
+topp.military_bases.r=MILITARY_ROLE
+topp.military_bases.w=MILITARY_ROLE</pre>
+</div>
+<p>롤과 퍼미션의 매핑은 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">롤</th>
+<th class="head">topp.states</th>
+<th class="head">topp.poly_landmarks</th>
+<th class="head">topp.military_bases</th>
+<th class="head">topp.(그 외 모든 레이어)</th>
+<th class="head">(그 외 모든 작업공간)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">NO_ONE</span></tt></td>
+<td>w</td>
+<td>r</td>
+<td>(none)</td>
+<td>w</td>
+<td>w</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">TRUSTED_ROLE</span></tt></td>
+<td>r</td>
+<td>r</td>
+<td>(none)</td>
+<td>r</td>
+<td>r</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">MILITARY_ROLE</span></tt></td>
+<td>(none)</td>
+<td>r</td>
+<td>r/w</td>
+<td>r</td>
+<td>(none)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">USA_CITIZEN_ROLE</span></tt></td>
+<td>r</td>
+<td>r</td>
+<td>(none)</td>
+<td>r</td>
+<td>(none)</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">LAND_MANAGER_ROLE</span></tt></td>
+<td>r</td>
+<td>r/w</td>
+<td>(none)</td>
+<td>r</td>
+<td>(none)</td>
+</tr>
+<tr class="row-odd"><td>(그 외 모든 사용자)</td>
+<td>(none)</td>
+<td>r</td>
+<td>(none)</td>
+<td>r</td>
+<td>(none)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><tt class="docutils literal"><span class="pre">topp.states.w=NO_ONE</span></tt> 항목은 공통 레벨(<tt class="docutils literal"><span class="pre">*.*.w=NO_ONE</span></tt>) 항목)에서 해당 퍼미션을 상속받기 때문에 필요없습니다.</p>
+</div>
+</div>
+<div class="section" id="invalid-configuration">
+<h3>Invalid configuration<a class="headerlink" href="#invalid-configuration" title="Permalink to this headline">¶</a></h3>
+<p>다음은 작업공간, 레이어, 퍼미션 조합이 다른 조합과 일치하기 때문에 유효하지 않은 예시입니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">topp</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">rw</span><span class="o">=</span><span class="n">ROLE1</span>
+<span class="n">topp</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">rw</span><span class="o">=</span><span class="n">ROLE2</span><span class="p">,</span><span class="n">ROLE3</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="service.html" title="previous chapter">Service Security</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="rest.html" title="next chapter">REST Security</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Layer security</a><ul>
+<li><a class="reference internal" href="#rules">Rules</a></li>
+<li><a class="reference internal" href="#catalog-mode">Catalog Mode</a></li>
+<li><a class="reference internal" href="#access-modes">Access modes</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#protecting-a-single-workspace-and-a-single-layer">Protecting a single workspace and a single layer</a></li>
+<li><a class="reference internal" href="#locking-down-geoserver">Locking down GeoServer</a></li>
+<li><a class="reference internal" href="#providing-restricted-administrative-access">Providing restricted administrative access</a></li>
+<li><a class="reference internal" href="#managing-multi-level-permissions">Managing multi-level permissions</a></li>
+<li><a class="reference internal" href="#invalid-configuration">Invalid configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="service.html" title="previous chapter">Service Security</a></li>
+            <li>다음: <a href="rest.html" title="next chapter">REST Security</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/security/layer.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

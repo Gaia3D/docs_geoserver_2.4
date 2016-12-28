@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Data stores &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="REST configuration API reference" href="index.html" />
+      <link rel="next" title="Feature types" href="featuretypes.html" />
+      <link rel="prev" title="Namespaces" href="namespaces.html" />
+</head>
+<body class="rest/api/datastores">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">REST configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">REST configuration API reference</a> &raquo;</li>
+  <li>Data stores</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="featuretypes.html" title="Feature types"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="namespaces.html" title="Namespaces"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="data-stores">
+<span id="rest-api-datastores"></span><h1>Data stores<a class="headerlink" href="#data-stores" title="Permalink to this headline">¶</a></h1>
+<p><tt class="docutils literal"><span class="pre">데이터 저장소(data store)</span></tt>는 벡터 형식의 공간 데이터를 담고 있습니다.
+파일(shapefile 등), 데이터베이스(PostGIS 등), 서버(<a class="reference internal" href="../../data/cascaded/wfs.html#data-external-wfs"><em>remote Web Feature Service</em></a> 등) 모두 데이터 저장소가 될 수 있습니다.</p>
+<div class="section" id="workspaces-ws-datastores-format">
+<h2><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores[.&lt;format&gt;]</span></tt><a class="headerlink" href="#workspaces-ws-datastores-format" title="Permalink to this headline">¶</a></h2>
+<p>설정된 작업공간의 모든 데이터 저장소를 제어합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>작업공간 <tt class="docutils literal"><span class="pre">ws</span></tt>의 모든 데이터 저장소를 나열합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>새로운 데이터 저장소를 생성합니다.</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="workspaces-ws-datastores-ds-format">
+<h2><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;[.&lt;format&gt;]</span></tt><a class="headerlink" href="#workspaces-ws-datastores-ds-format" title="Permalink to this headline">¶</a></h2>
+<p>설정된 작업공간의 특정 데이터 저장소를 제어합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>데이터 저장소 <tt class="docutils literal"><span class="pre">ds</span></tt>를 반환합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>데이터 저장소  <tt class="docutils literal"><span class="pre">ds</span></tt>를 변경합니다.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>데이터 저장소  <tt class="docutils literal"><span class="pre">ds</span></tt>를 삭제합니다.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#rest-api-datastores-recurse"><em>recurse</em></a></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="exceptions">
+<h3>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">예외</th>
+<th class="head">상태 코드</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>존재하지 않는 데이터 저장소에 대한 GET</td>
+<td>404</td>
+</tr>
+<tr class="row-odd"><td>데이터 저장소의 명칭을 변경하는 PUT</td>
+<td>403</td>
+</tr>
+<tr class="row-even"><td>데이터 저장소의 작업공간을 변경하는 PUT</td>
+<td>403</td>
+</tr>
+<tr class="row-odd"><td>설정된 피처형을 담고 있는 데이터 저장소에 대한 DELETE</td>
+<td>403</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="recurse">
+<span id="rest-api-datastores-recurse"></span><h4><tt class="docutils literal"><span class="pre">recurse</span></tt><a class="headerlink" href="#recurse" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">recurse</span></tt> 파라미터는 설정된 데이터 저장소가 참조하는 모든 레이어를 반복적으로 삭제합니다.
+이 파라미터에 쓸 수 있는 값은 &#8220;true&#8221; 혹은 &#8220;false&#8221;로, 기본값은 &#8220;false&#8221;입니다.</p>
+</div>
+</div>
+</div>
+<div class="section" id="workspaces-ws-datastores-ds-file-url-external-extension">
+<h2><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/[file|url|external][.&lt;extension&gt;]</span></tt><a class="headerlink" href="#workspaces-ws-datastores-ds-file-url-external-extension" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">file</span></tt>, <tt class="docutils literal"><span class="pre">url</span></tt>, <tt class="docutils literal"><span class="pre">external</span></tt>과 같은
+종단점(endpoint)들은 공간 데이터를 담고 있는 파일을 (POST 또는 PUT을 통해) 기존 데이터 저장소에 추가할 수 있고, 또 데이터 저장소가 없을 경우 새 데이터 저장소를 생성하여 추가할 수 있습니다.
+이 3개의 종단점은 파일을 업로드하는 방법을 설정하는 데 쓰입니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">file</span></tt> —로컬 소스에서 파일을 업로드합니다. 요청의 본체(body)는 파일 자체입니다.</li>
+<li><tt class="docutils literal"><span class="pre">url</span></tt> —원격 소스에서 파일을 업로드합니다. 요청의 본체는 업로드할 파일을 가리키는 URL입니다. 서버가 이 URL에 접속할 수 있어야 합니다.</li>
+<li><tt class="docutils literal"><span class="pre">external</span></tt> —서버에 존재하는 파일을 사용합니다. 요청의 본체는 기존 파일의 절대 경로입니다.</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+<th class="head">파라미터</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td><em>이제 사용되지 않습니다(deprecated)</em>. 데이터 저장소의 기반이 되는 파일을 MIME 형식 <tt class="docutils literal"><span class="pre">application/zip</span></tt>을 통해 ZIP 파일로 읽어들입니다.</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>데이터 저장소 <tt class="docutils literal"><span class="pre">ds</span></tt>로 파일을 업로드합니다. 필요하다면 데이터 저장소를 생성합니다.</td>
+<td>200</td>
+<td><a class="reference internal" href="#rest-api-datastores-file-put"><em>다음 주석을 참조하십시오</em></a>.</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#rest-api-datastores-configure"><em>configure</em></a>, <a class="reference internal" href="#rest-api-datastores-target"><em>target</em></a>, <a class="reference internal" href="#rest-api-datastores-update"><em>update</em></a>, <a class="reference internal" href="#rest-api-datastores-charset"><em>charset</em></a></td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id1">
+<h3>Exceptions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">예외</th>
+<th class="head">상태 코드</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>존재하지 않는 데이터 저장소에 대한 GET</td>
+<td>404</td>
+</tr>
+<tr class="row-odd"><td>파일 기반이 아닌 데이터 저장소에 대한 GET</td>
+<td>404</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="extension">
+<h4><tt class="docutils literal"><span class="pre">extension</span></tt><a class="headerlink" href="#extension" title="Permalink to this headline">¶</a></h4>
+<p id="rest-api-datastores-extension"><tt class="docutils literal"><span class="pre">extension</span></tt> 파라미터가 업로드되는 데이터의 형식을 설정합니다. 다음과 같은 확장자를 지원합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">확장자(extension)</th>
+<th class="head">데이터 저장소</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>shp</td>
+<td>Shapefile</td>
+</tr>
+<tr class="row-odd"><td>properties</td>
+<td>속성 파일</td>
+</tr>
+<tr class="row-even"><td>h2</td>
+<td>H2 Database</td>
+</tr>
+<tr class="row-odd"><td>spatialite</td>
+<td>SpatiaLite Database</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note" id="rest-api-datastores-file-put">
+<p class="first admonition-title">주석</p>
+<p>PUT을 통해 단독 파일(standalone) 또는 ZIP 압축 파일로 데이터 저장소에 파일을 추가할 수 있습니다. 단독 파일은 GML 저장소처럼 단일 파일을 이용하는 데이터 저장소에만 적합합니다.
+shapefile 저장소처럼 복수의 파일을 이용하는 데이터 저장소에는 ZIP 파일로 파일을 보내야 합니다.</p>
+<p class="last">단독 파일을 업로드할 경우, 파일 형식에 일치하는 <tt class="docutils literal"><span class="pre">Content-type</span></tt>을 설정하십시오.
+ZIP 파일을 업로드할 경우, <tt class="docutils literal"><span class="pre">Content-type</span></tt>을 <tt class="docutils literal"><span class="pre">application/zip</span></tt>으로 설정하십시오.</p>
+</div>
+</div>
+<div class="section" id="configure">
+<span id="rest-api-datastores-configure"></span><h4><tt class="docutils literal"><span class="pre">configure</span></tt><a class="headerlink" href="#configure" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">configure</span></tt> 파라미터는 파일 업로드에 대한 데이터 저장소 설정을 제어합니다. 다음 3가지 값 가운데 하나를 쓸 수 있습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">first</span></tt> —(<em>기본값</em>) 데이터 저장소에서 사용할 수 있는 첫번째 피처형만 설정합니다.</li>
+<li><tt class="docutils literal"><span class="pre">none</span></tt> —어떤 피처형도 설정하지 않습니다.</li>
+<li><tt class="docutils literal"><span class="pre">all</span></tt> —모든 피처형을 설정합니다.</li>
+</ul>
+</div>
+<div class="section" id="target">
+<span id="rest-api-datastores-target"></span><h4><tt class="docutils literal"><span class="pre">target</span></tt><a class="headerlink" href="#target" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">target</span></tt> 파라미터는 업로드된 데이터를 위해 서버에 새 데이터 저장소가 생성되었을 경우 어떤 형식이나 저장 엔진을 사용할 것인지 결정합니다.
+기존 데이터 저장소에 데이터가 들어올 경우, 이 파라미터를 무시합니다.
+이 파라미터에 쓸 수 있는 값은 <a class="reference internal" href="#rest-api-datastores-extension"><em>확장자 파라미터</em></a>의 경우와 동일합니다.</p>
+</div>
+<div class="section" id="update">
+<span id="rest-api-datastores-update"></span><h4><tt class="docutils literal"><span class="pre">update</span></tt><a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">update</span></tt> 파라미터는 PUT을 통해 파일이 기존 데이터 저장소에 들어왔을 때,
+그리고 이 데이터 저장소가 파일 내용과 일치하는 스키마를 담고 있는 경우, 기존 데이터를 어떻게 처리할 것인지 제어합니다. 다음 2가지 값 가운데 하나를 쓸 수 있습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">append</span></tt> —업로드된 데이터가 기존 데이터에 덧붙여(appended)집니다. 기본값입니다.</li>
+<li><tt class="docutils literal"><span class="pre">overwrite</span></tt> —업로드된 데이터가 기존 데이터를 대체합니다.</li>
+</ul>
+</div>
+<div class="section" id="charset">
+<span id="rest-api-datastores-charset"></span><h4><tt class="docutils literal"><span class="pre">charset</span></tt><a class="headerlink" href="#charset" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">charset</span></tt> 파라미터는 업로드되는 파일의 (&#8220;ISO-8559-1&#8221;과 같은) 캐릭터 인코딩을 설정합니다.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="namespaces.html" title="previous chapter">Namespaces</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="featuretypes.html" title="next chapter">Feature types</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Data stores</a><ul>
+<li><a class="reference internal" href="#workspaces-ws-datastores-format"><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores[.&lt;format&gt;]</span></tt></a></li>
+<li><a class="reference internal" href="#workspaces-ws-datastores-ds-format"><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;[.&lt;format&gt;]</span></tt></a><ul>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#parameters">Parameters</a><ul>
+<li><a class="reference internal" href="#recurse"><tt class="docutils literal"><span class="pre">recurse</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#workspaces-ws-datastores-ds-file-url-external-extension"><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/[file|url|external][.&lt;extension&gt;]</span></tt></a><ul>
+<li><a class="reference internal" href="#id1">Exceptions</a></li>
+<li><a class="reference internal" href="#id2">Parameters</a><ul>
+<li><a class="reference internal" href="#extension"><tt class="docutils literal"><span class="pre">extension</span></tt></a></li>
+<li><a class="reference internal" href="#configure"><tt class="docutils literal"><span class="pre">configure</span></tt></a></li>
+<li><a class="reference internal" href="#target"><tt class="docutils literal"><span class="pre">target</span></tt></a></li>
+<li><a class="reference internal" href="#update"><tt class="docutils literal"><span class="pre">update</span></tt></a></li>
+<li><a class="reference internal" href="#charset"><tt class="docutils literal"><span class="pre">charset</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="namespaces.html" title="previous chapter">Namespaces</a></li>
+            <li>다음: <a href="featuretypes.html" title="next chapter">Feature types</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/rest/api/datastores.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

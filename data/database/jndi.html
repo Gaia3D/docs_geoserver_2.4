@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>JNDI &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="SQL Views" href="sqlview.html" />
+      <link rel="prev" title="Database Connection Pooling" href="connection-pooling.html" />
+</head>
+<body class="data/database/jndi">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>JNDI</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="sqlview.html" title="SQL Views"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="connection-pooling.html" title="Database Connection Pooling"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="jndi">
+<span id="data-jndi"></span><h1>JNDI<a class="headerlink" href="#jndi" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer의 많은 데이터 저장소 및 연결이 <a class="reference external" href="http://en.wikipedia.org/wiki/Java_Naming_and_Directory_Interface">Java Naming and Directory Interface</a>(JNDI)를 사용하는 옵션을 가지고 있습니다.
+JNDI는 Java 시스템 내부의 요소들(components)이 미리 정의된(predefined) 명칭을 사용해서 다른 오브젝트 및 데이터를 찾도록 해줍니다.</p>
+<p>JNDI는 흔히 JDBC 데이터 소스를 컨테이너 내부에 저장하는 데 쓰입니다. 이런 쓰임에는 몇 가지 장점이 있습니다.
+먼저, DB 자원을 훨씬 효율적으로 사용할 수 있습니다. Java에서 DB 연결은 매우 자원집중적인(resource-intensive) 오브젝트이기 때문에, 보통 모아져(pooled) 있기 마련입니다.
+DB 연결이 필요한 개별 요소가 각각 고유 connection pool을 생성한다면 자원이 매우 빨리 소모될 것입니다.
+게다가 이런 자원은 대개 저활용(under-utilized)되고 있는데, 개별 요소가 이에 따라 connection pool을 관리하지 못 할 수도 있습니다.
+서블렛 컨테이너 레벨에서 공통 connection pool을 설정하고 DB 연결이 필요한 모든 요소가 공통 pool을 사용하도록 하는 것이 훨씬 효율적인 방법입니다.</p>
+<p>또한 JNDI는 DB 연결 설정을 통합하는데, DB 연결이 필요한 모든 요소들이 JNDI 명칭 외에 다른 세부 사항을 알아야 하는 것은 아니기 때문입니다.
+이 기능은 현재 실행 중인 시스템에서 DB 파라미터를 변경해야 하는 관리자에게 매우 유용합니다. 한번에 설정을 변경할 수 있기 때문입니다.</p>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="connection-pooling.html" title="previous chapter">Database Connection Pooling</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="sqlview.html" title="next chapter">SQL Views</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="connection-pooling.html" title="previous chapter">Database Connection Pooling</a></li>
+            <li>다음: <a href="sqlview.html" title="next chapter">SQL Views</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/jndi.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

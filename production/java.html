@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Java Considerations &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Running in a Production Environment" href="index.html" />
+      <link rel="next" title="Container Considerations" href="container.html" />
+      <link rel="prev" title="Running in a Production Environment" href="index.html" />
+</head>
+<body class="production/java">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Running in a Production Environment</a> &raquo;</li>
+  <li>Java Considerations</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="container.html" title="Container Considerations"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Running in a Production Environment"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="java-considerations">
+<span id="production-java"></span><h1>Java Considerations<a class="headerlink" href="#java-considerations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="use-oracle-jre">
+<h2>Use Oracle JRE<a class="headerlink" href="#use-oracle-jre" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">2.0 버전부터 JRE(Java Runtime Environment)만으로도 GeoServer를 운영할 수 있습니다. 현재 GeoServer는 JDK(Java Development Kit)가 필요없습니다.</p>
+</div>
+<p>GeoServer의 속도는 선택한 JRE(Java Runtime Environment)에 많이 달려 있습니다.
+최상의 속도를 얻으려면 <a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle JRE 6</a> (또는 JRE 1.6) 이후 버전을 사용하십시오.
+(GeoServer 2.2.x 버전부터 Oracle JRE 5를 지원하지 않습니다.) Oracle 이외의 곳에서 공개한 JRE도 잘 작동할 수도 있지만 일반적으로 테스트되지도 지원하지도 않습니다.
+실사용자에 따르면 OpenJDK로도 GeoServer를 운영할 수 있지만 2D 렌더링 속도가 저하된다고 합니다.</p>
+</div>
+<div class="section" id="install-native-jai-and-jai-image-i-o-extensions">
+<h2>Install native JAI and JAI Image I/O extensions<a class="headerlink" href="#install-native-jai-and-jai-image-i-o-extensions" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://java.sun.com/javase/technologies/desktop/media/">Java Advanced Imaging API</a>(JAI)는 Oracle이 개발한 고급 이미지 조정(manipulation) 라이브러리입니다.
+GeoServer가 커버리지를 다루려면 JAI가 필요한데, JAI는 WMS 산출물 작업에 영향을 미칩니다.
+기본적으로 GeoServer가 순수 Java 버전 JAI를 내장하고 있지만 <strong>최상의 속도를 얻으려면 JDK/JRE의 자체(native) JAI 버전을 설치하십시오</strong>.</p>
+<p>자체 JAI를 설치하는 일은 특히 모든 래스터 처리에 중요합니다. WMS 및 WCS 양쪽에서 래스터 크기 조정(rescale), 자르기(cut), 재투영(reproject) 등의 작업을 JAI에 많이 의존하기 때문입니다.
+자체 JAI를 설치하는 일은 또 모든 래스터 읽기 및 쓰기 작업에 중요하며, 역시 WMS 및 WCS 양쪽에 영향을 미칩니다.
+마지막으로 래스터 데이터를 작업하는 일이 없어도 자체 JAI가 매우 유용한 경우가 있습니다. WMS 산출물 인코딩 작업에서 PNG/GIF/JPEG 이미지를 써야(write) 하는데, 이미지 자체가 래스터이기 때문입니다.</p>
+<p>윈도우, 리눅스, 솔라리스(Solaris) 32비트 및 64비트 시스템 용 자체 확장 모듈이 있습니다. 그러나 OS X 용은 없습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">해당 인스톨러는 사용자 시스템 상에 오직 한 버전의 JDK/JRE에만 자체 확장 모듈을 추가합니다.
+다수의 버전에 확장 모듈이 필요한 경우 직접 확장 모듈의 압축을 풀어야 합니다.
+다음 <a class="reference internal" href="#native-jai-manual-install"><em>Installing native JAI manually</em></a> 섹션을 참조하십시오.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">또한 해당 인스톨러는 현재 사용 중인 JDK/JRE에만 확장 모듈을 적용합니다.
+현재 사용 중이 아닌 다른 JDK/JRE 상에 자체 확장 모듈이 필요한 경우 먼저 현재 사용 중인 JDK/JRE를 제거한 다음 남아 있는 JDK/JRE를 대상으로 셋업 프로그램을 실행해야 합니다.</p>
+</div>
+<div class="section" id="installing-native-jai-on-windows">
+<h3>Installing native JAI on Windows<a class="headerlink" href="#installing-native-jai-on-windows" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><a class="reference external" href="http://download.java.net/media/jai/builds/release/1_1_3/">JAI 다운로드 페이지</a>로 이동해서 1.1.3 버전 윈도우 인스톨러를 다운로드합니다.
+현재 32비트 용 인스톨러밖에 없으므로 JDK를 사용하는 경우
+<a class="reference external" href="http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-windows-i586-jdk.exe">jai-1_1_3-lib-windows-i586-jdk.exe</a>를 다운로드하고,
+JRE를 사용하는 경우 <a class="reference external" href="http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-windows-i586-jre.exe">jai-1_1_3-lib-windows-i586-jre.exe</a>를 다운로드하십시오.</li>
+<li>인스톨러를 실행하고 GeoServer 운영에 사용할 JDK/JRE를 설정하십시오.</li>
+<li><a class="reference external" href="http://download.java.net/media/jai-imageio/builds/release/1.1/">JAI Image I/O 다운로드 페이지</a>로 이동해서 1.1 버전 윈도우 인스톨러를 다운로드합니다.
+현재 32비트 용 인스톨러밖에 없으므로 JDK를 사용하는 경우
+<a class="reference external" href="http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-windows-i586-jdk.exe">jai_imageio-1_1-lib-windows-i586-jdk.exe</a>를 다운로드하고,
+JRE를 사용하는 경우 <a class="reference external" href="http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-windows-i586-jre.exe">jai_imageio-1_1-lib-windows-i586-jre.exe</a>를 다운로드하십시오.</li>
+<li>인스톨러를 실행하고 GeoServer 운영에 사용할 JDK/JRE를 설정하십시오.</li>
+</ol>
+</div>
+<div class="section" id="installing-native-jai-on-linux">
+<h3>Installing native JAI on Linux<a class="headerlink" href="#installing-native-jai-on-linux" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="http://download.java.net/media/jai/builds/release/1_1_3/">JAI 다운로드 페이지</a>로 이동해서 1.1.3 버전 리눅스 인스톨러를 다운로드합니다.
+다음과 같이 적합한 아키텍처를 선택하십시오.</p>
+<ul class="simple">
+<li><cite>i586</cite> —32비트 시스템 용</li>
+<li><cite>amd64</cite> —64비트 시스템 용 (인텔 프로세서도 포함)</li>
+</ul>
+</li>
+<li><p class="first">JDK/JRE를 담고 있는 디렉터리로 파일을 복사한 다음 실행합니다. 예를 들어 우분투 32비트 시스템에서는 다음과 같이 실행합니다.</p>
+<div class="highlight-python"><pre>$ sudo cp jai-1_1_3-lib-linux-i586-jdk.bin /usr/lib/jvm/java-6-sun
+$ cd /usr/lib/jvm/java-6-sun
+$ sudo sh jai-1_1_3-lib-linux-i586-jdk.bin
+# accept license
+$ sudo rm jai-1_1_3-lib-linux-i586-jdk.bin</pre>
+</div>
+</li>
+<li><p class="first"><a class="reference external" href="http://download.java.net/media/jai-imageio/builds/release/1.1/">JAI Image I/O 다운로드 페이지</a>로 이동해서 1.1 버전 리눅스 인스톨러를 다운로드합니다.
+다음과 같이 적합한 아키텍처를 선택하십시오.</p>
+<ul class="simple">
+<li><cite>i586</cite> —32비트 시스템 용</li>
+<li><cite>amd64</cite> —64비트 시스템 용 (인텔 프로세서도 포함)</li>
+</ul>
+</li>
+<li><p class="first">JDK/JRE를 담고 있는 디렉터리로 파일을 복사한 다음 실행합니다.
+문제가 생긴다면 환경 변수 <tt class="docutils literal"><span class="pre">_POSIX2_VERSION=199209</span></tt>를 내보내야 할 수도 있습니다.
+예를 들어 우분투 32비트 시스템에서는 다음과 같이 실행합니다.</p>
+<div class="highlight-python"><pre>$ sudo cp jai_imageio-1_1-lib-linux-i586-jdk.bin /usr/lib/jvm/java-6-sun
+$ cd /usr/lib/jvm/java-6-sun
+$ sudo su
+$ export _POSIX2_VERSION=199209
+$ sh jai_imageio-1_1-lib-linux-i586-jdk.bin
+# accept license
+$ rm ./jai_imageio-1_1-lib-linux-i586-jdk.bin
+$ exit</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="installing-native-jai-manually">
+<span id="native-jai-manual-install"></span><h3>Installing native JAI manually<a class="headerlink" href="#installing-native-jai-manually" title="Permalink to this headline">¶</a></h3>
+<p>앞의 인스톨러를 사용했을 때 문제가 생긴 경우나 하나 이상의 JDK/JRE에 자체 JAI를 설치하고자 하는 경우 자체 JAI를 직접 설치할 수 있습니다.</p>
+<p>상세한 내용을 알고 싶다면 <a class="reference external" href="http://docs.geotools.org/latest/userguide/build/install/jdk.html#java-extensions-optional">GeoTools page on JAI installation</a>를 참조하십시오.</p>
+</div>
+<div class="section" id="geoserver-cleanup">
+<h3>GeoServer cleanup<a class="headerlink" href="#geoserver-cleanup" title="Permalink to this headline">¶</a></h3>
+<p>설치가 완료되면 GeoServer 인스턴스에서 다음 내장 JAI 파일을 제거할 수도 있습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">jai_core</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">z</span><span class="o">.</span><span class="n">jar</span>
+<span class="n">jai_imageio</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">jar</span>
+<span class="n">jai_codec</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">z</span><span class="o">.</span><span class="n">jar</span>
+</pre></div>
+</div>
+<p>이 경우 <tt class="docutils literal"><span class="pre">x</span></tt>, <tt class="docutils literal"><span class="pre">y</span></tt>, <tt class="docutils literal"><span class="pre">z</span></tt>는 특정 버전 숫자를 가리킵니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Running in a Production Environment</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="container.html" title="next chapter">Container Considerations</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Java Considerations</a><ul>
+<li><a class="reference internal" href="#use-oracle-jre">Use Oracle JRE</a></li>
+<li><a class="reference internal" href="#install-native-jai-and-jai-image-i-o-extensions">Install native JAI and JAI Image I/O extensions</a><ul>
+<li><a class="reference internal" href="#installing-native-jai-on-windows">Installing native JAI on Windows</a></li>
+<li><a class="reference internal" href="#installing-native-jai-on-linux">Installing native JAI on Linux</a></li>
+<li><a class="reference internal" href="#installing-native-jai-manually">Installing native JAI manually</a></li>
+<li><a class="reference internal" href="#geoserver-cleanup">GeoServer cleanup</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Running in a Production Environment</a></li>
+            <li>다음: <a href="container.html" title="next chapter">Container Considerations</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/production/java.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Status &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Server" href="index.html" />
+      <link rel="next" title="Contact Information" href="contact.html" />
+      <link rel="prev" title="Server" href="index.html" />
+</head>
+<body class="webadmin/server/status">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Server</a> &raquo;</li>
+  <li>Status</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="contact.html" title="Contact Information"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Server"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="status">
+<span id="id1"></span><h1>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h1>
+<p>서버 상태(Server Status) 페이지에서 서버 설정 파라미터와 실행 상태(run-time status)를 요약해서 볼 수 있습니다. 테스트 작업 환경에서 진단 도구로 유용하게 사용할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/server_status1.png" src="../../_images/server_status1.png" />
+<p class="caption"><em>상태 페이지</em></p>
+</div>
+<div class="section" id="status-field-descriptions">
+<h2>Status Field Descriptions<a class="headerlink" href="#status-field-descriptions" title="Permalink to this headline">¶</a></h2>
+<p>다음 표는 현재 상태 지표(current status indicators)를 설명하고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td>Locks</td>
+<td>WFS에 한번에 한 명만 피처를 업데이트할 수 있도록 피처를 잠그는 기능이 있습니다. 데이터가 잠가져 있을 때에는 단 한 명의 WFS 편집자만 편집이 가능합니다.
+편집된 데이터가 게시(post)됐을 때 잠금이 풀려 다른 WFS 편집자들이 피처를 편집할 수 있게 됩니다. locks 값이 0이라는 것은 모든 잠금이 풀렸다는 의미입니다.
+locks 값이 0이 아니라면, &#8220;free locks&#8221; 버튼을 클릭해서 현재 서버가 서비스하고 있는 모든 피처의 잠금을 풀고, locks 값을 0으로 만들어주십시오.</td>
+</tr>
+<tr class="row-odd"><td>Connections</td>
+<td>벡터 저장소(vector stores) 개수를 의미하는데, 4 이상일 경우 접속 가능해집니다.</td>
+</tr>
+<tr class="row-even"><td>Memory Usage</td>
+<td>GeoServer가 현재 사용하고 있는 메모리 용량입니다. 이 표에서는 메모리 28 MB를 사용하고 있습니다.
+&#8220;Free Memory&#8221; 버튼을 클릭하면 청소부(garbage collector)를 실행하여 삭제 표시(marked for deletion)된 메모리를 초기화합니다.</td>
+</tr>
+<tr class="row-odd"><td>JVM Version</td>
+<td>서버에서 JVM(Java Virtual Machine) 어느 버전이 실행되고 있는지 보여줍니다. 이 표에서는 Sun Microsystems Inc.의 JVM 1.7.0 버전입니다.</td>
+</tr>
+<tr class="row-even"><td>Native JAI</td>
+<td>GeoServer는이미지 렌더링(image rendering) 및 범위 조작(coverage manipulation)에 <a class="reference external" href="https://jai.dev.java.net">Java Advanced Imaging</a> (JAI) 프레임워크를 사용합니다.
+JAI가 올바르게 설치됐을 경우 true 값이 표시되는데, WCS와 WMS를 더 빠르고 효율적으로 동작하게 해줍니다.</td>
+</tr>
+<tr class="row-odd"><td>Native JAI ImageIO</td>
+<td>GeoServer는 래스터 데이터 로드(load) 및 이미지 렌더링 작업에 <a class="reference external" href="https://jai-imageio.dev.java.net">JAI Image IO</a> (JAI) 프레임워크를 사용합니다.
+JAI가 올바르게 설치됐을 경우 true 값이 표시되는데, JAI Image I/O는 WCS와 WMS를 더 빠르고 효율적으로 동작하게 해줍니다.</td>
+</tr>
+<tr class="row-even"><td>JAI Maximum Memory</td>
+<td>타일 캐시(tile cache)에 사용되는 메모리 용량을 바이트(byte)로 표시합니다. 이 표에서는 377 MB입니다. JAI Maximum Memory 값은 0.0에서 {0} 사이여야 합니다.</td>
+</tr>
+<tr class="row-odd"><td>JAI Memory Usage</td>
+<td>타일 캐시에 실제로(Run-time) 사용되고 있는 메모리 용량을 표시합니다. &#8220;Free Memory&#8221; 버튼을 클릭하면, 타일 캐시 플러싱(flushing)을 실행하여 사용 가능한 JAI memory를 초기화합니다.</td>
+</tr>
+<tr class="row-even"><td>JAI Memory Threshold</td>
+<td>타일 제거(tile removal) 작업 시 유지해야 하는 캐시 메모리의 퍼센트 값을 말합니다. JAI Memory Threshold 값은 0.0에서 100 사이여야 합니다.</td>
+</tr>
+<tr class="row-odd"><td>Number of JAI Tile Threads</td>
+<td>스케줄러가 타일을 다루려고 사용하는 병렬 스레드(thread)의 개수를 표시합니다.</td>
+</tr>
+<tr class="row-even"><td>JAI Tile Thread Priority</td>
+<td>일반적인 타일 스케줄러 우선순위를 조정합니다. 우선순위 값은 기본적으로 5에 맞춰져 있으며, 1에서 10사이의 값이어야 합니다.</td>
+</tr>
+<tr class="row-odd"><td>Update Sequence</td>
+<td>서버 설정이 몇 번이나 변경됐는지 그 횟수를 나타냅니다.</td>
+</tr>
+<tr class="row-even"><td>Resource cache</td>
+<td>GeoServer는 데이터 자체를 캐시(cache)하지는 않지만, 저장소 접속 정보, 피처 형식 정의(feature type definitions), 외부 그래픽, 폰트 설정 정보, CRS 설정 정보 등을 캐시하고 있습니다.
+&#8220;Clear&#8221; 버튼을 클릭해서 캐시를 강제로 비우고 GeoServer가 저장소를 다시 열고 이미지 및 폰트 정보, <cite>${GEOSERVER_DATA_DIR}/user_projections/epsg.properties</cite>에 저장된 CRS 사용자 정의 설정 정보를 다시 읽어오게 할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>Configuration and catalog</td>
+<td>GeoServer는 모든 설정 데이터를 메모리에 보관합니다.
+어떤 이유로든 (예를 들어 외부 유틸리티가 디스크에 있는 설정을 변경했다든지) 이 설정 정보가 맞지 않게 되면, &#8220;Reload&#8221; 버튼을 클릭해서 GeoServer가 디스크에서 모든 설정 정보를 다시 읽어오게 할 수 있습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="timestamps-field-descriptions">
+<h2>Timestamps Field Descriptions<a class="headerlink" href="#timestamps-field-descriptions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>옵션</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td>GeoServer</td>
+<td>현재는 의미가 없는 값입니다. 현재 GeoServer가 설치된 일시를 나타냅니다.</td>
+</tr>
+<tr class="row-odd"><td>Configuration</td>
+<td>현재는 의미가 없는 값입니다. 가장 최근 설정이 변경된 일시를 나타냅니다.</td>
+</tr>
+<tr class="row-even"><td>XML</td>
+<td>현재는 의미가 없는 값입니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Server</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="contact.html" title="next chapter">Contact Information</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Status</a><ul>
+<li><a class="reference internal" href="#status-field-descriptions">Status Field Descriptions</a></li>
+<li><a class="reference internal" href="#timestamps-field-descriptions">Timestamps Field Descriptions</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Server</a></li>
+            <li>다음: <a href="contact.html" title="next chapter">Contact Information</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/server/status.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

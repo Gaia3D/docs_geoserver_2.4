@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Graphic symbology in GeoServer &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="SLD Extensions in GeoServer" href="index.html" />
+      <link rel="next" title="Variable substitution in SLD" href="substitution.html" />
+      <link rel="prev" title="Rendering Transformations" href="rendering-transform.html" />
+</head>
+<body class="styling/sld-extensions/pointsymbols">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Styling</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">SLD Extensions in GeoServer</a> &raquo;</li>
+  <li>Graphic symbology in GeoServer</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="substitution.html" title="Variable substitution in SLD"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="rendering-transform.html" title="Rendering Transformations"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="graphic-symbology-in-geoserver">
+<span id="pointsymbols"></span><h1>Graphic symbology in GeoServer<a class="headerlink" href="#graphic-symbology-in-geoserver" title="Permalink to this headline">¶</a></h1>
+<p>SLD는 <tt class="docutils literal"><span class="pre">&lt;Graphic&gt;</span></tt> 요소를 통해 그래픽 심볼(graphic symbology)을 지원합니다. 이 요소는 SLD 내에서 몇몇 경우에 쓰일 수 있습니다.</p>
+<ul class="simple">
+<li><a class="reference internal" href="../sld-reference/pointsymbolizer.html#sld-reference-pointsymbolizer"><em>PointSymbolizer</em></a>에 쓰여 포인트에 심볼을 표출합니다.</li>
+<li><a class="reference internal" href="../sld-reference/linesymbolizer.html#sld-reference-linesymbolizer"><em>LineSymbolizer</em></a>와
+<a class="reference internal" href="../sld-reference/polygonsymbolizer.html#sld-reference-polygonsymbolizer"><em>PolygonSymbolizer</em></a>의
+<tt class="docutils literal"><span class="pre">&lt;Stroke&gt;/&lt;GraphicStroke&gt;</span></tt> 요소에 쓰여 라인 및 폴리곤 경계선을 따라 심볼을 반복적으로 표출합니다.</li>
+<li><a class="reference internal" href="../sld-reference/linesymbolizer.html#sld-reference-linesymbolizer"><em>LineSymbolizer</em></a>와
+<a class="reference internal" href="../sld-reference/polygonsymbolizer.html#sld-reference-polygonsymbolizer"><em>PolygonSymbolizer</em></a>의
+<tt class="docutils literal"><span class="pre">&lt;Stroke&gt;/&lt;GraphicFill&gt;</span></tt> 요소에 쓰여 라인 및 폴리곤 경계선을 타일 심볼(tiled symbol)로 칠합니다.</li>
+<li><a class="reference internal" href="../sld-reference/polygonsymbolizer.html#sld-reference-polygonsymbolizer"><em>PolygonSymbolizer</em></a>의
+<tt class="docutils literal"><span class="pre">&lt;Fill&gt;/&lt;GraphicFill&gt;</span></tt> 요소에 쓰여 폴리곤 내부를 타일 심볼로 채웁니다. (점묘법)</li>
+<li><a class="reference internal" href="../sld-reference/textsymbolizer.html#sld-reference-textsymbolizer"><em>TextSymbolizer</em></a>에 쓰여 텍스트 레이블의 밑에 또는 레이블 대신 그래픽을 표출합니다. (GeoServer 확장 모듈입니다.)</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">&lt;Graphic&gt;</span></tt>은 <tt class="docutils literal"><span class="pre">&lt;Mark&gt;</span></tt>
+또는 <tt class="docutils literal"><span class="pre">&lt;ExternalGraphic&gt;</span></tt> 요소를 담고 있습니다. <strong>Mark</strong>는 미리 정의된 순수한 벡터 심볼이지만, 획 및 면은 SLD 내에서 정의됩니다.
+<strong>External Graphic</strong>은 (PNG 이미지 또는 SVG 그래픽 같은) 외부 파일이며, 심볼을 어떻게 렌더링할지 정의하는 형태 및 색상 정보를 담고 있습니다.</p>
+<p>표준 SLD에서 <tt class="docutils literal"><span class="pre">&lt;Mark&gt;</span></tt>와 <tt class="docutils literal"><span class="pre">&lt;ExternalGraphic&gt;</span></tt>의 명칭은 고정 문자열입니다.
+GeoServer에서 이를 확장하여 명칭에 CQL 연산식을 내장시켜 각 피처에 따라 심볼명을 연산할 수 있도록 해주는 <cite>동적 심볼라이저(dynamic symbolizer)</cite>를 제공합니다.</p>
+<div class="section" id="marks">
+<h2>Marks<a class="headerlink" href="#marks" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 표준 SLD <tt class="docutils literal"><span class="pre">&lt;Mark&gt;</span></tt> 심볼, 확장 심볼인 사용자 확장 가능 집합(user-expandable set), 트루타입(TrueType) 폰트의 그림 문자(glyph)를 지원합니다.
+<tt class="docutils literal"><span class="pre">&lt;WellKnownName&gt;</span></tt> 요소가 심볼명을 설정합니다.</p>
+<p>더 자세한 내용은 <a class="reference internal" href="../sld-reference/pointsymbolizer.html#sld-reference-pointsymbolizer"><em>PointSymbolizer</em></a>와
+<a class="reference internal" href="../sld-cookbook/points.html#sld-cookbook-points"><em>Points</em></a> 섹션에 있는 예시를 참조하십시오..</p>
+<div class="section" id="standard-symbols">
+<h3>Standard symbols<a class="headerlink" href="#standard-symbols" title="Permalink to this headline">¶</a></h3>
+<p>The SLD 사양은 다음 심볼을 지원하도록 하고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>명칭</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">square</span></tt></td>
+<td>정사각형</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">circle</span></tt></td>
+<td>원</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">triangle</span></tt></td>
+<td>똑바로 선 삼각형</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">star</span></tt></td>
+<td>5개의 꼭지를 가진 별</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">cross</span></tt></td>
+<td>보이지 않는 정사각형 안의 십자가 (해치 심볼로 부적합)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">x</span></tt></td>
+<td>보이지 않는 정사각형 안의 X (해치 심볼로 부적합)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="shape-symbols">
+<h3>Shape symbols<a class="headerlink" href="#shape-symbols" title="Permalink to this headline">¶</a></h3>
+<p>형태 심볼 집합은 기본 집한의 일부가 아닌 가외의 심볼들을 추가합니다. 심볼명 앞에 접두사 <tt class="docutils literal"><span class="pre">shape://</span></tt>를 붙여야 합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>명칭</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">shape://vertline</span></tt></td>
+<td>수직선 (해치 심볼이나 철도 심볼로 적합)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">shape://horline</span></tt></td>
+<td>수평선 (해치 심볼로 적합)</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">shape://slash</span></tt></td>
+<td>&#8220;슬래시(slash)&#8221; 키보드 심볼처럼 오른쪽으로 기울어진 사선 (대각선 해치 심볼로 적합)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">shape://backslash</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">shape://slash</span></tt>과 유사하지만, 기울어진 방향이 반대</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">shape://dot</span></tt></td>
+<td>주위에 여백을 가진 아주 작은 원</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">shape://plus</span></tt></td>
+<td>주위에 여백이 없는 + 심볼 (십자 해치 심볼로 적합)</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">shape://times</span></tt></td>
+<td>주위에 여백이 없는 &#8220;X&#8221; 심볼 (십자 해치 심볼로 적합)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">shape://oarrow</span></tt></td>
+<td>열린 화살표 심볼 (한쪽 변이 없는 삼각형, 라인 끝에 화살표를 배치할 경우 적합)</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">shape://carrow</span></tt></td>
+<td>닫힌 화살표 심볼 (닫힌 삼각형, 라인 끝에 화살표를 배치할 경우 적합)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ttf-marks">
+<h3>TTF marks<a class="headerlink" href="#ttf-marks" title="Permalink to this headline">¶</a></h3>
+<p>Wingdings, WebDings, 또는 인터넷에서 찾을 수 있는 많은 심볼 폰트와 같은 장식용 또는 기호 트루타입 폰트의 그림 문자를 써서 <strong>마크(Mark)</strong>를 생성할 수 있습니다.
+이를 설정하는 문법은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>ttf://&lt;fontname&gt;#&lt;hexcode&gt;</pre>
+</div>
+<p>이 코드에서 <tt class="docutils literal"><span class="pre">fontname</span></tt>은 GeoServer가 사용할 수 있는 TTF 폰트의 전체 명칭이며,
+<tt class="docutils literal"><span class="pre">hexcode</span></tt>는 해당 심볼의 16진수 코드입니다.
+심볼의 16진수 코드를 얻으려면 대부분의 운영 체제에서 (윈도우 및 리눅스 그놈 모두) 지원하는 &#8220;Char Map&#8221; 유틸리티를 이용하십시오.</p>
+<p>예를 들어 WebDings 폰트의 &#8220;방패(shield)&#8221; 심볼을 사용하려 할 때, 그놈(Gnome)의 <tt class="docutils literal"><span class="pre">charmap</span></tt>은 해당 심볼의 16진수 코드를 다음과 같이 보고합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/charmap.png" src="../../_images/charmap.png" />
+<p class="caption"><em>그놈 &#8220;Char Map&#8221;에서 심볼의 16진수 코드 확인하기</em></p>
+</div>
+<p>방패 그림 문자를 심볼로 사용하려면 다음과 같은 SLD를 사용합니다.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre> <span class="nt">&lt;PointSymbolizer&gt;</span>
+     <span class="nt">&lt;Graphic&gt;</span>
+       <span class="nt">&lt;Mark&gt;</span>
+         <span class="nt">&lt;WellKnownName&gt;</span>ttf://Webdings#0x0064<span class="nt">&lt;/WellKnownName&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#AAAAAA<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Stroke/&gt;</span>
+       <span class="nt">&lt;/Mark&gt;</span>
+     <span class="nt">&lt;Size&gt;</span>16<span class="nt">&lt;/Size&gt;</span>
+   <span class="nt">&lt;/Graphic&gt;</span>
+ <span class="nt">&lt;/PointSymbolizer&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>그 결과 다음과 같은 맵이 표출됩니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/shields.png" src="../../_images/shields.png" />
+<p class="caption"><em>맵 상에 렌더링된 방패 심볼</em></p>
+</div>
+</div>
+<div class="section" id="extending-the-mark-subsytem-using-java">
+<h3>Extending the Mark subsytem using Java<a class="headerlink" href="#extending-the-mark-subsytem-using-java" title="Permalink to this headline">¶</a></h3>
+<p>사용자가 마크 하위 시스템을 확장할 수 있습니다. Java 코드를 이용해 확장하려면, <tt class="docutils literal"><span class="pre">MarkFactory</span></tt> 인터페이스를 실행하고
+<tt class="docutils literal"><span class="pre">META-INF/services/org.geotools.renderer.style.MarkFactory</span></tt> 파일 안에서 확장을 선언하십시시오.</p>
+<p>더 자세한 정보를 알고 싶다면 GeoTools의 Java 문서인 <a class="reference external" href="http://svn.osgeo.org/geotools/trunk/modules/library/render/src/main/java/org/geotools/renderer/style/MarkFactory.java">MarkFactory</a>와 함께
+다음 예시 코드를 참조하십시오.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://svn.osgeo.org/geotools/trunk/modules/library/render/src/main/resources/META-INF/services/org.geotools.renderer.style.MarkFactory">factory SPI registration file</a></li>
+<li><a class="reference external" href="http://svn.osgeo.org/geotools/trunk/modules/library/render/src/main/java/org/geotools/renderer/style/TTFMarkFactory.java">TTFMarkFactory</a> 실행(implementation)</li>
+<li><a class="reference external" href="http://svn.osgeo.org/geotools/trunk/modules/library/render/src/main/java/org/geotools/renderer/style/ShapeMarkFactory.java">ShapeMarkFactory</a> 실행</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="external-graphics">
+<h2>External Graphics<a class="headerlink" href="#external-graphics" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">&lt;ExternalGraphic&gt;</span></tt>은 포인트 심볼을 정의하는 또 다른 방법입니다.
+마크와 다르게, 외부 그래픽은 그래픽 그대로(as-is) 쓰이기 때문에 설정도 좀 더 간단합니다. 이 요소는 <tt class="docutils literal"><span class="pre">&lt;OnlineResource&gt;</span></tt>에서
+URL이나 파일 경로를 통해 그래픽을 설정하고, <tt class="docutils literal"><span class="pre">&lt;Format&gt;</span></tt>에서 MIME 형식을 통해 그래픽 포맷을 설정합니다.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre> <span class="nt">&lt;PointSymbolizer&gt;</span>
+     <span class="nt">&lt;Graphic&gt;</span>
+        <span class="nt">&lt;ExternalGraphic&gt;</span>
+           <span class="nt">&lt;OnlineResource</span> <span class="na">xlink:type=</span><span class="s">&quot;simple&quot;</span> <span class="na">xlink:href=</span><span class="s">&quot;http://mywebsite.com/pointsymbol.png&quot;</span> <span class="nt">/&gt;</span>
+           <span class="nt">&lt;Format&gt;</span>image/png<span class="nt">&lt;/Format&gt;</span>
+        <span class="nt">&lt;/ExternalGraphic&gt;</span>
+     <span class="nt">&lt;/Graphic&gt;</span>
+ <span class="nt">&lt;/PointSymbolizer&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p><tt class="docutils literal"><span class="pre">&lt;Mark&gt;</span></tt>와 마찬가지로, <tt class="docutils literal"><span class="pre">&lt;Size&gt;</span></tt> 요소에서 크기를 설정할 수도 있습니다.
+이미지를 그래픽 심볼로 사용할 경우 크기 조정을 하지 않는 편이 좋습니다. 외양이 흐려질 수도 있기 때문입니다.
+<tt class="docutils literal"><span class="pre">&lt;Size&gt;</span></tt> 요소를 제외하면 이미지 자체 해상도로 사용할 수 있습니다.
+SVG 그래픽의 경우 이와는 반대로  <tt class="docutils literal"><span class="pre">&lt;Size&gt;</span></tt> 요소를 설정하는 편이 좋습니다.
+SVG 파일은 형태와 색상을 모두 가진 벡터 기반 포맷이기 때문에 어떤 크기에서도 선명하게 보입니다.</p>
+<p>심볼 파일 경로가 상대 경로라면, 다음과 같이 <tt class="docutils literal"><span class="pre">$GEOSERVER_DATA_DIR/styles</span></tt> 디렉터리 아래에서 파일을 찾습니다.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre> <span class="nt">&lt;PointSymbolizer&gt;</span>
+   <span class="nt">&lt;Graphic&gt;</span>
+     <span class="nt">&lt;ExternalGraphic&gt;</span>
+       <span class="nt">&lt;OnlineResource</span> <span class="na">xlink:type=</span><span class="s">&quot;simple&quot;</span> <span class="na">xlink:href=</span><span class="s">&quot;burg02.svg&quot;</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;Format&gt;</span>image/svg+xml<span class="nt">&lt;/Format&gt;</span>
+     <span class="nt">&lt;/ExternalGraphic&gt;</span>
+     <span class="nt">&lt;Size&gt;</span>20<span class="nt">&lt;/Size&gt;</span>
+   <span class="nt">&lt;/Graphic&gt;</span>
+ <span class="nt">&lt;/PointSymbolizer&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>이 예시는 SVG 그래픽을 사용했기 때문에, 크기를 명시적으로 설정했습니다.</p>
+<div class="section" id="symbol-positioning">
+<h3>Symbol Positioning<a class="headerlink" href="#symbol-positioning" title="Permalink to this headline">¶</a></h3>
+<p>그래픽 심볼은 그래픽 전체 중심이 배치 포인트(반복 혹은 타일 그래픽의 경우 포인트들)에 오도록 렌더링됩니다.
+그래픽을 (심볼이 포인트를 가리키는 경우처럼) 포인트에서 이동(offset)해야 할 경우, 맵의 전체 범위 안에서 그래픽의 가시(visible) 부분을 이동시켜야 합니다.
+이미지의 경우 투명 픽셀을 써서 이미지 크기를 확대할 수도 있습니다.
+SVG 그래픽의 경우 원하는 상대 위치를 가진 투명 사각형으로 그래픽 형태를 둘러싸는 방법을 쓸 수 있습니다.</p>
+</div>
+</div>
+<div class="section" id="dynamic-symbolizers">
+<h2>Dynamic symbolizers<a class="headerlink" href="#dynamic-symbolizers" title="Permalink to this headline">¶</a></h2>
+<p>표준 SLD에서, <tt class="docutils literal"><span class="pre">Mark/WellKnowName</span></tt> 요소와 <tt class="docutils literal"><span class="pre">ExternalGraphic/OnlineResource/&#64;xlink:href</span></tt> 속성은 고정 문자열입니다.
+즉 렌더링되는 모든 피처에 대해 동일한 값을 가진다는 뜻입니다. 피처 속성에 따라 심볼을 다르게 표출할 경우, 이 제한 때문에 스타일이 굉장히 길어집니다.
+다른 심볼마다 개별 <tt class="docutils literal"><span class="pre">Rule</span></tt> 및 <tt class="docutils literal"><span class="pre">Symbolizer</span></tt>를 사용해야 하기 때문입니다.</p>
+<p>GeoServer는 <tt class="docutils literal"><span class="pre">WellKnownName</span></tt> 및 <tt class="docutils literal"><span class="pre">OnlineResource/&#64;xlink:href</span></tt> 양쪽 모두에
+<a class="reference internal" href="../../filter/ecql_reference.html#filter-ecql-reference"><em>CQL 연산식</em></a>을 내장시킬 수 있도록 해서 이 문제를 개선했습니다.
+피처 속성값에서 심볼명을 추출할 수 있을 경우, 이 기능으로 훨씬 간결한 스타일 작업을 할 수 있습니다.
+다음과 같은 문법을 써서 <tt class="docutils literal"><span class="pre">&lt;WellKnownName&gt;</span></tt>의 문자열이나 <tt class="docutils literal"><span class="pre">&lt;OnlineResource&gt;</span></tt>의
+<tt class="docutils literal"><span class="pre">xlink:href</span></tt> 속성 안에 CQL 연산식을 내장시킬 수 있습니다.</p>
+<div class="highlight-python"><pre>${&lt;cql expression&gt;}</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">현재 버전에서, 연산식을 내장시키기 <em>전에</em> <tt class="docutils literal"><span class="pre">xlink:href</span></tt> 문자열이 유효한 URL이어야 합니다.
+다시 말해 전체 URL을 연산식으로 처리할 수 없다는 의미입니다. <tt class="docutils literal"><span class="pre">xlink:href</span></tt> 문자열은
+적어도 접두사 <tt class="docutils literal"><span class="pre">http://</span></tt>을 명확하게 포함해야 합니다.</p>
+</div>
+<p>연산식의 가장 간단한 형태는 <tt class="docutils literal"><span class="pre">${STATE_ABBR}</span></tt> 같은 단일 속성명입니다.
+예를 들면 미국의 주기(州旗)를 주 명칭과 일치하는 파일명을 가진 심볼을 써서 표출한다고 생각해보십시오.
+다음은 단일 규칙으로 깃발 심볼을 설정하는 스타일입니다.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;ExternalGraphic&gt;</span>
+   <span class="nt">&lt;OnlineResource</span> <span class="na">xlink:type=</span><span class="s">&quot;simple&quot;</span>
+                   <span class="na">xlink:href=</span><span class="s">&quot;http://mysite.com/tn_${STATE_ABBR}.jpg&quot;</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;Format&gt;</span>image/jpeg<span class="nt">&lt;/Format&gt;</span>
+<span class="nt">&lt;/ExternalGraphic&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>속성값을 조작해야 할 경우, 전체 CQL 연산식을 설정할 수 있습니다. 예를 들어 <tt class="docutils literal"><span class="pre">STATE_ABBR</span></tt> 속성값이 대문자인데
+URL에 소문자로 명칭을 써야할 경우, CQL의 <tt class="docutils literal"><span class="pre">strToLowerCase</span></tt> 함수를 사용할 수 있습니다.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;ExternalGraphic&gt;</span>
+   <span class="nt">&lt;OnlineResource</span> <span class="na">xlink:type=</span><span class="s">&quot;simple&quot;</span>
+            <span class="na">xlink:href=</span><span class="s">&quot;http://mysite.com/tn_${strToLowerCase(STATE_ABBR)}.jpg&quot;</span> <span class="nt">/&gt;</span>
+   <span class="nt">&lt;Format&gt;</span>image/jpeg<span class="nt">&lt;/Format&gt;</span>
+<span class="nt">&lt;/ExternalGraphic&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="rendering-transform.html" title="previous chapter">Rendering Transformations</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="substitution.html" title="next chapter">Variable substitution in SLD</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Graphic symbology in GeoServer</a><ul>
+<li><a class="reference internal" href="#marks">Marks</a><ul>
+<li><a class="reference internal" href="#standard-symbols">Standard symbols</a></li>
+<li><a class="reference internal" href="#shape-symbols">Shape symbols</a></li>
+<li><a class="reference internal" href="#ttf-marks">TTF marks</a></li>
+<li><a class="reference internal" href="#extending-the-mark-subsytem-using-java">Extending the Mark subsytem using Java</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#external-graphics">External Graphics</a><ul>
+<li><a class="reference internal" href="#symbol-positioning">Symbol Positioning</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dynamic-symbolizers">Dynamic symbolizers</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="rendering-transform.html" title="previous chapter">Rendering Transformations</a></li>
+            <li>다음: <a href="substitution.html" title="next chapter">Variable substitution in SLD</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/styling/sld-extensions/pointsymbols.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

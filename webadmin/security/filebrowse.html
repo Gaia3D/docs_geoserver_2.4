@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>File Browsing &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Security" href="index.html" />
+      <link rel="next" title="Demos" href="../demos/index.html" />
+      <link rel="prev" title="Services" href="services.html" />
+</head>
+<body class="webadmin/security/filebrowse">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Security</a> &raquo;</li>
+  <li>File Browsing</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../demos/index.html" title="Demos"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="services.html" title="Services"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="file-browsing">
+<span id="webadmin-sec-filebrowse"></span><h1>File Browsing<a class="headerlink" href="#file-browsing" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer 웹 관리자 인터페이스는 GeoServer 내부 디렉터리 이외의 파일 시스템의 위치를 노출시키는 파일 브라우저 대화창을 사용합니다.
+파일 시스템의 루트 및 사용자의 홈(home) 디렉터리도 노출됩니다. 서버의 보안 레벨이 높고 다수의 응용 프로그램이 실행되고 있는 환경일 경우 이 기능을 비활성화시키는 편이 좋습니다.</p>
+<p>이 기능을 비활성화시키는 데 <tt class="docutils literal"><span class="pre">GEOSERVER_FILEBROWSER_HIDEFS</span></tt> 속성을 사용할 수 있습니다.
+이 속성값을 <tt class="docutils literal"><span class="pre">true</span></tt>로 설정하면 파일 브라우저에서 오직 GeoServer 데이터 디렉터리만 노출됩니다.</p>
+<p>이 속성은 다음 표준적인 방법들 가운데 하나로 설정할 수 있습니다.</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">web.xml</span></tt></p>
+<div class="highlight-python"><pre>&lt;context-param&gt;
+  &lt;param-name&gt;GEOSERVER_FILEBROWSER_HIDEFS&lt;/param-name&gt;
+  &lt;param-value&gt;true&lt;/param-value&gt;
+&lt;/context-param&gt;</pre>
+</div>
+</li>
+<li><p class="first">시스템 속성</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">-</span><span class="n">DGEOSERVER_FILEBROWSER_HIDEFS</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">환경 변수</p>
+<div class="highlight-python"><pre>export GEOSERVER_FILEBROWSER_HIDEFS=true</pre>
+</div>
+</li>
+</ul>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="services.html" title="previous chapter">Services</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../demos/index.html" title="next chapter">Demos</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="services.html" title="previous chapter">Services</a></li>
+            <li>다음: <a href="../demos/index.html" title="next chapter">Demos</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/security/filebrowse.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

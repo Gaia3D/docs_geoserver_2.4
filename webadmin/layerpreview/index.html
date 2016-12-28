@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Layer Preview &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Administration Interface" href="../index.html" />
+      <link rel="next" title="Data" href="../data/index.html" />
+      <link rel="prev" title="JAI" href="../server/JAI.html" />
+</head>
+<body class="webadmin/layerpreview/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li>Layer Preview</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../data/index.html" title="Data"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../server/JAI.html" title="JAI"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="layer-preview">
+<span id="layerpreview"></span><h1>Layer Preview<a class="headerlink" href="#layer-preview" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 다양한 산출물 포맷으로 레이어를 보는 방법을 소개합니다. 미리 보기(preview)가 가능하도록 해당 레이어를 설정해두어야 합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/preview_list2.png" src="../../_images/preview_list2.png" />
+<p class="caption"><em>Layer Preview 페이지</em></p>
+</div>
+<p>각 레이어행은 레이어의 데이터형(type), 레이어명(name), 제목(title), 미리 보기가 가능한 포맷을 보여줍니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>데이터형 아이콘</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/data_layers_type11.png" class="first last" src="../../_images/data_layers_type11.png" />
+</td>
+<td>래스터 (그리드) 레이어</td>
+</tr>
+<tr class="row-odd"><td><img alt="../../_images/data_layers_type21.png" class="first last" src="../../_images/data_layers_type21.png" />
+</td>
+<td>벡터 (피처) 레이어</td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/preview_layergroup.png" class="first last" src="../../_images/preview_layergroup.png" />
+</td>
+<td>레이어 그룹</td>
+</tr>
+</tbody>
+</table>
+<p>레이어명은 작업공간 및 레이어의 명칭을 의미하며, 제목은 <a class="reference internal" href="../data/layers.html#edit-layer-data"><em>Edit Layer Data</em></a> 패널에서 설정한 간단한 설명을 가리킵니다.
+다음 예제에서 nurc는 작업공간을, Arc_Sample은 레이어 명칭을 뜻하며, &#8220;A sample ArcGrid field&#8221;는 Edit Later Data 패널에서 설정된 제목입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/preview_row1.png" src="../../_images/preview_row1.png" />
+<p class="caption"><em>레이어 미리 보기 단일 행</em></p>
+</div>
+<div class="section" id="output-formats">
+<h2>Output Formats<a class="headerlink" href="#output-formats" title="Permalink to this headline">¶</a></h2>
+<p>Layer Preview 페이지에서는 심화 활용 또는 데이터 공유를 위해 다양한 산출물 포맷을 지원합니다.
+모든 3가지 레이어 데이터형을 일반 OpenLayers 및 KML 포맷으로 미리 보기할 수 있습니다.
+또, &#8220;All formats&#8221; 메뉴를 사용해서 모든 레이어 데이터형을 추가적인 7가지 AtomPub, GIF, GeoRss, JPEG, KML (compressed), PDF, PNG, SVG, TIFF 산출물 포맷으로도 볼 수 있습니다.
+WFS 산출물 미리 보기는 벡터 레이어만 가능합니다. 이때 산출물은 일반 GML 및 CSV, GML3, GeoJSON, shapefile 포맷을 지원합니다.
+다음 표에서 모든 지원 산출물 포맷을 산출물 데이터형인 이미지, 텍스트, 데이터로 분류해서 간략히 설명하고 있습니다.</p>
+<div class="section" id="image-outputs">
+<h3>Image Outputs<a class="headerlink" href="#image-outputs" title="Permalink to this headline">¶</a></h3>
+<p>WMS의 래스터, 벡터, 커버리지 데이터에 대한 GetMap 요청에 따라 모든 이미지 산출물을 생산할 수 있습니다.
+WMS는 공간 데이터가 담고 있는 피처 데이터에 대한 접근을 허용하지 않으면서도 공간 데이터를 시각적으로 표출할 수 있는 방법입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>포맷</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td>KML</td>
+<td>KML(Keyhole Markup Language)은 구글어스 또는 구글맵 같은 어스 브라우저(EarthBrowser)에서 지리 데이터를 표출하기 위한 XML 기반 언어 스키마(schema)입니다.
+KML은 요소 및 속성을 포함하는 태그(tag) 기반 구조를 사용합니다. GeoServer에서 KML 파일은 KMZ이라는 파일 확장명으로 배포되는데, KML을 압축한 파일이라는 의미입니다.</td>
+</tr>
+<tr class="row-odd"><td>JPEG</td>
+<td>WMS의 래스터 포맷 산출물입니다. JPEG은 압축 그래픽 파일 포맷으로, 압축 시 약간 질이 손실됩니다. 사진에 사용하기에는 최적이지만 데이터를 정확하게 복제하는 데에는 추천하지 않습니다.</td>
+</tr>
+<tr class="row-even"><td>GIF</td>
+<td>WMS의 래스터 포맷 산출물입니다. GIF(Graphics Interchange Format)는 제한된 색상 수를 가진 선명한(sharp-edged) 라인 아트(line art)에 최적인 비트맵 이미지 포맷입니다.
+이는 이 포맷의 동일한 색상의 면과 날카로운 경계선에 어울리는 무손실 압축 때문입니다. (반면에 JPEG는 부드러운 색변화 및 더 무딘 경계선에 어울립니다.)
+GIF가 사용할 수 있는 색상은 8비트(8-bit) 팔레트, 즉 256색입니다.</td>
+</tr>
+<tr class="row-odd"><td>SVG</td>
+<td>WMS의 벡터 포맷 산출물입니다. SVG(Scalable Vector Graphics)는 XML로 2차원 그래픽을 모델링하기 위한 언어입니다. 개별적인 포인트보다 그래픽 오브젝트를 사용한다는 점에서 GIF나 JPEG과는 차이가 납니다.</td>
+</tr>
+<tr class="row-even"><td>TIFF</td>
+<td>WMS의 래스터 포맷 산출물입니다. TIFF(Tagged Image File Format)는 한 파일로 다양한 데이터를 처리할 수 있는 유연하고 적응성이 뛰어난 포맷입니다.
+GeoTIFF는 TIFF 파일 내부에 태그 형태로 지리 정보를 담고 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>PNG</td>
+<td>WMS의 래스터 포맷 산출물입니다. PNG(Portable Network Graphics) 파일 포맷은 GIF를 대신하기 위해 만들어진 무료 오픈소스 포맷입니다.
+GIF가 지원하는 256색만 지원하는 반면, PNG 포맷은 트루컬러(truecolor, 1,600만 색상)를 지원합니다.
+PNG 파일은 단일 색상의 넓은 면으로 이루어진 이미지인 경우에 최적입니다.</td>
+</tr>
+<tr class="row-even"><td>OpenLayers</td>
+<td>WMS의 GetMap 요청은 간단한 OpenLayers 미리 보기 창을 생성합니다.
+<a class="reference external" href="http://openlayers.org/">OpenLayers</a>는 웹브라우저에 맵 데이터를 표출하기 위한 오픈소스 JavaScript 라이브러리입니다.
+이 OpenLayers 산출물은 OpenLayers 독립 버전(standalone version)에서는 사용할 수 없는 몇몇 발전된 필터를 가지고 있습니다.
+또한, 생산된 미리 보기는 표출(display)에 사용할 쉬운 설정 옵션을 담고 있는 헤더(header)를 포함합니다.</td>
+</tr>
+<tr class="row-odd"><td>PDF</td>
+<td>PDF(Portable Document Format)은 텍스트, 폰트, 래스터 이미지, 2차원 벡터 그래픽을 모두 포함할 수 있는, 고정된 레이아웃을 가진 2차원 문서의 완전한 표현 형식을 압축한 포맷입니다.</td>
+</tr>
+</tbody>
+</table>
+<div class="figure align-left">
+<img alt="../../_images/preview_openlayers.png" src="../../_images/preview_openlayers.png" />
+<p class="caption"><em>이미지 산출물의 예 - nurc:Pk50095 레이어의 OpenLayers 미리 보기</em></p>
+</div>
+</div>
+<div class="section" id="text-outputs">
+<h3>Text Outputs<a class="headerlink" href="#text-outputs" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>포맷</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td>AtomPub</td>
+<td>XLM 포맷 형식의 WMS 공간 데이터 산출물입니다. AtomPub(Atom Publishing Protocol)은 HTTP와 XML을 사용해서 웹 리소스를 생산하고 편집하는 데 쓰이는 응용 프로그램 레벨의 프로토콜입니다.
+컨텐츠 수집·배포자(content syndication)를 위한 RSS 표준을 대신하기 위해 만들어진 Atom은 지리 데이터를 구독(subscription)할 수 있게 해줍니다.</td>
+</tr>
+<tr class="row-odd"><td>GeoRss</td>
+<td>WMS GetMap 요청에 대한 XLM 포맷 형식의 벡터 데이터 산출물입니다. RSS(Rich Site Summary)는 정기적으로 변경되는 웹 컨텐츠를 배달하기 위한 XML 포맷을 말합니다.
+<a class="reference external" href="http://www.georss.org">GeoRss</a>는 RSS 피드(feed) 내부에 위치 정보를 코드화하기 위한 표준입니다.
+Layers Preview는 Atom을 이용한 GeoRSS Simple Geometries 정보를 포함하는 RSS 2.0 문서를 생산합니다.</td>
+</tr>
+<tr class="row-even"><td>GeoJSON</td>
+<td><a class="reference external" href="http://json.org/">JavaScript Object Notation</a>(JSON)은 JavaScript 프로그래밍 언어에 기반한 가벼운 데이터 교환 형식(data-interchange format)입니다.
+JSON을 곧바로 손쉽게 javascript로 분절(parse)할 수 있기 때문에, 웹브라우저 기반 응용 프로그램을 위한 이상적인 데이터 교환 형식이라 할 수 있습니다.
+GeoJSON은 JSON에 지리 정보 형식을 추가한 텍스트 산출물 포맷입니다.</td>
+</tr>
+<tr class="row-odd"><td>CSV</td>
+<td>WFS GetFeature요청에 대한 쉼표로 단락된(comma-delimited) 텍스트 산출물입니다.
+CSV(Comma Separated Values) 파일은 데이터행을 담고 있는 텍스트 파일입니다.
+각 행의 데이터값은 쉼표로 구분됩니다. CSV 파일은 또 각 행의 변수 배열(value ordering)을 설명하는, 쉼표로 구분된 헤더를 담고 있습니다.
+GeoServer의 CSV 파일은 데이터 용량에 제한 없이 끝없이 산출될 수 있습니다.</td>
+</tr>
+</tbody>
+</table>
+<p>다음은 nurc:Pk50095 레이어의 Atom을 이용한 간단한 GeoRSS의 일부분입니다.</p>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+     &lt;rss xmlns:atom="http://www.w3.org/2005/Atom"
+          xmlns:georss="http://www.georss.org/georss" version="2.0"&gt;
+        &lt;channel&gt;
+              &lt;title&gt;Pk50095&lt;/title&gt;
+              &lt;description&gt;Feed auto-generated by GeoServer&lt;/description&gt;
+              &lt;link&gt;&gt;&lt;/link&gt;
+              &lt;item&gt;
+                &lt;title&gt;fid--f04ca6b_1226f8d829e_-7ff4&lt;/title&gt;
+                &lt;georss:polygon&gt;46.722110379286 13.00635746384126
+                     46.72697223230676 13.308182612644663 46.91359611878293
+                     13.302316867622581 46.90870264238999 12.999446822650462
+                     46.722110379286 13.00635746384126
+                &lt;/georss:polygon&gt;
+                &lt;/item&gt;
+        &lt;/channel&gt;
+&lt;/rss&gt;</pre>
+</div>
+</div>
+<div class="section" id="data-outputs">
+<h3>Data Outputs<a class="headerlink" href="#data-outputs" title="Permalink to this headline">¶</a></h3>
+<p>데이터 산출물은 모두 WFS의  GetFeature 요청에 따라 생산됩니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>포맷</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td>GML2/3</td>
+<td>GML(Geography Markup Language)은 지리 관련 피처를 표현하기 위해 <a class="reference external" href="http://en.wikipedia.org/wiki/Open_Geospatial_Consortium">Open Geospatial Consortium</a>(OGC)이 정의한 XML 문법입니다.
+GML은 지리 시스템을 위한 모델링 언어 역할은 물론 지리 데이터 공유에 쓰이는 공개 데이터 교환 형식 역할도 하고 있습니다.
+GML2는 기본 (공통) 산출물 포맷이지만, GML3은 &#8220;All Formats&#8221; 메뉴에서 선택할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>Shapefile</td>
+<td>ESRI shapefile, 또는 간단히 shapefile은 GIS 데이터를 교환하는 데 가장 흔히 사용되는 포맷입니다.
+GeoServer는 zip 파일 형태로 shapefile을 생산하는데, 이 zip 파일은 .cst, .dbf, .prg, .shp, .shx 파일을 담은 디렉터리를 압축하고 있습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../server/JAI.html" title="previous chapter">JAI</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../data/index.html" title="next chapter">Data</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Layer Preview</a><ul>
+<li><a class="reference internal" href="#output-formats">Output Formats</a><ul>
+<li><a class="reference internal" href="#image-outputs">Image Outputs</a></li>
+<li><a class="reference internal" href="#text-outputs">Text Outputs</a></li>
+<li><a class="reference internal" href="#data-outputs">Data Outputs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../server/JAI.html" title="previous chapter">JAI</a></li>
+            <li>다음: <a href="../data/index.html" title="next chapter">Data</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/layerpreview/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

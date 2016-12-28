@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Working with Raster Data &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="next" title="GeoTIFF" href="geotiff.html" />
+      <link rel="prev" title="Pregeneralized Features" href="../vector/featurepregen.html" />
+</head>
+<body class="data/raster/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li>Working with Raster Data</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="geotiff.html" title="GeoTIFF"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../vector/featurepregen.html" title="Pregeneralized Features"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="working-with-raster-data">
+<span id="data-raster"></span><h1>Working with Raster Data<a class="headerlink" href="#working-with-raster-data" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 GeoServer가 접근할 수 있는 래스터(커버리지) 데이터 소스에 대해 설명합니다.</p>
+<p>GeoServer를 표준 설치하면 다음 데이터 포맷을 로드해서 서비스할 수 있습니다.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="geotiff.html">GeoTIFF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gtopo30.html">GTOPO30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="worldimage.html">WorldImage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imagemosaic.html">ImageMosaic</a></li>
+</ul>
+</div>
+<p>GeoServer 확장 모듈(extension)로 다른 데이터 소스도 사용할 수 있습니다.
+확장 모듈은 GeoServer에 기능을 추가하는 모듈로, <a class="reference external" href="http://geoserver.org/display/GEOS/Download">GeoServer download page</a> 페이지에서 다운로드할 수 있습니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">GeoServer 인스턴스 버전과 확장 모듈 버전이 일치해야 합니다.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="arcgrid.html">ArcGrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gdal.html">GDAL Image Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oraclegeoraster.html">Oracle Georaster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="postgisraster.html">Postgis Raster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imagepyramid.html">ImagePyramid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imagemosaicjdbc.html">Image Mosaic JDBC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customjdbcaccess.html">Custom JDBC Access for image data</a></li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../vector/featurepregen.html" title="previous chapter">Pregeneralized Features</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="geotiff.html" title="next chapter">GeoTIFF</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../vector/featurepregen.html" title="previous chapter">Pregeneralized Features</a></li>
+            <li>다음: <a href="geotiff.html" title="next chapter">GeoTIFF</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/raster/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

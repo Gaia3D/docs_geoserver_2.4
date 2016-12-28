@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Windows Binary &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Windows" href="index.html" />
+      <link rel="next" title="Mac OS X" href="../osx/index.html" />
+      <link rel="prev" title="Windows Installer" href="installer.html" />
+</head>
+<body class="installation/windows/binary">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Installation</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Windows</a> &raquo;</li>
+  <li>Windows Binary</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../osx/index.html" title="Mac OS X"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="installer.html" title="Windows Installer"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="windows-binary">
+<span id="installation-windows-bin"></span><h1>Windows Binary<a class="headerlink" href="#windows-binary" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 섹션은 운영체제 독립적인 바이너리를 이용한 설치과정입니다. 윈도우용 마법사 기반 인스톨러는 <a class="reference internal" href="installer.html#windows-installer"><em>Windows Installer</em></a> 섹션을 참조하십시오.</p>
+</div>
+<p>GeoServer를 설치하는 가장 일반적인 방법은 운영체제 독립적인 바이너리를 사용하는 것입니다. 이 버전은 가벼운 서블릿 컨테이너 시스템인 <a class="reference external" href="http://www.mortbay.org/jetty/">Jetty</a> 내에 번들로 포함된 GeoServer 웹 응용 프로그램(webapp)입니다. 모든 운영체제에 걸쳐 매우 유사하게 작동하며 설치가 매우 간단하다는 장점이 있습니다.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><a class="reference external" href="http://geoserver.org/display/GEOS/Download">GeoServer Download page</a>로 이동하여 적합한 버전을 선택합니다.</li>
+<li>다운로드 페이지에서 <em class="guilabel">OS-independent binary</em>를 선택합니다.</li>
+<li>아카이브를 다운로드하여 설치하고자 하는 디렉터리에 압축을 풉니다. 일반적으로 <tt class="file docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files\GeoServer</span></tt> 경로를 사용합니다.</li>
+</ol>
+<div class="section" id="setting-environment-variables">
+<h3>Setting environment variables<a class="headerlink" href="#setting-environment-variables" title="Permalink to this headline">¶</a></h3>
+<p>아직 설정되지 않은 경우 <tt class="docutils literal"><span class="pre">JAVA_HOME</span></tt> 환경 변수를 설정해야 합니다. 이 변수는 <tt class="file docutils literal"><span class="pre">%JAVA_HOME%\bin\java.exe</span></tt> 파일이 있는 JDK/JRE 경로입니다. JRE는 <a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a> 에서 다운로드할 수 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">Oracle Java SE 6 버전 이상을 강력히 추천합니다. (GeoServer 2.2.x 버전부터 Oracle JRE 5를 지원하지 않습니다.) GeoServer를 실행하는 데 Java Development Kit (JDK)은 필요 없습니다. Java와 GeoServer의 관계에 대해 자세한 정보를 원한다면 <a class="reference internal" href="../../production/java.html#production-java"><em>Java Considerations</em></a> 섹션을 참조하십시오.</p>
+</div>
+<ol class="arabic simple">
+<li><em class="menuselection">제어판 ‣ 시스템 ‣ 고급 시스템 설정 ‣ 환경 변수</em>로 이동합니다.</li>
+<li><em class="guilabel">시스템 변수</em>에서 <em class="guilabel">새로 만들기</em>를 클릭합니다.</li>
+<li><em class="guilabel">변수 이름</em>에 <tt class="docutils literal"><span class="pre">JAVA_HOME</span></tt>, <em class="guilabel">변수 값</em>에 JDK/JRE 경로를 입력합니다.</li>
+<li>확인을 세 번 클릭하여 시스템 속성 창을 닫습니다.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer 설치 디렉터리인 <tt class="docutils literal"><span class="pre">GEOSERVER_HOME</span></tt> 변수와 GeoServer 데이터 디렉터리인 <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt> 변수(일반적으로 <tt class="file docutils literal"><span class="pre">%GEOSERVER_HOME\data_dir</span></tt>)를 설정할 수 있습니다. 만약 GeoServer 설치시 사용된 데이터 디렉터리 외에 다른 디렉터리를 데이터 디렉터리로 사용할 경우 후자의 설정은 필수적입니다. 이 변수를 설정하는 과정은 위와 동일합니다. 이렇게 사용자가 지정한 데이터 디렉터리는 반드시 유효한 <a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a>여야 한다는 점을 주의하십시오.</p>
+</div>
+</div>
+</div>
+<div class="section" id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 과정은 윈도우즈 탐색기나 커맨드 라인(명령 프롬프트)을 통해 가능합니다.</p>
+</div>
+<ol class="arabic simple">
+<li>GeoServer가 설치된 위치의 <tt class="file docutils literal"><span class="pre">bin</span></tt> 디렉터리로 이동합니다.</li>
+<li><tt class="file docutils literal"><span class="pre">startup.bat</span></tt>을 실행합니다. 명령 프롬프트 윈도우가 실행되어 계속 열려 있을 것입니다. 이 윈도우는 진단 및 문제 해결을 위한 정보를 포함합니다. 이 윈도우를 닫아서는 안 됩니다. 닫으면 GeoServer가 종료됩니다.</li>
+<li><a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>에 접속하려면 웹브라우저에서 <tt class="docutils literal"><span class="pre">http://localhost:8080/geoserver</span></tt> 로 이동하십시오.</li>
+</ol>
+</div>
+<div class="section" id="stopping">
+<h2>Stopping<a class="headerlink" href="#stopping" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer를 종료하려면 열려 있는 명령 프롬프트 윈도우를 닫거나 <tt class="file docutils literal"><span class="pre">bin</span></tt> 디렉터리 안에 있는 <tt class="file docutils literal"><span class="pre">shutdown.bat</span></tt> 파일을 실행합니다.</p>
+</div>
+<div class="section" id="uninstallation">
+<h2>Uninstallation<a class="headerlink" href="#uninstallation" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>GeoServer가 실행되고 있다면 종료합니다.</li>
+<li>GeoServer 설치 디렉터리를 삭제합니다.</li>
+</ol>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="installer.html" title="previous chapter">Windows Installer</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../osx/index.html" title="next chapter">Mac OS X</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Windows Binary</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#setting-environment-variables">Setting environment variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running">Running</a></li>
+<li><a class="reference internal" href="#stopping">Stopping</a></li>
+<li><a class="reference internal" href="#uninstallation">Uninstallation</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="installer.html" title="previous chapter">Windows Installer</a></li>
+            <li>다음: <a href="../osx/index.html" title="next chapter">Mac OS X</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/installation/windows/binary.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

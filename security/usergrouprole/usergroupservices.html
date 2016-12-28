@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>User/group services &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Role system" href="index.html" />
+      <link rel="next" title="Roles" href="roles.html" />
+      <link rel="prev" title="Users and Groups" href="usergroups.html" />
+</head>
+<body class="security/usergrouprole/usergroupservices">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Role system</a> &raquo;</li>
+  <li>User/group services</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="roles.html" title="Roles"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="usergroups.html" title="Users and Groups"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="user-group-services">
+<span id="sec-rolesystem-usergroupservices"></span><h1>User/group services<a class="headerlink" href="#user-group-services" title="Permalink to this headline">¶</a></h1>
+<p><strong>유저/그룹 서비스(user/group service)</strong>는 유저와 그룹에 대한 다음 정보를 제공합니다.</p>
+<ul class="simple">
+<li>사용자 목록</li>
+<li>각 그룹과 연계된 사용자를 포함한 그룹 목록</li>
+<li>사용자 비밀번호</li>
+</ul>
+<p>많은 인증(authentication) 제공자가 인증 작업을 위해 사용자/그룹 서비스를 이용합니다.
+이런 경우, 사용자/그룹 서비스는 어떤 사용자와 비밀번호를 인증할 것인지 대조하는 데이터베이스가 됩니다.
+<a class="reference internal" href="../auth/chain.html#sec-auth-chain"><em>인증 사슬(Authentication chain)</em></a>을 어떻게 설정하느냐에 따라 임의의 시간에 0개, 1개, 또는 다수의 사용자/그룹 서비스가 있을 수 있습니다.</p>
+<p>사용자/그룹 서비스가 사용자 정보에 대한 접근을 허용하지만 새로운 사용자 및 그룹을 추가하거나 변경할 수 없는 읽기 전용(read-only)일 수도 있습니다.
+사용자 및 그룹 데이터베이스를 외부 서비스에 위임하도록 사용자/그룹 서비스를 설정하면 이런 경우가 될 수 있습니다. 외부 LDAP 서버가 바로 한 예가 될 것입니다.</p>
+<p>기본적으로 GeoServer는 다음과 같은 2종류의 사용자/그룹 서비스를 지원합니다.</p>
+<ul class="simple">
+<li>XML —<em>(기본값)</em> XML로 지속되는(persisted) 사용자/그룹 서비스</li>
+<li>JDBC —JDBC를 통해 데이터베이스에서 지속되는 사용자/그룹 서비스</li>
+</ul>
+<div class="section" id="xml-user-group-service">
+<span id="sec-rolesystem-usergroupxml"></span><h2>XML user/group service<a class="headerlink" href="#xml-user-group-service" title="Permalink to this headline">¶</a></h2>
+<p>XML 사용자/그룹 서비스는 XML 파일 형태로 사용자/그룹 데이터베이스를 지속합니다.
+이 서비스는 GeoServer의 기본값입니다. 이 서비스는 사용자 데이터베이스를 XML로 표현하며,
+<a class="reference download internal" href="../../_downloads/users.xsd"><tt class="xref download docutils literal"><span class="pre">XML schema</span></tt></a>를 따라야 합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">XML 사용자/그룹 파일인 <tt class="file docutils literal"><span class="pre">users.xml</span></tt>의 위치는 GeoServer 데이터 디렉터리의
+<tt class="docutils literal"><span class="pre">security/usergroup/&lt;name&gt;/users.xml</span></tt> 인데,
+이때 <tt class="docutils literal"><span class="pre">&lt;name&gt;</span></tt>은 사용자/그룹 서비스의 명칭입니다.</p>
+</div>
+<p>다음은 GeoServer 기본 설정에 따라오는 <tt class="docutils literal"><span class="pre">users.xml</span></tt> 파일의 내용입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;userRegistry</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.geoserver.org/security/users&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;users&gt;</span>
+    <span class="nt">&lt;user</span> <span class="na">enabled=</span><span class="s">&quot;true&quot;</span> <span class="na">name=</span><span class="s">&quot;admin&quot;</span> <span class="na">password=</span><span class="s">&quot;crypt1:5WK8hBrtrte9wtImg5i5fjnd8VeqCjDB&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/users&gt;</span>
+  <span class="nt">&lt;groups/&gt;</span>
+<span class="nt">&lt;/userRegistry&gt;</span>
+</pre></div>
+</div>
+<p>이 설정은 <tt class="docutils literal"><span class="pre">admin</span></tt>이라는 단일 사용자를 정의하며 그룹은 정의하지 않습니다.
+기본적으로 저장된 사용자 비밀번호는 <a class="reference internal" href="../passwd.html#sec-passwd-encryption"><em>weak PBE</em></a> 방식을 써서 암호화됩니다.</p>
+<p>더 자세한 정보를 알고 싶다면 <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의
+<a class="reference internal" href="../../webadmin/security/ugr.html#webadmin-sec-usergroupservices"><em>Configuring a user/group service</em></a>를 참조하십시오.</p>
+</div>
+<div class="section" id="jdbc-user-group-service">
+<span id="sec-rolesystem-usergroupjdbc"></span><h2>JDBC user/group service<a class="headerlink" href="#jdbc-user-group-service" title="Permalink to this headline">¶</a></h2>
+<p>JDBC 사용자/그룹 서비스는 JDBC를 통해 사용자/그룹 데이터베이스를 지속하면서 사용자 정보를 다중 테이블에서 관리합니다. 이 사용자/그룹 데이터베이스의 스키마는 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<caption>테이블: users</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>password</td>
+<td>varchar(254)</td>
+<td>YES</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>enabled</td>
+<td>char(1)</td>
+<td>NO</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: user_props</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>username</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>propname</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-even"><td>propvalue</td>
+<td>varchar(2048)</td>
+<td>YES</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: groups</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>enabled</td>
+<td>char(1)</td>
+<td>NO</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: group_members</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>groupname</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>username</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal"><span class="pre">users</span></tt> 테이블은 최초(primary) 테이블로 사용자 및 연결된 비밀번호의 목록을 담고 있습니다.
+<tt class="docutils literal"><span class="pre">user_props</span></tt> 테이블은 추가적인 속성을 사용자에게 매핑합니다.
+(자세한 내용은 <a class="reference internal" href="usergroups.html#sec-rolesystem-usergroups"><em>Users and Groups</em></a>를 참조하십시오.)
+<tt class="docutils literal"><span class="pre">groups</span></tt> 테이블은 사용 가능한 모든 그룹 목록을 담고 있으며,
+<tt class="docutils literal"><span class="pre">group_members</span></tt> 테이블은 어떤 사용자가 어떤 그룹에 속하는지 보여줍니다.</p>
+<p>GeoServer의 기본적인 보안 설정은 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<caption>테이블: users</caption>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">name</th>
+<th class="head">password</th>
+<th class="head">enabled</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: user_props</caption>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">username</th>
+<th class="head">propname</th>
+<th class="head">propvalue</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: groups</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">name</th>
+<th class="head">enabled</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>테이블: group_members</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">groupname</th>
+<th class="head">username</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<p>더 자세한 정보를 알고 싶다면 <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의
+<a class="reference internal" href="../../webadmin/security/ugr.html#webadmin-sec-usergroupservices"><em>Configuring a user/group service</em></a>를 참조하십시오.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="usergroups.html" title="previous chapter">Users and Groups</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="roles.html" title="next chapter">Roles</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">User/group services</a><ul>
+<li><a class="reference internal" href="#xml-user-group-service">XML user/group service</a></li>
+<li><a class="reference internal" href="#jdbc-user-group-service">JDBC user/group service</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="usergroups.html" title="previous chapter">Users and Groups</a></li>
+            <li>다음: <a href="roles.html" title="next chapter">Roles</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/security/usergrouprole/usergroupservices.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

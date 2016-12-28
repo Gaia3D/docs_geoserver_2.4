@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Filter functions &mdash; GeoServer 2.4.0 User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Filtering in GeoServer" href="index.html" />
+      <link rel="next" title="Filter Function Reference" href="function_reference.html" />
+      <link rel="prev" title="ECQL Reference" href="ecql_reference.html" />
+</head>
+<body class="filter/function">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Filtering in GeoServer</a> &raquo;</li>
+  <li>Filter functions</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="function_reference.html" title="Filter Function Reference"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="ecql_reference.html" title="ECQL Reference"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="filter-functions">
+<span id="filter-function"></span><h1>Filter functions<a class="headerlink" href="#filter-functions" title="Permalink to this headline">¶</a></h1>
+<p>OGC의  Filter Encoding 사양에서 <em>필터 함수(filter function)</em>의 일반적인 콘셉트를 확인할 수 있습니다.
+필터 함수는 필터 연산식에서 특수한 계산을 수행하는 데 쓰이는 인수(argument)를 사용하는, 각각 고유한 명칭을 가진 함수입니다.
+이 함수 덕분에 필터를 정의할 때 훨씬 풍부한 표현을 할 수 있게 됩니다.
+필터 함수는 XML Filter Encoding 언어와 코드화되지 않은 ECQL 언어를 통해, 각 언어에 맞는 문법(syntax)에 따라 사용할 수 있습니다.</p>
+<p>GeoServer는 수학, 문자열 포맷, 도형 작업 등을 포함한 광범위한 기능을 커버하는 다양한 필터 함수들을 제공하고 있습니다.
+<a class="reference internal" href="function_reference.html#filter-function-reference"><em>Filter Function Reference</em></a> 페이지에서 전체 목록을 확인할 수 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">Filter Encoding 사양은 필터 함수에 대한 표준 문법을 제공하지만, 특정한 함수 집합을 지정하지는 않습니다.
+서버는 필요하면 어떤 함수든 제공할 수 있으며, 따라서 몇몇 함수 연산식은 특정 소프트웨어에서만 동작할 수도 있습니다.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>다음 예시들은 필터 함수를 어떻게 사용하는지 보여줍니다.
+첫번째 예시에서 <tt class="docutils literal"><span class="pre">geometryType</span></tt> 함수를 이용한 고급 WFS 필터링을 보여주며,
+두번째 예시에서 SLD(Styled Layer Descriptor) 안에서 함수를 이용해 어떻게 레이블(label)을 더 잘 렌더링할 수 있는지 보여줍니다.</p>
+<div class="section" id="wfs-filtering">
+<h3>WFS filtering<a class="headerlink" href="#wfs-filtering" title="Permalink to this headline">¶</a></h3>
+<p>어떤 종류의 도형이든 담을 수 있는 도형 항목 <tt class="docutils literal"><span class="pre">geom</span></tt>을 가진 피처형이 있다고 가정합니다.
+특정 응용 프로그램을 위해 담고 있는 도형이 단순 포인트 또는 다중 포인트인 피처만 추출해야 하는 상황입니다.
+이 작업을 GeoServer 전용 필터 함수인 <tt class="docutils literal"><span class="pre">geometryType</span></tt>을 이용해 할 수 있습니다.
+이 필터 함수를 포함한 WFS 요청은 다음과 같습니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:GetFeature</span> <span class="na">service=</span><span class="s">&quot;WFS&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+  <span class="na">outputFormat=</span><span class="s">&quot;GML2&quot;</span>
+  <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfs</span>
+<span class="s">                      http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:Query</span> <span class="na">typeName=</span><span class="s">&quot;sf:archsites&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ogc:Filter&gt;</span>
+       <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+          <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;geometryType&quot;</span><span class="nt">&gt;</span>
+             <span class="nt">&lt;ogc:PropertyName&gt;</span>geom<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+          <span class="nt">&lt;/ogc:Function&gt;</span>
+          <span class="nt">&lt;ogc:Literal&gt;</span>Point<span class="nt">&lt;/ogc:Literal&gt;</span>
+       <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+    <span class="nt">&lt;/ogc:Filter&gt;</span>
+    <span class="nt">&lt;/wfs:Query&gt;</span>
+<span class="nt">&lt;/wfs:GetFeature&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sld-formatting">
+<h3>SLD formatting<a class="headerlink" href="#sld-formatting" title="Permalink to this headline">¶</a></h3>
+<p>등고선 맵에서 표고 레이블을 표출하려 하는 상황입니다.
+표고가 실수값으로 저장되어 있어서 &#8220;150.0&#8221;이나 &#8220;149.999999&#8221;처럼 소수점이 원치 않는 위치에 표출될 수 있습니다.
+이때 숫자가 &#8220;150&#8221;과 같이 표출되도록 적절하게 반올림하고자 합니다.
+이를 위해 SLD 레이블 내용(content) 표현식 안에 <tt class="docutils literal"><span class="pre">numberFormat</span></tt> 필터 함수를 사용할 수 있습니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre>...
+<span class="nt">&lt;TextSymbolizer&gt;</span>
+  <span class="nt">&lt;Label&gt;</span>
+    <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;numberFormat&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;ogc:Literal&gt;</span>##<span class="nt">&lt;/ogc:Literal&gt;</span>
+      <span class="nt">&lt;ogc:PropertyName&gt;</span>ELEVATION<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+    <span class="nt">&lt;/ogc:Function&gt;</span>
+  <span class="nt">&lt;/Label&gt;</span>
+  ...
+<span class="nt">&lt;/TextSymbolizer&gt;</span>
+...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="performance-implications">
+<h2>Performance implications<a class="headerlink" href="#performance-implications" title="Permalink to this headline">¶</a></h2>
+<p>SLD 심볼화(symbolizer) 표현식에서 필터 함수를 사용해도 해당 함수가 대용량 계산을 하지 않는 이상 작업 시간이 눈에 띄게 늘어나지는 않습니다.</p>
+<p>그러나 WFS 필터링이나 SLD 규칙(rule) 표현식에서 필터 함수를 사용하면 특정한 경우 작업 시간이 늦어질 수 있습니다.
+특정 필터 함수를 자체(native) 에니터 저장소 필터 인코더가 해석하지 못 해서 GeoServer가 해당 함수를 메모리에서 대신 실행해야 하기 때문입니다.</p>
+<p>예를 들어 대부분의 데이터 저장소는 <tt class="docutils literal"><span class="pre">BBOX(geom,-10,30,20,45) and geometryType(geom) = 'Point'</span></tt>와 같은 필터 함수를 2개의 부분으로 나눕니다.
+BBOX 필터를 1순위 필터로 코드화하여 SQL로 실행시키는 반면,
+<tt class="docutils literal"><span class="pre">geometryType</span></tt> 함수를 1순위 필터에서 나오는 결과를 바탕으로 메모리에서 실행할 것입니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="ecql_reference.html" title="previous chapter">ECQL Reference</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="function_reference.html" title="next chapter">Filter Function Reference</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Filter functions</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#wfs-filtering">WFS filtering</a></li>
+<li><a class="reference internal" href="#sld-formatting">SLD formatting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performance-implications">Performance implications</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="ecql_reference.html" title="previous chapter">ECQL Reference</a></li>
+            <li>다음: <a href="function_reference.html" title="next chapter">Filter Function Reference</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/filter/function.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

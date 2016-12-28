@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Structure of the Data Directory &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="GeoServer Data Directory" href="index.html" />
+      <link rel="next" title="Migrating a Data Directory between different versions" href="migrating.html" />
+      <link rel="prev" title="Setting the Data Directory" href="data-dir-setting.html" />
+</head>
+<body class="datadirectory/data-dir-structure">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">GeoServer Data Directory</a> &raquo;</li>
+  <li>Structure of the Data Directory</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="migrating.html" title="Migrating a Data Directory between different versions"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="data-dir-setting.html" title="Setting the Data Directory"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="structure-of-the-data-directory">
+<span id="data-dir-structure"></span><h1>Structure of the Data Directory<a class="headerlink" href="#structure-of-the-data-directory" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 GeoServer의 데이터 디렉터리에 대한 개요를 설명합니다.</p>
+<p>일반적으로 데이터 디렉터리 설정 파일은 직접 편집해서는 안 되기 때문에, 이 섹션을 GeoServer 설정 정보에 대한 완전한 자료로 삼아서는 안 됩니다. 대신 <a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>를 통해 설정 정보를 수동으로 열람하고 수정할 수 있으며, 규칙에 따르는 접속 및 조작을 위해서는 <a class="reference internal" href="../rest/index.html#rest"><em>REST configuration</em></a> API를 사용해야 합니다.</p>
+<p>사용자가 수정할 수 있는 내용을 담고 있는 디렉터리에는 <tt class="docutils literal"><span class="pre">logs</span></tt>, <tt class="docutils literal"><span class="pre">palettes</span></tt>, <tt class="docutils literal"><span class="pre">templates</span></tt>, <tt class="docutils literal"><span class="pre">user-projection</span></tt>, <tt class="docutils literal"><span class="pre">www</span></tt>가 있습니다.</p>
+<p>다음 그림은 GeoServer의 데이터 디렉터리 구조를 보여줍니다.</p>
+<div class="highlight-python"><pre>&lt;data_directory&gt;/
+
+   global.xml
+   logging.xml
+   wms.xml
+   wfs.xml
+   wcs.xml
+
+   data/
+   demo/
+   geosearch/
+   gwc/
+   layergroups/
+   logs/
+   palettes/
+   plugIns/
+   security/
+   styles/
+   templates/
+   user_projections/
+   workspaces/
+     |
+     +- workspace dirs...
+        |
+        +- datastore dirs...
+           |
+           +- layer dirs...
+   www/</pre>
+</div>
+<div class="section" id="the-xml-files">
+<h2>The .xml files<a class="headerlink" href="#the-xml-files" title="Permalink to this headline">¶</a></h2>
+<p>최상위(top-level) <tt class="docutils literal"><span class="pre">.xml</span></tt> 파일들은 서버 인스턴스가 사용하는 서비스들 및 다양한 일반 옵션들에 대한 정보를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>파일</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">global.xml</span></tt></td>
+<td>모든 서비스에 공통적인 연락처 정보, JAI 설정, 캐릭터셋, 세부 정보 수준(verbosity) 등의 설정 정보를 담고 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">logging.xml</span></tt></td>
+<td>로그 수준, 로그 파일 위치, 로그를 표준 출력(stdout)할지 여부 등 로그 파라미터를 설정합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">wcs.xml</span></tt></td>
+<td>WCS 서비스를 위한 서비스 메타데이터 및 여러 설정 정보를 담고 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">wfs.xml</span></tt></td>
+<td>WFS 서비스를 위한 서비스 메타데이터 및 여러 설정 정보를 담고 있습니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">wms.xml</span></tt></td>
+<td>WMS 서비스를 위한 서비스 메타데이터 및 여러 설정 정보를 담고 있습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="workspaces">
+<h2>workspaces<a class="headerlink" href="#workspaces" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">작업공간(workspaces)</span></tt> 디렉터리는 GeoServer가 생산한 레이어의 메타데이터를 담고 있습니다.
+이 디렉터리에는 정의된 각각의 <strong>작업공간</strong>을 위한 디렉터리를 담고 있습니다.
+각 작업공간 디렉터리는 해당 작업공간에 정의된 <strong>데이터 저장소(datastores)</strong>들을 위한 디렉터리들을 가지고 있습니다.
+각 데이터 저장소 디렉터리는 해당 데이터 저장소에 정의된 <strong>레이어</strong>들을 위한 디렉터리들을 가지고 있습니다.
+각 레이어 디렉터리는 <tt class="docutils literal"><span class="pre">layer.xml</span></tt> 파일과, 해당 레이어가 <em>래스터(raster)</em> 아니면 <em>벡터(vector)</em> 데이터셋을 표현하느냐에 따라 <tt class="docutils literal"><span class="pre">coverage.xml</span></tt> 아니면 <tt class="docutils literal"><span class="pre">featuretype.xml</span></tt> 파일을 담고 있습니다.</p>
+</div>
+<div class="section" id="data">
+<h2>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">data</span></tt> 디렉터리는 레이어로 서비스되고 있는 파일 기반 지리공간(geospatial) 데이터셋들을 저장하기 위해 사용될 수 있습니다.
+(이 디렉터리를 주 &#8220;GeoServer data directory&#8221;와 혼동해서는 안 됩니다.)
+이 디렉터리는 보통 shapefile과 래스터 파일을 저장하기 위해 사용되지만, 파일 기반 데이터라면 모두 저장할 수 있습니다.</p>
+<p><tt class="docutils literal"><span class="pre">data</span></tt> 디렉터리에 데이터 파일을 저장하면 휴대성·이식성(portability)이라는 장점을 가지게 됩니다.
+<tt class="docutils literal"><span class="pre">C:\gis_data\foo.shp</span></tt> 경로의 데이터 디렉터리에 외부 저장된 shapefile을 가정해보면,
+<tt class="docutils literal"><span class="pre">catalog.xml</span></tt> 파일 내부에서 이 shapefile에 대한 <tt class="docutils literal"><span class="pre">datastore</span></tt> 값은 다음과 같이 표현될 것입니다.</p>
+<div class="highlight-python"><pre>&lt;datastore id="foo_shapefile"&gt;
+   &lt;connectionParams&gt;
+     &lt;parameter name="url" value="file://C:/gis_data/foo.shp" /&gt;
+   &lt;/connectionParams&gt;
+ &lt;/datastore&gt;</pre>
+</div>
+<p>이제 다른 호스트에서 실행 중인 GeoServer에 이 데이터 디렉터리를 복사(port)하려 한다고 가정해보십시오.
+다른 호스트에 <tt class="docutils literal"><span class="pre">C:\gis_data\foo.shp</span></tt> 파일 경로가 없을 확률이 높습니다.
+따라서 다른 호스트의 동일한 경로에 파일을 복사하든지,
+아니면 새로운 경로를 반영하기 위해 <tt class="docutils literal"><span class="pre">catalog.xml</span></tt> 파일을 편집해야 합니다.</p>
+<p>그런데 <tt class="docutils literal"><span class="pre">foo.shp</span></tt> 파일을 <tt class="docutils literal"><span class="pre">data</span></tt> 디렉터리에 저장하면 이런 문제가 생기지 않습니다.
+이럴 경우 <tt class="docutils literal"><span class="pre">catalog.xml</span></tt> 파일의 <tt class="docutils literal"><span class="pre">datastore</span></tt> 값은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>&lt;datastore id="foo_shapefile"&gt;
+  &lt;connectionParams&gt;
+    &lt;parameter name="url" value="file:data/foo.shp"/&gt;
+  &lt;/connectionParams&gt;
+&lt;/datastore&gt;</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">value</span></tt> 속성이 <tt class="docutils literal"><span class="pre">data</span></tt> 디렉터리를 따라 변경되었습니다.
+이런 위치 독립성(location independence) 덕분에 <tt class="docutils literal"><span class="pre">data</span></tt> 디렉터리를 통째로 다른 호스트에 복사하면 다른 설정 변경 없이도 바로 사용할 수 있게 됩니다.</p>
+</div>
+<div class="section" id="demo">
+<h2>demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">demo</span></tt> 디렉터리는 <em>Sample Request Tool</em>(<a class="reference external" href="http://localhost:8080/geoserver/demoRequest.do">http://localhost:8080/geoserver/demoRequest.do</a>)에서 확인할 수 있는 <em>sample requests</em>에 대한 정보를 담고 있습니다.
+자세한 내용은 <a class="reference internal" href="../webadmin/demos/index.html#webadmin-demos"><em>Demos</em></a> 페이지에서 확인하십시오.</p>
+</div>
+<div class="section" id="geosearch">
+<h2>geosearch<a class="headerlink" href="#geosearch" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">geosearch</span></tt> 디렉터리는 KML 파일의 출력 범위 기준(regionation)에 대한 정보를 담고 있습니다.
+자세한 내용은 <a class="reference internal" href="../googleearth/features/kmlregionation.html#kml-regionation"><em>KML Regionation</em></a> 페이지에서 확인하십시오.</p>
+</div>
+<div class="section" id="gwc">
+<h2>gwc<a class="headerlink" href="#gwc" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">gwc</span></tt> 디렉터리는 <a class="reference external" href="http://geowebcache.org">GeoWebCache</a> 서비스가 생성한 캐시(cache)를 보관합니다.</p>
+</div>
+<div class="section" id="layergroups">
+<h2>layergroups<a class="headerlink" href="#layergroups" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">layergroups</span></tt> 디렉터리는 정의된 레이어 그룹(layergroup)에 대한 설정 정보를 담고 있습니다.</p>
+</div>
+<div class="section" id="logs">
+<h2>logs<a class="headerlink" href="#logs" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">logs</span></tt> 디렉터리는 로그 프로파일(logging profiles)과 기본 <tt class="docutils literal"><span class="pre">geoserver.log</span></tt> 로그 파일에 대한 설정 정보를 담고 있습니다.
+<a class="reference internal" href="../advanced/logging.html#logging"><em>Advanced log configuration</em></a> 페이지도 참조하십시오.</p>
+</div>
+<div class="section" id="palettes">
+<h2>palettes<a class="headerlink" href="#palettes" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">palettes</span></tt> 디렉터리는 미리 계산된(pre-computed) <strong>이미지 팔레트(Image Palettes)</strong>를 저장하는 데 사용됩니다.
+GeoServer WMS가 생산된 이미지의 질을 유지하면서도 용량을 줄이기 위한 한 방편으로 이미지 팔레트를 사용합니다.
+<a class="reference internal" href="../tutorials/palettedimage/palettedimage.html#tutorials-palettedimages"><em>Paletted Images</em></a> 페이지도 참조하십시오.</p>
+</div>
+<div class="section" id="security">
+<h2>security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">security</span></tt> 디렉터리는 GeoServer의 보안 서브시스템을 설정하는 데 사용되는 파일들을 담고 있습니다.
+<em>접속 역할(access roles)</em>을 정의하는 일련의 속성(property) 파일도 포함되는데, 이 속성 파일은 각 역할이 접속할 수 있도록 인증받은 서비스 및 데이터도 함께 정의하고 있습니다.
+자세한 내용은 <a class="reference internal" href="../security/index.html#security"><em>Security</em></a> 섹션을 참조하십시오.</p>
+</div>
+<div class="section" id="styles">
+<h2>styles<a class="headerlink" href="#styles" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">styles</span></tt> 디렉터리는 GeoServer WMS가 사용하는 스타일 정보를 담은 Styled Layer Descriptor(SLD) 파일을 담고 있습니다.
+이 디렉터리 안의 <tt class="docutils literal"><span class="pre">catalog.xml</span></tt> 파일 내부에는 각각 다음과 같은 값이 존재합니다.</p>
+<div class="highlight-python"><pre>&lt;style id="point_style" file="default_point.sld"/&gt;</pre>
+</div>
+<p>스타일과 SLD에 대한 자세한 정보는 <a class="reference internal" href="../styling/index.html#styling"><em>Styling</em></a> 섹션을 참조하십시오.</p>
+</div>
+<div class="section" id="templates">
+<h2>templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">templates</span></tt> 디렉터리는 GeoServer의 <strong>templating</strong> 서브시스템이 사용하는 파일을 담고 있습니다.
+템플릿은 다양한 GeoServer 작업의 산출물을 사용자 지정하는 데 사용됩니다.
+<a class="reference internal" href="../tutorials/freemarker.html#tutorial-freemarkertemplate"><em>Freemarker Templates</em></a> 페이지도 참조하십시오.</p>
+</div>
+<div class="section" id="user-projections">
+<h2>user_projections<a class="headerlink" href="#user-projections" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">user_projections</span></tt> 디렉터리는 사용자 지정 공간 참조 시스템(custom spatial reference systems)을 정의하는 데 사용되는 <tt class="docutils literal"><span class="pre">epsg.properties</span></tt> 파일을 담고 있습니다. 이 파일은 공식 <a class="reference external" href="http://www.epsg.org/CurrentDB.html">EPSG 데이터베이스</a>의 일부가 아닙니다.
+<a class="reference internal" href="../advanced/crshandling/customcrs.html#crs-custom"><em>Custom CRS Definitions</em></a> 페이지도 참조하십시오.</p>
+</div>
+<div class="section" id="www">
+<h2>www<a class="headerlink" href="#www" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">www</span></tt> 디렉터리는 GeoServer가 일반적인 웹 서버처럼 파일들을 서비스할 수 있도록 해줍니다.
+이 디렉터리의 내용물은 <tt class="docutils literal"><span class="pre">http:/&lt;host:port&gt;/geoserver/www</span></tt> 주소에서 서비스됩니다.
+정식 웹 서버를 대체할 만큼은 아니지만, 클라이언트 중심(client-side) 매핑 응용 프로그램을 서비스하는 데 유용합니다.
+<a class="reference internal" href="../tutorials/staticfiles.html#tutorials-staticfiles"><em>Serving Static Files</em></a> 페이지도 참조하십시오.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="data-dir-setting.html" title="previous chapter">Setting the Data Directory</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="migrating.html" title="next chapter">Migrating a Data Directory between different versions</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Structure of the Data Directory</a><ul>
+<li><a class="reference internal" href="#the-xml-files">The .xml files</a></li>
+<li><a class="reference internal" href="#workspaces">workspaces</a></li>
+<li><a class="reference internal" href="#data">data</a></li>
+<li><a class="reference internal" href="#demo">demo</a></li>
+<li><a class="reference internal" href="#geosearch">geosearch</a></li>
+<li><a class="reference internal" href="#gwc">gwc</a></li>
+<li><a class="reference internal" href="#layergroups">layergroups</a></li>
+<li><a class="reference internal" href="#logs">logs</a></li>
+<li><a class="reference internal" href="#palettes">palettes</a></li>
+<li><a class="reference internal" href="#security">security</a></li>
+<li><a class="reference internal" href="#styles">styles</a></li>
+<li><a class="reference internal" href="#templates">templates</a></li>
+<li><a class="reference internal" href="#user-projections">user_projections</a></li>
+<li><a class="reference internal" href="#www">www</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="data-dir-setting.html" title="previous chapter">Setting the Data Directory</a></li>
+            <li>다음: <a href="migrating.html" title="next chapter">Migrating a Data Directory between different versions</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/datadirectory/data-dir-structure.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

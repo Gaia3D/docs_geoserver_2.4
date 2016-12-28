@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Working with SLD &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Styling" href="index.html" />
+      <link rel="next" title="SLD Cookbook" href="sld-cookbook/index.html" />
+      <link rel="prev" title="Introduction to SLD" href="sld-introduction.html" />
+</head>
+<body class="styling/sld-working">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Styling</a> &raquo;</li>
+  <li>Working with SLD</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="sld-cookbook/index.html" title="SLD Cookbook"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="sld-introduction.html" title="Introduction to SLD"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="working-with-sld">
+<span id="sld-working"></span><h1>Working with SLD<a class="headerlink" href="#working-with-sld" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 어떻게 GeoServer의 SLD 스타일 작업을 생성하고, 보며(view), 오류를 해결하는지 설명합니다.</p>
+<div class="section" id="creating">
+<h2>Creating<a class="headerlink" href="#creating" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer의 카탈로그에 몇 가지 기본 스타일이 정의되어 있습니다.
+카탈로그에 새로운 스타일을 몇 개든지 추가할 수 있습니다.
+또 완전한 맵을 정의하든 아니면 <strong>library mode</strong>를 이용해 서버 스타일 카탈로그를 확장하든, 서버 <strong>외부에서</strong> 스타일을 설정할 수도 있습니다.</p>
+<div class="section" id="catalog-styles">
+<h3>Catalog Styles<a class="headerlink" href="#catalog-styles" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의
+<a class="reference internal" href="../webadmin/data/styles.html#webadmin-styles"><em>Styles</em></a> 메뉴를 통해
+카탈로그의 스타일을 보고, 편집하고, 점검할 수 있습니다.
+REST <a class="reference internal" href="../rest/api/styles.html#rest-api-styles"><em>Styles</em></a> API를 통해서도
+카탈로그의 스타일을 생성하고 접근할 수 있습니다.</p>
+<p>카탈로그의 스타일은 <a class="reference internal" href="sld-reference/sld.html#sld-reference-sld"><em>StyledLayerDescriptor</em></a> 문서로 이루어집니다.
+이 문서는 <tt class="docutils literal"><span class="pre">&lt;NamedLayer&gt;</span></tt> 요소 1개를 담고 있는데,
+이 요소는 또 스타일을 설정하기 위한 <tt class="docutils literal"><span class="pre">&lt;UserStyle&gt;</span></tt> 요소 1개를 담고 있습니다.
+스타일이 서로 다른 여러 레이어에 적용될 수도 있기 때문에 레이어명은 무시됩니다.</p>
+<p>GeoServer에 등록된 모든 레이어(피처형)은 각각 적어도 1개의 카탈로그 스타일과 연결되어야 합니다.
+이것을 레이어를 렌더링하기 위한 기본 스타일이라고 합니다.
+1개 레이어에 얼마든지 스타일들을 추가할 수 있습니다.
+이렇게 해서 WMS <tt class="docutils literal"><span class="pre">GetCapabilities</span></tt> 문서에 레이어에 적절한 스타일을 적용하도록 알릴 수 있습니다.
+<a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의
+<a class="reference internal" href="../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a> 페이지를 통해
+레이어의 스타일을 변경할 수 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer에 레이어와 해당 스타일을 동시에 추가할 경우 스타일을 먼저 추가해서
+새로운 레이어가 추가되는 즉시 스타일과 연결될 수 있도록 해야 합니다.</p>
+</div>
+</div>
+<div class="section" id="external-styles">
+<h3>External Styles<a class="headerlink" href="#external-styles" title="Permalink to this headline">¶</a></h3>
+<p>여러 가지 방법으로 서버 외부에서 스타일을 정의할 수 있습니다.</p>
+<ul class="simple">
+<li>WMS <a class="reference internal" href="../services/wms/reference.html#wms-getmap"><em>GetMap</em></a>의 GET 요청 내 <tt class="docutils literal"><span class="pre">SLD=url</span></tt> 파라미터를 통해
+인터넷 접근이 가능한 SLD 문서를 제공할 수 있습니다.</li>
+<li>WMS <a class="reference internal" href="../services/wms/reference.html#wms-getmap"><em>GetMap</em></a>의 GET 요청 내 <tt class="docutils literal"><span class="pre">SLD_BODY=style</span></tt> 파라미터를 이용해
+SLD 문서를 직접 제공할 수 있습니다.
+SLD XML은 반드시 URL 코드화되어야 합니다.</li>
+<li>WMS <tt class="docutils literal"><span class="pre">GetMap</span></tt>의 POST 요청 XML 문서에 <a class="reference internal" href="sld-reference/sld.html#sld-reference-sld"><em>StyledLayerDescriptor</em></a> 요소를 포함시킬 수 있습니다.</li>
+</ul>
+<p>이런 모든 경우, WMS의 <tt class="docutils literal"><span class="pre">layers</span></tt> 파라미터가 없다면
+맵 구성 요소들 모두 외부 SLD가 제공한 레이어와 스타일로 정의됩니다.
+<tt class="docutils literal"><span class="pre">layers</span></tt> 파라미터가 있을 경우, 스타일 작업은 <a class="reference internal" href="#sld-library-mode"><em>Library Mode</em></a>에서 실행됩니다.</p>
+<p>외부 스타일은 피처 데이터를 제공하는 SLD의 <a class="reference internal" href="sld-reference/layers.html#sld-reference-inlinefeature"><em>InlineFeature</em></a> 요소를 사용해 스타일이 적용된 데이터로 새로운 레이어를 정의할 수 있습니다.
+이 기능으로 예를 들어 동적인 피처 강조(dynamic feature highlighting)를 시행할 수 있습니다.</p>
+<p>클라이언트 응용 프로그램으로 외부 스타일을 동적으로 생성할 수도 있습니다.
+클라이언트가 스타일 효과를 제어할 수 있게 해주는 강력한 방법입니다.</p>
+</div>
+<div class="section" id="library-mode">
+<span id="sld-library-mode"></span><h3>Library Mode<a class="headerlink" href="#library-mode" title="Permalink to this headline">¶</a></h3>
+<p><strong>Library Mode</strong>는 외부적에서 정의된 스타일을 서버 스타일 카탈로그에 대한 확장 모듈 역할을 하는 <em>style library</em>로 취급합니다.
+WMS의 <tt class="docutils literal"><span class="pre">layers</span></tt> 및 <tt class="docutils literal"><span class="pre">styles</span></tt> 파라미터를 이용해 맵의 레이어 및 스타일을 설정할 경우
+그리고 앞 섹션에서 설명한 방법 가운데 하나응 이용해 외부에서 추가적인 스타일 작업을 시행할 경우, Library Mode가 시작됩니다.
+렌더링 시 외부 스타일 문서 안의 스타일이 카탈로그 스타일보다 우선합니다.</p>
+<p>Library Mode에서 스타일 검색(lookup)은 다음과 같이 이루어집니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">레이어</span></tt> 목록의 각 레이어에 적용된 스타일은
+<tt class="docutils literal"><span class="pre">스타일</span></tt> 목록(이 있다면)에서 설정한 명칭이 붙은 스타일이거나 레이어 기본 스타일입니다.</li>
+<li><strong>명칭이 붙은(named)</strong> 스타일의 경우, 외부 스타일 문서 안에 일치하는 레이어명과 스타일명을 가진 <tt class="docutils literal"><span class="pre">&lt;NamedLayer&gt;...&lt;UserStyle&gt;</span></tt> 요소가 있다면
+이 태그의 레이어와 스타일을 사용합니다. 없다면 카탈로그에서 스타일명을 검색합니다. 카탈로그에도 없을 경우, 오류가 발생합니다.</li>
+<li><strong>기본(default)</strong> 스타일의 경우, 레이어명을 가진 <tt class="docutils literal"><span class="pre">&lt;NamedLayer&gt;</span></tt> 요소를 찾기 위해 외부 스타일 문서를 검색합니다.
+문서의 <tt class="docutils literal"><span class="pre">&lt;UserStyle&gt;</span></tt> 요소가 <tt class="docutils literal"><span class="pre">1</span></tt> 값을 가지는
+<tt class="docutils literal"><span class="pre">&lt;IsDefault&gt;</span></tt> 요소를 담고 있을 경우, 해당 스타일을 적용합니다.
+담고 있지 않으면 레이어와 연결된 (반드시 있는) 기본 서버 스타일을 적용합니다.</li>
+</ul>
+<p>일반적으로 서버 카탈로그의 스타일을 사용하는 편이 훨씬 간단하고 속도도 빠릅니다.
+그러나 많은 레이어를 담고 있는 맵에 스타일을 적용해야 하는데 그 레이어들 가운데 몇 개만 외부에서 정의된 스타일을 적용해야 하는 경우, Library Mode가 유용할 수 있습니다.</p>
+</div>
+</div>
+<div class="section" id="viewing">
+<h2>Viewing<a class="headerlink" href="#viewing" title="Permalink to this headline">¶</a></h2>
+<p>스타일과 레이어가 연결되면, 해당 레이어 데이터를 렌더링한 결과물을 <a class="reference internal" href="../webadmin/layerpreview/index.html#layerpreview"><em>Layer Preview</em></a>에서 볼 수 있습니다.
+가장 간편하게 쓸 수 있는 산출물 포맷은 내장된 OpenLayers 뷰어입니다.
+뷰(view)가 열려 있는 동안 스타일을 변경할 수 있고, 맵을 이동(pan)하거나 줌(zoom)하는 즉시 그 효과를 확인할 수 있습니다.
+WMS 요청의 <tt class="docutils literal"><span class="pre">styles</span></tt> 파라미터에 대체 스타일을 설정해서 볼 수도 있습니다.</p>
+<p>복수의 레이어에 스타일을 적용한 효과를 한꺼번에 보고자 할 경우, 몇 가지 접근법이 있습니다.</p>
+<ul class="simple">
+<li><a class="reference internal" href="../webadmin/data/layergroups.html#webadmin-layergroups"><em>Layer Groups</em></a> 페이지에서 원하는 레이어들로 <strong>레이어 그룹(layer group)</strong>을 생성하고, 미리 보기(preview)를 합니다.
+필요하면 레이어들에 기본 스타일이 아닌 스타일도 적용할 수 있습니다.</li>
+<li><tt class="docutils literal"><span class="pre">layers</span></tt> 파라미터에 복수의 레이어를 설정하고
+(기본 스타일 외의 스타일이 필요할 경우) <tt class="docutils literal"><span class="pre">styles</span></tt> 파라미터에 상응하는 스타일을 설정한
+WMS <a class="reference internal" href="../services/wms/reference.html#wms-getmap"><em>GetMap</em></a>의 GET 요청을 보냅니다.</li>
+<li>서버 레이어와 그때그때 즉시 처리해야 하는 데이터의 선택적인 레이어, 그리고 각 레이어에 대한 명칭이 붙은 카탈로그 스타일이나 사용자 지정 스타일을 설정한
+<a class="reference internal" href="sld-reference/sld.html#sld-reference-sld"><em>StyledLayerDescriptor</em></a> 요소를 담고 있는
+WMS <tt class="docutils literal"><span class="pre">GetMap</span></tt>의 POST 요청을 보냅니다.</li>
+</ul>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<p>SLD는 프로그래밍 언어 형식으로, 웹페이지를 만들거나 스크립트를 짜는 것과는 다릅니다.
+그러므로 문제 해결(troubleshooting)이 필요한 경우가 생길 수 있습니다.</p>
+<div class="section" id="syntax-errors">
+<h3>Syntax Errors<a class="headerlink" href="#syntax-errors" title="Permalink to this headline">¶</a></h3>
+<p>SLD 생성 시 구문 오류(syntax error)를 최소화하기 위해서
+XML을 지원하는 텍스트 편집기를 사용할 것을 권장합니다.
+(예시: GeoServer UI에서 제공하는 <em class="guilabel">Style Editor</em>)
+XML 편집기는 구문 강조와 함께 (제품에 따라) 내장 오류 검사기를 제공하기 때문에 구문 오류를 찾아내기 쉽습니다.</p>
+<p>GeoServer의 <em class="guilabel">Style Editor</em>에 작업 문서가 SLD XML 스키마를 따르는지 검증하는 기능이 있습니다.
+필수는 아니지만, 스타일 문서를 저장하기 전에 이 기능을 실행하는 편이 좋습니다.</p>
+</div>
+<div class="section" id="semantic-errors">
+<h3>Semantic Errors<a class="headerlink" href="#semantic-errors" title="Permalink to this headline">¶</a></h3>
+<p>의미 오류(semantic error)는 SLD 검증으로 걸러낼 수 없지만, 맵 렌더링 시 스타일이 적용될 때 발생합니다.
+이 오류가 발생하면 대부분의 경우 맵 상에 아무 피처도 표출되지 않습니다. 하지만 몇몇 오류는 맵을 렌더링하는 작업 자체를 정지시킵니다.</p>
+<p>SLD의 의미 오류를 제거하는 가장 쉬운 방법은 오류 부분을 격리하는 것입니다.
+SLD에 규칙과 필터가 많아 긴 경우, 일정 부분을 잠시 제거해서 에러가 발생하지 않는지 점검해보십시오.</p>
+<p>어떤 경우 서버가 오류를 식별하는 데 도움이 되는 WMS 예외(exception) 문서를 생성할 때도 있습니다.
+어떤 오류 메시지가 기록되었는지 서버 로그를 살펴보는 것도 좋은 방법입니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="sld-introduction.html" title="previous chapter">Introduction to SLD</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="sld-cookbook/index.html" title="next chapter">SLD Cookbook</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Working with SLD</a><ul>
+<li><a class="reference internal" href="#creating">Creating</a><ul>
+<li><a class="reference internal" href="#catalog-styles">Catalog Styles</a></li>
+<li><a class="reference internal" href="#external-styles">External Styles</a></li>
+<li><a class="reference internal" href="#library-mode">Library Mode</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viewing">Viewing</a></li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#syntax-errors">Syntax Errors</a></li>
+<li><a class="reference internal" href="#semantic-errors">Semantic Errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="sld-introduction.html" title="previous chapter">Introduction to SLD</a></li>
+            <li>다음: <a href="sld-cookbook/index.html" title="next chapter">SLD Cookbook</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/styling/sld-working.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

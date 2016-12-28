@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Troubleshooting &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Caching with GeoWebCache" href="index.html" />
+      <link rel="next" title="Google Earth" href="../googleearth/index.html" />
+      <link rel="prev" title="Disk Quota" href="rest/diskquota.html" />
+</head>
+<body class="geowebcache/troubleshooting">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Caching with GeoWebCache</a> &raquo;</li>
+  <li>Troubleshooting</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../googleearth/index.html" title="Google Earth"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="rest/diskquota.html" title="Disk Quota"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="troubleshooting">
+<span id="gwc-troubleshooting"></span><h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 통합 GeoWebCache에서 흔히 볼 수 있는 몇몇 문제점 및 그 해결책에 대해 논의합니다.</p>
+<div class="section" id="grid-misalignment">
+<h2>Grid misalignment<a class="headerlink" href="#grid-misalignment" title="Permalink to this headline">¶</a></h2>
+<p>GeoWebCache 종단점에 데이터를 요청하는 경우 때로 오류가 발생합니다.
+&#8220;지원하는 해상도가 아닙니다(resolution is not supported)&#8221; 또는 &#8220;범위가 정렬되지 않았습니다(bounds do not align)&#8221;라는 오류가 표출될 수도 있습니다.
+클라이언트가 전송한 WMS 요청이 GeoWebCache가 생성한 타일의 그리드와 정렬되지 않은 경우, 즉 맵 범위 또는 레이어 범위가 다르거나 지원하지 않는 해상도인 경우 이런 오류가 발생합니다.
+클라이언트로 OpenLayers를 사용하고 있다면 OpenLayers에 포함된 데모의 소스 코드에서 그리드를 일치시키는 힌트를 얻을 수도 있습니다.</p>
+<p>다른 해결책으로 GeoServer WMS와 직접 WMS 통합(direct WMS integration)을 활성화하는 방법도 있습니다.
+<a class="reference internal" href="../webadmin/tilecache/defaults.html#webadmin-tilecaching-defaults"><em>Caching defaults</em></a> 페이지에서 설정할 수 있습니다.</p>
+</div>
+<div class="section" id="direct-wms-integration">
+<h2>Direct WMS integration<a class="headerlink" href="#direct-wms-integration" title="Permalink to this headline">¶</a></h2>
+<p>직접 통합으로 GoeServer를 통해 서비스되는 WMS 요청을 마치 GeoWebCache가 받아 처리하는 것처럼 캐시할 수 있습니다.
+직접 WMS 통합을 하면 GeoServer WMS나 GeoWebCache WMS 양쪽 모두 요청을 처리할 수 있습니다.</p>
+<p>가끔 GeoWebCache로 가야 할 요청이 GeoServer를 통해 전달되기도 합니다. 이 경우 타일이 저장되지 않습니다.
+그런데, 요청을 일부러 GeoWebCache로 보냈는데도 어째서 GeoWebCache가 처리하지 않는지 그 이유를 알아볼 수 있습니다.
+명령어 유틸리티인 <a class="reference external" href="http://curl.haxx.se">cURL</a>를 써서 반환받은 응답 헤더를 살펴보면 이유를 알 수 있습니다.</p>
+<p>먼저 요청 예시를 얻으십시오. 해당 레이어의 레이어 미리 보기로 가서 <em class="guilabel">Tiled</em> 파라미터를 <em class="guilabel">Tiled</em>로 설정한 다음
+맵 영역을 오른쪽 클릭하고 이미지 위치를 가리키는 전체 경로를 복사해서 얻을 수 있습니다. 제대로 했다면 다음과 비슷한 GET 요청을 얻을 수 있습니다.</p>
+<div class="highlight-python"><pre>http://localhost:8090/geoserver/nurc/wms?LAYERS=nurc%3AArc_Sample&amp;STYLES=&amp;FORMAT=image%2Fjpeg&amp;TILED=true&amp;TILESORIGIN=-180%2C-90&amp;SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;SRS=EPSG%3A4326&amp;BBOX=-45,-45,0,0&amp;WIDTH=256&amp;HEIGHT=256</pre>
+</div>
+<p>이 URL을 다음과 같이 cURL 요청에 붙여넣습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v &quot;URL&quot;</span>
+</pre></div>
+</div>
+<p>다음은 그 예시입니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v &quot;http://localhost:8090/geoserver/nurc/wms?LAYERS=nurc%3AArc_Sample&amp;STYLES=&amp;FORMAT=image%2Fjpeg&amp;TILED=true&amp;TILESORIGIN=-180%2C-90&amp;SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;SRS=EPSG%3A4326&amp;BBOX=-45,-45,0,0&amp;WIDTH=256&amp;HEIGHT=256&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">RAW 이미지 산출물을 터미널에 표출되지 않게 하려면 산출물을 사용자 시스템의 널(null)로 전송시키면 됩니다.
+Linux 및 OS X 시스템의 경우 해당 요청에 <tt class="docutils literal"><span class="pre">&gt; /dev/null</span></tt>을 추가하고 윈도우 시스템의 경우 <tt class="docutils literal"><span class="pre">&gt; nul</span></tt>을 추가하십시오.</p>
+</div>
+<p>요청이 GeoWebCache WMS를 거치지 않는 경우, 그 이유가 사용자 지정 응답 헤더에 표출됩니다. 다음 응답 헤더를 살펴보십시오.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">geowebcache-cache-result</span></tt>: GeoWebCache WMS가 요청을 처리한 경우 <tt class="docutils literal"><span class="pre">HIT</span></tt> 값을 가지며, 그렇지 않으면 <tt class="docutils literal"><span class="pre">MISS</span></tt> 값을 가집니다.</li>
+<li><tt class="docutils literal"><span class="pre">geowebcache-miss-reason</span></tt>: 위 헤더가 <tt class="docutils literal"><span class="pre">MISS</span></tt>일 경우, 이 헤더에 어째서 GeoWebCache WMS가 요청을 처리하지 않았는지에 대해 간략한 설명을 생성합니다.</li>
+</ul>
+<p>다음은 요청과 그에 대한 응답을 함께 보여주는 몇몇 예시입니다. 문제 해결(troubleshooting)에 관련된 정보만을 보여주기 위해 이 응답들을 정리(truncate)한 상태입니다.</p>
+<div class="section" id="successful-request">
+<h3>Successful request<a class="headerlink" href="#successful-request" title="Permalink to this headline">¶</a></h3>
+<p>GeoWebCache WMS가 다음 요청을 성공적으로 처리했습니다.</p>
+<p>요청:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v &quot;http://localhost:8080/geoserver/topp/wms?TILED=true&amp;LAYERS=states&amp;FORMAT=image/png&amp;REQUEST=GetMap&amp;STYLES=&amp;SRS=EPSG:4326&amp;BBOX=-135,45,-112.5,67.5&amp;WIDTH=256&amp;HEIGHT=256&quot;</span>
+</pre></div>
+</div>
+<p>응답:</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK
+&lt; Content-Type: image/png
+&lt; geowebcache-crs: EPSG:4326
+...
+&lt; geowebcache-layer: topp:states
+&lt; geowebcache-gridset: EPSG:4326
+&lt; geowebcache-tile-index: [2, 6, 3]
+...
+&lt; geowebcache-cache-result: HIT
+&lt; geowebcache-tile-bounds: -135.0,45.0,-112.5,67.5
+...</pre>
+</div>
+</div>
+<div class="section" id="wrong-height-parameter">
+<h3>Wrong height parameter<a class="headerlink" href="#wrong-height-parameter" title="Permalink to this headline">¶</a></h3>
+<p>요청한 이미지의 크기(256x257)가 정상적인 256x256 타일 크기와 맞지 않기 때문에 GeoWebCache WMS가 다음 요청을 처리하지 못 했습니다.</p>
+<p>요청:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v &quot;http://localhost:8080/geoserver/topp/wms?TILED=true&amp;LAYERS=states&amp;FORMAT=image/png&amp;REQUEST=GetMap&amp;STYLES=&amp;SRS=EPSG:4326&amp;BBOX=-135,45,-112.5,67.5&amp;WIDTH=256&amp;HEIGHT=257&quot;</span>
+</pre></div>
+</div>
+<p>응답:</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK
+&lt; Content-Type: image/png
+&lt; geowebcache-miss-reason: request does not align to grid(s) 'EPSG:4326'
+...</pre>
+</div>
+</div>
+<div class="section" id="no-tile-layer-associated">
+<h3>No tile layer associated<a class="headerlink" href="#no-tile-layer-associated" title="Permalink to this headline">¶</a></h3>
+<p>요청한 레이어에 설정된 타일 레이어가 없기 때문에 GeoWebCache WMS가 다음 요청을 처리하지 못 했습니다.</p>
+<p>요청:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v &quot;http://localhost:8080/geoserver/topp/wms?TILED=true&amp;LAYERS=tasmania_roads&amp;FORMAT=image/png&amp;REQUEST=GetMap&amp;STYLES=&amp;SRS=EPSG:4326&amp;BBOX=-135,45,-112.5,67.5&amp;WIDTH=256&amp;HEIGHT=256&quot;</span>
+</pre></div>
+</div>
+<p>응답:</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK
+&lt; Content-Type: image/png
+&lt; geowebcache-miss-reason: not a tile layer
+...</pre>
+</div>
+</div>
+<div class="section" id="missing-parameter-filter">
+<h3>Missing parameter filter<a class="headerlink" href="#missing-parameter-filter" title="Permalink to this headline">¶</a></h3>
+<p>요청한 레이어에 요청이 담고 있는 파라미터 필터(BGCOLOR)가 설정되지 않았기 때문에 GeoWebCache WMS가 다음 요청을 처리하지 못 했습니다.</p>
+<p>요청:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v &quot;http://localhost:8080/geoserver/topp/wms?BGCOLOR=0xAAAAAA&amp;TILED=true&amp;LAYERS=states&amp;FORMAT=image/png&amp;REQUEST=GetMap&amp;STYLES=&amp;SRS=EPSG:4326&amp;BBOX=-135,45,-112.5,67.5&amp;WIDTH=256&amp;HEIGHT=256&quot;</span>
+</pre></div>
+</div>
+<p>응답:</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK
+&lt; Content-Type: image/png
+&lt; geowebcache-miss-reason: no parameter filter exists for BGCOLOR
+...</pre>
+</div>
+</div>
+<div class="section" id="crs-not-defined">
+<h3>CRS not defined<a class="headerlink" href="#crs-not-defined" title="Permalink to this headline">¶</a></h3>
+<p>요청이 참조하는 CRS(EPSG:26986)와 일치하는 타일 레이어 그리드셋이 하나도 없기 때문에 GeoWebCache WMS가 다음 요청을 처리하지 못 했습니다.</p>
+<p>요청:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v &quot;http://localhost:8080/geoserver/topp/wms?TILED=true&amp;LAYERS=states&amp;FORMAT=image/png&amp;REQUEST=GetMap&amp;STYLES=&amp;SRS=EPSG:26986&amp;BBOX=-135,45,-112.5,67.5&amp;WIDTH=256&amp;HEIGHT=256&quot;</span>
+</pre></div>
+</div>
+<p>응답:</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK
+&lt; Content-Type: image/png
+&lt; geowebcache-miss-reason: no cache exists for requested CRS
+...</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="rest/diskquota.html" title="previous chapter">Disk Quota</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../googleearth/index.html" title="next chapter">Google Earth</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#grid-misalignment">Grid misalignment</a></li>
+<li><a class="reference internal" href="#direct-wms-integration">Direct WMS integration</a><ul>
+<li><a class="reference internal" href="#successful-request">Successful request</a></li>
+<li><a class="reference internal" href="#wrong-height-parameter">Wrong height parameter</a></li>
+<li><a class="reference internal" href="#no-tile-layer-associated">No tile layer associated</a></li>
+<li><a class="reference internal" href="#missing-parameter-filter">Missing parameter filter</a></li>
+<li><a class="reference internal" href="#crs-not-defined">CRS not defined</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="rest/diskquota.html" title="previous chapter">Disk Quota</a></li>
+            <li>다음: <a href="../googleearth/index.html" title="next chapter">Google Earth</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/geowebcache/troubleshooting.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>API details &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="REST configuration API reference" href="index.html" />
+      <link rel="next" title="Global settings" href="global.html" />
+      <link rel="prev" title="REST configuration API reference" href="index.html" />
+</head>
+<body class="rest/api/details">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">REST configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">REST configuration API reference</a> &raquo;</li>
+  <li>API details</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="global.html" title="Global settings"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="REST configuration API reference"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="api-details">
+<span id="rest-api-details"></span><h1>API details<a class="headerlink" href="#api-details" title="Permalink to this headline">¶</a></h1>
+<p>이 페이지에서 REST API 아키텍처(architecture)에 대한 정보를 설명합니다.</p>
+<div class="section" id="authentication">
+<h2>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
+<p>클라리언트가 REST를 이용하려면 인증을 받아야 합니다. 기본적인 인증 방법은 기본 인증(basic authentication)입니다.
+인증 방법을 변경하는 방법은 <a class="reference internal" href="../../security/index.html#security"><em>Security</em></a> 섹션을 참조하십시오.</p>
+</div>
+<div class="section" id="status-codes">
+<h2>Status codes<a class="headerlink" href="#status-codes" title="Permalink to this headline">¶</a></h2>
+<p>HTTP 요청은 상태 코드(status code)을 통해 요청 결과를 클라이언트에게 전달합니다. 이 문서 전반에 걸쳐 다양한 목적을 위해 서로 다른 상태 코드가 사용됩니다.
+<a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP specification</a>에서 이 코드들을 상세하게 설명하고 있습니다.</p>
+<p>다음은 가장 흔하게 쓰이는 상태 코드와 그 설명을 나열한 표입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">상태 코드</th>
+<th class="head">설명</th>
+<th class="head">비고</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>200</td>
+<td>OK</td>
+<td>요청이 성공했습니다.</td>
+</tr>
+<tr class="row-odd"><td>201</td>
+<td>Created</td>
+<td>새 피처형이나 데이터 저장소와 같은 새로운 리소스를 성공적으로 생성했습니다.</td>
+</tr>
+<tr class="row-even"><td>403</td>
+<td>Forbidden</td>
+<td>주로 퍼미션(permission) 불일치를 뜻합니다.</td>
+</tr>
+<tr class="row-odd"><td>404</td>
+<td>Not Found</td>
+<td>가리킨 위치에 종단점(endpoint)이나 리소스가 없습니다.</td>
+</tr>
+<tr class="row-even"><td>405</td>
+<td>Method Not Allowed</td>
+<td>맞지 않는 작업이 종단점에 접근했다는 것을 주로 뜻합니다. (예를 들면 PUT/POST 요청이 가야할 곳에 GET 요청이 갔을 경우)</td>
+</tr>
+<tr class="row-odd"><td>500</td>
+<td>Internal Server Error</td>
+<td>주로 요청에 문법 오류가 발생했다는 것을 뜻합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="formats-and-representations">
+<h2>Formats and representations<a class="headerlink" href="#formats-and-representations" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">format</span></tt>은 특정 리소스를 어떻게 표현해야 하는지 설정합니다. 다음과 같은 경우 <tt class="docutils literal"><span class="pre">format</span></tt>을 사용합니다.</p>
+<ul class="simple">
+<li>어떤 표현을 클라이언트에게 반환해야 하는지 설정해야 하는 작업</li>
+<li>서버에 보내는 표현을 설정해야 하는 POST 혹은 PUT 작업</li>
+</ul>
+<p><strong>GET</strong> 작업의 경우 2가지 방법으로 <tt class="docutils literal"><span class="pre">format</span></tt>을 설정할 수 있습니다.</p>
+<p>첫번째로, <tt class="docutils literal"><span class="pre">Accept</span></tt> 헤더(header)를 사용하는 방법입니다.
+예를 들어 헤더를 <tt class="docutils literal"><span class="pre">&quot;Accept: text/xml&quot;</span></tt>로 설정하면 XML 형식으로 리소스를 반환합니다.
+두번째로, 파일 확장자를 사용하는 방법이 있습니다.
+예를 들어 <tt class="docutils literal"><span class="pre">foo</span></tt>라는 리소스를 XML 형식으로 요청하려면
+요청 URI의 마지막을 <tt class="docutils literal"><span class="pre">/foo.xml</span></tt>로 끝내면 됩니다.
+JSON 형식으로 요청하려면 요청 URI의 마지막을 <tt class="docutils literal"><span class="pre">/foo.json</span></tt>으로 끝내면 됩니다.
+아무 <tt class="docutils literal"><span class="pre">format</span></tt>도 설정하지 않으면 서버가 자체 형식인 HTML을 보통 사용할 것입니다.
+요청 <tt class="docutils literal"><span class="pre">format</span></tt>을 헤더와 확장자 양쪽을 통해 설정할 경우, 확장자로 설정된 형식이 우선됩니다.</p>
+<p><strong>POST</strong> 또는 <strong>PUT</strong> 작업의 경우 <tt class="docutils literal"><span class="pre">Content-type</span></tt> 헤더를 통해 서버로 보내는 내용의 형식을 설정합니다.
+예를 들어 XML 형식의 표현을 보내려면 <tt class="docutils literal"><span class="pre">&quot;Content-type: text/xml&quot;</span></tt> 또는
+<tt class="docutils literal"><span class="pre">&quot;Content-type: application/xml&quot;</span></tt>을 사용합니다.
+GET 요청과 마찬가지로 서버에서 반환되는 내용의 표현은 <tt class="docutils literal"><span class="pre">Accept</span></tt> 헤더 또는 파일 확장자로 설정됩니다.</p>
+<p>다음은 각 형식에 대한 <tt class="docutils literal"><span class="pre">Content-type</span></tt> 값을 정의하는 표입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">형식</th>
+<th class="head">Content-type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>XML</td>
+<td><tt class="docutils literal"><span class="pre">application/xml</span></tt></td>
+</tr>
+<tr class="row-odd"><td>JSON</td>
+<td><tt class="docutils literal"><span class="pre">application/json</span></tt></td>
+</tr>
+<tr class="row-even"><td>HTML</td>
+<td><tt class="docutils literal"><span class="pre">application/html</span></tt></td>
+</tr>
+<tr class="row-odd"><td>SLD</td>
+<td><tt class="docutils literal"><span class="pre">application/vnd.ogc.sld+xml</span></tt></td>
+</tr>
+<tr class="row-even"><td>ZIP</td>
+<td><tt class="docutils literal"><span class="pre">application/zip</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">REST configuration API reference</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="global.html" title="next chapter">Global settings</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">API details</a><ul>
+<li><a class="reference internal" href="#authentication">Authentication</a></li>
+<li><a class="reference internal" href="#status-codes">Status codes</a></li>
+<li><a class="reference internal" href="#formats-and-representations">Formats and representations</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">REST configuration API reference</a></li>
+            <li>다음: <a href="global.html" title="next chapter">Global settings</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/rest/api/details.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

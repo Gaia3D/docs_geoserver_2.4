@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Controlling feature ID generation in spatial databases &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="Custom SQL session start/stop scripts" href="sqlsession.html" />
+      <link rel="prev" title="SQL Views" href="sqlview.html" />
+</head>
+<body class="data/database/primarykey">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>Controlling feature ID generation in spatial databases</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="sqlsession.html" title="Custom SQL session start/stop scripts"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="sqlview.html" title="SQL Views"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="controlling-feature-id-generation-in-spatial-databases">
+<span id="primarykey"></span><h1>Controlling feature ID generation in spatial databases<a class="headerlink" href="#controlling-feature-id-generation-in-spatial-databases" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>모든 공간DB 데이터 저장소(PostGIS, Oracle, MySQL 등등)는 보통 피처 ID를 primary key 테이블에서 유도한 다음,
+(WFS 삽입(insert) 작업처럼) 새 피처를 생성해야 할 경우 어떻게 다음 key 값을 찾을 것인지에 대해 어떤 규칙을 가정합니다.</p>
+<p>보통 자동적으로 값이 증가하는 열을 찾거나(PostGIS의 경우), <tt class="docutils literal"><span class="pre">&lt;table&gt;_&lt;column&gt;_SEQUENCE</span></tt>와 같은 특정 규칙의 이름을 딴 배열(sequence)을 찾는(Oracle의 경우) 것이 일반적인 규칙입니다.</p>
+<p>위와 같은 경우를 찾을 수 없을 때 저장소는 새로운 요청마다 랜덤한 피처 ID를 생성하는 방식으로 돌아가는데, 이 경우 테이블이 검색 및 트랜잭션에 기반한 피처 ID에 맞지 않게 됩니다.</p>
+</div>
+<div class="section" id="metadata-table-description">
+<h2>Metadata table description<a class="headerlink" href="#metadata-table-description" title="Permalink to this headline">¶</a></h2>
+<p>사용자가 직접 어떤 열을 사용할지, 어떤 방법으로 새 primary key 값을 생성할지 설정하는 <cite>primary key 메타데이터 테이블</cite>을 생성함으로써 이런 기본 규칙을 무효화할 수 있습니다.
+다음 SQL문으로 이 테이블을 생성할 수 있습니다.
+(PostGIS에 맞도록 생성된 SQL문으로 사용자의 DB에 맞게 수정하십시오. 원한다면 마지막 check 구문을 삭제할 수도 있습니다.)</p>
+<div class="highlight-python"><pre>CREATE TABLE gt_pk_metadata_table (
+  table_schema VARCHAR(32) NOT NULL,
+  table_name VARCHAR(32) NOT NULL,
+  pk_column VARCHAR(32) NOT NULL,
+  pk_column_idx INTEGER,
+  pk_policy VARCHAR(32),
+  pk_sequence VARCHAR(64),
+  unique (table_schema, table_name, pk_column),
+  check (pk_policy in ('sequence', 'assigned', 'autoincrement'))
+)</pre>
+</div>
+<p>사용자가 테이블명을 변경할 수 있습니다. 변경할 경우 데이터 저장소의 <cite>primary key 메타데이터 테이블</cite> 설정 파라미터에 이 테이블명을 (물론 스키마에 부합하도록) 지정해주어야 합니다.</p>
+<p>다음 표에서 메타데이터 테이블의 각 열의 의미를 설명합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>열</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">table_schema</em></td>
+<td>테이블이 위치한 데이터베이스의 스키마 명칭입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">table_name</em></td>
+<td>생산할 테이블명입니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">pk_column</em></td>
+<td>피처 ID를 만드는 데 사용하는 열 명칭입니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">pk_column_idx</em></td>
+<td>다중 열(multi-column) key 형식의 열 지표(index of the column)입니다.
+다중 열 key가 필요한 경우, 동일한 테이블 스키마 및 테이블명을 가진 다중 레코드를 사용합니다.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">pk_policy</em></td>
+<td>새로운 값을 생성하는 정책입니다. (WFS 삽입 작업에 응답하는) 테이블에 새 피처를 추가해야 할 경우 사용합니다.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">pk_sequence</em></td>
+<td>pk_column을 위한 새 값을 생성하는 경우 사용할 데이터베이스 배열(sequence)의 명칭입니다.</td>
+</tr>
+</tbody>
+</table>
+<p>사용할 수 있는 값은 다음과 같습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>assigned</cite> —새로 삽입된 피처가 사용할 속성값입니다. (이 경우 &#8220;expose primary keys&#8221; 옵션이 활성화되었다고 가정합니다)</li>
+<li><cite>sequence</cite> —&#8220;pk_sequence&#8221; 열에 있는 다음 배열값으로부터 속성값을 생산합니다.</li>
+<li><cite>autogenerated</cite> —자동적으로 값이 증가하는 열의 경우, 자동적으로 증가하는 다음 값을 사용합니다.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="using-the-metadata-table-with-views">
+<h2>Using the metadata table with views<a class="headerlink" href="#using-the-metadata-table-with-views" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 아무 문제없이 공간 뷰를 생산할 수 있지만, 보통 2가지 부작용이 생깁니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li>뷰를 읽기 전용으로 취급합니다.</li>
+<li>피처 ID가 랜덤하게 생성됩니다.</li>
+</ul>
+</div></blockquote>
+<p>메타데이터 테이블은 뷰를 참조할 수도 있는데, <tt class="docutils literal"><span class="pre">table_name</span></tt> 열에 뷰 명칭을 사용하기만 하면 됩니다.
+이렇게 하면 안정적인 ID를 생성할 수 있으며, 업데이트 가능한 뷰를 지원하는 DB의 경우 뷰를 쓰기 가능으로 취급하는 코드를 만들어내기도 합니다.
+(즉 뷰에 WFS-T를 사용할 수 있습니다.)</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="sqlview.html" title="previous chapter">SQL Views</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="sqlsession.html" title="next chapter">Custom SQL session start/stop scripts</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Controlling feature ID generation in spatial databases</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#metadata-table-description">Metadata table description</a></li>
+<li><a class="reference internal" href="#using-the-metadata-table-with-views">Using the metadata table with views</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="sqlview.html" title="previous chapter">SQL Views</a></li>
+            <li>다음: <a href="sqlsession.html" title="next chapter">Custom SQL session start/stop scripts</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/primarykey.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

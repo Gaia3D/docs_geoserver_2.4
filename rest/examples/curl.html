@@ -1,0 +1,841 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>cURL &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="REST configuration examples" href="index.html" />
+      <link rel="next" title="PHP" href="php.html" />
+      <link rel="prev" title="REST configuration examples" href="index.html" />
+</head>
+<body class="rest/examples/curl">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">REST configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">REST configuration examples</a> &raquo;</li>
+  <li>cURL</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="php.html" title="PHP"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="REST configuration examples"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="curl">
+<span id="rest-examples-curl"></span><h1>cURL<a class="headerlink" href="#curl" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션의 예시들은 GeoServer의 REST 인터페이스에 대한 요청을 생성하기 위해 HTTP 요청 및 파일 전송을 실행하기 위한 명령어(command line) 도구인 <a class="reference external" href="http://curl.haxx.se/">cURL</a>을 이용합니다.
+이 예시들이 <tt class="docutils literal"><span class="pre">cURL</span></tt>에 바탕을 두고 있기는 하지만, HTTP를 쓸 수 있는 모든 도구나 라이브러리에서도 쓸 수 있습니다.</p>
+<div class="section" id="adding-a-new-workspace">
+<h2>Adding a new workspace<a class="headerlink" href="#adding-a-new-workspace" title="Permalink to this headline">¶</a></h2>
+<p>다음은 POST 요청을 통해 &#8220;acme&#8221;라는 새로운 작업공간을 생성하는 예시입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -H &quot;Content-type: text/xml&quot;</span>
+<span class="go">  -d &quot;&lt;workspace&gt;&lt;name&gt;acme&lt;/name&gt;&lt;/workspace&gt;&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces</span>
+</pre></div>
+</div>
+<p>정확하게 실행되면 요청에 대한 응답은 다음 내용을 담고 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 201 Created
+...
+&lt; Location: http://localhost:8080/geoserver/rest/workspaces/acme</pre>
+</div>
+<p>새로 생성된 작업공간의 위치(URI)를 지정하는 <tt class="docutils literal"><span class="pre">Location</span></tt> 응답 헤더를 유의하십시오.</p>
+<p>GET 요청을 통해 작업공간 정보를 XML로 받아올 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET -H &quot;Accept: text/xml&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme</span>
+</pre></div>
+</div>
+<p>요청에 대한 응답은 다음과 같아야 합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;workspace&gt;</span>
+  <span class="nt">&lt;name&gt;</span>acme<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;dataStores&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/workspaces/acme/datastores.xml&quot;</span>
+     <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/dataStores&gt;</span>
+  <span class="nt">&lt;coverageStores&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/workspaces/acme/coveragestores.xml&quot;</span>
+     <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/coverageStores&gt;</span>
+  <span class="nt">&lt;wmsStores&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/workspaces/acme/wmsstores.xml&quot;</span>
+     <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/wmsStores&gt;</span>
+<span class="nt">&lt;/workspace&gt;</span>
+</pre></div>
+</div>
+<p>이 응답에서 해당 작업공간이 &#8220;<tt class="docutils literal"><span class="pre">데이터 저장소(dataStores)</span></tt>&#8221;(<a class="reference internal" href="../../data/vector/index.html#data-vector"><em>벡터 데이터</em></a>),
+&#8220;<tt class="docutils literal"><span class="pre">커버리지 저장소(coverageStores)</span></tt>&#8221;(<a class="reference internal" href="../../data/raster/index.html#data-raster"><em>래스터 데이터</em></a>),
+&#8220;<tt class="docutils literal"><span class="pre">WMS 저장소(wmsStores)</span></tt>&#8221;(<a class="reference internal" href="../../data/cascaded/wms.html#data-external-wms"><em>순차적 WMS 서버(cascaded WMS servers)</em></a>)를
+가질 수 있다는 것을 알 수 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p><tt class="docutils literal"><span class="pre">Accept</span></tt> 헤더는 필수가 아닙니다. 다음 요청은 <tt class="docutils literal"><span class="pre">Accept</span></tt> 헤더가 없지만, 앞과 동일한 응답을 반환할 것입니다.</p>
+<div class="last highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET http://localhost:8080/geoserver/rest/workspaces/acme.xml</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="uploading-a-shapefile">
+<h2>Uploading a shapefile<a class="headerlink" href="#uploading-a-shapefile" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 shapefile을 업로드하여 새로운 저장소를 생성합니다.</p>
+<p>다음은 압축된 shapefile <tt class="docutils literal"><span class="pre">roads.zip</span></tt>을 업로드해서 and 새로운 저장소 <tt class="docutils literal"><span class="pre">roads</span></tt>를 생성하는 요청입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPUT -H &quot;Content-type: application/zip&quot;</span>
+<span class="go">  --data-binary @roads.zip</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores/roads/file.shp</span>
+</pre></div>
+</div>
+<p>URI의 <tt class="docutils literal"><span class="pre">roads</span></tt> 식별자는 생성할 저장소의 명칭을 가리킵니다.
+저장소 <tt class="docutils literal"><span class="pre">somethingelse</span></tt>를 생성하려면 URI는 <tt class="docutils literal"><span class="pre">http://localhost:8080/geoserver/rest/workspaces/acme/datastores/somethingelse/file.shp</span></tt> 가 될 것입니다.</p>
+<p>정확하게 실행되면 요청에 대한 응답은 다음 내용을 담고 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 201 Created</pre>
+</div>
+<p>GET 요청을 통해 저장소 정보를 XML로 받아올 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores/roads.xml</span>
+</pre></div>
+</div>
+<p>요청에 대한 응답은 다음과 같아야 합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;dataStore&gt;</span>
+  <span class="nt">&lt;name&gt;</span>roads<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;type&gt;</span>Shapefile<span class="nt">&lt;/type&gt;</span>
+  <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+  <span class="nt">&lt;workspace&gt;</span>
+    <span class="nt">&lt;name&gt;</span>acme<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/workspaces/acme.xml&quot;</span> <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/workspace&gt;</span>
+  <span class="nt">&lt;connectionParameters&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;url&quot;</span><span class="nt">&gt;</span>file:/C:/path/to/data_dir/data/acme/roads/<span class="nt">&lt;/entry&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;namespace&quot;</span><span class="nt">&gt;</span>http://acme<span class="nt">&lt;/entry&gt;</span>
+  <span class="nt">&lt;/connectionParameters&gt;</span>
+  <span class="nt">&lt;__default&gt;</span>false<span class="nt">&lt;/__default&gt;</span>
+  <span class="nt">&lt;featureTypes&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/workspaces/acme/datastores/roads/featuretypes.xml&quot;</span>
+     <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/featureTypes&gt;</span>
+<span class="nt">&lt;/dataStore&gt;</span>
+</pre></div>
+</div>
+<p>shapefile을 업로드할 경우 기본적으로 피처형 하나를 자동적으로 생성합니다. GET 요청을 통해 피처형 정보를 XML로 받아올 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores/roads/featuretypes/roads.xml</span>
+</pre></div>
+</div>
+<p>정확하게 실행되면 요청에 대한 응답은 다음 내용을 담고 있어야 합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;featureType&gt;</span>
+  <span class="nt">&lt;name&gt;</span>roads<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;nativeName&gt;</span>roads<span class="nt">&lt;/nativeName&gt;</span>
+  <span class="nt">&lt;namespace&gt;</span>
+    <span class="nt">&lt;name&gt;</span>acme<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/namespaces/acme.xml&quot;</span> <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/namespace&gt;</span>
+  ...
+<span class="nt">&lt;/featureType&gt;</span>
+</pre></div>
+</div>
+<p>응답의 나머지 부분은 레이어 메타데이터와 설정 정보로 이루어져 있습니다.</p>
+</div>
+<div class="section" id="adding-an-existing-shapefile">
+<h2>Adding an existing shapefile<a class="headerlink" href="#adding-an-existing-shapefile" title="Permalink to this headline">¶</a></h2>
+<p>앞의 예시에서 shapefile은 PUT 요청의 본체(body)에 담긴 ZIP 파일을 전송해서 GeoServer에 직접 업로드되었습니다.
+이 예시에서 서버에 이미 존재하는 shapefile을 발행(publish)하는 방법을 설명합니다.</p>
+<p>shapefile <tt class="docutils literal"><span class="pre">rivers.shp</span></tt>를 담고 있는 <tt class="docutils literal"><span class="pre">/data/shapefiles/rivers</span></tt> 디렉터리가 서버에 있다고 할 때,
+다음과 같이 shapefile을 위한 새로운 저장소를 추가할 수 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPUT -H &quot;Content-type: text/plain&quot;</span>
+<span class="go">  -d &quot;file:///data/shapefiles/rivers/rivers.shp&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores/rivers/external.shp</span>
+</pre></div>
+</div>
+<p>요청 URI의 <tt class="docutils literal"><span class="pre">external.shp</span></tt> 부분이 해당 파일이 카탈로그 외부에 있다는 것을 가리킵니다.</p>
+<p>정확하게 실행되면 요청에 대한 응답은 다음 내용을 담고 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 201 Created</pre>
+</div>
+<p>shapefile이 기존 저장소에 추가되고 레이어로 발행될 것입니다.</p>
+<p>저장소의 내용을 확인하려면 GET 요청을 실행하십시오. XML 응답은 저장소의 내용이 아니라 저장소 자체에 대한 상세 정보를 담고 있으므로, HTTP를 위한 GET 요청을 실행합니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores/rivers.html</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-a-directory-of-existing-shapefiles">
+<h2>Adding a directory of existing shapefiles<a class="headerlink" href="#adding-a-directory-of-existing-shapefiles" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 단일 작업을 통해 복수의 shapefile을 담고 있는 저장소를 로드하고 생성하는 방법을 설명합니다. 이 예시는 단일 shapefile을 추가하는 앞의 예시와 매우 유사합니다.</p>
+<p>복수의 shapefile을 담고 있는 <tt class="docutils literal"><span class="pre">/data/shapefiles</span></tt> 디렉터리가 서버에 있다고 할 때, 다음과 같이 디렉터리를 위한 새로운 저장소를 추가할 수 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPUT -H &quot;Content-type: text/plain&quot;</span>
+<span class="go">  -d &quot;file:///data/shapefiles/&quot;</span>
+<span class="go">  &quot;http://localhost:8080/geoserver/rest/workspaces/acme/datastores/shapefiles/external.shp?configure=all&quot;</span>
+</pre></div>
+</div>
+<p>디렉터리 안의 각 shapefile을 로드하고 발행하도록 설정하는 <tt class="docutils literal"><span class="pre">configure=all</span></tt> 쿼리 문자열 파라미터를 유의하십시오.</p>
+<p>정확하게 실행되면 요청에 대한 응답은 다음 내용을 담고 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 201 Created</pre>
+</div>
+<p>저장소의 내용을 확인하려면 GET 요청을 실행하십시오. XML 응답은 저장소의 내용이 아니라 저장소 자체에 대한 상세 정보를 담고 있으므로, HTTP를 위한 GET 요청을 실행합니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET</span>
+<span class="go">http://localhost:8080/geoserver/rest/workspaces/acme/datastores/shapefiles.html</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-layer-style">
+<h2>Creating a layer style<a class="headerlink" href="#creating-a-layer-style" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 서버 상에 새로운 스타일을 생성하고 로컬 SLD 파일의 내용으로 해당 스타일을 채웁니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">roads_style</span></tt>이라는 새로운 스타일을 생성하는 요청입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -H &quot;Content-type: text/xml&quot;</span>
+<span class="go">  -d &quot;&lt;style&gt;&lt;name&gt;roads_style&lt;/name&gt;&lt;filename&gt;roads.sld&lt;/filename&gt;&lt;/style&gt;&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/styles</span>
+</pre></div>
+</div>
+<p>정확하게 실행되면 요청에 대한 응답은 다음 내용을 담고 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 201 Created</pre>
+</div>
+<p>다음 요청은 <tt class="file docutils literal"><span class="pre">roads.sld</span></tt> 파일을 업로드해서 <tt class="docutils literal"><span class="pre">roads_style</span></tt>의 내용을 채웁니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPUT -H &quot;Content-type: application/vnd.ogc.sld+xml&quot;</span>
+<span class="go">  -d @roads.sld http://localhost:8080/geoserver/rest/styles/roads_style</span>
+</pre></div>
+</div>
+<p>정확하게 실행되면 요청에 대한 응답은 다음 내용을 담고 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK</pre>
+</div>
+<p>GET 요청을 통해 SLD 자체를 다운로드할 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET</span>
+<span class="go">  http://localhost:8080/geoserver/rest/styles/roads_style.sld</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="changing-a-layer-style">
+<h2>Changing a layer style<a class="headerlink" href="#changing-a-layer-style" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 레이어 스타일을 변경합니다. 스타일을 변경하기 전에 해당 레이어의 기존 설정을 검토하는 것이 유용합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<p>다음은 &#8220;acme:roads&#8221; 레이어의 정보를 XML로 받아오는 요청입니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET &quot;http://localhost:8080/geoserver/rest/layers/acme:roads.xml&quot;</span>
+</pre></div>
+</div>
+<p>요청에 대한 응답은 다음과 같아야 합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;layer&gt;</span>
+  <span class="nt">&lt;name&gt;</span>roads<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;type&gt;</span>VECTOR<span class="nt">&lt;/type&gt;</span>
+  <span class="nt">&lt;defaultStyle&gt;</span>
+    <span class="nt">&lt;name&gt;</span>line<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/styles/line.xml&quot;</span> <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/defaultStyle&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">class=</span><span class="s">&quot;featureType&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;name&gt;</span>roads<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/workpaces/acme/datastores/roads/featuretypes/roads.xml&quot;</span>
+     <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+  <span class="nt">&lt;attribution&gt;</span>
+    <span class="nt">&lt;logoWidth&gt;</span>0<span class="nt">&lt;/logoWidth&gt;</span>
+    <span class="nt">&lt;logoHeight&gt;</span>0<span class="nt">&lt;/logoHeight&gt;</span>
+  <span class="nt">&lt;/attribution&gt;</span>
+<span class="nt">&lt;/layer&gt;</span>
+</pre></div>
+</div>
+<p>레이어가 생성되면 GeoServer는 레이어 도형값에 알맞은 기본 스타일을 레이어에 부여합니다.
+이 경우 <tt class="docutils literal"><span class="pre">라인(line)</span></tt> 스타일이 레이어에 할당됩니다. 다음 WMS 요청을 통해 이 스타일을 검토할 수 있습니다.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/reflect?layers=acme:roads</pre>
+</div>
+<p>다음 새로운 요청으로 새로운 스타일 <tt class="docutils literal"><span class="pre">roads_style</span></tt>을 생성하고 이를 &#8220;acme:roads&#8221; 레이어에 적용할 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPUT -H &quot;Content-type: text/xml&quot;</span>
+<span class="go">  -d &quot;&lt;layer&gt;&lt;defaultStyle&gt;&lt;name&gt;roads_style&lt;/name&gt;&lt;/defaultStyle&gt;&lt;/layer&gt;&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/layers/acme:roads</span>
+</pre></div>
+</div>
+<p>정확하게 실행되면 요청에 대한 응답은 다음 내용을 담고 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK</pre>
+</div>
+<p>앞과 동일한 WMS 요청을 통해 이 새로운 스타일을 검토할 수 있습니다.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/reflect?layers=acme:roads</pre>
+</div>
+<p>스타일을 (공통 스타일이 아니라) 어떤 작업공간에 업로드해서 해당 작업공간의 어떤 레이어에 적용하고 싶을 경우, 먼저 해당 작업공간 안에 그 스타일을 생성해야 합니다.</p>
+<div class="highlight-python"><pre>curl -u admin:geoserver -XPOST -H 'Content-type: text/xml' \
+  -d '&lt;style&gt;&lt;name&gt;roads_style&lt;/name&gt;&lt;filename&gt;roads.sld&lt;/filename&gt;&lt;/style&gt;'
+  http://localhost:8080/geoserver/rest/workspaces/acme/styles</pre>
+</div>
+<p>파일을 작업공간 내부로 업로드합니다.</p>
+<div class="highlight-python"><pre>curl -u admin:geoserver -XPUT -H 'Content-type: application/vnd.ogc.sld+xml' \
+  -d @roads.sld http://localhost:8080/geoserver/rest/workspaces/acme/styles/roads_style</pre>
+</div>
+<p>마지막으로 레이어에 스타일을 적용합니다. 다음 XML에서 <tt class="docutils literal"><span class="pre">&lt;workspace&gt;</span></tt> 태그의 사용법을 유의하십시오.</p>
+<div class="highlight-python"><pre>curl -u admin:geoserver -XPUT -H 'Content-type: text/xml' \
+  -d '&lt;layer&gt;&lt;defaultStyle&gt;&lt;name&gt;roads_style&lt;/name&gt;&lt;workspace&gt;acme&lt;/workspace&gt;&lt;/defaultStyle&gt;&lt;/layer&gt;' \
+  http://localhost:8080/geoserver/rest/layers/acme:roads</pre>
+</div>
+</div>
+<div class="section" id="adding-a-postgis-database">
+<h2>Adding a PostGIS database<a class="headerlink" href="#adding-a-postgis-database" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 <tt class="docutils literal"><span class="pre">nyc</span></tt>라는 PostGIS 데이터베이스를 새로운 저장소로 추가합니다.
+이 섹션에서 <tt class="docutils literal"><span class="pre">nyc</span></tt>라는 PostGIS 데이터베이스가 로컬 시스템에 있고 사용자 <tt class="docutils literal"><span class="pre">bob</span></tt>이 이 DB에 접속할 수 있다고 가정합니다.</p>
+<p>다음 내용으로 새로운 텍스트 파일을 생성하십시오. 새로운 저장소를 표현할 것입니다. 이 파일을 <tt class="file docutils literal"><span class="pre">nycDataStore.xml</span></tt> 파일명으로 저장하십시오.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;dataStore&gt;</span>
+  <span class="nt">&lt;name&gt;</span>nyc<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;connectionParameters&gt;</span>
+    <span class="nt">&lt;host&gt;</span>localhost<span class="nt">&lt;/host&gt;</span>
+    <span class="nt">&lt;port&gt;</span>5432<span class="nt">&lt;/port&gt;</span>
+    <span class="nt">&lt;database&gt;</span>nyc<span class="nt">&lt;/database&gt;</span>
+    <span class="nt">&lt;user&gt;</span>bob<span class="nt">&lt;/user&gt;</span>
+    <span class="nt">&lt;passwd&gt;</span>postgres<span class="nt">&lt;/passwd&gt;</span>
+    <span class="nt">&lt;dbtype&gt;</span>postgis<span class="nt">&lt;/dbtype&gt;</span>
+  <span class="nt">&lt;/connectionParameters&gt;</span>
+<span class="nt">&lt;/dataStore&gt;</span>
+</pre></div>
+</div>
+<p>다음은 새로운 PostGIS 저장소를 GeoServer 카탈로그에 추가하는 요청입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -T nycDataStore.xml -H &quot;Content-type: text/xml&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores</span>
+</pre></div>
+</div>
+<p>정확하게 실행되면 요청에 대한 응답은 다음 내용을 담고 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK</pre>
+</div>
+<p>GET 요청을 통해 저장소 정보를 XML로 받아올 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET http://localhost:8080/geoserver/rest/workspaces/acme/datastores/nyc.xml</span>
+</pre></div>
+</div>
+<p>요청에 대한 응답은 다음과 같아야 합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;dataStore&gt;</span>
+  <span class="nt">&lt;name&gt;</span>nyc<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;type&gt;</span>PostGIS<span class="nt">&lt;/type&gt;</span>
+  <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+  <span class="nt">&lt;workspace&gt;</span>
+    <span class="nt">&lt;name&gt;</span>acme<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/workspaces/acme.xml&quot;</span> <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/workspace&gt;</span>
+  <span class="nt">&lt;connectionParameters&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;port&quot;</span><span class="nt">&gt;</span>5432<span class="nt">&lt;/entry&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;dbtype&quot;</span><span class="nt">&gt;</span>postgis<span class="nt">&lt;/entry&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;host&quot;</span><span class="nt">&gt;</span>localhost<span class="nt">&lt;/entry&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;user&quot;</span><span class="nt">&gt;</span>bob<span class="nt">&lt;/entry&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;database&quot;</span><span class="nt">&gt;</span>nyc<span class="nt">&lt;/entry&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;namespace&quot;</span><span class="nt">&gt;</span>http://acme<span class="nt">&lt;/entry&gt;</span>
+  <span class="nt">&lt;/connectionParameters&gt;</span>
+  <span class="nt">&lt;__default&gt;</span>false<span class="nt">&lt;/__default&gt;</span>
+  <span class="nt">&lt;featureTypes&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span>
+     <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/workspaces/acme/datastores/nyc/featuretypes.xml&quot;</span>
+     <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/featureTypes&gt;</span>
+<span class="nt">&lt;/dataStore&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-a-postgis-table">
+<h2>Adding a PostGIS table<a class="headerlink" href="#adding-a-postgis-table" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서, 이전 예시에서 생성한 PostGIS 데이터베이스의 테이블을 피처형으로 추가합니다. 해당 테이블이 이미 생성되었다고 가정합니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">buildings</span></tt> 테이블을 새로운 피처형으로 추가하는 요청입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -H &quot;Content-type: text/xml&quot;</span>
+<span class="go">  -d &quot;&lt;featureType&gt;&lt;name&gt;buildings&lt;/name&gt;&lt;/featureType&gt;&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores/nyc/featuretypes</span>
+</pre></div>
+</div>
+<p>GET 요청을 통해 피처형 정보를 XML로 받아올 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores/nyc/featuretypes/buildings.xml</span>
+</pre></div>
+</div>
+<p>WMS GetMap 요청을 통해 이 레이어를 검토할 수 있습니다.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/reflect?layers=acme:buildings</pre>
+</div>
+</div>
+<div class="section" id="creating-a-postgis-table">
+<h2>Creating a PostGIS table<a class="headerlink" href="#creating-a-postgis-table" title="Permalink to this headline">¶</a></h2>
+<p>이전 예시에서, 데이터베이스에 이미 존재하는 PostGIS 테이블에 기반한 새로운 피처형을 추가했습니다. 다음 예시에서 GeoServer에 새로운 피처형을 생성할 뿐만 아니라, PostGIS 테이블까지 생성합니다.</p>
+<p>다음 내용으로 새로운 텍스트 파일을 생성하십시오. 새로운 피처형과 테이블을 정의할 것입니다. 이 파일을 <tt class="file docutils literal"><span class="pre">annotations.xml</span></tt> 파일명으로 저장하십시오.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;featureType&gt;</span>
+  <span class="nt">&lt;name&gt;</span>annotations<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;nativeName&gt;</span>annotations<span class="nt">&lt;/nativeName&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Annotations<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;srs&gt;</span>EPSG:4326<span class="nt">&lt;/srs&gt;</span>
+  <span class="nt">&lt;attributes&gt;</span>
+    <span class="nt">&lt;attribute&gt;</span>
+      <span class="nt">&lt;name&gt;</span>the_geom<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;binding&gt;</span>com.vividsolutions.jts.geom.Point<span class="nt">&lt;/binding&gt;</span>
+    <span class="nt">&lt;/attribute&gt;</span>
+    <span class="nt">&lt;attribute&gt;</span>
+      <span class="nt">&lt;name&gt;</span>description<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;binding&gt;</span>java.lang.String<span class="nt">&lt;/binding&gt;</span>
+    <span class="nt">&lt;/attribute&gt;</span>
+    <span class="nt">&lt;attribute&gt;</span>
+      <span class="nt">&lt;name&gt;</span>timestamp<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;binding&gt;</span>java.util.Date<span class="nt">&lt;/binding&gt;</span>
+    <span class="nt">&lt;/attribute&gt;</span>
+  <span class="nt">&lt;/attributes&gt;</span>
+<span class="nt">&lt;/featureType&gt;</span>
+</pre></div>
+</div>
+<p>다음은 피처형을 생성하고 새로운 테이블을 추가하는 요청입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -T annotations.xml -H &quot;Content-type: text/xml&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores/nyc/featuretypes</span>
+</pre></div>
+</div>
+<p>이 요청으로 &#8220;nyc&#8221; 데이터베이스에 완전히 피처형으로 설정된 새로운 빈 테이블 &#8220;annotations&#8221;가 생성됩니다.</p>
+<p>GET 요청을 통해 피처형 정보를 XML로 받아올 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET</span>
+<span class="go">  http://localhost:8080/geoserver/rest/workspaces/acme/datastores/nyc/featuretypes/annotations.xml</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-layer-group">
+<h2>Creating a layer group<a class="headerlink" href="#creating-a-layer-group" title="Permalink to this headline">¶</a></h2>
+<p>이번 예시에서, 서버 상에 이미 존재하는 레이어들에 기반한  레이어 그룹을 생성합니다.</p>
+<p>다음 내용으로 새로운 텍스트 파일을 생성하십시오. 새로운 레이어 그룹을 정의할 것입니다. 이 파일을 <tt class="file docutils literal"><span class="pre">nycLayerGroup.xml</span></tt> 파일명으로 저장하십시오.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;layerGroup&gt;</span>
+  <span class="nt">&lt;name&gt;</span>nyc<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;layers&gt;</span>
+    <span class="nt">&lt;layer&gt;</span>roads<span class="nt">&lt;/layer&gt;</span>
+    <span class="nt">&lt;layer&gt;</span>parks<span class="nt">&lt;/layer&gt;</span>
+    <span class="nt">&lt;layer&gt;</span>buildings<span class="nt">&lt;/layer&gt;</span>
+  <span class="nt">&lt;/layers&gt;</span>
+  <span class="nt">&lt;styles&gt;</span>
+    <span class="nt">&lt;style&gt;</span>roads_style<span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;style&gt;</span>polygon<span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;style&gt;</span>polygon<span class="nt">&lt;/style&gt;</span>
+  <span class="nt">&lt;/styles&gt;</span>
+<span class="nt">&lt;/layerGroup&gt;</span>
+</pre></div>
+</div>
+<p>다음은 새로운 레이어 그룹을 생성하는 요청입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있을 수도 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -d @nycLayerGroup.xml -H &quot;Content-type: text/xml&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/layergroups</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 예시의 <tt class="docutils literal"><span class="pre">-d &#64;filename.xml</span></tt> 인자는 POST 방식을 통해 HTTP 요청의 본체에 파일을 담아 전송하는 데 쓰입니다.
+이전 예시에 쓰였던 <tt class="docutils literal"><span class="pre">-T filename.xml</span></tt> 인자도 POST 방식을 통해 HTTP 요청의 본체에 파일을 담아 전송하는 데 쓰였습니다.</p>
+</div>
+<p>WMS GetMap 요청을 통해 이 레이어 그룹을 검토할 수 있습니다.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/reflect?layers=nyc</pre>
+</div>
+</div>
+<div class="section" id="retrieving-component-versions">
+<h2>Retrieving component versions<a class="headerlink" href="#retrieving-component-versions" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 GeoServer, GeoTools, GeoWebCache 등 주요 컴포넌트의 버전을 받아오는 방법을 설명합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET -H &quot;Accept: text/xml&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/about/version.xml</span>
+</pre></div>
+</div>
+<p>요청에 대한 응답은 다음과 같아야 합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;about&gt;</span>
+ <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;GeoServer&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Build-Timestamp&gt;</span>11-Dec-2012 17:55<span class="nt">&lt;/Build-Timestamp&gt;</span>
+  <span class="nt">&lt;Git-Revision&gt;</span>e66f8da85521f73d0fd00b71331069a5f49f7865<span class="nt">&lt;/Git-Revision&gt;</span>
+  <span class="nt">&lt;Version&gt;</span>2.3-SNAPSHOT<span class="nt">&lt;/Version&gt;</span>
+ <span class="nt">&lt;/resource&gt;</span>
+ <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;GeoTools&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Build-Timestamp&gt;</span>04-Dec-2012 02:31<span class="nt">&lt;/Build-Timestamp&gt;</span>
+  <span class="nt">&lt;Git-Revision&gt;</span>380a2b8545ee9221f1f2d38a4f10ef77a23bccae<span class="nt">&lt;/Git-Revision&gt;</span>
+  <span class="nt">&lt;Version&gt;</span>9-SNAPSHOT<span class="nt">&lt;/Version&gt;</span>
+ <span class="nt">&lt;/resource&gt;</span>
+ <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;GeoWebCache&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Git-Revision&gt;</span>2a534f91f6b99e5120a9eaa5db62df771dd01688<span class="nt">&lt;/Git-Revision&gt;</span>
+  <span class="nt">&lt;Version&gt;</span>1.3-SNAPSHOT<span class="nt">&lt;/Version&gt;</span>
+ <span class="nt">&lt;/resource&gt;</span>
+<span class="nt">&lt;/about&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="retrieving-manifests">
+<h2>Retrieving manifests<a class="headerlink" href="#retrieving-manifests" title="Permalink to this headline">¶</a></h2>
+<p>이번 예시들에서 ClassLoader가 알고 있는 전체 목록(manifest) 및 하위 목록(subset)을 받아오는 방법을 설명합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET -H &quot;Accept: text/xml&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/about/manifest.xml</span>
+</pre></div>
+</div>
+<p>이 요청으로 매우 긴 목록 정보를 받아옵니다. 이 목록 정보도 유용하기는 하지만, 필터링하는 편이 좋습니다.</p>
+<div class="section" id="filtering-over-resource-name">
+<h3>Filtering over resource name<a class="headerlink" href="#filtering-over-resource-name" title="Permalink to this headline">¶</a></h3>
+<p>정규 표현식을 이용해서 리소스 명칭으로 필터링할 수 있습니다.
+다음은 <tt class="docutils literal"><span class="pre">name</span></tt> 속성이 <tt class="docutils literal"><span class="pre">gwc-.*</span></tt>와 일치하는 리소스만 받아오는 예시입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 각 코드 예시는 몇 줄에 걸쳐 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET -H &quot;Accept: text/xml&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/about/manifest.xml?manifest=gwc-.*</span>
+</pre></div>
+</div>
+<p>요청에 대한 응답은 다음과 같아야 합니다. (간결성을 위해 편집했습니다.)</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;about&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-2.3.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-core-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-diskquota-core-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-diskquota-jdbc-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-georss-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-gmaps-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-kml-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-rest-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-tms-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-ve-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-wms-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+  <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;gwc-wmts-1.4.0&quot;</span><span class="nt">&gt;</span>
+    ...
+  <span class="nt">&lt;/resource&gt;</span>
+<span class="nt">&lt;/about&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filtering-over-resource-properties">
+<h3>Filtering over resource properties<a class="headerlink" href="#filtering-over-resource-properties" title="Permalink to this headline">¶</a></h3>
+<p>리소스 속성으로 필터링할 수도 있습니다. 다음은 <tt class="docutils literal"><span class="pre">GeoServerModule</span></tt>과 동일한 속성을 가진 리소스만 받아오는 예시입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 코드 예시는 몇 줄에 걸쳐 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -u admin:geoserver -XGET -H &quot;Accept: text/xml&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/about/manifest.xml?key=GeoServerModule</span>
+</pre></div>
+</div>
+<p>요청에 대한 응답은 다음과 같아야 합니다. (간결성을 위해 편집했습니다.)</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;about&gt;</span>
+ <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;control-flow-2.3.0&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;GeoServerModule&gt;</span>extension<span class="nt">&lt;/GeoServerModule&gt;</span>
+  ...
+ <span class="nt">&lt;/resource&gt;</span>
+ ...
+ <span class="nt">&lt;resource</span> <span class="na">name=</span><span class="s">&quot;wms-2.3.0&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;GeoServerModule&gt;</span>core<span class="nt">&lt;/GeoServerModule&gt;</span>
+  ...
+ <span class="nt">&lt;/resource&gt;</span>
+<span class="nt">&lt;/about&gt;</span>
+</pre></div>
+</div>
+<p>속성과 값 양쪽으로 필터링할 수도 있습니다.
+<tt class="docutils literal"><span class="pre">GeoServerModule</span></tt>이라는 속성이 <tt class="docutils literal"><span class="pre">extension</span></tt>과 동일한 값을 가지는 리소스만 받아오려면,
+다음과 같이 앞의 요청에 <tt class="docutils literal"><span class="pre">&amp;value=extension</span></tt>을 추가하십시오.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -u admin:geoserver -XGET -H &quot;Accept: text/xml&quot;</span>
+<span class="go">  http://localhost:8080/geoserver/rest/about/manifest.xml?key=GeoServerModule&amp;value=extension</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="uploading-and-modifying-a-image-mosaic">
+<h2>Uploading and modifying a image mosaic<a class="headerlink" href="#uploading-and-modifying-a-image-mosaic" title="Permalink to this headline">¶</a></h2>
+<p>다음은 (해상도, 오버뷰(overview) 등을 초기화(initialize)할 수 있는, 적어도 하나 이상의 입자를 가진) 모자이크의 정의를 담고 있는 ZIP 파일을 업로드하고 모자이크의 모든 커버리지를 새로운 레이어로 설정하는 명령어입니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">다음 코드 예시는 몇 줄에 걸쳐 있는 단일 명령어(single command)를 담고 있습니다.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl ­-u admin:geoserver -XPUT ­H &quot;Content­type:application/zip&quot;­--data-binary @polyphemus.zip</span>
+<span class="go">   http://localhost:8080/geoserver/rest/workspaces/topp/coveragestores/polyphemus/file.imagemosaic</span>
+</pre></div>
+</div>
+<p>다음은 단일 파일을 모자이크 내로 거둬들여(또는 다시 거둬들여) 그 속성을 모아 모자이크 인덱스를 업데이트하도록 하는 요청입니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -H &quot;Content-type: text/plain&quot; -d &quot;file:///path/to/the/file/polyphemus_20130302.nc&quot;</span>
+<span class="go">   &quot;http://localhost:8080/geoserver/rest/workspaces/topp/coveragestores/poly-incremental/external.imagemosaic&quot;</span>
+</pre></div>
+</div>
+<p>다음과 같이 전체 디렉터리에 대해 거둬들이기(harvesting) 작업을 할 수도 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -H &quot;Content-type: text/plain&quot; -d &quot;file:///path/to/the/mosaic/folder&quot;</span>
+<span class="go">    &quot;http://localhost:8080/geoserver/rest/workspaces/topp/coveragestores/poly-incremental/external.imagemosaic&quot;</span>
+</pre></div>
+</div>
+<p>이미지 모자이크(image mosaic) 인덱스 구조를 다음과 같이 받아올 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET &quot;http://localhost:8080/geoserver/rest/workspaces/topp/coveragestores/polyphemus-v1/coverages/NO2/index.xml&quot;</span>
+</pre></div>
+</div>
+<p>요청에 대한 응답은 다음과 같아야 합니다.</p>
+<div class="highlight-json"><pre>   &lt;Schema&gt;
+  &lt;attributes&gt;
+    &lt;Attribute&gt;
+      &lt;name&gt;the_geom&lt;/name&gt;
+      &lt;minOccurs&gt;0&lt;/minOccurs&gt;
+      &lt;maxOccurs&gt;1&lt;/maxOccurs&gt;
+      &lt;nillable&gt;true&lt;/nillable&gt;
+      &lt;binding&gt;com.vividsolutions.jts.geom.Polygon&lt;/binding&gt;
+    &lt;/Attribute&gt;
+    &lt;Attribute&gt;
+      &lt;name&gt;location&lt;/name&gt;
+      &lt;minOccurs&gt;0&lt;/minOccurs&gt;
+      &lt;maxOccurs&gt;1&lt;/maxOccurs&gt;
+      &lt;nillable&gt;true&lt;/nillable&gt;
+      &lt;binding&gt;java.lang.String&lt;/binding&gt;
+    &lt;/Attribute&gt;
+    &lt;Attribute&gt;
+      &lt;name&gt;imageindex&lt;/name&gt;
+      &lt;minOccurs&gt;0&lt;/minOccurs&gt;
+      &lt;maxOccurs&gt;1&lt;/maxOccurs&gt;
+      &lt;nillable&gt;true&lt;/nillable&gt;
+      &lt;binding&gt;java.lang.Integer&lt;/binding&gt;
+    &lt;/Attribute&gt;
+    &lt;Attribute&gt;
+      &lt;name&gt;time&lt;/name&gt;
+      &lt;minOccurs&gt;0&lt;/minOccurs&gt;
+      &lt;maxOccurs&gt;1&lt;/maxOccurs&gt;
+      &lt;nillable&gt;true&lt;/nillable&gt;
+      &lt;binding&gt;java.sql.Timestamp&lt;/binding&gt;
+    &lt;/Attribute&gt;
+    &lt;Attribute&gt;
+      &lt;name&gt;elevation&lt;/name&gt;
+      &lt;minOccurs&gt;0&lt;/minOccurs&gt;
+      &lt;maxOccurs&gt;1&lt;/maxOccurs&gt;
+      &lt;nillable&gt;true&lt;/nillable&gt;
+      &lt;binding&gt;java.lang.Double&lt;/binding&gt;
+    &lt;/Attribute&gt;
+    &lt;Attribute&gt;
+      &lt;name&gt;fileDate&lt;/name&gt;
+      &lt;minOccurs&gt;0&lt;/minOccurs&gt;
+      &lt;maxOccurs&gt;1&lt;/maxOccurs&gt;
+      &lt;nillable&gt;true&lt;/nillable&gt;
+      &lt;binding&gt;java.sql.Timestamp&lt;/binding&gt;
+    &lt;/Attribute&gt;
+    &lt;Attribute&gt;
+      &lt;name&gt;updated&lt;/name&gt;
+      &lt;minOccurs&gt;0&lt;/minOccurs&gt;
+      &lt;maxOccurs&gt;1&lt;/maxOccurs&gt;
+      &lt;nillable&gt;true&lt;/nillable&gt;
+      &lt;binding&gt;java.sql.Timestamp&lt;/binding&gt;
+    &lt;/Attribute&gt;
+  &lt;/attributes&gt;
+  &lt;atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="alternate" href="http://localhost:8080/geoserver/rest/workspaces/topp/coveragestores/polyphemus-v1/coverages/NO2/index/granules.xml" type="application/xml"/&gt;
+&lt;/Schema&gt;</pre>
+</div>
+<p>다음과 같이 기존 입자 목록을 받아올 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XGET &quot;http://localhost:8080/geoserver/rest/workspaces/topp/coveragestores/polyphemus-v1/coverages/NO2/index/granules.xml?limit=2&quot;</span>
+</pre></div>
+</div>
+<p>이 요청에 대한 응답은 입자에 대한 다음 GML 설명입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;wfs:FeatureCollection</span> <span class="na">xmlns:gf=</span><span class="s">&quot;http://www.geoserver.org/rest/granules&quot;</span> <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span> <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;gml:boundedBy&gt;</span>
+    <span class="nt">&lt;gml:Box</span> <span class="na">srsName=</span><span class="s">&quot;http://www.opengis.net/gml/srs/epsg.xml#4326&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;gml:coord&gt;</span>
+        <span class="nt">&lt;gml:X&gt;</span>5.0<span class="nt">&lt;/gml:X&gt;</span>
+        <span class="nt">&lt;gml:Y&gt;</span>45.0<span class="nt">&lt;/gml:Y&gt;</span>
+      <span class="nt">&lt;/gml:coord&gt;</span>
+      <span class="nt">&lt;gml:coord&gt;</span>
+        <span class="nt">&lt;gml:X&gt;</span>14.875<span class="nt">&lt;/gml:X&gt;</span>
+        <span class="nt">&lt;gml:Y&gt;</span>50.9375<span class="nt">&lt;/gml:Y&gt;</span>
+      <span class="nt">&lt;/gml:coord&gt;</span>
+    <span class="nt">&lt;/gml:Box&gt;</span>
+  <span class="nt">&lt;/gml:boundedBy&gt;</span>
+  <span class="nt">&lt;gml:featureMember&gt;</span>
+    <span class="nt">&lt;gf:NO2</span> <span class="na">fid=</span><span class="s">&quot;NO2.1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;gf:the_geom&gt;</span>
+        <span class="nt">&lt;gml:Polygon&gt;</span>
+          <span class="nt">&lt;gml:outerBoundaryIs&gt;</span>
+            <span class="nt">&lt;gml:LinearRing&gt;</span>
+              <span class="nt">&lt;gml:coordinates&gt;</span>5.0,45.0 5.0,50.9375 14.875,50.9375 14.875,45.0 5.0,45.0<span class="nt">&lt;/gml:coordinates&gt;</span>
+            <span class="nt">&lt;/gml:LinearRing&gt;</span>
+          <span class="nt">&lt;/gml:outerBoundaryIs&gt;</span>
+        <span class="nt">&lt;/gml:Polygon&gt;</span>
+      <span class="nt">&lt;/gf:the_geom&gt;</span>
+      <span class="nt">&lt;gf:location&gt;</span>polyphemus_20130301.nc<span class="nt">&lt;/gf:location&gt;</span>
+      <span class="nt">&lt;gf:imageindex&gt;</span>336<span class="nt">&lt;/gf:imageindex&gt;</span>
+      <span class="nt">&lt;gf:time&gt;</span>2013-03-01T00:00:00Z<span class="nt">&lt;/gf:time&gt;</span>
+      <span class="nt">&lt;gf:elevation&gt;</span>10.0<span class="nt">&lt;/gf:elevation&gt;</span>
+      <span class="nt">&lt;gf:fileDate&gt;</span>2013-03-01T00:00:00Z<span class="nt">&lt;/gf:fileDate&gt;</span>
+      <span class="nt">&lt;gf:updated&gt;</span>2013-04-11T10:54:31Z<span class="nt">&lt;/gf:updated&gt;</span>
+    <span class="nt">&lt;/gf:NO2&gt;</span>
+  <span class="nt">&lt;/gml:featureMember&gt;</span>
+  <span class="nt">&lt;gml:featureMember&gt;</span>
+    <span class="nt">&lt;gf:NO2</span> <span class="na">fid=</span><span class="s">&quot;NO2.2&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;gf:the_geom&gt;</span>
+        <span class="nt">&lt;gml:Polygon&gt;</span>
+          <span class="nt">&lt;gml:outerBoundaryIs&gt;</span>
+            <span class="nt">&lt;gml:LinearRing&gt;</span>
+              <span class="nt">&lt;gml:coordinates&gt;</span>5.0,45.0 5.0,50.9375 14.875,50.9375 14.875,45.0 5.0,45.0<span class="nt">&lt;/gml:coordinates&gt;</span>
+            <span class="nt">&lt;/gml:LinearRing&gt;</span>
+          <span class="nt">&lt;/gml:outerBoundaryIs&gt;</span>
+        <span class="nt">&lt;/gml:Polygon&gt;</span>
+      <span class="nt">&lt;/gf:the_geom&gt;</span>
+      <span class="nt">&lt;gf:location&gt;</span>polyphemus_20130301.nc<span class="nt">&lt;/gf:location&gt;</span>
+      <span class="nt">&lt;gf:imageindex&gt;</span>337<span class="nt">&lt;/gf:imageindex&gt;</span>
+      <span class="nt">&lt;gf:time&gt;</span>2013-03-01T00:00:00Z<span class="nt">&lt;/gf:time&gt;</span>
+      <span class="nt">&lt;gf:elevation&gt;</span>35.0<span class="nt">&lt;/gf:elevation&gt;</span>
+      <span class="nt">&lt;gf:fileDate&gt;</span>2013-03-01T00:00:00Z<span class="nt">&lt;/gf:fileDate&gt;</span>
+      <span class="nt">&lt;gf:updated&gt;</span>2013-04-11T10:54:31Z<span class="nt">&lt;/gf:updated&gt;</span>
+    <span class="nt">&lt;/gf:NO2&gt;</span>
+  <span class="nt">&lt;/gml:featureMember&gt;</span>
+<span class="nt">&lt;/wfs:FeatureCollection&gt;</span>
+</pre></div>
+</div>
+<p>다음과 같이 특정 파일(NetCDF 파일은 복수의 입자를 담을 수 있습니다)에서 나온 모든 입자를 제거할 수 있습니다.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XDELETE &quot;http://localhost:8080/geoserver/rest/workspaces/topp/coveragestores/polyphemus-v1/coverages/NO2/index/granules.xml?filter=location=&#39;polyphemus_20130301.nc&#39;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">REST configuration examples</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="php.html" title="next chapter">PHP</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">cURL</a><ul>
+<li><a class="reference internal" href="#adding-a-new-workspace">Adding a new workspace</a></li>
+<li><a class="reference internal" href="#uploading-a-shapefile">Uploading a shapefile</a></li>
+<li><a class="reference internal" href="#adding-an-existing-shapefile">Adding an existing shapefile</a></li>
+<li><a class="reference internal" href="#adding-a-directory-of-existing-shapefiles">Adding a directory of existing shapefiles</a></li>
+<li><a class="reference internal" href="#creating-a-layer-style">Creating a layer style</a></li>
+<li><a class="reference internal" href="#changing-a-layer-style">Changing a layer style</a></li>
+<li><a class="reference internal" href="#adding-a-postgis-database">Adding a PostGIS database</a></li>
+<li><a class="reference internal" href="#adding-a-postgis-table">Adding a PostGIS table</a></li>
+<li><a class="reference internal" href="#creating-a-postgis-table">Creating a PostGIS table</a></li>
+<li><a class="reference internal" href="#creating-a-layer-group">Creating a layer group</a></li>
+<li><a class="reference internal" href="#retrieving-component-versions">Retrieving component versions</a></li>
+<li><a class="reference internal" href="#retrieving-manifests">Retrieving manifests</a><ul>
+<li><a class="reference internal" href="#filtering-over-resource-name">Filtering over resource name</a></li>
+<li><a class="reference internal" href="#filtering-over-resource-properties">Filtering over resource properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#uploading-and-modifying-a-image-mosaic">Uploading and modifying a image mosaic</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">REST configuration examples</a></li>
+            <li>다음: <a href="php.html" title="next chapter">PHP</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/rest/examples/curl.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

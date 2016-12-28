@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Data Reference &mdash; GeoServer 2.4.0 User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
+      <link rel="up" title="Monitoring" href="index.html" />
+      <link rel="next" title="Monitor Configuration" href="configuration.html" />
+      <link rel="prev" title="Monitoring Overview" href="overview.html" />
+</head>
+<body class="extensions/monitoring/reference">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Extensions</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Monitoring</a> &raquo;</li>
+  <li>Data Reference</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="configuration.html" title="Monitor Configuration"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="overview.html" title="Monitoring Overview"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="data-reference">
+<span id="monitor-reference"></span><h1>Data Reference<a class="headerlink" href="#data-reference" title="Permalink to this headline">¶</a></h1>
+<p>The following is a list of all the attributes of a request that are captured by
+the monitor extension.</p>
+<div class="section" id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="65%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Description</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ID</td>
+<td>Numeric identifier of the request. Every request is assigned an identifier upon
+its creation.</td>
+<td>Numeric</td>
+</tr>
+<tr class="row-odd"><td>Status</td>
+<td>Status of the request. See <a class="reference internal" href="../../webadmin/server/status.html#status"><em>notes</em></a> below.</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Category</td>
+<td>The type of request being made, for example an OGC service request, a REST call, etc...
+See <a class="reference internal" href="#category"><em>notes</em></a> below.</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Start time</td>
+<td>The time of the start of the request.</td>
+<td>Timestamp</td>
+</tr>
+<tr class="row-even"><td>End time</td>
+<td>The time of the completion of the request.</td>
+<td>Timestamp</td>
+</tr>
+<tr class="row-odd"><td>Total time</td>
+<td>The total time spent handling the request, measured in milliseconds, equal to
+the end time - start time.</td>
+<td>Numeric</td>
+</tr>
+<tr class="row-even"><td>Error message</td>
+<td>The exception message if the request failed or resulted in an error.</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Error</td>
+<td>The raw exception if the message failed or resulted in an error.</td>
+<td>Text blob</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="status">
+<span id="id1"></span><h3>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h3>
+<p>The status of a request changes over it&#8217;s life cycle and may have one of the
+following values:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">WAITING</span></tt> - The request has been received by the server, but is queued and not yet
+being actively handled.</li>
+<li><tt class="docutils literal"><span class="pre">RUNNING</span></tt> - The request is in the process of being handled by the server.</li>
+<li><tt class="docutils literal"><span class="pre">FINISHED</span></tt> - The request has been completed and finished normally.</li>
+<li><tt class="docutils literal"><span class="pre">FAILED</span></tt> - The request has been completed but resulted in an error.</li>
+<li><tt class="docutils literal"><span class="pre">CANCELLED</span></tt> - The request was cancelled before it could complete.</li>
+<li><tt class="docutils literal"><span class="pre">INTERRUPTED</span></tt> - The request was interrupted before it could complete.</li>
+</ul>
+</div>
+<div class="section" id="category">
+<span id="id2"></span><h3>Category<a class="headerlink" href="#category" title="Permalink to this headline">¶</a></h3>
+<p>Requests are grouped into categories that describe the nature or type of the request. The
+following are the list of all categories:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">OWS</span></tt> - The request is an OGC service request.</li>
+<li><tt class="docutils literal"><span class="pre">REST</span></tt> - The request is a REST service request.</li>
+<li><tt class="docutils literal"><span class="pre">OTHER</span></tt> - All other requests.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="http">
+<h2>HTTP<a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h2>
+<p>The following attributes are all HTTP related.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="65%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Description</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>HTTP method</td>
+<td>The HTTP method, one of <tt class="docutils literal"><span class="pre">GET</span></tt>, <tt class="docutils literal"><span class="pre">POST</span></tt>, <tt class="docutils literal"><span class="pre">PUT</span></tt>, or <tt class="docutils literal"><span class="pre">DELETE</span></tt></td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Remote address</td>
+<td>The IP address of the client from which the request originated.</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Remote host</td>
+<td>The hostname corresponding to the remote address, obtained via reverse DNS lookup.</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Host</td>
+<td>The hostname of the server handling the request, from the point of view of the client.</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Internal host</td>
+<td>The hostname of the server handling request, from the point of view of the local network.
+Availability depends on host and network configuration.</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Path</td>
+<td>The path component of the request URL, for example: &#8220;/wms&#8221;, &#8220;/rest/workspaces.xml&#8221;, etc...</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Query string</td>
+<td>The query string component of the request URL. Typically only present when the HTTP method is GET.</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Body</td>
+<td>The body content of the request. Typically only present when the HTTP method is PUT or POST.</td>
+<td>Binary blob</td>
+</tr>
+<tr class="row-even"><td>Body content length</td>
+<td>The total number of bytes comprising the body of the request. Typically only present when the
+HTTP method is PUT or POST.</td>
+<td>Numeric</td>
+</tr>
+<tr class="row-odd"><td>Body content type</td>
+<td>The mime type of the body content of the request, for example: &#8220;application/json&#8221;,
+&#8220;text/xml; subtype=gml/3.2&#8221;, etc... Typically only present when the HTTP method is PUT or POST.</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Response status</td>
+<td>The HTTP response code, for example: 200, 401, etc...</td>
+<td>Numeric</td>
+</tr>
+<tr class="row-odd"><td>Response length</td>
+<td>The total number of bytes comprising the response to the request.</td>
+<td>Numeric</td>
+</tr>
+<tr class="row-even"><td>Response content type</td>
+<td>The mime type of the response to the request.</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Remote user</td>
+<td>The username specified parsed of the request. Only available when request included credentials
+for authentication.</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Remote user agent</td>
+<td>The value of the <tt class="docutils literal"><span class="pre">User-Agent</span></tt> HTTP header.</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Http referrer</td>
+<td>The value of the <tt class="docutils literal"><span class="pre">Referer</span></tt> HTTP header.</td>
+<td>String</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ows-ogc">
+<h2>OWS/OGC<a class="headerlink" href="#ows-ogc" title="Permalink to this headline">¶</a></h2>
+<p>The following attributes are OGC service specific.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="65%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Description</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Service</td>
+<td>The OGC service identifier, for example: &#8220;WMS&#8221;, &#8220;WFS&#8221;, etc...</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Operation</td>
+<td>The OGC operation name, for example: &#8220;GetMap&#8221;, &#8220;GetFeature&#8221;, etc...</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Sub operation</td>
+<td>The ogc sub operation (if it applies). For instance when the operation is a WFS Transaction
+the sub operation may be one of &#8220;Insert&#8221;, &#8220;Update&#8221;, etc...</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>OWS/OGC Version</td>
+<td>The OGC service version, for example with WFS the version may be &#8220;1.0.0&#8221;, &#8220;1.1.0&#8221;, etc...</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Resources</td>
+<td>Names of resources (layers, processes, etc...) specified as part of the request.</td>
+<td>List of String</td>
+</tr>
+<tr class="row-odd"><td>Bounding box</td>
+<td>The bounding box specified as part of the request. In some cases this is not possible to
+obtain this reliable, an example being a complex WFS query with a nested &#8220;BBOX&#8221; filter.</td>
+<td>List of Numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="geoip">
+<h2>GeoIP<a class="headerlink" href="#geoip" title="Permalink to this headline">¶</a></h2>
+<p>The following attributes are specific to GeoIP look ups and are not captured out of the box. See
+<a class="reference internal" href="geoip.html#monitor-geoip"><em>GeoIP</em></a> for more details.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="65%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Description</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Remote country</td>
+<td>Name of the country of the client from which the request originated.</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Remote city</td>
+<td>Name of the city from which the request originated.</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Remote lat</td>
+<td>The latitude from which the request originated.</td>
+<td>Numeric</td>
+</tr>
+<tr class="row-odd"><td>Remote lon</td>
+<td>The longitude from which the request originated.</td>
+<td>Numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="overview.html" title="previous chapter">Monitoring Overview</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="configuration.html" title="next chapter">Monitor Configuration</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Data Reference</a><ul>
+<li><a class="reference internal" href="#general">General</a><ul>
+<li><a class="reference internal" href="#status">Status</a></li>
+<li><a class="reference internal" href="#category">Category</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#http">HTTP</a></li>
+<li><a class="reference internal" href="#ows-ogc">OWS/OGC</a></li>
+<li><a class="reference internal" href="#geoip">GeoIP</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="overview.html" title="previous chapter">Monitoring Overview</a></li>
+            <li>Next: <a href="configuration.html" title="next chapter">Monitor Configuration</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/extensions/monitoring/reference.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

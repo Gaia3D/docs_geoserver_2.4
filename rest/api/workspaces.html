@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Workspaces &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="REST configuration API reference" href="index.html" />
+      <link rel="next" title="Namespaces" href="namespaces.html" />
+      <link rel="prev" title="Global settings" href="global.html" />
+</head>
+<body class="rest/api/workspaces">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">REST configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">REST configuration API reference</a> &raquo;</li>
+  <li>Workspaces</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="namespaces.html" title="Namespaces"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="global.html" title="Global settings"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="workspaces">
+<span id="rest-api-workspaces"></span><h1>Workspaces<a class="headerlink" href="#workspaces" title="Permalink to this headline">¶</a></h1>
+<p><tt class="docutils literal"><span class="pre">작업공간(workspace)</span></tt>은 데이터 저장소의 집합(grouping)입니다. 명칭공간(namespace)과 유사하게, 어떤 방식으로 연관되어 있는 데이터를 무리짓는 데 사용됩니다.</p>
+<div class="section" id="workspaces-format">
+<h2><tt class="docutils literal"><span class="pre">/workspaces[.&lt;format&gt;]</span></tt><a class="headerlink" href="#workspaces-format" title="Permalink to this headline">¶</a></h2>
+<p>모든 작업공간을 제어합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>모든 작업공간을 나열합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>새 작업공간을 생성합니다.</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="workspaces-ws-format">
+<h2><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;[.&lt;format&gt;]</span></tt><a class="headerlink" href="#workspaces-ws-format" title="Permalink to this headline">¶</a></h2>
+<p>특정 작업공간을 제어합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+<th class="head">파라미터</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>작업공간 <tt class="docutils literal"><span class="pre">ws</span></tt>를 반환합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>작업공간 <tt class="docutils literal"><span class="pre">ws</span></tt>를 변경합니다.</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>작업공간 <tt class="docutils literal"><span class="pre">ws</span></tt>를 삭제합니다.</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#rest-api-workspaces-recurse"><em>recurse</em></a></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="exceptions">
+<h3>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">예외(Exception)</th>
+<th class="head">상태 코드</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>존재하지 않는 작업공간에 대한 GET</td>
+<td>404</td>
+</tr>
+<tr class="row-odd"><td>작업공간 명칭을 변경하는 PUT</td>
+<td>403</td>
+</tr>
+<tr class="row-even"><td>비어 있지 않은 작업공간에 대한 DELETE</td>
+<td>403</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="recurse">
+<span id="rest-api-workspaces-recurse"></span><h4><tt class="docutils literal"><span class="pre">recurse</span></tt><a class="headerlink" href="#recurse" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">recurse</span></tt> 파라미터는 설정된 작업공간이 참조하는 모든 레이어(데이터 저장소, 커버리지 저장소, 피처형 등등)를 반복적으로(recursively) 삭제합니다.
+이 파라미터에 쓸 수 있는 값은 &#8220;true&#8221; 혹은 &#8220;false&#8221;입니다. 기본값은 &#8220;false&#8221;입니다.</p>
+</div>
+</div>
+</div>
+<div class="section" id="workspaces-default-format">
+<h2><tt class="docutils literal"><span class="pre">/workspaces/default[.&lt;format&gt;]</span></tt><a class="headerlink" href="#workspaces-default-format" title="Permalink to this headline">¶</a></h2>
+<p>기본 작업공간을 제어합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>기본 작업공간을 반환합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>기본 작업공간을 설정합니다.</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="workspaces-ws-settings-format">
+<h2><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/settings[.&lt;format&gt;]</span></tt><a class="headerlink" href="#workspaces-ws-settings-format" title="Permalink to this headline">¶</a></h2>
+<p>특정 작업공간에 대한 설정을 제어합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>작업공간 설정을 반환합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>작업공간 설정을 생성하거나 업데이트합니다.</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>작업공간 설정을 삭제합니다.</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="global.html" title="previous chapter">Global settings</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="namespaces.html" title="next chapter">Namespaces</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Workspaces</a><ul>
+<li><a class="reference internal" href="#workspaces-format"><tt class="docutils literal"><span class="pre">/workspaces[.&lt;format&gt;]</span></tt></a></li>
+<li><a class="reference internal" href="#workspaces-ws-format"><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;[.&lt;format&gt;]</span></tt></a><ul>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#parameters">Parameters</a><ul>
+<li><a class="reference internal" href="#recurse"><tt class="docutils literal"><span class="pre">recurse</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#workspaces-default-format"><tt class="docutils literal"><span class="pre">/workspaces/default[.&lt;format&gt;]</span></tt></a></li>
+<li><a class="reference internal" href="#workspaces-ws-settings-format"><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/settings[.&lt;format&gt;]</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="global.html" title="previous chapter">Global settings</a></li>
+            <li>다음: <a href="namespaces.html" title="next chapter">Namespaces</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/rest/api/workspaces.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

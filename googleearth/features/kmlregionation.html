@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>KML Regionation &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Features" href="index.html" />
+      <link rel="next" title="KML Scoring" href="kmlscoring.html" />
+      <link rel="prev" title="KML Super-Overlays" href="kmlsuperoverlays.html" />
+</head>
+<body class="googleearth/features/kmlregionation">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Google Earth</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Features</a> &raquo;</li>
+  <li>KML Regionation</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="kmlscoring.html" title="KML Scoring"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="kmlsuperoverlays.html" title="KML Super-Overlays"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="kml-regionation">
+<span id="ge-feature-kml-regionation"></span><h1>KML Regionation<a class="headerlink" href="#kml-regionation" title="Permalink to this headline">¶</a></h1>
+<p>Google 어스에 벡터 피처를 표출하는 것은 멋진 스타일을 적용한 맵을 생성할 수 있는 아주 강력한 방법입니다.
+그러나 언제나 모든 피처를 표출하는 것이 항상 최선은 아닙니다.
+너무 많은 피처를 한꺼번에 표출하면 맵이 보기 흉해질 수 있고, 또 Google 어스의 속도를 저하시킬 수도 있습니다.
+이 문제를 해결하려면 GeoServer의 KML 산출물에 특정 기준에 따라 피처를 제한하는 기능을 포함시켜야 합니다.
+이 처리과정을 <strong>지역화(regionation)</strong>라고 합니다. 수퍼오버레이 KML 반영자(reflector) 모드를 사용할 경우 지역화를 기본적으로 활성화됩니다.</p>
+<div class="section" id="regionation-attributes">
+<h2>Regionation Attributes<a class="headerlink" href="#regionation-attributes" title="Permalink to this headline">¶</a></h2>
+<p>지역화의 가장 중요한 측면은 특정 피처를 어떻게 다른 피처보다 훨씬 두드러지게 표출할지 결정한다는 점입니다.
+<strong>도형(geometry)에 따라</strong>, 혹은 <strong>속성(attribute)에 따라</strong> 결정할 수 있습니다.
+피처의 상대적인 &#8220;중요도(importance)&#8221;를 가장 잘 보여줄 수 있는 옵션을 선택해야 합니다.
+도형에 따라 지역화하기로 선택한 경우 높은 줌 레벨에서 더 큰 라인과 폴리곤만을 표출하고, 줌인하면 작은 피처들을 표출할 것입니다.
+속성에 따라 지역화하는 경우 해당 속성값이 클 수록 높은 줌 레벨에서 해당 피처를 표출할 것입니다.
+(숫자값이 아닌 속성을 선택하면 해당 속성을 무시하고 대신 기본값인 도형에 따라 지역화하는 작업을 할 것입니다.)</p>
+</div>
+<div class="section" id="regionation-strategies">
+<h2>Regionation Strategies<a class="headerlink" href="#regionation-strategies" title="Permalink to this headline">¶</a></h2>
+<p>어떤 순간 또는 줌 레벨에서 어떤 피처를 표출할지 결정하는 방법을 설정하는 것을 지역화 전략(regionation strategy)이라고 합니다. 다음 5가지 지역화 전략이 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>전략</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">best_guess</span></tt></td>
+<td>(<em>기본값</em>) 작업 대상이 되는 데이터형에 따라 실질적인 전략을 결정합니다.
+데이터가 포인트로 구성되어 있다면 <tt class="docutils literal"><span class="pre">random</span></tt> 전략을 사용합니다.
+데이터가 라인 또는 폴리곤으로 구성되어 있다면 <tt class="docutils literal"><span class="pre">geometry</span></tt> 전략을 사용합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">external-sorting</span></tt></td>
+<td>GeoServer 내부에 보조 데이터베이스를 생성합니다. 첫 요청에 따라 인덱스를 구축하는 데 약간 시간이 걸릴 수 있습니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">native-sorting</span></tt></td>
+<td>데이터를 관리(host)하는 백엔드(backend)의 기본 분류 알고리듬(sorting algorithm)을 사용합니다.
+<tt class="docutils literal"><span class="pre">external-sorting</span></tt>보다 빠르지만, PostGIS 데이터베이스와 작업할 경우에만 사용할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">geometry</span></tt></td>
+<td>(라인의 경우) 길이에 따라, (폴리곤의 경우) 면적에 따라 외부적으로 분류합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">random</span></tt></td>
+<td>분류 작업 없이 기존 데이터의 순서를 사용합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>대부분의 경우 <strong>best_guess</strong> 전략이면 충분합니다.</p>
+</div>
+<div class="section" id="setting-regionation-parameters">
+<h2>Setting Regionation Parameters<a class="headerlink" href="#setting-regionation-parameters" title="Permalink to this headline">¶</a></h2>
+<p>지역화 전략과 그 속성은 피처형에 특화되어 있으며, 따라서 <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>웹 관리자 인터페이스</em></a>의
+<a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>레이어</em></a> 편집 페이지에서 설정됩니다.
+왼쪽 사이드 메뉴에서 &#8216;Layers&#8217;를 클릭한 다음 원하는 벡터 레이어를 선택하십시오.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="kmlsuperoverlays.html" title="previous chapter">KML Super-Overlays</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="kmlscoring.html" title="next chapter">KML Scoring</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">KML Regionation</a><ul>
+<li><a class="reference internal" href="#regionation-attributes">Regionation Attributes</a></li>
+<li><a class="reference internal" href="#regionation-strategies">Regionation Strategies</a></li>
+<li><a class="reference internal" href="#setting-regionation-parameters">Setting Regionation Parameters</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="kmlsuperoverlays.html" title="previous chapter">KML Super-Overlays</a></li>
+            <li>다음: <a href="kmlscoring.html" title="next chapter">KML Scoring</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/googleearth/features/kmlregionation.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

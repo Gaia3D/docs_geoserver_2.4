@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Other Considerations &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Running in a Production Environment" href="index.html" />
+      <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
+      <link rel="prev" title="Linux init scripts" href="linuxscript.html" />
+</head>
+<body class="production/misc">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Running in a Production Environment</a> &raquo;</li>
+  <li>Other Considerations</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="troubleshooting.html" title="Troubleshooting"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="linuxscript.html" title="Linux init scripts"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="other-considerations">
+<span id="production-misc"></span><h1>Other Considerations<a class="headerlink" href="#other-considerations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="host-your-application-separately">
+<h2>Host your application separately<a class="headerlink" href="#host-your-application-separately" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 <a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 데모 섹션에 응용 프로그램 예시를 몇 가지 담고 있습니다.
+생산(production) 인스턴스의 경우 이 사용자 응용 프로그램 꾸러미를 사용하지 말 것을 권장합니다.
+업그레이드 및 문제 해결 작업(troubleshooting)을 쉽게 하려면 사용자 응용 프로그램을 위한 컨테이너를 분리하는 편이 좋습니다.
+하지만 GeoServer와 사용자 응용 프로그램을 모두 호스트하는 (Tomcat이나 Jetty 같은) 하나의 컨테이너 관리자(container manager)를 사용하는 것은 괜찮습니다.</p>
+</div>
+<div class="section" id="proxy-your-server">
+<h2>Proxy your server<a class="headerlink" href="#proxy-your-server" title="Permalink to this headline">¶</a></h2>
+<p>역량 문서(capabilities document)를 통해 GeoServer의 프록시(proxy)를 적절히 보고할 수 있습니다.
+<a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 서버 설정 섹션의
+<tt class="docutils literal"><span class="pre">Proxy base URL</span></tt> 항목에 외부 프록시 URL을 입력해서 프록시를 설정할 수 있습니다.</p>
+</div>
+<div class="section" id="publish-your-server-s-capabilities-documents">
+<h2>Publish your server&#8217;s capabilities documents<a class="headerlink" href="#publish-your-server-s-capabilities-documents" title="Permalink to this headline">¶</a></h2>
+<p>사용자의 데이터를 찾기 쉽게 하려면 웹 상의 사용자 역량 문서 안에 링크를 추가하면 됩니다.
+이렇게 하면 검색 엔진이 해당 링크를 찾아 인덱싱할 것입니다.</p>
+</div>
+<div class="section" id="set-up-clustering">
+<h2>Set up clustering<a class="headerlink" href="#set-up-clustering" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer 설치 시 신뢰도 및 속도를 향상시키는 최상의 방법은 <a class="reference external" href="http://en.wikipedia.org/wiki/Cluster_(computing)">클러스터(cluster)</a>를 설정하는 것입니다.
+가장 안정적이고 빠른 GeoServer 인스턴스는 어떤 방식으로든 클러스터로 설정되어 있습니다.
+컨테이너 수준, 가상 머신 수준, 물리적 서버 수준 등 클러스터를 설정하는 기법은 매우 다양합니다.</p>
+<p>안드레아 아이메(Andrea Aime)가 2009년 FOSS4G 행사에서 발표한 &#8216;GeoServer in Production&#8217;에서 GeoServer 사용자들이 이제까지 클러스터를 설정하기 위해 사용해왔던 기법들을 가장 폭넓게 설명하고 있습니다.
+이 정보를 예제 및 백서로 만들기 위한 작업이 진행 중입니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="linuxscript.html" title="previous chapter">Linux init scripts</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="troubleshooting.html" title="next chapter">Troubleshooting</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Other Considerations</a><ul>
+<li><a class="reference internal" href="#host-your-application-separately">Host your application separately</a></li>
+<li><a class="reference internal" href="#proxy-your-server">Proxy your server</a></li>
+<li><a class="reference internal" href="#publish-your-server-s-capabilities-documents">Publish your server&#8217;s capabilities documents</a></li>
+<li><a class="reference internal" href="#set-up-clustering">Set up clustering</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="linuxscript.html" title="previous chapter">Linux init scripts</a></li>
+            <li>다음: <a href="troubleshooting.html" title="next chapter">Troubleshooting</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/production/misc.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

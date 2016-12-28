@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Supported GML Versions &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Secondary Namespaces" href="secondary-namespaces.html" />
+      <link rel="prev" title="Application Schema Resolution" href="app-schema-resolution.html" />
+</head>
+<body class="data/app-schema/supported-gml-versions">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Supported GML Versions</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="secondary-namespaces.html" title="Secondary Namespaces"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="app-schema-resolution.html" title="Application Schema Resolution"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="supported-gml-versions">
+<span id="app-schema-gml32"></span><h1>Supported GML Versions<a class="headerlink" href="#supported-gml-versions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="gml-3-1-1">
+<h2>GML 3.1.1<a class="headerlink" href="#gml-3-1-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>WFS 1.1.0은 GML 3.1.1 응용 스키마를 지원합니다.</li>
+<li>GeoServer의 기본값은 WFS 2.0.0이기 때문에 클라이언트 요청에 WFS 1.1.0이라고 명시해야 합니다.</li>
+<li>WFS 버전을 1.1.0으로 설정하려면 GET URL에 <tt class="docutils literal"><span class="pre">version=1.1.0</span></tt>을 포함시키십시오.</li>
+</ul>
+</div>
+<div class="section" id="gml-3-2-1">
+<h2>GML 3.2.1<a class="headerlink" href="#gml-3-2-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>WFS 1.1.0 및 (불완전하지만) WFS 2.0.0은 GML 3.2.1 응용 스키마를 지원합니다.</li>
+<li>Paging(STARTINDEX) 같은 WFS 1.1.0에 없는 WFS 2.0.0 기능을 아직 지원하지 못 합니다.</li>
+<li>WFS 1.1.0을 사용하는 클라이언트는 요청에 WFS 1.1.0이라고 명시하고 GML 3.2.1 용 <tt class="docutils literal"><span class="pre">gml32</span></tt> 산출물 포맷을 선택해야 합니다.</li>
+<li>GML 3.2.1 용 WFS 1.1.0을 사용하려면, GET URL에 <tt class="docutils literal"><span class="pre">version=1.1.0</span></tt>을 포함시켜 WFS 버전을 1.1.0으로 설정하고
+<tt class="docutils literal"><span class="pre">outputFormat=gml32</span></tt>을 포함시켜 산출물 포맷을 GML 3.2.1로 설정해야 합니다.</li>
+<li>기본 WFS 버전은 2.0.0으로, 이 버전의 기본 산출물 포맷은 GML 3.2.1입니다.</li>
+<li>모든 GML 응답은 WFS 1.1.0이더라도 WFS 2.0.0의 <tt class="docutils literal"><span class="pre">FeatureCollection</span></tt> 요소에 담깁니다.
+WFS 1.1.0의 <tt class="docutils literal"><span class="pre">FeatureCollection</span></tt> 요소가 GML 3.2.1 기능을 담지 못 하기 때문입니다.</li>
+</ul>
+<div class="section" id="secondary-namespace-for-gml-3-2-1-required">
+<h3>Secondary namespace for GML 3.2.1 required<a class="headerlink" href="#secondary-namespace-for-gml-3-2-1-required" title="Permalink to this headline">¶</a></h3>
+<p>GML 3.2.1 WFS 응답은 WFS 2.0.0의 <tt class="docutils literal"><span class="pre">FeatureCollection</span></tt> 요소로 전달됩니다.
+WFS 1.1.0과는 달리, WFS 2.0.0은 GML 버전에 명시적으로 의존하지 않습니다. 결국 GML namespace는 보조적(secondary)이 되며, 명시적으로 그렇게 정의되어야 합니다.
+자세한 내용은 <a class="reference internal" href="secondary-namespaces.html#app-schema-secondary-namespaces"><em>Secondary Namespaces</em></a>를 참조하십시오.</p>
+<p>예를 들어 GML 3.2 용 접두사 <tt class="docutils literal"><span class="pre">gml</span></tt>을 사용하려면 다음과 같은 내용을 담고 있는 <tt class="docutils literal"><span class="pre">workspaces/gml/namespace.xml</span></tt> 파일을 생성해야 합니다.</p>
+<div class="highlight-python"><pre>&lt;namespace&gt;
+    &lt;id&gt;gml_namespace&lt;/id&gt;
+    &lt;prefix&gt;gml&lt;/prefix&gt;
+    &lt;uri&gt;http://www.opengis.net/gml/3.2&lt;/uri&gt;
+&lt;/namespace&gt;</pre>
+</div>
+<p>그리고 <tt class="docutils literal"><span class="pre">workspaces/gml/workspace.xml</span></tt> 파일은 다음과 같은 내용을 담고 있어야 합니다.</p>
+<div class="highlight-python"><pre>&lt;workspace&gt;
+    &lt;id&gt;gml_workspace&lt;/id&gt;
+    &lt;name&gt;gml&lt;/name&gt;
+&lt;/workspace&gt;</pre>
+</div>
+<p>보조 namespace로 <tt class="docutils literal"><span class="pre">gml</span></tt> namespace 접두사를 정의하지 못 하면,</p>
+<div class="highlight-python"><pre>java.io.IOException: The prefix "null" for element "null:name" is not bound.</pre>
+</div>
+<p>매핑 파일 안에서 namespace 접두사를 정의했다고 해도, (이 경우 <tt class="docutils literal"><span class="pre">gml:name</span></tt>을 담은) 응답을 코드화하는 도중에 이런 오류가 발생합니다.</p>
+</div>
+<div class="section" id="gml-3-2-1-geometries-require-gml-id">
+<h3>GML 3.2.1 geometries require gml:id<a class="headerlink" href="#gml-3-2-1-geometries-require-gml-id" title="Permalink to this headline">¶</a></h3>
+<p>GML 3.2.1의 모든 도형(geometry)은 <tt class="docutils literal"><span class="pre">gml:id</span></tt>를 가지고 있어야 합니다.
+GeoServer는 <tt class="docutils literal"><span class="pre">gml:id</span></tt>가 없는 도형이라도 WFS 응답을 코드화할 수 있지만, 이런 응답은 스키마에 맞지 않습니다.
+<tt class="docutils literal"><span class="pre">gml:id</span></tt>를 가진 도형을 코드화하는 작업은
+도형 속성을 매핑할 때 <tt class="docutils literal"><span class="pre">idExpression</span></tt>을 설정하면 가능합니다.
+예를 들면 <tt class="docutils literal"><span class="pre">gsml:shape</span></tt>이 도형 속성이라고 하면 해당 <tt class="docutils literal"><span class="pre">gml:id</span></tt>는 다음과 같이 생성될 것입니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;gsml:shape&lt;/targetAttribute&gt;
+    &lt;idExpression&gt;
+        &lt;OCQL&gt;strConcat('shape.', getId())&lt;/OCQL&gt;
+    &lt;/idExpression&gt;
+    &lt;sourceExpression&gt;
+        &lt;OCQL&gt;SHAPE&lt;/OCQL&gt;
+    &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>이 예시에서 <tt class="docutils literal"><span class="pre">getId()</span></tt>는 담고 있는 피처의 <tt class="docutils literal"><span class="pre">gml:id</span></tt>를 반환하며,
+따라서 각 도형은 문자열 <tt class="docutils literal"><span class="pre">&quot;shape.&quot;</span></tt>에 <tt class="docutils literal"><span class="pre">gml:id</span></tt>를 붙인 유일한 <tt class="docutils literal"><span class="pre">gml:id</span></tt>를 가지게 됩니다.</p>
+<p><tt class="docutils literal"><span class="pre">MultiPoint</span></tt>나 <tt class="docutils literal"><span class="pre">MultiSurface</span></tt> 같은 다중도형(multigeometry)에 (예를 들자면)
+GML 3.2.1 스키마를 따르도록 하기 위해 <tt class="docutils literal"><span class="pre">parentid</span></tt>의 <tt class="docutils literal"><span class="pre">gml:id</span></tt>를 할당한다면,
+다중도형이 담고 있는 각 도형은 자동적으로 <tt class="docutils literal"><span class="pre">parentid.1</span></tt>, <tt class="docutils literal"><span class="pre">parentid.2</span></tt>, ... 와 같은 형태의
+<tt class="docutils literal"><span class="pre">gml:id</span></tt>를 순서대로 할당받게 됩니다.</p>
+</div>
+</div>
+<div class="section" id="gml-3-3">
+<h2>GML 3.3<a class="headerlink" href="#gml-3-3" title="Permalink to this headline">¶</a></h2>
+<p>현재 제안된 GML 3.3은 그 자체로 GML 3.2.1의 응용 스키마로서, GML 3.3 초안을 대상으로 한 예비 테스트 결과 기대했던 대로 응용 스키마와 잘 작동하는 것으로 나타났다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="app-schema-resolution.html" title="previous chapter">Application Schema Resolution</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="secondary-namespaces.html" title="next chapter">Secondary Namespaces</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Supported GML Versions</a><ul>
+<li><a class="reference internal" href="#gml-3-1-1">GML 3.1.1</a></li>
+<li><a class="reference internal" href="#gml-3-2-1">GML 3.2.1</a><ul>
+<li><a class="reference internal" href="#secondary-namespace-for-gml-3-2-1-required">Secondary namespace for GML 3.2.1 required</a></li>
+<li><a class="reference internal" href="#gml-3-2-1-geometries-require-gml-id">GML 3.2.1 geometries require gml:id</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gml-3-3">GML 3.3</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="app-schema-resolution.html" title="previous chapter">Application Schema Resolution</a></li>
+            <li>다음: <a href="secondary-namespaces.html" title="next chapter">Secondary Namespaces</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/supported-gml-versions.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

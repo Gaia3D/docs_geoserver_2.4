@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Tutorial &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Working with Cascaded Services" href="../cascaded/index.html" />
+      <link rel="prev" title="Joining Support For Performance" href="joining.html" />
+</head>
+<body class="data/app-schema/tutorial">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Tutorial</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../cascaded/index.html" title="Working with Cascaded Services"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="joining.html" title="Joining Support For Performance"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="tutorial">
+<span id="app-schema-tutorial"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>이 페이지는 응용 스키마 플러그인과 2개의 속성 파일에서 나온 데이터를 이용해서 2개의 복잡 피처형을 설정하는 방법을 보여주는 예제를 담고 있습니다.</p>
+<div class="section" id="geosciml">
+<h2>GeoSciML<a class="headerlink" href="#geosciml" title="Permalink to this headline">¶</a></h2>
+<p>이 예제에서 GML 응용 프로그램 스키마인 <a class="reference external" href="http://geosciml.org/geosciml/2.0/doc/">GeoSciML(Geoscience Markup Language) 2.0</a>을 사용합니다.</p>
+<blockquote>
+<div><em>&#8220;GeoSciML은 고체지구과학(solid-earth geoscience)에서 쓰이는 정보 구조를 지원하는 피처형 집합을 설정하는 응용 프로그램 스키마입니다.&#8221;</em></div></blockquote>
+<p>이 예제는 2가지 피처형을 정의합니다.</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt> &mdash;&#8220;지구에 존재하는 물질체(지질)&#8221;를 설명합니다.</li>
+<li><tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt> &mdash;맵 상에 표출된 피처, 이 경우 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>의 표현을 설명합니다.</li>
+</ol>
+<p>1개의 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>가 지표면 여러 곳에 나타날 수 있기 때문에,
+각각 <tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>인 다중 값을 가지는 <tt class="docutils literal"><span class="pre">gsml:occurrence</span></tt> 속성을 갖출 수 있습니다.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">일반적인 경우와 마찬가지로 GeoServer를 설치합니다.</p>
+</li>
+<li><p class="first">응용 스키마 플러그인 <tt class="docutils literal"><span class="pre">geoserver-*-app-schema-plugin.zip</span></tt>을 다음과 같이 설치합니다.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">JAR 파일을 <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> 디렉터리에 넣습니다.</p>
+</li>
+<li><p class="first">이 예제에서 GeoServer 설정을 담고 있는 데이터 디렉터리인 <tt class="docutils literal"><span class="pre">tutorial</span></tt> 폴더를 이용할 것입니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li>기존 <tt class="docutils literal"><span class="pre">data</span></tt> 디렉터리를 <tt class="docutils literal"><span class="pre">tutorial</span></tt> 데이터 디렉터리로 대체하거나,</li>
+<li><tt class="docutils literal"><span class="pre">WEB-INF/web.xml</span></tt> 파일을 편집해서 <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt>가
+<tt class="docutils literal"><span class="pre">tutorial</span></tt> 데이터 디렉터리를 가리키도록 설정하십시오.
+(<tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt>를 설정하는 부분의 주석 처리 태그를 제거해야 합니다.)</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">사용자 서블렛 컨테이너에 필요한 설정을 마친 다음, 서블렛을 재시작하십시오.
+예를 들어 Tomcat을 사용하는 경우, <tt class="docutils literal"><span class="pre">server.xml</span></tt> 파일 안에 새로운 관련 환경을 설정한 다음 Tomcat을 재시작하십시오.</p>
+</li>
+<li><p class="first">GeoServer가 이 예제 설정으로 처음 시작하면, 필요한 모든 XSD 스키마 파일을 다운로드해서 데이터 디렉터리의
+<tt class="docutils literal"><span class="pre">app-schema-cache</span></tt> 폴더에 저장할 것입니다. <strong>이 작업을 마치려면 인터넷에 연결되어 있어야 합니다.</strong></p>
+</li>
+</ul>
+</div>
+<div class="section" id="datastore-xml">
+<h2>datastore.xml<a class="headerlink" href="#datastore-xml" title="Permalink to this headline">¶</a></h2>
+<p>개별 데이터 저장소 설정 파일 <tt class="docutils literal"><span class="pre">datastore.xml</span></tt>은 매핑 파일의 위치를 설정하고 해당 매핑 파일을 응용 스키마 데이터 저장소로서 읽어오도록 합니다.
+이 파일을 매핑 파일 안에 설정되어 있는 소스 데이터 저장소와 혼동해서는 안 됩니다.</p>
+<p><tt class="docutils literal"><span class="pre">gsml_GeologicUnit</span></tt>을 위한 파일은 <tt class="docutils literal"><span class="pre">workspaces/gsml/gsml_GeologicUnit/datastore.xml</span></tt> 에 위치하며, 다음 내용을 담고 있습니다.</p>
+<div class="highlight-python"><pre>&lt;dataStore&gt;
+    &lt;id&gt;gsml_GeologicUnit_datastore&lt;/id&gt;
+    &lt;name&gt;gsml_GeologicUnit&lt;/name&gt;
+    &lt;enabled&gt;true&lt;/enabled&gt;
+    &lt;workspace&gt;
+        &lt;id&gt;gsml_workspace&lt;/id&gt;
+    &lt;/workspace&gt;
+    &lt;connectionParameters&gt;
+        &lt;entry key="namespace"&gt;urn:cgi:xmlns:CGI:GeoSciML:2.0&lt;/entry&gt;
+        &lt;entry key="url"&gt;file:workspaces/gsml/gsml_GeologicUnit/gsml_GeologicUnit.xml&lt;/entry&gt;
+        &lt;entry key="dbtype"&gt;app-schema&lt;/entry&gt;
+    &lt;/connectionParameters&gt;
+&lt;/dataStore&gt;</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>을 위한 파일은 <tt class="docutils literal"><span class="pre">workspaces/gsml/gsml_MappedFeature/datastore.xml</span></tt> 에 위치하며, 다음 내용을 담고 있습니다.</p>
+<div class="highlight-python"><pre>&lt;dataStore&gt;
+    &lt;id&gt;gsml_MappedFeature_datastore&lt;/id&gt;
+    &lt;name&gt;gsml_MappedFeature&lt;/name&gt;
+    &lt;enabled&gt;true&lt;/enabled&gt;
+    &lt;workspace&gt;
+        &lt;id&gt;gsml_workspace&lt;/id&gt;
+    &lt;/workspace&gt;
+    &lt;connectionParameters&gt;
+        &lt;entry key="namespace"&gt;urn:cgi:xmlns:CGI:GeoSciML:2.0&lt;/entry&gt;
+        &lt;entry key="url"&gt;file:workspaces/gsml/gsml_MappedFeature/gsml_MappedFeature.xml&lt;/entry&gt;
+        &lt;entry key="dbtype"&gt;app-schema&lt;/entry&gt;
+    &lt;/connectionParameters&gt;
+&lt;/dataStore&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><tt class="docutils literal"><span class="pre">entry</span></tt> 요소 안에 공백이 들어가지 않도록 주의하십시오.</p>
+</div>
+</div>
+<div class="section" id="mapping-files">
+<h2>Mapping files<a class="headerlink" href="#mapping-files" title="Permalink to this headline">¶</a></h2>
+<p>매핑 파일 안에서 다음과 같이 응용 스키마 피처형을 설정합니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">workspaces/gsml/gsml_GeologicUnit/gsml_GeologicUnit.xml</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">workspaces/gsml/gsml_MappedFeature/gsml_MappedFeature.xml</span></tt></li>
+</ul>
+<div class="section" id="namespaces">
+<h3>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h3>
+<p>각 매핑 파일은 다음과 같이 명칭공간 접두사(namespace prefix) 정의를 담고 있습니다.</p>
+<div class="highlight-python"><pre>&lt;Namespace&gt;
+    &lt;prefix&gt;gml&lt;/prefix&gt;
+    &lt;uri&gt;http://www.opengis.net/gml&lt;/uri&gt;
+&lt;/Namespace&gt;
+&lt;Namespace&gt;
+    &lt;prefix&gt;gsml&lt;/prefix&gt;
+    &lt;uri&gt;urn:cgi:xmlns:CGI:GeoSciML:2.0&lt;/uri&gt;
+&lt;/Namespace&gt;
+&lt;Namespace&gt;
+    &lt;prefix&gt;xlink&lt;/prefix&gt;
+    &lt;uri&gt;http://www.w3.org/1999/xlink&lt;/uri&gt;
+&lt;/Namespace&gt;</pre>
+</div>
+<p>매핑 파일에 쓰인 명칭공간 접두사만 선언하면 되기 때문에, <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>의 매핑 파일은 더 적은 접두사를 담고 있습니다.</p>
+</div>
+<div class="section" id="source-data-store">
+<h3>Source data store<a class="headerlink" href="#source-data-store" title="Permalink to this headline">¶</a></h3>
+<p>이 예제에 쓰이는 데이터는 2개의 속성 파일을 포함하고 있습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">workspaces/gsml/gsml_GeologicUnit/gsml_GeologicUnit.properties</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">workspaces/gsml/gsml_MappedFeature/gsml_MappedFeature.properties</span></tt></li>
+</ul>
+<p>속성 파일의 서식을 알고 싶다면 <a class="reference internal" href="../vector/properties.html#data-java-properties"><em>Java Properties</em></a>를 참조하십시오.</p>
+<p>이 예제에서 각 피처형은 동일한 소스 데이터 저장소 설정을 이용합니다.
+다음 <tt class="docutils literal"><span class="pre">directory</span></tt> 파라미터를 통해 해당 매핑 파일과 동일한 디렉터리에 위치한, 파일명이 해당 피처형의 명칭인 속성 파일이 소스 데이터를 담고 있다는 사실을 알 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;sourceDataStores&gt;
+     &lt;DataStore&gt;
+         &lt;id&gt;datastore&lt;/id&gt;
+         &lt;parameters&gt;
+             &lt;Parameter&gt;
+                 &lt;name&gt;directory&lt;/name&gt;
+                 &lt;value&gt;file:./&lt;/value&gt;
+             &lt;/Parameter&gt;
+         &lt;/parameters&gt;
+     &lt;/DataStore&gt;
+ &lt;/sourceDataStores&gt;</pre>
+</div>
+<p>데이터베이스 같은 다른 종류의 데이터 저장소를 사용하는 방법에 대해 알고 싶다면 <a class="reference internal" href="data-stores.html#app-schema-data-stores"><em>Data Stores</em></a>를 참조하십시오.</p>
+</div>
+<div class="section" id="target-types">
+<h3>Target types<a class="headerlink" href="#target-types" title="Permalink to this headline">¶</a></h3>
+<p>GeoSciML 2.0을 위한 최상위 스키마인 하나의 XML 스키마가 2개의 피처형을 모두 정의합니다. 스키마의 <tt class="docutils literal"><span class="pre">targetTypes</span></tt> 섹션에서 이를 설정합니다.
+<tt class="docutils literal"><span class="pre">typeMapping</span></tt> 섹션의 <tt class="docutils literal"><span class="pre">targetElement</span></tt> 파라미터에서 산출 피처의 종류를 정의합니다.</p>
+<div class="highlight-python"><pre>&lt;targetTypes&gt;
+    &lt;FeatureType&gt;
+        &lt;schemaUri&gt;http://www.geosciml.org/geosciml/2.0/xsd/geosciml.xsd&lt;/schemaUri&gt;
+    &lt;/FeatureType&gt;
+&lt;/targetTypes&gt;</pre>
+</div>
+<p>이 경우 스키마를 생산하지만, 스키마 해석(resolution)에 OASIS XML 카탈로그를 이용하기 때문에 원할 경우 카탈로그에 있는 개인용 또는 변경된 스키마를 이용할 수 있습니다.</p>
+</div>
+<div class="section" id="mappings">
+<h3>Mappings<a class="headerlink" href="#mappings" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">typeMappings</span></tt> 요소는 설정 요소로 시작합니다.
+<tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>의 매핑 파일에 다음 내용이 있습니다.</p>
+<div class="highlight-python"><pre>&lt;typeMappings&gt;
+    &lt;FeatureTypeMapping&gt;
+        &lt;sourceDataStore&gt;datastore&lt;/sourceDataStore&gt;
+        &lt;sourceType&gt;gsml_GeologicUnit&lt;/sourceType&gt;
+        &lt;targetElement&gt;gsml:GeologicUnit&lt;/targetElement&gt;</pre>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">sourceDataStore</span></tt>에서 매핑 작업을 시작하는데, <tt class="docutils literal"><span class="pre">sourceDataStores</span></tt> 섹션에서
+입력 데이터의 소스에 명칭을 붙이기 위해 사용되는 임의의 식별자를 부여합니다.</li>
+<li><tt class="docutils literal"><span class="pre">sourceType</span></tt>은 소스 단순 피처형의 명칭을 부여합니다.
+이 경우 단순 피처형 <tt class="docutils literal"><span class="pre">gsml_GeologicUnit</span></tt>의 소스는 매핑 파일과 동일한 디렉터리에 있는
+<tt class="docutils literal"><span class="pre">gsml_GeologicUnit.properties</span></tt> 파일의 내용입니다.</li>
+<li>데이터베이스와 작업하는 경우 <tt class="docutils literal"><span class="pre">sourceType</span></tt>은 테이블 또는 뷰(view)의 명칭이 됩니다.
+데이터베이스 식별자는 PostGIS의 경우 소문자, Oracle Spatial의 경우 대문자를 사용해야 합니다.</li>
+<li><tt class="docutils literal"><span class="pre">targetElement</span></tt>는 산출 복잡 피처형의 명칭입니다.</li>
+</ul>
+</div>
+<div class="section" id="gml-id-mapping">
+<h3>gml:id mapping<a class="headerlink" href="#gml-id-mapping" title="Permalink to this headline">¶</a></h3>
+<p>매핑 작업 시 먼저 소스 속성 파일에 다음과 같이 <tt class="docutils literal"><span class="pre">gml:id</span></tt>를 피처 ID로 설정합니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;
+        gsml:GeologicUnit
+    &lt;/targetAttribute&gt;
+    &lt;idExpression&gt;
+        &lt;OCQL&gt;ID&lt;/OCQL&gt;
+    &lt;/idExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">targetAttribute</span></tt> &mdash;매핑 파일이 적용되는 요소, 이 경우에는 최상위 피처형을 가리키는 XPath입니다.</li>
+<li><tt class="docutils literal"><span class="pre">idExpression</span></tt> &mdash;피처에 <tt class="docutils literal"><span class="pre">gml:id</span></tt>를 설정하는 데에만 이용할 수 있는 특수한 형태입니다.
+<a class="reference external" href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName">NCName</a> 값을 가질 수 있다면 어떤 항목이나 CQL 연산식도 사용할 수 있습니다.</li>
+</ul>
+</div>
+<div class="section" id="ordinary-mapping">
+<h3>Ordinary mapping<a class="headerlink" href="#ordinary-mapping" title="Permalink to this headline">¶</a></h3>
+<p>대부분의 매핑은 목표(target)와 소스(source)로 이루어집니다. 다음은 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>의 매핑입니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;
+        gml:description
+        &lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+        &lt;OCQL&gt;DESCRIPTION&lt;/OCQL&gt;
+    &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<ul class="simple">
+<li>이 경우 <tt class="docutils literal"><span class="pre">gml:description</span></tt>의 값은 속성 파일의 <tt class="docutils literal"><span class="pre">DESCRIPTION</span></tt> 항목의 값일 뿐입니다.</li>
+<li>데이터베이스의 경우, 열의 명칭이 항목명이 됩니다. (테이블/뷰는 앞의 <tt class="docutils literal"><span class="pre">sourceType</span></tt>에 설정됩니다.)
+데이터베이스 식별자는 PostGIS의 경우 소문자, Oracle Spatial의 경우 대문자를 사용해야 합니다.</li>
+<li>값을 계산하기 위해 CQL 연산식을 사용할 수 있습니다. CQL 계산값에 대한 쿼리를 사용하면 효율적인 SQL 쿼리를 구축할 수 없으므로 주의하십시오.</li>
+<li>소스 연산식에 CQL 상수를 이용할 수 있으며, 이 경우 작은 따옴표로 감싸야 합니다.</li>
+</ul>
+</div>
+<div class="section" id="client-properties">
+<h3>Client properties<a class="headerlink" href="#client-properties" title="Permalink to this headline">¶</a></h3>
+<p>매핑 작업 시 요소 값 외에 하나 이상의 &#8220;클라이언트 속성(client property)&#8221;(XML 속성)을 설정할 수 있습니다.
+다음은 <tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>에 대한 예시입니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;
+        gsml:specification
+    &lt;/targetAttribute&gt;
+    &lt;ClientProperty&gt;
+        &lt;name&gt;xlink:href&lt;/name&gt;
+        &lt;value&gt;GU_URN&lt;/value&gt;
+    &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<ul class="simple">
+<li>이 매핑 작업으로 <tt class="docutils literal"><span class="pre">gsml:specification</span></tt> 요소를 비워놓게 되지만
+<tt class="docutils literal"><span class="pre">GU_URN</span></tt> 항목의 값으로 <tt class="docutils literal"><span class="pre">xlink:href</span></tt> 속성을 설정합니다.</li>
+<li>복수의 <tt class="docutils literal"><span class="pre">ClientProperty</span></tt> 매핑을 설정할 수 있습니다.</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>에 대한 다음 예시에서 요소 값 및 XML 속성을 모두 제공합니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;
+        gml:name[1]
+        &lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+        &lt;OCQL&gt;NAME&lt;/OCQL&gt;
+    &lt;/sourceExpression&gt;
+    &lt;ClientProperty&gt;
+        &lt;name&gt;codeSpace&lt;/name&gt;
+        &lt;value&gt;'urn:x-test:classifierScheme:TestAuthority:GeologicUnitName'&lt;/value&gt;
+    &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">codespace</span></tt> XML 속성을 CQL 상수가 제공하는 고정값으로 설정합니다.</li>
+<li><tt class="docutils literal"><span class="pre">gml:name</span></tt>에 대해 복수의 매핑 작업을 하며,
+<tt class="docutils literal"><span class="pre">[1]</span></tt> 인덱스는 해당 매핑이 첫번째를 목표로 하고 있다는 뜻입니다.</li>
+</ul>
+</div>
+<div class="section" id="targetattributenode">
+<h3>targetAttributeNode<a class="headerlink" href="#targetattributenode" title="Permalink to this headline">¶</a></h3>
+<p>속성형이 추상적(abstract)인 경우, <tt class="docutils literal"><span class="pre">targetAttributeNode</span></tt> 매핑을 이용해서 명확한 형(type)을 설정해야 합니다.
+이 매핑 작업은 속성의 내용에 대한 매핑 작업보다 먼저 이루어져야 합니다.</p>
+<p>다음은 <tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>에 대한 매핑 파일의 예시입니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;gsml:positionalAccuracy&lt;/targetAttribute&gt;
+    &lt;targetAttributeNode&gt;gsml:CGI_TermValuePropertyType&lt;/targetAttributeNode&gt;
+&lt;/AttributeMapping&gt;
+&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;gsml:positionalAccuracy/gsml:CGI_TermValue/gsml:value&lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+        &lt;OCQL&gt;'urn:ogc:def:nil:OGC:missing'&lt;/OCQL&gt;
+    &lt;/sourceExpression&gt;
+    &lt;ClientProperty&gt;
+        &lt;name&gt;codeSpace&lt;/name&gt;
+        &lt;value&gt;'urn:ietf:rfc:2141'&lt;/value&gt;
+    &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">gsml:positionalAccuracy</span></tt>는 추상적인 <tt class="docutils literal"><span class="pre">gsml:CGI_TermValuePropertyType</span></tt> 형이기 때문에,
+속성의 내용을 매핑하기 전에 <tt class="docutils literal"><span class="pre">targetAttributeNode</span></tt> 매핑을 통해 명확한 하위형(subtype)인
+<tt class="docutils literal"><span class="pre">gsml:CGI_TermValuePropertyType</span></tt>에 매핑해야 합니다.</li>
+<li>이 예시에서 내포된 속성도 임의의 심도까지 매핑할 수 있다는 사실도 알 수 있습니다. 그러나 깊이가 상당한 내포에 대해서는 불가능하며, 이런 경우 피처 연쇄 처리를 사용하는 편이 낫습니다.</li>
+</ul>
+</div>
+<div class="section" id="feature-chaining">
+<h3>Feature chaining<a class="headerlink" href="#feature-chaining" title="Permalink to this headline">¶</a></h3>
+<p>피처 연쇄 처리(feature chaining)에서, 값 또는 참조를 통해 다음과 같이 어떤 피처형을 컨테이너 피처형의 속성으로 사용할 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;
+        gsml:occurrence
+    &lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+        &lt;OCQL&gt;URN&lt;/OCQL&gt;
+        &lt;linkElement&gt;gsml:MappedFeature&lt;/linkElement&gt;
+        &lt;linkField&gt;gml:name[2]&lt;/linkField&gt;
+    &lt;/sourceExpression&gt;
+    &lt;isMultiple&gt;true&lt;/isMultiple&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<ul class="simple">
+<li>이 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>에 대한 매핑 작업의 경우,
+<tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>의 <tt class="docutils literal"><span class="pre">gsml:occurrence</span></tt>에 대한 매핑을 설정합니다.</li>
+<li><tt class="docutils literal"><span class="pre">gsml_GeologicUnit</span></tt> 소스 단순 피처의 <tt class="docutils literal"><span class="pre">URN</span></tt> 항목이 &#8220;외부 키(foreign key)&#8221;로 쓰이는데,
+이를 통해 각 <tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>의 두번째 <tt class="docutils literal"><span class="pre">gml:name</span></tt>에 매핑합니다.</li>
+<li>구축 중인 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>의 <tt class="docutils literal"><span class="pre">URN</span></tt>과 동일한
+<tt class="docutils literal"><span class="pre">gml:name[2]</span></tt>을 가진 모든 <tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>가
+(값을 통해) <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>의 <tt class="docutils literal"><span class="pre">gsml:occurrence</span></tt> 속성으로서 포함됩니다.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="wfs-response">
+<h2>WFS response<a class="headerlink" href="#wfs-response" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer가 실행 중인 경우, 웹 브라우저에서 응용 스키마 WFS를 테스트하십시오.
+GeoServer가 <tt class="docutils literal"><span class="pre">localhost:8080</span></tt> 포트를 열어놓았다면 다음 링크를 이용해서 2개의 피처형을 쿼리할 수 있습니다.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://localhost:8080/geoserver/wfs?request=GetFeature&amp;version=1.1.0&amp;typeName=gsml:GeologicUnit">http://localhost:8080/geoserver/wfs?request=GetFeature&amp;version=1.1.0&amp;typeName=gsml:GeologicUnit</a></li>
+<li><a class="reference external" href="http://localhost:8080/geoserver/wfs?request=GetFeature&amp;version=1.1.0&amp;typeName=gsml:MappedFeature">http://localhost:8080/geoserver/wfs?request=GetFeature&amp;version=1.1.0&amp;typeName=gsml:MappedFeature</a></li>
+</ul>
+<p>GeoServerdml 웹 관리자 인터페이스의 <a class="reference internal" href="../../webadmin/demos/index.html#demo-requests"><em>Demo requests</em></a>를 이용해서도 WFS 응답을 받아올 수 있습니다.
+(웹 관리자 인터페이스가 아직 응용 스키마 저장소나 응용 스키마 레이어 관리를 지원하지 않는다는 점을 유의하십시오.)</p>
+<ul class="simple">
+<li><a class="reference external" href="http://localhost:8080/geoserver/web/?wicket:bookmarkablePage=:org.geoserver.web.demo.DemoRequestsPage">http://localhost:8080/geoserver/web/?wicket:bookmarkablePage=:org.geoserver.web.demo.DemoRequestsPage</a></li>
+</ul>
+<div class="section" id="gsml-geologicunit">
+<h3>gsml:GeologicUnit<a class="headerlink" href="#gsml-geologicunit" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>의 다중 값 속성인 <tt class="docutils literal"><span class="pre">gsml:occurrence</span></tt>를 구축하는 데 피처 연쇄 처리를 이용했습니다.
+이 속성이 <tt class="docutils literal"><span class="pre">gsml:MappedFeature</span></tt>입니다.
+<tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>에 대한 WFS 응답은 양쪽 피처의 산출물을 단일 응답으로 결합합니다.
+첫번째 <tt class="docutils literal"><span class="pre">gsml:GeologicUnit</span></tt>은 2개의 <tt class="docutils literal"><span class="pre">gsml:occurrence</span></tt> 속성을 가지며, 두번째는 하나의 속성을 가집니다.
+이 피처 인스턴스 사이의 관계는 데이터에 따라 달라집니다.</p>
+<p><tt class="docutils literal"><span class="pre">tutorial</span></tt> 설정의 매핑 파일이 이 피처형들의 모든 필수 속성에 대한 속성 매핑을 담고 있지 않기 때문에,
+GeoSciML 2.0 스키마와 비교할 경우 WFS 응답이 <em>스키마적으로 유효하지 않게(schema-valid) 됩니다</em>.
+매핑 파일에 더 많은 속성 매핑을 추가하면 스키마적 유효성(Schema-validity)을 얻을 수 있습니다.</p>
+</div>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">gsml_GeologicUnit.properties</span></tt>와 <tt class="docutils literal"><span class="pre">gsml_MappedFeature.properties</span></tt> 파일은
+호주 빅토리아 주의 1차산업국(Department of Primary Industries)이 제공한 데이터에서 추출한 것입니다.
+이 예제의 목적에 따라 이 데이터는 실제로 아무 의미가 없을 정도로 변경되었습니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="joining.html" title="previous chapter">Joining Support For Performance</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../cascaded/index.html" title="next chapter">Working with Cascaded Services</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#geosciml">GeoSciML</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#datastore-xml">datastore.xml</a></li>
+<li><a class="reference internal" href="#mapping-files">Mapping files</a><ul>
+<li><a class="reference internal" href="#namespaces">Namespaces</a></li>
+<li><a class="reference internal" href="#source-data-store">Source data store</a></li>
+<li><a class="reference internal" href="#target-types">Target types</a></li>
+<li><a class="reference internal" href="#mappings">Mappings</a></li>
+<li><a class="reference internal" href="#gml-id-mapping">gml:id mapping</a></li>
+<li><a class="reference internal" href="#ordinary-mapping">Ordinary mapping</a></li>
+<li><a class="reference internal" href="#client-properties">Client properties</a></li>
+<li><a class="reference internal" href="#targetattributenode">targetAttributeNode</a></li>
+<li><a class="reference internal" href="#feature-chaining">Feature chaining</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wfs-response">WFS response</a><ul>
+<li><a class="reference internal" href="#gsml-geologicunit">gsml:GeologicUnit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="joining.html" title="previous chapter">Joining Support For Performance</a></li>
+            <li>다음: <a href="../cascaded/index.html" title="next chapter">Working with Cascaded Services</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/tutorial.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

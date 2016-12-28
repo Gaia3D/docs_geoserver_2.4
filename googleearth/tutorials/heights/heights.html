@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Heights Templates &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../../index.html" />
+      <link rel="up" title="Tutorials" href="../index.html" />
+      <link rel="next" title="Time" href="../time/time.html" />
+      <link rel="prev" title="KML Placemark Templates" href="../kmlplacemark/index.html" />
+</head>
+<body class="googleearth/tutorials/heights/heights">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Google Earth</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Tutorials</a> &raquo;</li>
+  <li>Heights Templates</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../time/time.html" title="Time"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../kmlplacemark/index.html" title="KML Placemark Templates"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="heights-templates">
+<span id="tutorials-heights"></span><h1>Heights Templates<a class="headerlink" href="#heights-templates" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>KML의 높이(height) 템플릿을 쓰면 Google 어스에서 사용자 데이터 속성을 피처의 &#8216;높이&#8217;로 사용할 수 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 예제는 GeoServer가 <a class="reference external" href="http://localhost:8080">http://localhost:8080</a> 주소에서 실행되고 있다고 가정합니다.</p>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>이 예제를 따라하려면 GeoServer 기본 설치 시의 설정을 유지하고 Google 어스를 설치해야 합니다.
+<a class="reference external" href="http://earth.google.com/">http://earth.google.com/</a>에서 Google 어스를 무료로 다운로드할 수 있습니다.</p>
+</div>
+<div class="section" id="step-one">
+<h2>Step One<a class="headerlink" href="#step-one" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer는 기본적으로 모든 피처의 높이를 0으로 렌더링하기 때문에 Google 어스에서는 지표면에 납작하게 보입니다.</p>
+<p>Google 어스에서 (GeoServer의 모든 버전에 포함되어 있는) <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어를 볼 수 있는 가장 쉬운 방법은 네트워크 링크입니다.
+Google 어스의 <em class="guilabel">Places</em> 메뉴에서 <em class="guilabel">Temporary Places</em>를 오른쪽 클릭한 다음 <em class="menuselection">Add &raquo; Network Link</em>를 선택합니다.
+이어지는 대화창의 <em class="guilabel">Name</em> 항목에 <tt class="docutils literal"><span class="pre">topp:states</span></tt>를 입력한 다음 <em class="guilabel">Link</em> 항목에 다음 URL을 입력합니다.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/reflect?layers=topp:states&amp;format=application/vnd.google-earth.kml+xml</pre>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/height-none.png" src="../../../_images/height-none.png" />
+<p class="caption"><em>Google 어스에서 topp:states 레이어 보기</em></p>
+</div>
+</div>
+<div class="section" id="step-two">
+<h2>Step Two<a class="headerlink" href="#step-two" title="Permalink to this headline">¶</a></h2>
+<p>각 주(州)의 인구를 높이를 위한 값으로 사용하면 흥미로운 결과를 볼 수 있습니다. (인구가 많을 수록 맵 상에서 더 높게 표출됩니다.)
+그렇게 하려면 GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pre">workspaces/topp/states_shapefile/states</span></tt> 디렉터리에
+<tt class="docutils literal"><span class="pre">height.ftl</span></tt> 파일을 생성하십시오. 해당 파일에 다음 텍스트를 입력해서 인구 값을 설정합니다.</p>
+<div class="highlight-python"><pre>${PERSONS.value}</pre>
+</div>
+<p>이렇게 하면 <tt class="docutils literal"><span class="pre">PERSONS</span></tt> 속성값을 각 피처의 높이로 사용하게 됩니다.
+그 결과를 확인하려면 <em class="guilabel">Temporary Places</em>에서 <tt class="docutils literal"><span class="pre">topp:states</span></tt>를 오른쪽 클릭한 다음 <em class="guilabel">Refresh</em>를 선택하십시오.</p>
+<div class="figure align-center">
+<img alt="../../../_images/height-toomuch.png" src="../../../_images/height-toomuch.png" />
+<p class="caption"><em>인구를 높이 값으로</em></p>
+</div>
+</div>
+<div class="section" id="step-three">
+<h2>Step Three<a class="headerlink" href="#step-three" title="Permalink to this headline">¶</a></h2>
+<p>이 인구 맵을 보면 캘리포니아 주가 다른 모든 주보다 높으며, 모든 주가 너무 높아서 어떤 각도에서도 제대로 전체를 볼 수 없다는 것을 알 수 있습니다.
+좀 더 잘 보이는 크기로 축척을 줄이기 위해 높이 값을 100으로 나누기로 합니다. 방금 작성한 템플릿을 다음과 같이 변경하십시오.</p>
+<div class="highlight-python"><pre>${PERSONS.value / 100}</pre>
+</div>
+<p>뷰(view)를 다시 한 번 새로고침하면, 높이 항목이 사라집니다. GeoServer 로그(데이터 디렉터리의 <tt class="docutils literal"><span class="pre">logs/geoserver.log</span></tt>)를 살펴보면 다음과 같은 내용을 볼 수 있습니다.</p>
+<div class="highlight-python"><pre>Caused by: freemarker.core.NonNumericalException: Error on line 1, column 3 in height.ftl
+Expression PERSONS.value is not numerical</pre>
+</div>
+<p>하지만 아무리 shapefile 내에서 문자열 값으로 선언되어 있더라도, <tt class="docutils literal"><span class="pre">PERSONS</span></tt> 항목은 숫자라는 사실을 알고 있습니다.
+인구 속성값을 강제로 변환하기 위해 다음과 같이 <tt class="docutils literal"><span class="pre">?number</span></tt>를 추가하십시오.</p>
+<div class="highlight-python"><pre>${PERSONS.value?number / 100}</pre>
+</div>
+<p>마지막으로 한 번 더 <em class="guilabel">Refresh</em>를 선택하면 다음 그림처럼 멋진 미국 인구 맵을 볼 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/height-math.png" src="../../../_images/height-math.png" />
+<p class="caption"><em>높이 축척 변경</em></p>
+</div>
+</div>
+<div class="section" id="step-four">
+<h2>Step Four<a class="headerlink" href="#step-four" title="Permalink to this headline">¶</a></h2>
+<p>아직 몇 가지 조정을 더 할 수 있습니다. 높이 값을 가진 피처에 대해 기본적으로 &#8216;속이 꽉 찬(solid)&#8217; 모양을 생성하지만, Google 어스는 지표면에서 떨어져 떠 있는(floating) 폴리곤도 생성할 수 있습니다.
+&#8216;지표면과 접촉(connect to ground)&#8217; 기능을 비활성화하려면 <tt class="docutils literal"><span class="pre">false</span></tt> 값을 가진
+<tt class="docutils literal"><span class="pre">extrude</span></tt>라는 형식 옵션을 추가하십시오. 그러니까 <em class="guilabel">Network Link</em>의 <em class="guilabel">Link</em> 항목을 다음과 같이 변경하십시오.</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/reflect?layers=topp:states&amp;format=application/vnd.google-earth.kml%2Bxml&amp;format_options=extrude:false</pre>
+</div>
+<p>Google 어스가 높이 항목을 어떻게 해석할지에 대한 몇 가지 옵션이 있습니다.
+기본적으로 높이를 지표면에서의 높이로 해석하지만, 해수면에서의 높이로 설정할 수도 있고, 아예 무시할 수도 있습니다.
+(사용자의 템플릿을 변경하지 않고도 초기의 &#8216;납작(flat)&#8217;한 상태로 돌아가는 데 유용합니다.)
+<tt class="docutils literal"><span class="pre">altitudeMode</span></tt>라는 형식 옵션을 통해 이를 제어할 수 있습니다. 이 옵션에서 사용할 수 있는 값은 다음과 같습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>altitudeMode</strong></td>
+<td><strong>목적</strong></td>
+</tr>
+<tr class="row-even"><td>altitudeMode</td>
+<td>지표면을 기준으로 높이를 해석합니다.</td>
+</tr>
+<tr class="row-odd"><td>absolute</td>
+<td>해수면을 기준으로 높이를 해석합니다.</td>
+</tr>
+<tr class="row-even"><td>clampToGround</td>
+<td>높이를 무시합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../kmlplacemark/index.html" title="previous chapter">KML Placemark Templates</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../time/time.html" title="next chapter">Time</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Heights Templates</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#step-one">Step One</a></li>
+<li><a class="reference internal" href="#step-two">Step Two</a></li>
+<li><a class="reference internal" href="#step-three">Step Three</a></li>
+<li><a class="reference internal" href="#step-four">Step Four</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../kmlplacemark/index.html" title="previous chapter">KML Placemark Templates</a></li>
+            <li>다음: <a href="../time/time.html" title="next chapter">Time</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/googleearth/tutorials/heights/heights.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

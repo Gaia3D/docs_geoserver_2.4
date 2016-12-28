@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Time Support in Geoserver WMS &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Map Service" href="index.html" />
+      <link rel="next" title="WMS output formats" href="outputformats.html" />
+      <link rel="prev" title="WMS reference" href="reference.html" />
+</head>
+<body class="services/wms/time">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Map Service</a> &raquo;</li>
+  <li>Time Support in Geoserver WMS</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="outputformats.html" title="WMS output formats"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="reference.html" title="WMS reference"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="time-support-in-geoserver-wms">
+<span id="wms-time"></span><h1>Time Support in Geoserver WMS<a class="headerlink" href="#time-support-in-geoserver-wms" title="Permalink to this headline">¶</a></h1>
+<p>시간(TIME) 차원에서 제대로 설정된 레이어의 경우, GeoServer는 렌더링 시 시계열 서브셋을 설정하기 위해 GetMap 요청에 TIME 속성을 사용할 수 있도록 지원합니다.
+예를 들면 장기간에 걸쳐 수집된 날씨 관측 정보를 담은 단일 데이터셋에서 단 하루치의 관측 정보를 표출하도록 할 수도 있습니다.</p>
+<div class="section" id="specifying-a-time">
+<h2>Specifying a Time<a class="headerlink" href="#specifying-a-time" title="Permalink to this headline">¶</a></h2>
+<p>WMS TIME 파라미터에서 시간을 설정할 경우 쓰이는 형식은 <a class="reference external" href="http://en.wikipedia.org/wiki/ISO_8601">ISO-8601</a>을 따릅니다.
+1,000분의 1초 단위까지 시간을 설정할 수도 있습니다. GeoServer는 그 이상 정밀한 시간 쿼리를 지원하지 않습니다. 시간 표현은 다음 일반 형식을 사용합니다.</p>
+<div class="highlight-python"><pre>yyyy-MM-ddThh:mm:ss.SSSZ</pre>
+</div>
+<p>그러니까 어떤 날짜를 년도 4자리, 월 2자리, 일 2자리로 설정하며, 해당 날짜의 어떤 순간을 각각 2자리의 시, 분, 초로 설정합니다. 초 항목 뒤에 임의 개수의 십진수를 추가할 수 있습니다.
+날짜와 순간을 대문자 &#8216;T&#8217;로 구분하고, 전체 형식 뒤에 접미사 &#8216;Z&#8217;가 붙습니다.
+(&#8216;Z&#8217;는 &#8216;Zulu&#8217; 또는 시간대(time zone)에서 <a class="reference external" href="http://en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a>를 가리킵니다.
+WMS 사양은 다른 시간대를 지원하지 않습니다.)</p>
+<p>GeoServer는 GetMap 요청의 LAYERS 파라미터 안에 있는 시계열이 활성화된 모든 레이어에 TIME 값을 적용할 것입니다.
+시계열 요소가 없는 레이어도 정상적으로 서비스됩니다. 따라서 클라이언트가 시계열 데이터와 함께 정치적 국경 같은 참조 정보를 포함시킬 수 있습니다.</p>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
+<li><p class="first">2001년 12월 12일 오후 6시는 다음과 같이 표현됩니다.</p>
+<div class="highlight-python"><pre>TIME=2001-12-12T18:00:00.0Z</pre>
+</div>
+</li>
+<li><p class="first">1993년 5월 5일 오후 11시 34분은 다음과 같이 표현됩니다.</p>
+<div class="highlight-python"><pre>TIME=1993-05-05T11:34:00.0Z</pre>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="specifying-a-periodicity">
+<h2>Specifying a Periodicity<a class="headerlink" href="#specifying-a-periodicity" title="Permalink to this headline">¶</a></h2>
+<p>주기(periodicity) 또한 ISO-8601 형식으로 설정합니다. 맨 앞에 대문자 &#8216;P&#8217;가 오고 그 뒤에 각각 시간 단위를 지정하는 숫자와 문자로 이루어진 하나 이상의 시구간이 붙습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>단위</strong></td>
+<td><strong>축약형</strong></td>
+</tr>
+<tr class="row-even"><td>Years</td>
+<td><tt class="docutils literal"><span class="pre">Y</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Months</td>
+<td><tt class="docutils literal"><span class="pre">M</span></tt></td>
+</tr>
+<tr class="row-even"><td>Days</td>
+<td><tt class="docutils literal"><span class="pre">D</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Hours</td>
+<td><tt class="docutils literal"><span class="pre">H</span></tt></td>
+</tr>
+<tr class="row-even"><td>Minutes</td>
+<td><tt class="docutils literal"><span class="pre">M</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Seconds</td>
+<td><tt class="docutils literal"><span class="pre">S</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>년월일 값의 무리는 시분초 값의 무리와 <tt class="docutils literal"><span class="pre">T</span></tt> 문자로 구분되어야 합니다.
+또 0 값인 항목을 뺄 수도 있으며, 시, 분, 초 항목이 모두 빠질 경우 <tt class="docutils literal"><span class="pre">T</span></tt> 문자도 생략할 수 있습니다.
+소수 값을 쓸 수도 있지만, 포함된 항목 가운데 가장 정밀한 단위일 경우에만 가능합니다.</p>
+<p>주기를 시작/끝 시간으로 정의된 시구간으로 균등하게 나누어야 합니다.</p>
+<div class="section" id="examples-of-periods">
+<h3>Examples of Periods<a class="headerlink" href="#examples-of-periods" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
+<li><p class="first">시간을 다음과 같이 표현할 수 있습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">P0Y0M0DT1H0M0S</span>
+
+<span class="n">PT1H0M0S</span>
+
+<span class="n">PT1H</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">90분(1시간 30분)을 다음과 같이 표현할 수 있습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">P0Y0M0DT1H30M0S</span>
+
+<span class="n">PT1H30M</span>
+
+<span class="n">P90M</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">18개월(1년 6개월)을 다음과 같이 표현할 수 있습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">P1Y6M0DT0H0M0S</span>
+
+<span class="n">P1Y6M0D</span>
+
+<span class="n">P0Y18M0DT0H0M0S</span>
+
+<span class="n">P18M</span>
+
+하지만 <span class="n">P1.25Y3M</span>은 안 됩니다.
+</pre></div>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="specifying-an-interval">
+<h2>Specifying an Interval<a class="headerlink" href="#specifying-an-interval" title="Permalink to this headline">¶</a></h2>
+<p>클라이언트가 어떤 단일한 순간 대신, <tt class="docutils literal"><span class="pre">/</span></tt> 문자로 구분된 시작 및 끝 시간을 설정해서 이어지는 시구간에 대한 정보를 요청할 수도 있습니다.
+이때 시작 및 끝 모두 포괄적입니다. 다시 말해 설정된 구간의 정확한 끝 시간도 렌더링 시 타일에 반영됩니다.</p>
+<div class="section" id="id1">
+<h3>Examples<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>설명</td>
+<td>시간 설정</td>
+</tr>
+<tr class="row-even"><td>2002년 9월 한 달 동안</td>
+<td><tt class="docutils literal"><span class="pre">2002-09-01T00:00:00.0Z/2002-10-01T23:59:59.999Z</span></tt></td>
+</tr>
+<tr class="row-odd"><td>2010년 12월 25일 하루 동안</td>
+<td><tt class="docutils literal"><span class="pre">2010-12-25T00:00:00.0Z/2010-12-25T23:59:59.999Z</span></tt></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">시구간이 포괄적이기 때문에 &#8220;어떤 날짜의 하루 전체&#8221;와 같은 식의 개념을 정확히 설정할 수 없습니다.
+따라서 부정확하지만 시작/끝 시간의 데이터를 받아들이거나, 부정확하지만 시구간의 마지막 1,000분의 1초를 제외하거나 해야 합니다.
+실제 상황에서 GeoServer 및 많은 데이터 저장소 엔진이 시간 표현을 정밀하게 하는 데 한계가 있으므로, 1,000분의 1초까지 근사치를 내는 것이 &#8216;최선입니다.&#8217;
+향후 이 기술적인 제한을 해결할 수도 있습니다.</p>
+</div>
+</div>
+</div>
+<div class="section" id="reduced-accuracy-times">
+<h2>Reduced Accuracy Times<a class="headerlink" href="#reduced-accuracy-times" title="Permalink to this headline">¶</a></h2>
+<p>WMS 사양에 따르면 시간 문자열의 접미사를 제거해서 시간 설정 표현을 단축(truncate)할 수 있습니다.
+이런 경우 GeoServer는 시간을 시간 문자열에 설정된 가장 정밀한 단위와 동일한 기간으로 취급합니다.
+예를 들어 시간 설정 표현에서 년도만 남기고 다른 항목을 모두 제거하면 해당 년도의 처음부터 1년 동안의 기간으로 식별합니다.</p>
+<p>이 기능을 실행할 경우 GeoServer가 적합한 단위를 추가한 다음 1,000분의 1초를 빼게 됩니다.
+데이터의 실제 수집 주기(sampling frequency)와 일치하는 시구간을 설정했을 경우, 이렇게 해야 의외의 결과를 피할 수 있습니다.
+예를 들어 년 단위 데이터가 자체적으로 2001-01-01T00:00:00.0Z, 2002-01-01T00:00:00Z 등과 같은 날짜/시간을 가지고 저장된 경우
+이렇게 하지 않은 채 2001년에 대해 요청을 하면 2001년과 2002년 데이터를 함께 받게 될 것입니다.</p>
+<div class="section" id="id2">
+<h3>Examples<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>설명</td>
+<td>정밀도 저하 시간(Reduced Accuracy Time)</td>
+<td>동일 시구간</td>
+</tr>
+<tr class="row-even"><td>2002년 9월 한 달 동안</td>
+<td><tt class="docutils literal"><span class="pre">2002-09</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">2002-09-01T00:00:00.0Z/2002-10-01T23:59:59.999Z</span></tt></td>
+</tr>
+<tr class="row-odd"><td>2010년 12월 25일 하루 동안</td>
+<td><tt class="docutils literal"><span class="pre">2010-12-25</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">2010-12-25T00:00:00.0Z/2010-12-25T23:59:59.999Z</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="ranges-with-reduced-accuracy-times">
+<h2>Ranges with Reduced Accuracy Times<a class="headerlink" href="#ranges-with-reduced-accuracy-times" title="Permalink to this headline">¶</a></h2>
+<p>시구간을 설정할 때에도 정밀도 저하 시간을 쓸 수 있습니다.
+이러한 경우 GeoServer가 앞에서 설명한대로 효과적으로 시작 및 끝 시간을 확장한 다음 시구간 시작과 끝 사이의 데이터를 모두 받아옵니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>설명</td>
+<td>정밀도 저하 시간</td>
+<td>동일 시구간</td>
+</tr>
+<tr class="row-even"><td>2002년 9월에서 12월까지</td>
+<td><tt class="docutils literal"><span class="pre">2002-09/2002-12</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">2002-09-01T00:00:00.0Z/2002-12-31T23:59:59.999Z</span></tt></td>
+</tr>
+<tr class="row-odd"><td>2010년 12월 25일 오후 12시부터 6시까지</td>
+<td><tt class="docutils literal"><span class="pre">2010-12-25T12/2010-12-25T18</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">2010-12-25T12:00:00.0Z/2010-12-25T18:59:59.999Z</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="specifying-a-list-of-times">
+<h2>Specifying a List of Times<a class="headerlink" href="#specifying-a-list-of-times" title="Permalink to this headline">¶</a></h2>
+<p>몇몇 형식의 경우 GeoServer가 애니메이션을 생성할 수 있습니다.
+이런 경우 클라이언트가 각 프레임마다 각각 시간을 설정해야 합니다.
+복수의 시간을 설정해야 할 경우 클라이언트는 앞에서 설명한대로 각 시간을 지정하고 쉼표로 구분하면 됩니다.</p>
+<p>이 시간 목록이 (예를 들어 일별 혹은 시간별 데이터와 같이) 일정한 간격으로 떨어져 있다면 해당 목록을 시작 시간과 끝 시간을 지정한 시구간과 슬래시로 구분한 주기로 설정할 수도 있습니다.</p>
+<div class="section" id="id3">
+<h3>Examples<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>설명</td>
+<td>목록 표기법</td>
+<td>시구간 표기법</td>
+</tr>
+<tr class="row-even"><td>2012년 8월 12일에서 18일까지 1주간 매일 정오</td>
+<td><tt class="docutils literal"><span class="pre">TIME=2012-08-12T12:00:00.0Z,2012-08-13T12:00:00.0Z,2012-08-14T12:00:00.0Z,2012-08-15T12:00:00.0Z,2012-08-16T12:00:00.0Z,2012-08-17T12:00:00.0Z,2012-08-18T12:00:00.0Z</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">TIME=2012-08-12T12:00:00.0Z/2012-08-18:T12:00:00.0Z/P1D</span></tt></td>
+</tr>
+<tr class="row-odd"><td>1999년 9월, 10월, 11월 1일 자정</td>
+<td><tt class="docutils literal"><span class="pre">TIME=1999-09-01T00:00:00.0Z,1999-10-01T00:00:00.0Z,1999-11-01T00:00:00.0Z</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">TIME=1999-09-01T00:00:00.0Z/1999-11-01T00:00:00.0Z/P1M</span></tt></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer는 현재 시구간 목록을 지원하지 않기 때문에 실질적으로 시간 목록 쿼리가 모두 1,000분의 1초의 정밀도를 갖추게 됩니다.
+시구간 설정 시 정밀도 저하 표기법을 사용하는 경우 각 시구간이 자동적으로 시구간이 시작되는 순간으로 변환될 것입니다.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="reference.html" title="previous chapter">WMS reference</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="outputformats.html" title="next chapter">WMS output formats</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Time Support in Geoserver WMS</a><ul>
+<li><a class="reference internal" href="#specifying-a-time">Specifying a Time</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#specifying-a-periodicity">Specifying a Periodicity</a><ul>
+<li><a class="reference internal" href="#examples-of-periods">Examples of Periods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#specifying-an-interval">Specifying an Interval</a><ul>
+<li><a class="reference internal" href="#id1">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reduced-accuracy-times">Reduced Accuracy Times</a><ul>
+<li><a class="reference internal" href="#id2">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ranges-with-reduced-accuracy-times">Ranges with Reduced Accuracy Times</a></li>
+<li><a class="reference internal" href="#specifying-a-list-of-times">Specifying a List of Times</a><ul>
+<li><a class="reference internal" href="#id3">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="reference.html" title="previous chapter">WMS reference</a></li>
+            <li>다음: <a href="outputformats.html" title="next chapter">WMS output formats</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wms/time.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

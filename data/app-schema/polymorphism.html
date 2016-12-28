@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Polymorphism &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Data Access Integration" href="data-access-integration.html" />
+      <link rel="prev" title="Feature Chaining" href="feature-chaining.html" />
+</head>
+<body class="data/app-schema/polymorphism">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Polymorphism</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="data-access-integration.html" title="Data Access Integration"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="feature-chaining.html" title="Feature Chaining"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="polymorphism">
+<span id="app-schema-polymorphism"></span><h1>Polymorphism<a class="headerlink" href="#polymorphism" title="Permalink to this headline">¶</a></h1>
+<p>이 문서에서 다형성(polymorphism)이란 어떤 속성이 서로 다른 형태를 띨 수 있는 기능을 가리킵니다.
+소스 값에 따라 속성을 특정 구조, 형(type), <tt class="docutils literal"><span class="pre">xlink:href</span></tt> 참조로 코드화하거나, 아예 코드화하지 않을 수도 있습니다.
+이렇게 하려면 피처 연쇄 처리 구문(syntax)을 재사용하고 <tt class="docutils literal"><span class="pre">linkElement</span></tt> 태그 안에 OCQL 함수를 허용해야 합니다.
+피처 연쇄 처리 구문을 잘 모른다면 <a class="reference internal" href="feature-chaining.html#app-schema-feature-chaining"><em>Feature Chaining</em></a>을 참조하십시오.</p>
+<div class="section" id="data-type-polymorphism">
+<h2>Data-type polymorphism<a class="headerlink" href="#data-type-polymorphism" title="Permalink to this headline">¶</a></h2>
+<p>일반적인 피처 연쇄 처리 작업으로 속성을 다음과 같이 특정 형으로 코드화할 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;ex:someAttribute&lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+        &lt;OCQL&gt;VALUE_ID&lt;/OCQL&gt;
+          &lt;linkElement&gt;NumericType&lt;/linkElement&gt;
+          &lt;linkField&gt;FEATURE_LINK&lt;/linkField&gt;
+    &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;
+&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;ex:someAttribute&lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+          &lt;OCQL&gt;VALUE_ID&lt;/OCQL&gt;
+          &lt;linkElement&gt;gsml:CGI_TermValue&lt;/linkElement&gt;
+          &lt;linkField&gt;FEATURE_LINK&lt;/linkField&gt;
+    &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+이때 <p class="last"><tt class="docutils literal"><span class="pre">NumericType</span></tt>은 <tt class="docutils literal"><span class="pre">mappingName</span></tt>인 반면,
+<tt class="docutils literal"><span class="pre">gsml:CGI_TermValue</span></tt>는 <tt class="docutils literal"><span class="pre">targetElement</span></tt>입니다.</p>
+</div>
+<p>이 예시에서 외부 키(foreign key)가 <tt class="docutils literal"><span class="pre">linkField</span></tt>와 일치하는 경우
+<tt class="docutils literal"><span class="pre">NumericType</span></tt> 설정으로 <tt class="docutils literal"><span class="pre">ex:someAttribute</span></tt>를 코드화합니다.
+외부 키가 링크된 양쪽 설정의 후보 키(candidate key)와 일치하는 경우 양쪽 인스턴스 모두 코드화합니다. 따라서 이 예시는 0개 이상의 관계가 있을 경우에만 작동합니다.</p>
+<p>단일 속성 인스턴스에 대해 함수를 사용할 수 있습니다. 일반적으로 사용되는 함수 목록은 <a class="reference internal" href="#useful-functions">useful functions</a>를 참조하십시오.
+<tt class="docutils literal"><span class="pre">linkElement</span></tt> 안에 함수를 설정하면 다음과 같이 맨 처음 일치하는 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt>에 매핑할 것입니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;ex:someAttribute&lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+          &lt;OCQL&gt;VALUE_ID&lt;/OCQL&gt;
+          &lt;linkElement&gt;
+            Recode(CLASS_TEXT, 'numeric', 'NumericType', 'literal', 'gsml:CGI_TermValue')
+        &lt;/linkElement&gt;
+          &lt;linkField&gt;FEATURE_LINK&lt;/linkField&gt;
+    &lt;/sourceExpression&gt;
+    &lt;isMultiple&gt;true&lt;/isMultiple&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>이 예시에서 <em>CLASS_TEXT</em> 값이 &#8216;숫자(numeric)&#8217;일 경우 <em>VALUE_ID</em>를 링크된 형에 대한 외부 키로 갖춘
+<tt class="docutils literal"><span class="pre">NumericType</span></tt>의 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt>과 링크할 것입니다.
+잠재적으로 일치하는 모든 형이 <tt class="docutils literal"><span class="pre">linkField</span></tt>에 설정되어 있는 공통 속성을 갖추어야 합니다.
+이 예시에서 <tt class="docutils literal"><span class="pre">linkField</span></tt>는 <em>FEATURE_LINK</em>로, 피처 연쇄 처리에만 사용되는 가짜 속성입니다.
+링크되어 있는 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt>이 컨테이너 형과 동일한 <tt class="docutils literal"><span class="pre">sourceType</span></tt>을 가지고 있을 경우
+다음과 같이 <tt class="docutils literal"><span class="pre">linkField</span></tt>와 OCQL을 삭제해도 됩니다. 이렇게 하면 불필요한 쿼리를 줄일 수 있어서 속도를 향상시킬 수 있습니다.</p>
+<p>컨테이너 형의 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt>이 다음과 같고,</p>
+<div class="highlight-python"><pre>&lt;FeatureTypeMapping&gt;
+    &lt;sourceDataStore&gt;PropertyFiles&lt;/sourceDataStore&gt;
+    &lt;sourceType&gt;PolymorphicFeature&lt;/sourceType&gt;</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">NumericType</span></tt>인 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt>이 동일한 테이블을 가리키며,</p>
+<div class="highlight-python"><pre>&lt;FeatureTypeMapping&gt;
+    &lt;mappingName&gt;NumericType&lt;/mappingName&gt;
+    &lt;sourceDataStore&gt;PropertyFiles&lt;/sourceDataStore&gt;
+    &lt;sourceType&gt;PolymorphicFeature&lt;/sourceType&gt;</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">gsml:CGI_TermValue</span></tt>의 <tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt>도 동일한 테이블을 가리킬 때,</p>
+<div class="highlight-python"><pre>&lt;<tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt>&gt;
+    &lt;sourceDataStore&gt;PropertyFiles&lt;/sourceDataStore&gt;
+    &lt;sourceType&gt;PolymorphicFeature&lt;/sourceType&gt;
+    &lt;targetElement&gt;gsml:CGI_TermValue&lt;/targetElement&gt;</pre>
+</div>
+<p>이런 경우에 다형성 속성 매핑 작업 시 <tt class="docutils literal"><span class="pre">linkField</span></tt>를 삭제해도 됩니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;ex:someAttribute&lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+          &lt;linkElement&gt;
+            Recode(CLASS_TEXT, 'numeric', 'NumericType', 'literal', 'gsml:CGI_TermValue')
+        &lt;/linkElement&gt;
+    &lt;/sourceExpression&gt;
+    &lt;isMultiple&gt;true&lt;/isMultiple&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+</div>
+<div class="section" id="referential-polymorphism">
+<h2>Referential polymorphism<a class="headerlink" href="#referential-polymorphism" title="Permalink to this headline">¶</a></h2>
+<p>최상위의 <tt class="docutils literal"><span class="pre">xlink:href</span></tt> 참조로서 속성을 코드화하도록 설정하는 경우입니다.
+시나리오에 참조의 경우만 있다면, <tt class="docutils literal"><span class="pre">ClientProperty</span></tt> 안에 다음과 같이 함수를 설정해주면 됩니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;ex:someAttribute&lt;/targetAttribute&gt;
+      &lt;ClientProperty&gt;
+            &lt;name&gt;xlink:href&lt;/name&gt;
+            &lt;value&gt;if_then_else(isNull(NUMERIC_VALUE), 'urn:ogc:def:nil:OGC:1.0:missing', strConcat('#', NUMERIC_VALUE))&lt;/value&gt;
+    &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>즉 <em>NUMERIC_VALUE</em>가 널(null)이라면 속성을 다음과 같이 코드화해야 한다는 뜻입니다.</p>
+<div class="highlight-python"><pre>&lt;ex:someAttribute xlink:href="urn:ogc:def:nil:OGC:1.0:missing"&gt;</pre>
+</div>
+<p>널이 아니라면 다음과 같이 코드화합니다.</p>
+<div class="highlight-python"><pre>&lt;ex:someAttribute xlink:href="#123"&gt;
+    where NUMERIC_VALUE = '123'</pre>
+</div>
+<p>하지만 완전히 구조화된 속성도 가능한 경우가 있다면 이 방법을 사용할 수 없습니다.
+이런 때에는 다음과 같이 <a class="reference internal" href="#toxlinkhref">toxlinkhref</a> 함수를 쓸 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+    &lt;targetAttribute&gt;ex:someAttribute&lt;/targetAttribute&gt;
+    &lt;sourceExpression&gt;
+          &lt;linkElement&gt;
+            if_then_else(isNull(NUMERIC_VALUE), toXlinkHref('urn:ogc:def:nil:OGC:1.0:missing'),
+              if_then_else(lessEqualThan(NUMERIC_VALUE, 1000), 'numeric_value', toXlinkHref('urn:ogc:def:nil:OGC:1.0:missing')))
+        &lt;/linkElement&gt;
+    &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>즉 <em>NUMERIC_VALUE</em>가 널(null)이라면 속성을 다음과 같이 코드화한다는 뜻입니다.</p>
+<div class="highlight-python"><pre>&lt;ex:someAttribute xlink:href="urn:ogc:def:nil:OGC:1.0:missing"&gt;</pre>
+</div>
+<p><em>NUMERIC_VALUE</em>가 널이 아니고 1,000 이하인 경우 &#8216;numeric_value&#8217;인 <tt class="docutils literal"><span class="pre">mappingName</span></tt>을 갖춘
+<tt class="docutils literal"><span class="pre">FeatureTypeMapping</span></tt>에서 나온 속성으로 코드화합니다.
+<em>NUMERIC_VALUE</em>가 1,000을 초과하는 경우 첫번째 시나리오대로 속성을 코드화합니다.</p>
+</div>
+<div class="section" id="useful-functions">
+<h2>Useful functions<a class="headerlink" href="#useful-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="if-then-else-function">
+<h3>if_then_else function<a class="headerlink" href="#if-then-else-function" title="Permalink to this headline">¶</a></h3>
+<p><strong>구문</strong>:</p>
+<div class="highlight-python"><pre>if_then_else(BOOLEAN_EXPRESSION, value, default value)</pre>
+</div>
+<ul class="simple">
+<li><strong>BOOLEAN_EXPRESSION</strong>: 불 열 값(Boolean column value)이나 불 함수(Boolean function)가 될 수 있습니다.</li>
+<li><strong>value</strong>: BOOLEAN_EXPRESSION이 참일 경우 매핑할 값입니다.</li>
+<li><strong>default value</strong>: BOOLEAN_EXPRESSION이 거짓일 경우 매핑할 값입니다.</li>
+</ul>
+</div>
+<div class="section" id="recode-function">
+<h3>Recode function<a class="headerlink" href="#recode-function" title="Permalink to this headline">¶</a></h3>
+<p><strong>구문</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Recode</span><span class="p">(</span><span class="n">EXPRESSION</span><span class="p">, key1</span><span class="p">, value1</span><span class="p">, key2</span><span class="p">, value2</span><span class="p">,</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first"><strong>EXPRESSION</strong>: 값을 얻어올 열의 명칭 또는 또 다른 함수가 될 수 있습니다.</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>key-n</strong>:</dt>
+<dd><ul class="first last simple">
+<li>n번째 값에 매핑할 키(key) 표현식입니다.</li>
+<li>EXPRESSION을 계산한 값이 아무 키와도 일치하지 않을 경우 해당 속성에 대해 아무것도 코드화하지 않습니다.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><strong>value-n</strong>: <tt class="docutils literal"><span class="pre">mappingName</span></tt>이나 <tt class="docutils literal"><span class="pre">targetElement</span></tt>로 번역되는 값의 표현식입니다.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="lessequalthan">
+<h3>lessEqualThan<a class="headerlink" href="#lessequalthan" title="Permalink to this headline">¶</a></h3>
+<p>ATTRIBUTE_EXPRESSION 값이 LIMIT_EXPRESSION 이하일 경우 참을 반환합니다.</p>
+<p><strong>구문</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lessEqualThan</span><span class="p">(</span><span class="n">ATTRIBUTE_EXPRESSION</span><span class="p">, LIMIT_EXPRESSION</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>ATTRIBUTE_EXPRESSION</strong>: 평가할 속성의 표현식입니다.</li>
+<li><strong>LIMIT_EXPRESSION</strong>: 비교할 숫자값의 표현식입니다.</li>
+</ul>
+</div>
+<div class="section" id="lessthan">
+<h3>lessThan<a class="headerlink" href="#lessthan" title="Permalink to this headline">¶</a></h3>
+<p>ATTRIBUTE_EXPRESSION 값이 LIMIT_EXPRESSION 미만일 경우 참을 반환합니다.</p>
+<p><strong>구문</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lessThan</span><span class="p">(</span><span class="n">ATTRIBUTE_EXPRESSION</span><span class="p">, LIMIT_EXPRESSION</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>ATTRIBUTE_EXPRESSION</strong>: 평가할 속성의 표현식입니다.</li>
+<li><strong>LIMIT_EXPRESSION</strong>: 비교할 숫자값의 표현식입니다.</li>
+</ul>
+</div>
+<div class="section" id="equalto">
+<h3>equalTo<a class="headerlink" href="#equalto" title="Permalink to this headline">¶</a></h3>
+<p>2개의 표현식을 비교해서 동일한 경우 참을 반환합니다.</p>
+<p><strong>구문</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">equalTo</span><span class="p">(</span><span class="n">LHS_EXPRESSION</span><span class="p">, RHS_EXPRESSION</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="isnull">
+<h3>isNull<a class="headerlink" href="#isnull" title="Permalink to this headline">¶</a></h3>
+<p>표현식 값이 널(null)인 경우 참인 불 값(Boolean)을 반환합니다.</p>
+<p><strong>구문</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">isNull</span><span class="p">(</span><span class="n">EXPRESSION</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>EXPRESSION</strong>: 평가할 표현식입니다.</li>
+</ul>
+</div>
+<div class="section" id="toxlinkhref">
+<h3>toXlinkHref<a class="headerlink" href="#toxlinkhref" title="Permalink to this headline">¶</a></h3>
+<p>참조형 다형성 및 피처 연쇄 처리를 위해 특별히 만들어진 함수로, <tt class="docutils literal"><span class="pre">linkElement</span></tt> 안에서만 쓰입니다.
+속성을 <tt class="docutils literal"><span class="pre">xlink:href</span></tt>로 코드화해야 한다는 것을 암시합니다.</p>
+<p><strong>구문</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">toXlinkHref</span><span class="p">(</span><span class="n">XLINK_HREF_EXPRESSION</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt><strong>XLINK_HREF_EXPRESSION</strong>:</dt>
+<dd><ul class="first last simple">
+<li>함수일 수도, 상수일 수도 있습니다.</li>
+<li>상수일 경우 작은 따옴표로 감싸야 합니다.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<ul class="last simple">
+<li><tt class="docutils literal"><span class="pre">toXlinkHref</span></tt> 함수를 제대로 실행하려면 명칭공간에 <tt class="docutils literal"><span class="pre">XLink</span></tt> URI를 선언해야 합니다.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="other-functions">
+<h3>Other functions<a class="headerlink" href="#other-functions" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../../filter/function_reference.html#filter-function-reference"><em>Filter Function Reference</em></a>를 참조하십시오.</p>
+</div>
+<div class="section" id="combinations">
+<h3>Combinations<a class="headerlink" href="#combinations" title="Permalink to this headline">¶</a></h3>
+<p>다음과 같이 함수를 결합할 수 있지만 속도를 저하시킬 수도 있습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">if_then_else</span><span class="p">(</span><span class="n">isNull</span><span class="p">(</span><span class="n">NUMERIC_VALUE</span><span class="p">), toXlinkHref</span><span class="p">(</span><span class="s">&#39;urn:ogc:def:nil:OGC:1.0:missing&#39;</span><span class="p">),</span>
+    <span class="n">if_then_else</span><span class="p">(</span><span class="n">lessEqualThan</span><span class="p">(</span><span class="n">NUMERIC_VALUE</span><span class="p">, 1000</span><span class="p">),</span> <span class="s">&#39;numeric_value&#39;</span><span class="p">, toXlinkHref</span><span class="p">(</span><span class="s">&#39;urn:ogc:def:nil:OGC:1.0:missing&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<ul class="last simple">
+<li>함수에 쓰이는 값으로 <tt class="docutils literal"><span class="pre">mappingName</span></tt> 또는 <tt class="docutils literal"><span class="pre">targetElement</span></tt>를 설정하는 경우 작은 따옴표로 감싸야 합니다.</li>
+<li>널(null) 확인 기능이 없는 일부 함수에 널을 대입할 경우 오류가 발생할 것입니다.</li>
+<li>데이터셋에 널 값이 있는 경우 표현식을 <tt class="docutils literal"><span class="pre">isNull()</span></tt> 함수로 감싸면 이런 오류를 피할 수 있습니다.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="null-or-missing-value">
+<h2>Null or missing value<a class="headerlink" href="#null-or-missing-value" title="Permalink to this headline">¶</a></h2>
+<p>특정한 경우에 속성 코드화 작업을 건너뛰려면, 다음과 같이 <tt class="docutils literal"><span class="pre">if_then_else</span></tt> 함수에 쓰이는 값에
+<tt class="docutils literal"><span class="pre">Expression.NIL</span></tt>을 사용하거나, <a class="reference internal" href="#recode-function">Recode 함수</a>에 키(key)를 포함시키지 않으면 됩니다.</p>
+<div class="highlight-python"><pre>if_then_else(isNull(VALUE), Expression.NIL, 'gsml:CGI_TermValue')
+    VALUE가 널일 경우 속성을 코드화하지 않습니다.
+
+Recode(VALUE, 'term_value', 'gsml:CGI_TermValue')
+    VALUE가 'term_value'가 아닐 경우 속성을 코드화하지 않습니다.</pre>
+</div>
+<p>최상위에서 사라진 값을 표현하는 <tt class="docutils literal"><span class="pre">xlink:href</span></tt>로 속성을 코드화하려면,
+<a class="reference internal" href="#referential-polymorphism">Referential Polymorphism</a>을 참조하십시오.</p>
+</div>
+<div class="section" id="any-type">
+<h2>Any type<a class="headerlink" href="#any-type" title="Permalink to this headline">¶</a></h2>
+<p>속성형으로 <tt class="docutils literal"><span class="pre">xs:anyType</span></tt>을 사용한다는 것 자체가 해당 속성이 다형성이라는 사실을 암시합니다.
+어떤 형으로든 <tt class="docutils literal"><span class="pre">xs:anyType</span></tt>을 코드화할 수 있기 때문입니다.</p>
+<p>형이 미리 결정되어 있고 바뀌지 않는다면 다음과 같이 <a class="reference internal" href="mapping-file.html#app-schema-mapping-file-targetattributenode"><em>targetAttributeNode (optional)</em></a>를 설정해야 할 수도 있습니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;om:result&lt;/targetAttribute&gt;
+      &lt;targetAttributeNode&gt;gml:MeasureType&lt;targetAttributeNode&gt;
+      &lt;sourceExpression&gt;
+          &lt;OCQL&gt;TOPAGE&lt;/OCQL&gt;
+      &lt;/sourceExpression&gt;
+      &lt;ClientProperty&gt;
+          &lt;name&gt;xsi:type&lt;/name&gt;
+          &lt;value&gt;'gml:MeasureType'&lt;/value&gt;
+      &lt;/ClientProperty&gt;
+      &lt;ClientProperty&gt;
+          &lt;name&gt;uom&lt;/name&gt;
+          &lt;value&gt;'http://www.opengis.net/def/uom/UCUM/0/Ma'&lt;/value&gt;
+      &lt;/ClientProperty&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>주형(casting type)이 복잡형인 경우 응용 스키마가 <tt class="docutils literal"><span class="pre">targetAttribute</span></tt> 내
+<tt class="docutils literal"><span class="pre">XPath</span></tt>에서 자동적으로 형을 결정할 수 있기 때문에
+<a class="reference internal" href="mapping-file.html#app-schema-mapping-file-targetattributenode"><em>targetAttributeNode (optional)</em></a>를 설정하지 않아도 됩니다.
+예를 들어 다음 예시에서 <tt class="docutils literal"><span class="pre">om:result</span></tt>는 <tt class="docutils literal"><span class="pre">MappedFeatureType</span></tt>으로 자동 지정됩니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;om:result/gsml:MappedFeature/gml:name&lt;/targetAttribute&gt;
+      &lt;sourceExpression&gt;
+          &lt;OCQL&gt;NAME&lt;/OCQL&gt;
+      &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>또 피처 연쇄 처리를 사용하는 방법도 있습니다. 다음은 앞의 예시와 동일한 내용의 매핑 작업 예시입니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;om:result&lt;/targetAttribute&gt;
+      &lt;sourceExpression&gt;
+            &lt;OCQL&gt;LEX_D&lt;/OCQL&gt;
+            &lt;linkElement&gt;gsml:MappedFeature&lt;/linkElement&gt;
+            &lt;linkField&gt;gml:name&lt;/linkField&gt;
+      &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>형(type)이 조건에 따라 달라지는 경우, 해당 속성에 대한 매핑 스타일은 다른 어느 다형성 속성과도 동일합니다.</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+      &lt;targetAttribute&gt;om:result&lt;/targetAttribute&gt;
+      &lt;sourceExpression&gt;
+            &lt;linkElement&gt;
+               Recode(NAME, Expression.Nil, toXlinkHref('urn:ogc:def:nil:OGC::missing'),'numeric',
+               toXlinkHref(strConcat('urn:numeric-value::', NUMERIC_VALUE)), 'literal', 'TermValue2')
+            &lt;/linkElement&gt;
+      &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+</div>
+<div class="section" id="filters">
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
+<p>사용자가 무엇을 필터링하고자 하는지 확실히 알고 있다면 일반적인 경우와 마찬가지로 필터를 이용할 수 있습니다.
+예를 들어 어떤 속성을 <tt class="docutils literal"><span class="pre">gsml:CGI_TermValue</span></tt>나
+<tt class="docutils literal"><span class="pre">gsml:CGI_NumericValue</span></tt>로 코드화할 수 있는 경우,
+사용자는 다음 속성명으로 필터를 실행할 수 있습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">gsml:CGI_TermValue</span></tt>로 코드화되고 필터를 만족시키는, 일치하는 속성을 반환하려면
+<tt class="docutils literal"><span class="pre">ex:someAttribute</span></tt>/<tt class="docutils literal"><span class="pre">gsml:CGI_TermValue</span></tt>/<tt class="docutils literal"><span class="pre">gsml:value</span></tt>
+속성명으로 필터를 실행합니다.</li>
+<li>마찬가지로 <tt class="docutils literal"><span class="pre">gsml:CGI_NumericValue</span></tt> 속성과 일치하는 속성을 반환하려면
+<tt class="docutils literal"><span class="pre">ex:someAttribute</span></tt>/<tt class="docutils literal"><span class="pre">gsml:CGI_NumericValue</span></tt>/<tt class="docutils literal"><span class="pre">gsml:principalValue</span></tt>
+속성명으로 필터를 실행합니다.</li>
+</ul>
+</div></blockquote>
+<p>또다른 제한은 문서 바깥의 인스턴스를 가리키는 <tt class="docutils literal"><span class="pre">xlink:href</span></tt> 속성의 속성을 필터링하는 것입니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="feature-chaining.html" title="previous chapter">Feature Chaining</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="data-access-integration.html" title="next chapter">Data Access Integration</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Polymorphism</a><ul>
+<li><a class="reference internal" href="#data-type-polymorphism">Data-type polymorphism</a></li>
+<li><a class="reference internal" href="#referential-polymorphism">Referential polymorphism</a></li>
+<li><a class="reference internal" href="#useful-functions">Useful functions</a><ul>
+<li><a class="reference internal" href="#if-then-else-function">if_then_else function</a></li>
+<li><a class="reference internal" href="#recode-function">Recode function</a></li>
+<li><a class="reference internal" href="#lessequalthan">lessEqualThan</a></li>
+<li><a class="reference internal" href="#lessthan">lessThan</a></li>
+<li><a class="reference internal" href="#equalto">equalTo</a></li>
+<li><a class="reference internal" href="#isnull">isNull</a></li>
+<li><a class="reference internal" href="#toxlinkhref">toXlinkHref</a></li>
+<li><a class="reference internal" href="#other-functions">Other functions</a></li>
+<li><a class="reference internal" href="#combinations">Combinations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#null-or-missing-value">Null or missing value</a></li>
+<li><a class="reference internal" href="#any-type">Any type</a></li>
+<li><a class="reference internal" href="#filters">Filters</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="feature-chaining.html" title="previous chapter">Feature Chaining</a></li>
+            <li>다음: <a href="data-access-integration.html" title="next chapter">Data Access Integration</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/polymorphism.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

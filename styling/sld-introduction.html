@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Introduction to SLD &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Styling" href="index.html" />
+      <link rel="next" title="Working with SLD" href="sld-working.html" />
+      <link rel="prev" title="Styling" href="index.html" />
+</head>
+<body class="styling/sld-introduction">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Styling</a> &raquo;</li>
+  <li>Introduction to SLD</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="sld-working.html" title="Working with SLD"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Styling"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="introduction-to-sld">
+<span id="sld-intro"></span><h1>Introduction to SLD<a class="headerlink" href="#introduction-to-sld" title="Permalink to this headline">¶</a></h1>
+<p>지리정보 데이터는 자체 시각적 구성 요소(intrinsic visual component)를 갖추고 있지 않습니다.
+따라서 데이터를 보려면 스타일을 적용해야 합니다.
+데이터를 맵 상에 렌더링하기 위해 스타일 작업(styling)으로 색상, 굵기(thickness), 그리고 다른 시각적 속성을 설정합니다.</p>
+<p>GeoServer에서 스타일 작업은 <a class="reference external" href="http://www.opengeospatial.org/standards/sld">Styled Layer Descriptor</a>, 줄여서 SLD라는 마크업(markup) 언어를 통해 이루어집니다.
+SLD는 XML 기반 마크업 언어로, 어느 정도 복잡하기는 하지만 매우 강력한 도구입니다.
+이 페이지에서 SLD의 역량을 소개하고 GeoServer 내에서 어떻게 작동하는지 설명합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer가 SLD를 스타일 작업에만 사용하기 때문에, &#8220;SLD&#8221;와 &#8220;스타일(style)&#8221;이라는 용어를 자주 혼용할 것입니다.</p>
+</div>
+<div class="section" id="sld-concepts">
+<h2>SLD Concepts<a class="headerlink" href="#sld-concepts" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer에서 스타일 작업은 대부분 XML <strong>SLD 스타일 문서(SLD style documents)</strong>를 이용해 설정합니다.
+스타일 문서는 GeoServer의 <strong>레이어(layer)</strong>, 즉 <strong>피처형(featuretype)</strong>과 연계되어, 레이어를 어떻게 <strong>렌더링</strong>해야 하는지 설정합니다.
+스타일 문서 1개는 하나의 <strong>명칭을 가진 레이어(named layer)</strong>와 해당 레이어를 위한 <strong>사용자 스타일(user style)</strong>을 설정합니다.
+레이어 및 스타일은 그들을 식별하기 위한 <strong>name</strong>, 표출하기 위한 <strong>title</strong>, 자세한 설명을 담은 <strong>abstract</strong>와 같은 메타데이터 요소를 갖출 수 있습니다.
+최상위(top-level) 스타일 안에는 하나 이상의 <strong>피처형 스타일(feature type style)</strong>이 있는데, 렌더링 순서를 제어하기 위한 &#8220;가상 레이어(virtual layers)&#8221;로서 사용됩니다.
+(이를 통해 길을 표현하는 윤곽선 라인(cased line)과 같은 스타일 효과를 쓸 수 있습니다.)
+각 피처형의 스타일은 하나 이상의 <strong>규칙(rule)</strong>을 담고 있는데, 피처 속성 및 줌 레벨에 기반하여 스타일을 적용하는 방법을 제어합니다.
+규칙은 <strong>필터(filter)</strong>를 통해 적용 가능한 피처를 선택하는데,
+이 필터는 <strong>술어(predicate)</strong>, <strong>연산식(expression)</strong>, <strong>필터 함수(filter function)</strong>를 담고 있는 논리 조건입니다.
+규칙은 개별 피처에 대한 스타일을 상세하게 설정하기 위해 임의 개수의 <strong>심볼라이저(symbolizer)</strong>를 담고 있습니다.
+심볼라이저는 <strong>포인트(point)</strong>, <strong>라인(line)</strong>, <strong>폴리곤(polygon)</strong>은 물론
+<strong>래스터(raster)</strong>와 <strong>텍스트 레이블(text label)</strong>에 대한 스타일을 설정합니다.</p>
+<p>더 자세한 정보는 <a class="reference internal" href="sld-reference/index.html#sld-reference"><em>SLD Reference</em></a>를 참조하십시오.</p>
+</div>
+<div class="section" id="types-of-styling">
+<h2>Types of styling<a class="headerlink" href="#types-of-styling" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer가 서비스할 수 있는 벡터 데이터는 <strong>포인트, 라인, 폴리곤</strong> 3개 형태(shape)의 클래스로 이루어집니다.
+경계(edge)만 스타일을 적용하면 되기 때문에 (이를 &#8220;획(stroke)&#8221;이라고도 합니다) 라인(1차원 형태)이 가장 단순합니다.
+2차원 형태인 폴리곤은 경계와 내부(&#8220;면(fill)&#8221;이라고도 합니다)를 갖추고 있는데 둘 다 다른 스타일을 적용할 수 있습니다.
+차원이 없기는 하지만 포인트도 스타일을 적용할 수 있는 경계와 면은 물론 크기(size)를 갖추고 있습니다.
+면에는 생상을 설정할 수 있습니다. 획에는 색상 및 굵기를 설정할 수 있습니다.</p>
+<p>GeoServer는 래스터 데이터도 서비스하는데, 래스터 데이터에도
+색상표(color palette), 불투명도(opacity), 대조(contrast) 및 다른 파라미터들을 제어하는 광범위하고 다양한 스타일을 적용할 수 있습니다.</p>
+<p>물론 더 고급 스타일도 사용할 수 있습니다.
+포인트를 잘 알려진 형태인 원, 사각형, 별은 물론 사용자 지정 그래픽이나 텍스트로 설정할 수 있습니다.
+라인을 점선(dash)이나 해시(hash) 스타일로 설정할 수 있습니다.
+폴리곤을 사용자 지정 타일 그래픽(tiled graphic)으로 채울 수도 있습니다.
+스타일 작업은 데이터의 속성에 기반할 수도 있기 때문에, 특정 피처는 다른 스타일이 적용됩니다.
+피처에 텍스트 레이블을 붙일 수도 있습니다.
+피처를 눈에 보이는 크기에 따라 적절한 방법으로 표출하기 위해 스타일 작업은 줌 레벨에 따라 달라질 수도 있습니다.
+가능성은 무궁무진합니다.</p>
+</div>
+<div class="section" id="a-basic-style-example">
+<h2>A basic style example<a class="headerlink" href="#a-basic-style-example" title="Permalink to this headline">¶</a></h2>
+<p>SLD를 배우는 좋은 방법은 스타일 예시를 공부하는 것입니다.
+다음 예시는 포인트를 담고 있는 레이어에 적용할 수 있는 간단한 SLD로, 포인트에 6픽셀 크기의 빨간 원 스타일을 적용하고 있습니다.
+(<a class="reference internal" href="sld-cookbook/index.html#sld-cookbook"><em>SLD Cookbook</em></a>의
+<a class="reference internal" href="sld-cookbook/points.html#sld-cookbook-points"><em>Points</em></a> 섹션에 나오는 첫번째 예시입니다.)</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span>
+<span class="nt">&lt;StyledLayerDescriptor</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/sld StyledLayerDescriptor.xsd&quot;</span>
+    <span class="na">xmlns=</span><span class="s">&quot;http://www.opengis.net/sld&quot;</span>
+    <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+    <span class="na">xmlns:xlink=</span><span class="s">&quot;http://www.w3.org/1999/xlink&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;NamedLayer&gt;</span>
+    <span class="nt">&lt;Name&gt;</span>Simple point<span class="nt">&lt;/Name&gt;</span>
+    <span class="nt">&lt;UserStyle&gt;</span>
+      <span class="nt">&lt;Title&gt;</span>GeoServer SLD Cook Book: Simple point<span class="nt">&lt;/Title&gt;</span>
+      <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+        <span class="nt">&lt;Rule&gt;</span>
+          <span class="nt">&lt;PointSymbolizer&gt;</span>
+            <span class="nt">&lt;Graphic&gt;</span>
+              <span class="nt">&lt;Mark&gt;</span>
+                <span class="nt">&lt;WellKnownName&gt;</span>circle<span class="nt">&lt;/WellKnownName&gt;</span>
+                <span class="nt">&lt;Fill&gt;</span>
+                  <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#FF0000<span class="nt">&lt;/CssParameter&gt;</span>
+                <span class="nt">&lt;/Fill&gt;</span>
+              <span class="nt">&lt;/Mark&gt;</span>
+              <span class="nt">&lt;Size&gt;</span>6<span class="nt">&lt;/Size&gt;</span>
+            <span class="nt">&lt;/Graphic&gt;</span>
+          <span class="nt">&lt;/PointSymbolizer&gt;</span>
+        <span class="nt">&lt;/Rule&gt;</span>
+      <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+    <span class="nt">&lt;/UserStyle&gt;</span>
+  <span class="nt">&lt;/NamedLayer&gt;</span>
+<span class="nt">&lt;/StyledLayerDescriptor&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>예시가 길어 보이지만, 이를 이해하는 데 중요한 행은 몇 줄밖에 없습니다.
+<strong>14행</strong>에서 데이터를 포인트로 스타일하는 데 &#8220;PointSymbolizer&#8221;를 사용할 것을 명시하고 있습니다.
+<strong>15~17행</strong>에서 포인트에 &#8220;well known name&#8221; 태그로 설정된 그래픽 형태 — 이 경우에는 원 — 를 사용해 스타일을 적용하도록 명시하고 있습니다.
+SLD는 &#8220;square&#8221;, &#8220;star&#8221;, &#8220;triangle&#8221; 등과 같은 여러 형태에 대한 명칭을 제공합니다.
+<strong>18~20행</strong>에서 이 형태를 <tt class="docutils literal"><span class="pre">#FF0000</span></tt> 색상(빨강)으로 채우도록 설정하고 있습니다.
+이는 RGB 색상 코드로, #RRGGBB 형식으로 쓰이며 16진법을 사용합니다.
+마지막으로 <strong>22행</strong>에서 이 형태의 크기를 지름 6픽셀로 설정하고 있습니다.
+이 예시의 나머지 부분은 스타일을 식별할 수 있는 명칭이나 범례에 쓰일 제목 등 스타일에 대한 메타데이터를 담고 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">SLD 문서 안에서 몇몇 태그는 <tt class="docutils literal"><span class="pre">ogc:</span></tt>과 같은 접두사를 쓰고 있습니다.
+이 태그들이 <strong>XML namespaces</strong>에 정의되어 있기 때문입니다.
+최상위 <tt class="docutils literal"><span class="pre">StyledLayerDescriptor</span></tt> 태그(<strong>2-7행</strong>)에서
+<tt class="docutils literal"><span class="pre">xmlns</span></tt>과 <tt class="docutils literal"><span class="pre">xmlns:ogc</span></tt>라는 2개의 XML namespace를 설정합니다.
+첫번째 namespace는 이 문서의 기본 namespace이기 때문에 이 namespace에 붙는 태그에 접두사는 필요없습니다.
+두번째 namespace에 붙는 태그에는 접두사 <tt class="docutils literal"><span class="pre">ogc:</span></tt>가 필요합니다.
+사실 namespace의 접두사는 아무 식별자나 될 수 있습니다.
+첫번째 namespace를 (자주 그러듯이) <tt class="docutils literal"><span class="pre">xmlns:sld</span></tt>로도 쓸 수 있으며,
+이 경우 이 예시 안의 모든 태그에 <tt class="docutils literal"><span class="pre">sld:</span></tt> 접두사를 붙여야 합니다.
+요점은 태그에 자신이 속한 namespace의 접두사를 사용해야 한다는 것입니다.</p>
+</div>
+<p>SLD를 사용한 스타일 작업의 예시를 <a class="reference internal" href="sld-cookbook/index.html#sld-cookbook"><em>SLD Cookbook</em></a>에서 더 볼 수 있습니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Styling</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="sld-working.html" title="next chapter">Working with SLD</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Introduction to SLD</a><ul>
+<li><a class="reference internal" href="#sld-concepts">SLD Concepts</a></li>
+<li><a class="reference internal" href="#types-of-styling">Types of styling</a></li>
+<li><a class="reference internal" href="#a-basic-style-example">A basic style example</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Styling</a></li>
+            <li>다음: <a href="sld-working.html" title="next chapter">Working with SLD</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/styling/sld-introduction.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

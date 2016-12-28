@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Global variables affecting WMS &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Map Service" href="index.html" />
+      <link rel="next" title="GetLegendGraphic" href="get_legend_graphic/legendgraphic.html" />
+      <link rel="prev" title="WMS configuration" href="configuration.html" />
+</head>
+<body class="services/wms/global">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Map Service</a> &raquo;</li>
+  <li>Global variables affecting WMS</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="get_legend_graphic/legendgraphic.html" title="GetLegendGraphic"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="configuration.html" title="WMS configuration"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="global-variables-affecting-wms">
+<span id="wms-global-variables"></span><h1>Global variables affecting WMS<a class="headerlink" href="#global-variables-affecting-wms" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 WMS의 동작에 영향을 미칠 수 있는 공통 변수 집합에 대해 설명합니다.
+각 공통 변수를 잘 알려진 <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIRECTORY</span></tt> 설정처럼 서블렛 컨텍스트 변수나 Java 시스템 속성과 같은 환경 변수로 설정할 수 있습니다.
+어떻게 공통 변수를 설정할 수 있는지에 대해서는 <a class="reference internal" href="../../datadirectory/data-dir-setting.html#data-dir-setting"><em>Setting the Data Directory</em></a>를 참조하십시오.</p>
+<div class="section" id="max-filter-rules">
+<h2>MAX_FILTER_RULES<a class="headerlink" href="#max-filter-rules" title="Permalink to this headline">¶</a></h2>
+<p>정수 값(기본값은 20)을 가집니다. 복수의 활성화된 규칙을 담고 있는 스타일을 적용할 때 렌더러(renderer)는 규칙 필터들을 결합하거나, 표준 범위(bounding box) 필터에 추가합니다.
+최대 규칙 필터 개수에 도달할 때까지 이 동작을 반복하며, 이 최대 개수를 넘으면 대용량 쿼리를 방지하기 위해 규칙 필터를 더 이상 추가하지 않습니다.
+기본적으로 20개의 규칙을 결합할 수 있으며, 20개를 넘으면 범위 필터만 사용합니다.
+스타일들이 거의 분류(classification) 관련이라면 비활성화(0으로 설정)하는 것이 유용하고, 규칙 필터가 실제로 많은 용량의 데이터를 필터링하는 경우 활성화하는 편이 좋습니다.</p>
+</div>
+<div class="section" id="optimize-line-width">
+<h2>OPTIMIZE_LINE_WIDTH<a class="headerlink" href="#optimize-line-width" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">true</span></tt> 또는 <tt class="docutils literal"><span class="pre">false</span></tt> 값을 가질 수 있습니다.
+(기본값은 <tt class="docutils literal"><span class="pre">false</span></tt>입니다.)
+<tt class="docutils literal"><span class="pre">true</span></tt>로 설정하면 폭이 1.5픽셀 미만인 획을 폭 &#8220;0&#8221; 픽셀로 바꾸는데, 실제로 0픽셀이 아니라 아주 가는 라인이 됩니다.
+GeoServer 2.0.0 버전 이전에서는 이것이 기본값이었습니다.
+<tt class="docutils literal"><span class="pre">false</span></tt>로 설정하면 획의 폭을 변경하지 않으며 1픽셀 미만의 폭을 설정할 수 있습니다.
+GeoServer 2.0.0 버전부터는 이것이 기본값입니다.</p>
+</div>
+<div class="section" id="use-streaming-renderer">
+<h2>USE_STREAMING_RENDERER<a class="headerlink" href="#use-streaming-renderer" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">true</span></tt> 또는 <tt class="docutils literal"><span class="pre">false</span></tt> 값을 가질 수 있습니다.
+(기본값은 <tt class="docutils literal"><span class="pre">false</span></tt>입니다.)
+<tt class="docutils literal"><span class="pre">true</span></tt>로 설정하면 모든 데이터에 대해 <em>StreamingRenderer</em>를 사용합니다.
+<em>StreamingRenderer</em>란 shapefile이 모든 데이터 소스에 대해 기본적으로 사용하는 것으로,
+보통 복수의 <tt class="docutils literal"><span class="pre">FeatureTypeStyle</span></tt> 요소를 가진 스타일을 렌더링할 때는 빠르지만 대용량 데이터를 렌더링할 때는 느립니다.</p>
+</div>
+<div class="section" id="enable-jsonp">
+<h2>ENABLE_JSONP<a class="headerlink" href="#enable-jsonp" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">true</span></tt> 또는 <tt class="docutils literal"><span class="pre">false</span></tt> 값을 가질 수 있습니다.
+(기본값은 <tt class="docutils literal"><span class="pre">false</span></tt>입니다.)
+<tt class="docutils literal"><span class="pre">true</span></tt>로 설정하면 JSONP(text/javascript) 산출물 형식을 사용할 수 있습니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="configuration.html" title="previous chapter">WMS configuration</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="get_legend_graphic/legendgraphic.html" title="next chapter">GetLegendGraphic</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Global variables affecting WMS</a><ul>
+<li><a class="reference internal" href="#max-filter-rules">MAX_FILTER_RULES</a></li>
+<li><a class="reference internal" href="#optimize-line-width">OPTIMIZE_LINE_WIDTH</a></li>
+<li><a class="reference internal" href="#use-streaming-renderer">USE_STREAMING_RENDERER</a></li>
+<li><a class="reference internal" href="#enable-jsonp">ENABLE_JSONP</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="configuration.html" title="previous chapter">WMS configuration</a></li>
+            <li>다음: <a href="get_legend_graphic/legendgraphic.html" title="next chapter">GetLegendGraphic</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wms/global.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Workspaces &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Data" href="index.html" />
+      <link rel="next" title="Stores" href="stores.html" />
+      <link rel="prev" title="Data" href="index.html" />
+</head>
+<body class="webadmin/data/workspaces">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Data</a> &raquo;</li>
+  <li>Workspaces</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="stores.html" title="Stores"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Data"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="workspaces">
+<span id="webadmin-workspaces"></span><h1>Workspaces<a class="headerlink" href="#workspaces" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 작업공간의 정보를 보면서 설정하는 방법을 설명합니다. 명칭공간(namespace)과 비슷하게, 작업공간은 다른 항목들을 조직하는 컨테이너입니다.
+GeoServer에서 작업공간은 보통 유사한 레이어들을 함께 묶는 데 사용됩니다. 개별 레이어들은 보통 작업공간명, 콜론(:), 저장소명으로 불립니다. 예를 들자면 topp:states 같은 명칭입니다.
+서로 다른 작업공간에 있는 한, 같은 이름을 가진 서로 다른 레이어도 존재할 수 있습니다.예를 들면 sf:states, topp:states 같은 경우입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces1.png" src="../../_images/data_workspaces1.png" />
+<p class="caption"><em>작업 공간 페이지</em></p>
+</div>
+<div class="section" id="edit-workspace">
+<h2>Edit Workspace<a class="headerlink" href="#edit-workspace" title="Permalink to this headline">¶</a></h2>
+<p>작업공간의 상세 사항을 보거나 편집하려면, 작업공간명을 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces_URI.png" src="../../_images/data_workspaces_URI.png" />
+<p class="caption"><em>작업공간명 &#8220;topp&#8221;</em></p>
+</div>
+<p>작업공간은 명칭과 명칭공간 URI(Namespace Uniform Resource Identifier)로 이루어집니다. 작업공간명은 10자를 넘거나 공백을 포함할 수 없습니다.
+URI는 URL과 비슷하지만, 웹상의 주소를 가리킬 필요 없이 해당 작업공간을 가리키는 유일한 식별자(unique identifier) 역할만 하면 됩니다.
+작업공간 URI의 경우, 각각 다른 추적 가능한 식별자를 붙인 사용자 프로젝트와 관련된 URL을 사용하도록 권장하고 있습니다.
+예를 들면 &#8220;topp&#8221; 작업공간의 경우 <tt class="docutils literal"><span class="pre">http://www.openplans.org/topp</span></tt> 과 같은 URI를 사용하는 것입니다.</p>
+</div>
+<div class="section" id="add-or-remove-a-workspace">
+<h2>Add or Remove a Workspace<a class="headerlink" href="#add-or-remove-a-workspace" title="Permalink to this headline">¶</a></h2>
+<p>작업공간을 추가하거나 제거하는 버튼은 Workspaces View 페이지의 최상단에 위치합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces_add_remove.png" src="../../_images/data_workspaces_add_remove.png" />
+<p class="caption"><em>작업공간 추가·제거 버튼</em></p>
+</div>
+<p>새로운 작업공간을 생성하려면 <em class="guilabel">Add new workspace</em> 버튼을 클릭한 다음, 작업공간의 Name 및 Namespace URI를 입력해야 합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces_medford.png" src="../../_images/data_workspaces_medford.png" />
+<p class="caption"><em>New Workspace 페이지 예제</em></p>
+</div>
+<p>작업공간을 제거하려면 해당 작업공간의 체크박스를 선택하십시오. 레이어 삭제 과정과 마찬가지로, 검색 결과 페이지에서 여러 작업공간을 중복 선택한 다음 제거할 수 있습니다.
+<em class="guilabel">Remove selected workspaces(s)</em> 버튼을 클릭하십시오. 삭제를 확인 혹은 취소하라고 묻는 창이 뜰 것입니다. 작업공간을 제거하려면 <em class="guilabel">OK</em>를 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces_rename_confirm.png" src="../../_images/data_workspaces_rename_confirm.png" />
+<p class="caption"><em>작업공간 제거 확인</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Data</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="stores.html" title="next chapter">Stores</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Workspaces</a><ul>
+<li><a class="reference internal" href="#edit-workspace">Edit Workspace</a></li>
+<li><a class="reference internal" href="#add-or-remove-a-workspace">Add or Remove a Workspace</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Data</a></li>
+            <li>다음: <a href="stores.html" title="next chapter">Stores</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/data/workspaces.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

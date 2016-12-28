@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WFS basics &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Feature Service" href="index.html" />
+      <link rel="next" title="WFS reference" href="reference.html" />
+      <link rel="prev" title="Web Feature Service" href="index.html" />
+</head>
+<body class="services/wfs/basics">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Feature Service</a> &raquo;</li>
+  <li>WFS basics</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="reference.html" title="WFS reference"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="index.html" title="Web Feature Service"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wfs-basics">
+<span id="id1"></span><h1>WFS basics<a class="headerlink" href="#wfs-basics" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer는 <a class="reference external" href="http://www.opengeospatial.org">OGC(Open Geospatial Consortium)</a>의 <a class="reference external" href="http://www.opengeospatial.org/standards/wms">WFS(Web Feature Service)</a>
+버전 <strong>1.0.0</strong>, <strong>1.1.0</strong> 및 <strong>2.0.0</strong> 사양을 지원합니다. WFS는 인터넷을 통해 벡터 데이터를 교환하기 위한 표준을 정의합니다.
+WFS를 준수하면, 클라이언트가 데이터 구조 및 소스 데이터를 모두 쿼리할 수 있습니다. 고급 WFS 작업은 피처 잠금(locking) 및 편집 작업도 지원합니다.</p>
+<p>GeoServer는 이 표준의 3개 버전 모두의 모범 S/W(reference implementation)로, 프로토콜의 모든 부분을 완벽하게 실행합니다.
+따라서 기본 작업인 <a class="reference internal" href="reference.html#wfs-getcap"><em>GetCapabilities</em></a>, <a class="reference internal" href="reference.html#wfs-dft"><em>DescribeFeatureType</em></a>,
+<a class="reference internal" href="reference.html#wfs-getfeature"><em>GetFeature</em></a>는 물론 <a class="reference internal" href="reference.html#wfs-wfst"><em>Transaction</em></a> 같은 더 고급 작업까지 지원합니다.
+GeoServer WFS는 또한 <a class="reference internal" href="../../security/index.html#security"><em>Security</em></a> 시스템과 통합되어 데이터 및 트랜잭션 접근을 제한할 수 있으며,
+다양한 <a class="reference internal" href="outputformats.html#wfs-output-formats"><em>WFS 산출물 형식</em></a>을 지원해서 기초 데이터(raw data)를 좀 더 폭넓게 쓰일 수 있도록 합니다.</p>
+<div class="section" id="differences-between-wfs-versions">
+<h2>Differences between WFS versions<a class="headerlink" href="#differences-between-wfs-versions" title="Permalink to this headline">¶</a></h2>
+<p>WFS 버전 사이의 주요 차이점은 다음과 같습니다.</p>
+<ul class="simple">
+<li>WFS 1.1.0 및 2.0.0은 기본 GML으로 GML3을 반환하지만, WFS 1.0.0은 GML2를 반환합니다. GML3은 상당히 다른 방법으로 도형을 지정합니다. GeoServer는 GML3 및 GML2 두 형식으로 된 형식을 모두 지원합니다.</li>
+<li>WFS 1.1.0 및 2.0.0은 <tt class="docutils literal"><span class="pre">urn:x-ogc:def:crs:EPSG:XXXX</span></tt> 형식으로 SRS(공간 참조 시스템, 혹은 투영체)를 설정하지만,
+WFS 1.0.0은 <tt class="docutils literal"><span class="pre">http://www.opengis.net/gml/srs/epsg.xml#XXXX</span></tt> 형식으로 설정합니다.
+이 차이점 때문에 반환되는 데이터의 <a class="reference internal" href="#wfs-basics-axis"><em>경위도 순서(axis order)</em></a> 차이가 나타납니다.</li>
+<li>WFS 1.1.0 및 2.0.0은 상황에 따라(on-the-fly) 데이터를 재투영할 수 있습니다. 즉 자체(native) SRS와 다른 SRS를 갖춘 데이터를 반환할 수 있습니다.</li>
+<li>WFS 2.0.0은 시계열 필터 지원을 추가한 새로운 버전의 필터 인코딩 사양을 갖추고 있습니다.</li>
+<li>WFS 2.0.0은 GetFeature 요청을 통해 결합(join) 작업을 할 수 있습니다.</li>
+<li>WFS 2.0.0은 <tt class="docutils literal"><span class="pre">startIndex</span></tt>와 <tt class="docutils literal"><span class="pre">maxFeatures</span></tt> 파라미터를 통해
+GetFeature 요청의 결과를 호출(page)할 수 있습니다. GeoServer는 현재 WFS 1.0.0과 1.1.0에서도 이 기능을 지원합니다.</li>
+<li>WFS 2.0.0은 저장 쿼리(stored query)를 지원합니다. 저장 쿼리란 정식 WFS 쿼리를 서버 상에 저장해서 WFS 요청에 적절한 식별자를 전송, 호출할 수 있는 기능입니다.</li>
+<li>WFS 2.0.0은 OGC 인터페이스에 대한 대안으로 SOAP(Simple Object Access Protocol)을 지원합니다.</li>
+</ul>
+</div>
+<div class="section" id="axis-ordering">
+<span id="wfs-basics-axis"></span><h2>Axis ordering<a class="headerlink" href="#axis-ordering" title="Permalink to this headline">¶</a></h2>
+<p>WFS 1.0.0 서버는 데이터 배포 시 가장 흔한 방식인 경도/위도(x/y) 순서로 된 지리 좌표를 반환합니다. 예를 들면 대부분의 shapefile은 기본적으로 이 순서를 따릅니다.</p>
+<p>그러나 전통적인 지리 및 지도 시스템의 경위도 순서는 그 반대 &mdash; 위도/경도(y/x) &mdash; 로, 최신 WFS 사양은 이 순서를 따르고 있습니다. 경위도 순서 기본값은 다음과 같습니다.</p>
+<ul class="simple">
+<li>위도/경도 &mdash;WFS 1.1.0 and WFS 2.0.0</li>
+<li>경도/위도 &mdash;WMS 1.0.0</li>
+</ul>
+<p>때문에 서로 다른 버전의 서버를 뒤바꾸거나 사용자의 WFS를 업드레이드할 경우 문제가 생길 수도 있습니다.
+혼란을 최소화하고 호환성을 증대하기 위해 GeoServer는 다음 형식으로 투영체를 설정할 경우 다음과 같은 가정을 하고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="75%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">표현</th>
+<th class="head">가정하는 경위도 순서</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">EPSG:xxxx</span></tt></td>
+<td>경도/위도(x/y)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">http://www.opengis.net/gml/srs/epsg.xml#xxxx</span></tt></td>
+<td>경도/위도(x/y)</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">urn:x-ogc:def:crs:EPSG:xxxx</span></tt></td>
+<td>위도/경도(y/x)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="index.html" title="previous chapter">Web Feature Service</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="reference.html" title="next chapter">WFS reference</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WFS basics</a><ul>
+<li><a class="reference internal" href="#differences-between-wfs-versions">Differences between WFS versions</a></li>
+<li><a class="reference internal" href="#axis-ordering">Axis ordering</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="index.html" title="previous chapter">Web Feature Service</a></li>
+            <li>다음: <a href="reference.html" title="next chapter">WFS reference</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wfs/basics.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

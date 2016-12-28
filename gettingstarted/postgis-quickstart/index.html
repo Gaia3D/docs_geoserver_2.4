@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Publishing a PostGIS Table &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Getting Started" href="../index.html" />
+      <link rel="next" title="Styling a Map" href="../styling-quickstart/index.html" />
+      <link rel="prev" title="Publishing a Shapefile" href="../shapefile-quickstart/index.html" />
+</head>
+<body class="gettingstarted/postgis-quickstart/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Getting Started</a> &raquo;</li>
+  <li>Publishing a PostGIS Table</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../styling-quickstart/index.html" title="Styling a Map"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../shapefile-quickstart/index.html" title="Publishing a Shapefile"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="publishing-a-postgis-table">
+<span id="postgis-quickstart"></span><h1>Publishing a PostGIS Table<a class="headerlink" href="#publishing-a-postgis-table" title="Permalink to this headline">¶</a></h1>
+<p>이번 예제에서 GeoServer에서 PostGIS 테이블을 생산하는 방법을 단계별로 설명합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 예제는 GeoServer가 <a class="reference external" href="http://localhost:8080/geoserver/web">http://localhost:8080/geoserver/web</a> 주소에서 실행되고 있다고 가정합니다.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 예제는 PostGIS가 사용자의 시스템에 이미 설치돼 있다고 가정합니다.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first"><a class="reference download internal" href="../../_downloads/nyc_buildings.zip"><tt class="xref download docutils literal"><span class="pre">nyc_buildings.zip</span></tt></a> 압축 파일을 다운로드합니다. 이 파일에 이번 예제에서 사용할 뉴욕 시 건물 데이터셋의 PostGIS 덤프(dump)가 압축되어 있습니다.</p>
+</li>
+<li><p class="first">&#8220;nyc&#8221;라는 PostGIS 데이터베이스를 만드십시오. 다음 명령어로 만들 수 있습니다.</p>
+<div class="highlight-python"><pre>createdb -T template_postgis nyc</pre>
+</div>
+<p>PostGIS 설치 시 &#8220;postgis_template&#8221;이 설정되지 않았다면, 다음 명령어로 같은 결과를 낼 수 있습니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">nyc_buildings.zip</span></tt> 파일을 시스템 내부 적당한 장소에 풉니다. <tt class="docutils literal"><span class="pre">nyc_buildings.sql</span></tt> 파일이 나올 것입니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">nyc_buildings.sql</span></tt> 파일을 <tt class="docutils literal"><span class="pre">nyc</span></tt> 데이터베이스로 임포트(import)합니다.</p>
+<div class="highlight-python"><pre>psql -f nyc_buildings.sql nyc</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="create-a-data-store">
+<h2>Create a Data Store<a class="headerlink" href="#create-a-data-store" title="Permalink to this headline">¶</a></h2>
+<p>먼저 PostGIS 데이터베이스 &#8220;nyc&#8221;를 위한 <em>데이터 저장소(data store)</em>를 만들어야 합니다. 이 데이터 저장소는 GeoServer가 데이터베이스에 접속하는 방법을 설정합니다.</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">웹브라우저에서 <a class="reference external" href="http://localhost:8080/geoserver">http://localhost:8080/geoserver</a> 주소로 이동하십시오.</p>
+</li>
+<li><p class="first">왼쪽 메뉴에서 <em class="menuselection">Data‣Stores</em> 를 클릭합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/datastores.png" src="../../_images/datastores.png" />
+<p class="caption"><em>새로운 Data Source 추가</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">PostGIS</span> <span class="pre">NG</span></tt> 링크를 클릭하여 새로운 데이터 저장소를 추가합니다.</p>
+</li>
+<li><p class="first"><em class="guilabel">Basic Store Info</em> 페이지로 갑니다. <em class="guilabel">Workspace</em>는 기본값을 유지하고, <em class="guilabel">Data Source Name</em> 란에 <tt class="docutils literal"><span class="pre">nyc_buildings</span></tt>을 입력한 다음, <em class="guilabel">Description</em> 란에 간단한 설명을 입력합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/basicStore.png" src="../../_images/basicStore.png" />
+<p class="caption"><em>Basic Store Info 페이지</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">PostGIS 데이터베이스의 <em class="guilabel">접속 파라미터(Connection Parameters)</em>를 설정합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">dbtype</span></tt></td>
+<td>postgisng</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">host</span></tt></td>
+<td>localhost</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">post</span></tt></td>
+<td>5432</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">database</span></tt></td>
+<td>nyc</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">schema</span></tt></td>
+<td>public</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">user</span></tt></td>
+<td>PostgreSQL 사용자명 입력</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">passwd</span></tt></td>
+<td>PostgreSQL 비밀번호 입력</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">validate</span> <span class="pre">connections</span></tt></td>
+<td>체크박스를 클릭</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last"><strong>user</strong> 및 <strong>passwd</strong> 파라미터는 해당 PostGIS 데이터베이스를 만든 사용자의 것이어야 합니다. PostgreSQL을 어떻게 설정하느냐에 따라 <strong>passwd</strong> 파라미터가 필요 없을 수도 있습니다.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/connectionParameters.png" src="../../_images/connectionParameters.png" />
+<p class="caption"><em>접속 파라미터 설정</em></p>
+</div>
+</li>
+<li><p class="first"><em class="guilabel">Save</em>를 클릭합니다.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="create-a-layer">
+<h2>Create a Layer<a class="headerlink" href="#create-a-layer" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">왼쪽 메뉴에서 <em class="menuselection">Data‣Layers</em> 를 클릭합니다.</p>
+</li>
+<li><p class="first"><em class="guilabel">Add a new resource</em>를 클릭합니다.</p>
+</li>
+<li><p class="first"><em class="guilabel">New Layer chooser</em> 드롭다운 메뉴에서 <tt class="docutils literal"><span class="pre">cite:nyc_buidings</span></tt>를 선택합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/newlayerchooser.png" src="../../_images/newlayerchooser.png" />
+<p class="caption"><em>새로운 Layer를 드롭다운 메뉴에서 선택</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">새로 나타난 레이어 행에서, 레이어명 <tt class="docutils literal"><span class="pre">nyc_buildings</span></tt>를 선택합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/layerrow.png" src="../../_images/layerrow.png" />
+<p class="caption"><em>새로운 Layer 행</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Edit Layer</em> 페이지에서 레이어의 Data 및 Publishing 파라미터를 정의합니다. <em class="guilabel">Title</em> 란 및 <em class="guilabel">Abstract</em> 란에 <tt class="docutils literal"><span class="pre">nyc_buildings</span></tt> 레이어에 대해 짧게 입력합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/basicInfo.png" src="../../_images/basicInfo.png" />
+<p class="caption"><em>Basic Resource Info 페이지</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">레이어의 <em>bounding boxes</em>를 생성하기 위해 먼저 <em class="guilabel">Compute from data</em>를 클릭한 다음 <em class="guilabel">Compute from Native bounds</em>를 클릭합니다.</em></p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/boundingbox.png" src="../../_images/boundingbox.png" />
+<p class="caption"><em>Bounding Boxes 생성</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Publishing</em> 탭으로 전환하여 레이어 스타일을 설정하십시오.</p>
+</li>
+<li><p class="first"><em class="guilabel">Default Style</em> 드롭다운 목록에서 <em class="guilabel">polygon</em> 스타일을 선택하십시오.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/style.png" src="../../_images/style.png" />
+<p class="caption"><em>기본 스타일 선택</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">페이지 맨 아래로 스크롤한 다음 <em class="guilabel">Save</em>를 클릭하여 레이어 설정을 완료합니다.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="preview-the-layer">
+<h2>Preview the Layer<a class="headerlink" href="#preview-the-layer" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first"><tt class="docutils literal"><span class="pre">nyc_buildings</span></tt> 레이어가 정확히 생산됐는지 확인하려면 레이어 미리보기를 할 수 있습니다. <em class="guilabel">Layer Preview</em> 화면으로 이동해서 <tt class="docutils literal"><span class="pre">cite:nyc_buildings</span></tt> 레이어를 찾아보십시오.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/layer-preview.png" src="../../_images/layer-preview.png" />
+<p class="caption"><em>레이어 미리보기</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><em class="guilabel">Common Formats</em> 열의 <em class="guilabel">OpenLayers</em> 링크를 클릭하십시오.</p>
+</li>
+<li><p class="first">성공입니다! 새 페이지에 OpenLayers 맵이 로드되어 기본 polygon 스타일로 레이어 데이터를 표시했습니다. 미리보기 맵에서 데이터셋을 줌인·줌아웃하거나 이동(pan)시켜볼 수 있으며, 피처(feature)의 속성(attribute)들을 표시해볼 수도 있습니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/openlayers.png" src="../../_images/openlayers.png" />
+<p class="caption"><em>nyc_buildings 레이어의 미리보기 맵</em></p>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../shapefile-quickstart/index.html" title="previous chapter">Publishing a Shapefile</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../styling-quickstart/index.html" title="next chapter">Styling a Map</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Publishing a PostGIS Table</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#create-a-data-store">Create a Data Store</a></li>
+<li><a class="reference internal" href="#create-a-layer">Create a Layer</a></li>
+<li><a class="reference internal" href="#preview-the-layer">Preview the Layer</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="../shapefile-quickstart/index.html" title="previous chapter">Publishing a Shapefile</a></li>
+            <li>다음: <a href="../styling-quickstart/index.html" title="next chapter">Styling a Map</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/gettingstarted/postgis-quickstart/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

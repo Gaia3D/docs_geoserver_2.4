@@ -1,0 +1,468 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Data Stores &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Feature Chaining" href="feature-chaining.html" />
+      <link rel="prev" title="Property Interpolation" href="property-interpolation.html" />
+</head>
+<body class="data/app-schema/data-stores">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Data Stores</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="feature-chaining.html" title="Feature Chaining"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="property-interpolation.html" title="Property Interpolation"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="data-stores">
+<span id="app-schema-data-stores"></span><h1>Data Stores<a class="headerlink" href="#data-stores" title="Permalink to this headline">¶</a></h1>
+<p>응용 스키마 <a class="reference internal" href="mapping-file.html#app-schema-mapping-file"><em>Mapping File</em></a>의 <tt class="docutils literal"><span class="pre">sourceDataStores</span></tt> 섹션에
+사용자의 데이터 저장소를 지정해야 합니다.
+GeoServer 단순 피처(simple feature)의 경우 웹 인터페이스에서 설정할 수 있지만,
+응용 스키마는 웹 설정 인터페이스를 지원하지 않기 때문에 매핑 파일을 편집해서 데이터 저장소를 설정해야만 합니다.</p>
+<p><a class="reference internal" href="property-interpolation.html#app-schema-property-interpolation"><em>Property Interpolation</em></a>을 이용해서 많은 설정 옵션들을 외재화(externalize)할 수 있습니다.</p>
+<div class="section" id="the-datastore-element">
+<h2>The DataStore element<a class="headerlink" href="#the-datastore-element" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">DataStore</span></tt> 설정은 다음과 같이 구성됩니다.</p>
+<ul class="simple">
+<li>매핑 파일의 다른 부분에서 데이터 저장소를 참조하는 데 쓰이는 알아보기 힘든(opaque) 식별자인 <tt class="docutils literal"><span class="pre">id</span></tt></li>
+<li>각각 파라미터 1개의 <tt class="docutils literal"><span class="pre">name</span></tt>과 <tt class="docutils literal"><span class="pre">value</span></tt>를 담고 있으며
+데이터 저장소를 설정하는 데 쓰이는 하나 이상의 <tt class="docutils literal"><span class="pre">Parameter</span></tt> 요소</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">DataStore</span></tt> 요소의 개요는 다음과 같습니다.</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+     &lt;id&gt;datastore&lt;/id&gt;
+     &lt;parameters&gt;
+         &lt;Parameter&gt;
+             &lt;name&gt;...&lt;/name&gt;
+             &lt;value&gt;...&lt;/value&gt;
+         &lt;/Parameter&gt;
+         ...
+     &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<p>파라미터의 순서는 중요하지 않습니다.</p>
+</div>
+<div class="section" id="database-options">
+<h2>Database options<a class="headerlink" href="#database-options" title="Permalink to this headline">¶</a></h2>
+<p>PostGIS, Oracle, ArcSDE 같은 데이터베이스들은 공통적이거나 유사한 설정 옵션들을 공유합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="36%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><tt class="docutils literal"><span class="pre">name</span></tt></th>
+<th class="head">의미</th>
+<th class="head"><tt class="docutils literal"><span class="pre">value</span></tt> 예시</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">dbtype</span></tt></td>
+<td>DB 형식</td>
+<td><tt class="docutils literal"><span class="pre">postgisng</span></tt>, <tt class="docutils literal"><span class="pre">Oracle</span></tt>, <tt class="docutils literal"><span class="pre">arcsde</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">host</span></tt></td>
+<td>DB 서버의 호스트명 또는 IP 주소</td>
+<td><tt class="docutils literal"><span class="pre">database.example.org</span></tt>, <tt class="docutils literal"><span class="pre">192.168.3.12</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">port</span></tt></td>
+<td>DB 서버의 TCP 포트 번호</td>
+<td>설정하지 않을 경우의 기본값: <tt class="docutils literal"><span class="pre">1521</span></tt> (Oracle), <tt class="docutils literal"><span class="pre">5432</span></tt> (PostGIS), <tt class="docutils literal"><span class="pre">5151</span></tt> (ArcSDE)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">database</span></tt></td>
+<td>PostGIS/Oracle DB</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">instance</span></tt></td>
+<td>ArcSDE 인스턴스</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">schema</span></tt></td>
+<td>데이터베이스 스키마</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">user</span></tt></td>
+<td>DB 서버에 로그인할 때 쓰이는 사용자명</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">passwd</span></tt></td>
+<td>DB 서버에 로그인할 때 쓰이는 비밀번호</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Expose primary keys</span></tt></td>
+<td>매핑 작업 대상이 되는 primary key를 담은 열</td>
+<td>기본값은 <tt class="docutils literal"><span class="pre">false</span></tt>로, 매핑 작업 시 primary key 열을 쓰려면 <tt class="docutils literal"><span class="pre">true</span></tt>로 설정하십시오.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="postgis">
+<h2>PostGIS<a class="headerlink" href="#postgis" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer 2.0 이후 버전에 포함된 PostGIS NG(New Generation) 드라이버를 사용하려면 <tt class="docutils literal"><span class="pre">dbtype</span></tt> 파라미터를 <tt class="docutils literal"><span class="pre">postgisng</span></tt>로 설정하십시오.</p>
+<p>예시:</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;datastore&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;dbtype&lt;/name&gt;
+            &lt;value&gt;postgisng&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;host&lt;/name&gt;
+            &lt;value&gt;postgresql.example.org&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;port&lt;/name&gt;
+            &lt;value&gt;5432&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;database&lt;/name&gt;
+            &lt;value&gt;test&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;user&lt;/name&gt;
+            &lt;value&gt;test&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;passwd&lt;/name&gt;
+            &lt;value&gt;test&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer 기본 설치 파일에 PostGIS 지원 기능이 포함되므로 개별 플러그인은 필요하지 않습니다.</p>
+</div>
+</div>
+<div class="section" id="oracle">
+<h2>Oracle<a class="headerlink" href="#oracle" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer 2.0 이후 버전과 호환되는 Oracle Spatial NG(New Generation) 드라이버를 사용하려면 <tt class="docutils literal"><span class="pre">dbtype</span></tt> 파라미터를 <tt class="docutils literal"><span class="pre">Oracle</span></tt>로 설정하십시오.</p>
+<p>예시:</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;datastore&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;dbtype&lt;/name&gt;
+            &lt;value&gt;Oracle&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;host&lt;/name&gt;
+            &lt;value&gt;oracle.example.org&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;port&lt;/name&gt;
+            &lt;value&gt;1521&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;database&lt;/name&gt;
+            &lt;value&gt;demodb&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;user&lt;/name&gt;
+            &lt;value&gt;orauser&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;passwd&lt;/name&gt;
+            &lt;value&gt;s3cr3t&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">Oracle Spatial 데이터베이스에 연결하려면 Oracle 플러그인을 설치해야 합니다.</p>
+</div>
+</div>
+<div class="section" id="arcsde">
+<h2>ArcSDE<a class="headerlink" href="#arcsde" title="Permalink to this headline">¶</a></h2>
+<p>다음 예시로 ArcSDE 데이터베이스에 연결할 수 있습니다.</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;datastore&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;dbtype&lt;/name&gt;
+            &lt;value&gt;arcsde&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;server&lt;/name&gt;
+            &lt;value&gt;arcsde.example.org&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;port&lt;/name&gt;
+            &lt;value&gt;5151&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;instance&lt;/name&gt;
+            &lt;value&gt;sde&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;user&lt;/name&gt;
+            &lt;value&gt;demo&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;password&lt;/name&gt;
+            &lt;value&gt;s3cr3t&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;datastore.allowNonSpatialTables&lt;/name&gt;
+            &lt;value&gt;true&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<p>비(非)공간(non-spatial) 테이블을 사용하면 비공간 속성을 사용하는 응용 스키마를 전달하는 데 도움이 됩니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">ArcSDE 데이터베이스에 연결하려면 ArcSDE 플러그인을 설치해야 합니다.</p>
+</div>
+</div>
+<div class="section" id="shapefile">
+<h2>Shapefile<a class="headerlink" href="#shapefile" title="Permalink to this headline">¶</a></h2>
+<p>Shapefile 데이터 소스는 .shp 파일의 위치를 나타내는 파일 URL 값을 가지는 <tt class="docutils literal"><span class="pre">url</span></tt> 파라미터로 설정할 수 있습니다.</p>
+<p>다음 예시에서 <tt class="docutils literal"><span class="pre">url</span></tt> 파라미터만 필요합니다. 다른 파라미터는 없어도 상관 없습니다.</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;shapefile&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;url&lt;/name&gt;
+            &lt;value&gt;file:/D:/Workspace/shapefiles/VerdeRiverBuffer.shp&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;memory mapped buffer&lt;/name&gt;
+            &lt;value&gt;false&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;create spatial index&lt;/name&gt;
+            &lt;value&gt;true&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;charset&lt;/name&gt;
+            &lt;value&gt;ISO-8859-1&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이번 예시에서 <tt class="docutils literal"><span class="pre">url</span></tt>은 윈도우 파일 시스템 경로를 URL 표기법으로 번역한 것입니다.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer 기본 설치 파일에 shapefile 지원 기능이 포함되므로 개별 플러그인은 필요하지 않습니다.</p>
+</div>
+</div>
+<div class="section" id="property-file">
+<h2>Property file<a class="headerlink" href="#property-file" title="Permalink to this headline">¶</a></h2>
+<p>파일 위치의 <tt class="docutils literal"><span class="pre">directory</span></tt> 파라미터를 <tt class="docutils literal"><span class="pre">file:</span></tt> URI 형식으로 지정해서 속성 파일을 설정할 수 있습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">directory</span></tt>가 <tt class="docutils literal"><span class="pre">file:./</span></tt>로 시작할 경우 매핑 파일 디렉터리를 기준으로 하는 상대 경로라는 의미입니다.
+(유효하지 않은 URI지만, 작동은 합니다.)</li>
+</ul>
+<p>예를 들면 다음 데이터 저장소는 매핑 파일과 같은 디렉터리에 있는 속성 파일에 접근합니다.</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;propertyfile&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;directory&lt;/name&gt;
+            &lt;value&gt;file:./&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<p>속성 파일 데이터 저장소는 디렉터리 안의 .properties 파일들에 저장된 <em>모든</em> 피처형을 담고 있습니다.
+예를 들어 디렉터리 안에 River.properties와 station.properties 파일이 있을 경우,
+해당 데이터 저장소는 이 파일들을 <tt class="docutils literal"><span class="pre">River</span></tt> 피처형과 <tt class="docutils literal"><span class="pre">station</span></tt> 피처형으로 서비스할 수 있습니다.
+다른 파일 확장자는 무시합니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">GeoServer 기본 설치 파일에 속성 파일 지원 기능이 포함되므로 개별 플러그인은 필요하지 않습니다.</p>
+</div>
+</div>
+<div class="section" id="jndi">
+<h2>JNDI<a class="headerlink" href="#jndi" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">jndiReferenceName</span></tt> 파라미터로 JDBC 데이터 저장소를 정의하면 사용자의 서블렛 컨테이너가 제공하는 연결 풀(connection pool)을 쓸 수 있게 됩니다.
+이를 통해 연결 풀 파라미터를 상세히 설정할 수 있으며 데이터 저장소 간에는 물론 서블렛 사이에서도 연결을 공유할 수 있게 됩니다.</p>
+<p>JNDI 연결 제공자(connection provider)를 사용하는 방법은 다음과 같습니다.</p>
+<ol class="arabic simple">
+<li>데이터베이스 형식을 알려주기 위해 <tt class="docutils literal"><span class="pre">dbtype</span></tt> 파라미터를 설정합니다. 그 값은 앞의 (JNDI가 아닌) 예시와 동일합니다.</li>
+<li>서블렛 컨테이너에서 설정한 <tt class="docutils literal"><span class="pre">jndiReferenceName</span></tt>을 그대로 사용하십시오.
+두 값 모두 Tomcat처럼 상수인 <tt class="docutils literal"><span class="pre">jdbc/oracle</span></tt> 형식을 사용하며,
+기본 형식인 <tt class="docutils literal"><span class="pre">java:comp/env/jdbc/oracle</span></tt>을 지원합니다.</li>
+</ol>
+<p>다음 예시에서 Oracle에 연결하기 위해 JNDI를 이용합니다.</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;datastore&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;dbtype&lt;/name&gt;
+            &lt;value&gt;Oracle&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;jndiReferenceName&lt;/name&gt;
+            &lt;value&gt;jdbc/oracle&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<p>사용자의 서블렛 컨테이너가 <tt class="docutils literal"><span class="pre">geoserver/WEB-INF/web.xml</span></tt> 파일 마지막 부분에
+다음과 같은 <tt class="docutils literal"><span class="pre">resource-ref</span></tt> 섹션을 추가할 것을 요청할 수도 있습니다.
+(Tomcat의 경우입니다. Jetty는 요청하지 않습니다.)</p>
+<div class="highlight-python"><pre>&lt;resource-ref&gt;
+    &lt;description&gt;Oracle Spatial Datasource&lt;/description&gt;
+    &lt;res-ref-name&gt;jdbc/oracle&lt;/res-ref-name&gt;
+    &lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;
+    &lt;res-auth&gt;Container&lt;/res-auth&gt;
+&lt;/resource-ref&gt;</pre>
+</div>
+<p>다음은 Oracle 연결 풀을 포함하는 <tt class="docutils literal"><span class="pre">/etc/tomcat6/server.xml</span></tt> 파일 안의 Tomcat 6 Context의 예시입니다.</p>
+<div class="highlight-python"><pre>&lt;Context
+    path="/geoserver"
+    docBase="/usr/local/geoserver"
+    crossContext="false"
+    reloadable="false"&gt;
+    &lt;Resource
+        name="jdbc/oracle"
+        auth="Container"
+        type="javax.sql.DataSource"
+        url="jdbc:oracle:thin:@YOUR_DATABASE_HOSTNAME:1521:YOUR_DATABASE_NAME"
+        driverClassName="oracle.jdbc.driver.OracleDriver"
+        username="YOUR_DATABASE_USERNAME"
+        password="YOUR_DATABASE_PASSWORD"
+        maxActive="20"
+        maxIdle="10"
+        minIdle="0"
+        maxWait="10000"
+        minEvictableIdleTimeMillis="300000"
+        timeBetweenEvictionRunsMillis="300000"
+        numTestsPerEvictionRun="20"
+        poolPreparedStatements="true"
+        maxOpenPreparedStatements="100"
+        testOnBorrow="true"
+        validationQuery="SELECT SYSDATE FROM DUAL" /&gt;
+&lt;/Context&gt;</pre>
+</div>
+<p>방화벽 시간제한(firewall timeout) 때문에 가동되지 않고 있는(idle) 데이터베이스 연결이 잘려 GeoServer가 정지(hang)될 수 있습니다.
+GeoServer와 데이터베이스 사이에 방화벽이 있을 경우, 방화벽 시간제한 이전에 연결 풀이 가동 중이 아닌 연결을 끄도록 설정하면 GeoServer가 정지되는 일을 막을 수 있습니다.
+JNDI 연결 풀은 가동 중이 아닌 연결을 5분에서 10분 후에 끄도록 설정되어 있습니다.</p>
+<p><a class="reference internal" href="../../tutorials/tomcat-jndi/tomcat-jndi.html#tomcat-jndi"><em>Setting up a JNDI connection pool with Tomcat</em></a> 페이지도 참조하십시오.</p>
+</div>
+<div class="section" id="expose-primary-keys">
+<h2>Expose primary keys<a class="headerlink" href="#expose-primary-keys" title="Permalink to this headline">¶</a></h2>
+<p>초기 상태에서 GeoServer는 데이터베이스의 primary key 열을 숨깁니다. 응용 스키마 매핑 파일에서 이런 열을 사용할 수 있도록 하려면
+데이터 저장소의 <tt class="docutils literal"><span class="pre">Expose primary keys</span></tt> 파라미터를 다음과 같이 <tt class="docutils literal"><span class="pre">true</span></tt>로 설정하십시오.</p>
+<div class="highlight-python"><pre>&lt;Parameter&gt;
+    &lt;name&gt;Expose primary keys&lt;/name&gt;
+   &lt;value&gt;true&lt;/value&gt;
+&lt;/Parameter&gt;</pre>
+</div>
+<p>이 방법은 PostGIS, Oracle, JNDI 데이터 저장소에 사용할 수 있습니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="property-interpolation.html" title="previous chapter">Property Interpolation</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="feature-chaining.html" title="next chapter">Feature Chaining</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Data Stores</a><ul>
+<li><a class="reference internal" href="#the-datastore-element">The DataStore element</a></li>
+<li><a class="reference internal" href="#database-options">Database options</a></li>
+<li><a class="reference internal" href="#postgis">PostGIS</a></li>
+<li><a class="reference internal" href="#oracle">Oracle</a></li>
+<li><a class="reference internal" href="#arcsde">ArcSDE</a></li>
+<li><a class="reference internal" href="#shapefile">Shapefile</a></li>
+<li><a class="reference internal" href="#property-file">Property file</a></li>
+<li><a class="reference internal" href="#jndi">JNDI</a></li>
+<li><a class="reference internal" href="#expose-primary-keys">Expose primary keys</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="property-interpolation.html" title="previous chapter">Property Interpolation</a></li>
+            <li>다음: <a href="feature-chaining.html" title="next chapter">Feature Chaining</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/data-stores.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

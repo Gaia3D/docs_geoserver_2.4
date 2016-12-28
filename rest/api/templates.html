@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Freemarker templates &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="REST configuration API reference" href="index.html" />
+      <link rel="next" title="OWS Services" href="services.html" />
+      <link rel="prev" title="Fonts" href="fonts.html" />
+</head>
+<body class="rest/api/templates">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">REST configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">REST configuration API reference</a> &raquo;</li>
+  <li>Freemarker templates</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="services.html" title="OWS Services"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="fonts.html" title="Fonts"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="freemarker-templates">
+<span id="rest-api-templates"></span><h1>Freemarker templates<a class="headerlink" href="#freemarker-templates" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://freemarker.sourceforge.net/">Freemarker</a>는 간단하지만 강력한 서식(template) 엔진으로, 사용자 지정 산출물을 위해 GeoServer가 채택했습니다.</p>
+<p>카탈로그 리소스를 위한 Freemarker 서식을 관리하는 데 GeoServer REST API를 사용할 수 있습니다.</p>
+<div class="section" id="templates-template-ftl">
+<h2><tt class="docutils literal"><span class="pre">/templates/&lt;template&gt;.ftl</span></tt><a class="headerlink" href="#templates-template-ftl" title="Permalink to this headline">¶</a></h2>
+<p>이 종단점은 전체 카탈로그에 공통적인 서식을 관리합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>서식을 반환합니다.</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>PUT</td>
+<td>서식을 삽입하거나 업데이트합니다.</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>DELETE</td>
+<td>서식을 삭제합니다.</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>다음 종단점에도 동일한 작업이 적용됩니다.</p>
+<ul class="simple">
+<li>작업공간 서식(Workspace templates) —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+<li>벡터 저장소(Vector store) 서식 —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+<li>피처형(Feature type) 서식 —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/featuretypes/&lt;f&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+<li>래스터 저장소(Raster store) 서식 —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+<li>커버리지(Coverage) 서식 —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/coverages/&lt;c&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+</ul>
+</div>
+<div class="section" id="templates-format">
+<h2><tt class="docutils literal"><span class="pre">/templates[.&lt;format&gt;]</span></tt><a class="headerlink" href="#templates-format" title="Permalink to this headline">¶</a></h2>
+<p>이 종단점은 모든 공통 서식을 관리합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">방식</th>
+<th class="head">동작</th>
+<th class="head">상태 코드</th>
+<th class="head">형식</th>
+<th class="head">기본 형식</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>서식을 반환합니다.</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+</tbody>
+</table>
+<p>다음 종단점에도 동일한 작업이 적용됩니다.</p>
+<ul class="simple">
+<li>작업공간 서식 —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/templates[.&lt;format&gt;]</span></tt></li>
+<li>벡터 저장소 서식 —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/templates[.&lt;format&gt;]</span></tt></li>
+<li>피처형 서식 —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/featuretypes/&lt;f&gt;/templates[.&lt;format&gt;]</span></tt></li>
+<li>래스터 저장소 서식 —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/templates[.&lt;format&gt;]</span></tt></li>
+<li>커버리지 서식 —<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/coverages/&lt;c&gt;/templates[.&lt;format&gt;]</span></tt></li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="fonts.html" title="previous chapter">Fonts</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="services.html" title="next chapter">OWS Services</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Freemarker templates</a><ul>
+<li><a class="reference internal" href="#templates-template-ftl"><tt class="docutils literal"><span class="pre">/templates/&lt;template&gt;.ftl</span></tt></a></li>
+<li><a class="reference internal" href="#templates-format"><tt class="docutils literal"><span class="pre">/templates[.&lt;format&gt;]</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="fonts.html" title="previous chapter">Fonts</a></li>
+            <li>다음: <a href="services.html" title="next chapter">OWS Services</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/rest/api/templates.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Authentication to OWS and REST services &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Authentication" href="index.html" />
+      <link rel="next" title="Authentication providers" href="providers.html" />
+      <link rel="prev" title="Authenticating to the Web Admin Interface" href="web.html" />
+</head>
+<body class="security/auth/owsrest">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Authentication</a> &raquo;</li>
+  <li>Authentication to OWS and REST services</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="providers.html" title="Authentication providers"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="web.html" title="Authenticating to the Web Admin Interface"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="authentication-to-ows-and-rest-services">
+<span id="sec-auth-owsrest"></span><h1>Authentication to OWS and REST services<a class="headerlink" href="#authentication-to-ows-and-rest-services" title="Permalink to this headline">¶</a></h1>
+<p>OWS 및 REST 서비스는 상태 비보존형(stateless)이며 내부적으로 &#8220;세션(session)&#8221;을 인식하지 못 하기 때문에
+클라이언트가 각각의 모든 요청에 대해 이 서비스들을 위한 인증 체계(authentication scheme)에 자격 증명(credentials)을 제공해야 합니다.
+따라서 &#8220;세션 통합(session integration)&#8221;을 지원합니다.
+즉 서버 상에 이미 (동시에 공존하는 <a class="reference internal" href="web.html#sec-auth-webadmin"><em>Authenticated web admin session</em></a>에서 나온) 세션이 존재하는 경우
+인증을 위해 쓰일 것이라는 의미입니다. 이 체계 덕분에 GeoServer가 OWS 및 REST 서비스를 위해 세션을 생성하는 시간을 절약할 수 있습니다.</p>
+<p>GeoServer 기본 설정은 이 서비스들을 위한 <a class="reference external" href="http://en.wikipedia.org/wiki/Basic_access_authentication">HTTP Basic authentication</a>을 지원하고 있습니다.</p>
+<p>일반적인 인증 과정은 다음과 같습니다.</p>
+<ol class="arabic simple">
+<li>사용자가 어떤 자격 증명도 없이 서비스에 요청을 보냅니다.</li>
+<li>보안되지 않은 리소스에 접근하는 경우, 평범하게 요청을 처리합니다.</li>
+<li>보안된 리소스에 접근하는 경우, 다음과 같이 처리합니다.</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>클라이언트에게 HTTP 401 상태 코드를 반환해서, 일반적으로 클라이언트가 자격 증명을 보완하게 만듭니다.</li>
+<li>보통 기본 인증(Basic Authentication)을 갖춘 HTTP 헤더에 포함된 적합한 자격 증명과 함께 서비스 요청을 반복합니다.</li>
+<li>사용자가 리소스에 접근할 수 있는 충분한 권한을 가지고 있을 경우 평범하게 요청을 처리합니다. 그렇지 않을 경우 클라이언트에게 HTTP 404 상태 코드를 반환합니다.</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li>이어지는 요청도 동일한 사용자 자격 증명을 포함해야 합니다.</li>
+</ol>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>다음은 OWS 서비스를 위한 인증 사슬을 설명하는 그림입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/auth_chain_ogc1.png" src="../../_images/auth_chain_ogc1.png" />
+<p class="caption"><em>OWS 서비스 인증 사슬</em></p>
+</div>
+<p>이 예시의 필터 사슬은 다음 3가지 필터로 이루어져 있습니다.</p>
+<ul class="simple">
+<li><strong>Session</strong> —기존 세션을 식별하여 (하지만 새로운 세션을 생성하지 <em>않습니다</em>) &#8220;세션 통합&#8221;을 처리합니다.</li>
+<li><strong>Basic Auth</strong> —요청 HTTP 헤더에서 기본 인증 자격 증명을 추출합니다.</li>
+<li><strong>Anonymous</strong> —익명 접근을 처리합니다.</li>
+</ul>
+<p>제공자 사슬은 다음 2가지 제공자로 이루어져 있습니다.</p>
+<ul class="simple">
+<li><strong>Root</strong> —<a class="reference internal" href="../root.html#sec-root"><em>루트 계정(Root account)</em></a>은 특별한 &#8220;수퍼유저(super user)&#8221; 제공자를 갖추고 있습니다.
+이 계정은 거의 사용되지 않기 때문에 이 제공자를 호출하는 일도 거의 없습니다.</li>
+<li><strong>Username/password</strong> —사용자 데이터베이스를 대상으로 사용자명/비밀번호 인증 작업을 수행합니다.</li>
+</ul>
+<p>다음은 사슬의 다양한 요소들이 어떻게 작동하는지 보여주는 OWS 요청의 예시입니다.</p>
+<div class="section" id="anonymous-wms-getcapabilities-request">
+<h3>Anonymous WMS GetCapabilities request<a class="headerlink" href="#anonymous-wms-getcapabilities-request" title="Permalink to this headline">¶</a></h3>
+<p>이 예시에서 WMS 클라이언트가 익명 GetCapabilities 요청을 할 경우 호출되는 처리 과정을 설명합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/auth_chain_ogc2.png" src="../../_images/auth_chain_ogc2.png" />
+<p class="caption"><em>WMS 클라이언트가 익명 GetCapabilities 요청을 할 경우의 인증 사슬</em></p>
+</div>
+<p><em>Session</em> 필터가 기존 세션을 확인하지만 세션이 없기 때문에 다음 과정으로 넘어갑니다.
+<em>Basic Auth</em> 필터가 요청에서 기본 인증 헤더(Basic Authorization header)를 검색하지만 익명 요청이기 때문에 찾을 수 없습니다.
+마지막으로 <em>Anonymous</em> 필터가 실행되어 익명으로 요청을 인증합니다.
+GetCapabilities 요청이 &#8220;발견(discovery)&#8221; 작업이기 때문에 일반적으로 보안된 서버 상에서도 배제되지는 않습니다.
+이 경우에도 그렇다고 가정하면 익명 요청이 성공해서 클라이언트에게 역량(capabilities) 응답을 반환할 것이고, 제공자 사슬을 호출하지는 않습니다.</p>
+</div>
+<div class="section" id="anonymous-wms-getmap-request-for-a-secured-layer">
+<h3>Anonymous WMS GetMap request for a secured layer<a class="headerlink" href="#anonymous-wms-getmap-request-for-a-secured-layer" title="Permalink to this headline">¶</a></h3>
+<p>이 예시에서 WMS 클라이언트가 보안된 레이어에 대해 익명 GetMap 요청을 할 경우 호출되는 처리 과정을 설명합니다.</p>
+<p>정확히 앞에서 설명한대로 사슬이 실행됩니다. <em>Session</em> 필터가 기존 세션을 확인하지만 세션이 없기 때문에 다음 과정으로 넘어갑니다.
+<em>Basic Auth</em> 필터가 요청에서 기본 인증 헤더를 검색하지만 익명 요청이기 때문에 찾을 수 없습니다.
+마지막으로 <em>Anonymous</em> 필터가 실행되어 익명으로 요청을 인증합니다.
+하지만 이 경우 접근할 레이어가 보안된 리소스이기 때문에 GetMap 요청이 실패합니다.
+서버가 HTTP 401 상태 코드와 함께 예외(exception)를 반환하는데, 보통 클라이언트가 사용자에게 로그인 대화창을 표출하도록 만듭니다.</p>
+</div>
+<div class="section" id="wms-getmap-request-with-user-supplied-credentials">
+<h3>WMS GetMap request with user-supplied credentials<a class="headerlink" href="#wms-getmap-request-with-user-supplied-credentials" title="Permalink to this headline">¶</a></h3>
+<p>이 예시에서 WMS 클라이언트가 사용자로부터 자격 증명을 받아 보안된 레이어에 대한 이전 요청을 다시 보낼 경우 호출되는 처리 과정을 설명합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/auth_chain_ogc3.png" src="../../_images/auth_chain_ogc3.png" />
+<p class="caption"><em>WMS 클라이언트가 사용자 자격 증명을 받아 보안된 레이어에 대한 요청을 할 경우의 인증 사슬</em></p>
+</div>
+<p><em>Session</em> 필터가 앞에서 설명한대로 실행되고, 넘어갑니다.
+<em>Basic Auth</em> 필터가 요청에서 기본 인증 헤더를 찾아 자격 증명을 추출하고 제공자 사슬을 호출합니다.
+처리 과정이 <em>Username/password</em> 제공자로 넘어가 실제 인증 작업을 수행합니다.
+자격 증명이 레이어에 접근하는 데 필요한 권한을 갖춘 경우 평범하게 요청을 처리해서 GetMap 요청이 성공, 맵 응답을 반환합니다.
+자격 증명이 불충분할 경우 HTTP 401 상태 코드를 대신 반환하는데, 클라이언트 쪽에서 다시 로그인 대화창을 표출하도록 할 수도 있습니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="web.html" title="previous chapter">Authenticating to the Web Admin Interface</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="providers.html" title="next chapter">Authentication providers</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Authentication to OWS and REST services</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#anonymous-wms-getcapabilities-request">Anonymous WMS GetCapabilities request</a></li>
+<li><a class="reference internal" href="#anonymous-wms-getmap-request-for-a-secured-layer">Anonymous WMS GetMap request for a secured layer</a></li>
+<li><a class="reference internal" href="#wms-getmap-request-with-user-supplied-credentials">WMS GetMap request with user-supplied credentials</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="web.html" title="previous chapter">Authenticating to the Web Admin Interface</a></li>
+            <li>다음: <a href="providers.html" title="next chapter">Authentication providers</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/security/auth/owsrest.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

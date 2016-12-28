@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WFS vendor parameters &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Feature Service" href="index.html" />
+      <link rel="next" title="WFS schema mapping" href="schemamapping.html" />
+      <link rel="prev" title="WFS output formats" href="outputformats.html" />
+</head>
+<body class="services/wfs/vendor">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Feature Service</a> &raquo;</li>
+  <li>WFS vendor parameters</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="schemamapping.html" title="WFS schema mapping"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="outputformats.html" title="WFS output formats"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wfs-vendor-parameters">
+<span id="id1"></span><h1>WFS vendor parameters<a class="headerlink" href="#wfs-vendor-parameters" title="Permalink to this headline">¶</a></h1>
+<p>WFS 벤더(vendor) 파라미터는 확장 기능을 제공하기 위해 정의된 비표준 요청 파라미터입니다. GeoServer는 다양한 벤더에 특화된 WFS 파라미터를 지원합니다.</p>
+<div class="section" id="cql-filters">
+<h2>CQL filters<a class="headerlink" href="#cql-filters" title="Permalink to this headline">¶</a></h2>
+<p>WFS의 <a class="reference internal" href="reference.html#wfs-getfeature"><em>GetFeature</em></a> GET 요청에서
+<tt class="docutils literal"><span class="pre">cql_filter</span></tt> 파라미터를 사용해서 ECQL(Extended Common Query Language) 형식으로 필터를 설정할 수 있습니다.
+ECQL은 OGC XML 필터보다 간결하고 가독성이 높은 문법(syntax)을 제공합니다.</p>
+<p>보다 자세한 내용을 알고 싶다면 <a class="reference internal" href="../../filter/ecql_reference.html#filter-ecql-reference"><em>ECQL Reference</em></a>와
+<a class="reference internal" href="../../tutorials/cql/cql_tutorial.html#cql-tutorial"><em>CQL and ECQL</em></a> 예제를 참조하십시오.</p>
+<p>다음은 OGC 필터를 사용하는 GET 요청의 예시입니다.</p>
+<div class="highlight-python"><pre>filter=%3CFilter%20xmlns:gml=%22http://www.opengis.net/gml%22%3E%3CIntersects%3E%3CPropertyName%3Ethe_geom%3C/PropertyName%3E%3Cgml:Point%20srsName=%224326%22%3E%3Cgml:coordinates%3E-74.817265,40.5296504%3C/gml:coordinates%3E%3C/gml:Point%3E%3C/Intersects%3E%3C/Filter%3E</pre>
+</div>
+<p>ECQL을 사용하면 동일한 필터를 다음과 같이 정의할 수 있습니다.</p>
+<div class="highlight-python"><pre>cql_filter=INTERSECT(the_geom,%20POINT%20(-74.817265%2040.5296504))</pre>
+</div>
+</div>
+<div class="section" id="format-options">
+<h2>Format options<a class="headerlink" href="#format-options" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">format_options</span></tt> 파라미터는 형식에 특화된 다른 파라미터들을 담는 컨테이너(container)입니다. 구문은 다음과 같습니다.</p>
+<div class="highlight-python"><pre>format_options=param1:value1;param2:value2;...</pre>
+</div>
+<p>다음 형식 옵션을 지원합니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">callback</span></tt> (기본값은 <tt class="docutils literal"><span class="pre">parseResponse</span></tt>입니다.) &mdash;JSONP 응답 형식을 위한 콜백 함수명을 설정합니다.</li>
+</ul>
+</div>
+<div class="section" id="reprojection">
+<h2>Reprojection<a class="headerlink" href="#reprojection" title="Permalink to this headline">¶</a></h2>
+<p>WFS 1.1.0 및 2.0.0 버전 모두 데이터 재투영을 지원하기 때문에, GeoServer가 데이터를 어떤 투영체로 저장한 다음 또다른 투영체로 GML을 반환할 수 있습니다.
+사양에 정의되어 있지는 않지만, GeoServer는 WFS 1.0.0 버전에서도 이 기능을 지원합니다.
+WFS의 <a class="reference internal" href="reference.html#wfs-getfeature"><em>GetFeature</em></a> GET 요청을 전송할 때 재투영 SRS를 설정하는 파라미터를 다음과 같이 추가할 수 있습니다.</p>
+<div class="highlight-python"><pre>srsName=&lt;srsName&gt;</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">&lt;srsName&gt;</span></tt> 자리에 <tt class="docutils literal"><span class="pre">EPSG:4326</span></tt>와 같은 투영체 코드를 입력합니다.
+POST 요청 시 <tt class="docutils literal"><span class="pre">Query</span></tt> 요소에 동일한 코드를 추가할 수 있습니다.</p>
+</div>
+<div class="section" id="xml-request-validation">
+<h2>XML request validation<a class="headerlink" href="#xml-request-validation" title="Permalink to this headline">¶</a></h2>
+<p>XML 요청의 유효성을 판단할 때 GeoServer는 WFS 사양보다 덜 엄격합니다. 들어오는 XML 요청을 유효하게 만들려면 다음 파라미터를 이용하십시오.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">strict</span><span class="o">=</span><span class="p">[</span><span class="n">true</span><span class="o">|</span><span class="n">false</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>이 파라미터의 기본 옵션은 <tt class="docutils literal"><span class="pre">false</span></tt>입니다.</p>
+<p>다음은 유효하지 않은 요청의 예시입니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:GetFeature</span> <span class="na">service=</span><span class="s">&quot;WFS&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+ <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Query</span> <span class="na">typeName=</span><span class="s">&quot;topp:states&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/wfs:GetFeature&gt;</span>
+</pre></div>
+</div>
+<p>이 요청은 다음 2가지 이유로 유효하지 않습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Query</span></tt> 요소에 접두사 <tt class="docutils literal"><span class="pre">wfs:</span></tt>가 붙어야 합니다.</li>
+<li>명칭공간 접두사가 명칭공간 URI에 매핑되지 않았습니다.</li>
+</ul>
+<p>그렇긴 하지만 GeoServer는 기본적으로 이 요청을 처리할 것입니다.
+그러나 <tt class="docutils literal"><span class="pre">strict=true</span></tt> 파라미터를 써서 이 명령을 실행하면 오류가 발생합니다. 정확한 구문은 다음과 같아야 합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:GetFeature</span> <span class="na">service=</span><span class="s">&quot;WFS&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+ <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+ <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:Query</span> <span class="na">typeName=</span><span class="s">&quot;topp:states&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/wfs:GetFeature&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getcapabilities-namespace-filter">
+<h2>GetCapabilities namespace filter<a class="headerlink" href="#getcapabilities-namespace-filter" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">&lt;namespace&gt;</span></tt> 파라미터를 추가해서 특정 명칭공간에 속하는 레이어들만 반환하도록
+WFS <a class="reference internal" href="reference.html#wfs-getcap"><em>GetCapabilities</em></a> 요청을 필터링할 수도 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 파라미터는 GetCapabilities 요청에만 쓰입니다.</p>
+</div>
+<p>이 필터를 적용하려면 다음 코드를 요청에 추가하십시오.</p>
+<div class="highlight-python"><pre>namespace=&lt;namespace&gt;</pre>
+</div>
+<p>유효하지 않은 명칭공간을 입력해도 에러가 발생하지는 않지만, 반환되는 GetCapabilities 문서에 어떤 레이어 정보도 담기지 않습니다.</p>
+<div class="admonition warning">
+<p class="first admonition-title">경고</p>
+<p class="last">이 파라미터를 이용하면 GetCapabilities 문서가 유효하지 않게 될 수도 있습니다. WFS 사양에 따르면 문서가 적어도 하나의 레이어를 반환해야 하기 때문입니다.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 필터는 <a class="reference internal" href="../virtual-services.html#virtual-services"><em>Virtual OWS Services</em></a>와 관련이 있습니다.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="outputformats.html" title="previous chapter">WFS output formats</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="schemamapping.html" title="next chapter">WFS schema mapping</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WFS vendor parameters</a><ul>
+<li><a class="reference internal" href="#cql-filters">CQL filters</a></li>
+<li><a class="reference internal" href="#format-options">Format options</a></li>
+<li><a class="reference internal" href="#reprojection">Reprojection</a></li>
+<li><a class="reference internal" href="#xml-request-validation">XML request validation</a></li>
+<li><a class="reference internal" href="#getcapabilities-namespace-filter">GetCapabilities namespace filter</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="outputformats.html" title="previous chapter">WFS output formats</a></li>
+            <li>다음: <a href="schemamapping.html" title="next chapter">WFS schema mapping</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wfs/vendor.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

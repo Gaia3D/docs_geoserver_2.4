@@ -1,0 +1,549 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Users, Groups, Roles &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Security" href="index.html" />
+      <link rel="next" title="Data" href="data.html" />
+      <link rel="prev" title="Passwords" href="passwords.html" />
+</head>
+<body class="webadmin/security/ugr">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Security</a> &raquo;</li>
+  <li>Users, Groups, Roles</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="data.html" title="Data"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="passwords.html" title="Passwords"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="users-groups-roles">
+<span id="webadmin-sec-ugr"></span><h1>Users, Groups, Roles<a class="headerlink" href="#users-groups-roles" title="Permalink to this headline">¶</a></h1>
+<p>이 섹션에서 <a class="reference internal" href="../../security/usergrouprole/usergroupservices.html#sec-rolesystem-usergroupservices"><em>User/group services</em></a>와 <a class="reference internal" href="../../security/usergrouprole/roleservices.html#sec-rolesystem-roleservices"><em>Role services</em></a>에 대한 설정 옵션들을 제공합니다.
+또 사용자, 그룹, 롤 그 자체로도 추가·편집·제거가 가능합니다. 이 섹션 및 관련 페이지들에서 대단한 분량의 설정을 할 수 있습니다.</p>
+<div class="section" id="user-group-services">
+<span id="webadmin-sec-usergroupservices"></span><h2>User Group Services<a class="headerlink" href="#user-group-services" title="Permalink to this headline">¶</a></h2>
+<p>이 메뉴에서 user/group 서비스를 추가·편집·제거할 수 있습니다.
+GeoServer는 user/group 서비스 하나를 기본적으로 사용하는데, 바로 <a class="reference internal" href="../../security/usergrouprole/usergroupservices.html#sec-rolesystem-usergroupxml"><em>XML 기반</em></a> 서비스입니다.
+이 서비스는 <a class="reference internal" href="../../security/passwd.html#sec-passwd-encryption"><em>Weak PBE</em></a> 방식으로 암호화돼 있으며 기본 <a class="reference internal" href="../../security/passwd.html#sec-passwd-policy"><em>password policy</em></a>를 사용합니다.
+JNDI를 사용하거나 사용하지 않거나 상관없이 <a class="reference internal" href="../../security/usergrouprole/usergroupservices.html#sec-rolesystem-usergroupjdbc"><em>JDBC</em></a>에 기반한 user/group 서비스를 사용할 수도 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_usergroup.png" src="../../_images/ugr_usergroup.png" />
+<p class="caption"><em>User/group 서비스</em></p>
+</div>
+<p>기존 user/group 서비스를 클릭하면 서비스를 편집할 수 있고, <em class="guilabel">Add new</em> 링크를 클릭하면 새 user/group 서비스를 설정할 수 있습니다.</p>
+<p>이 설정에는 Settings, Users, Groups 3가지 탭이 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">새 user/group 서비스 생성 시 Settings 탭에서 초기값이 입력된 양식을 볼 수 있습니다.</p>
+</div>
+</div>
+<div class="section" id="add-new-xml-user-group-service">
+<h2>Add new XML user/group service<a class="headerlink" href="#add-new-xml-user-group-service" title="Permalink to this headline">¶</a></h2>
+<p>새로운 XML user/group 서비스를 생성하려면 <em class="guilabel">Add new</em> 링크를 클릭하십시오.
+XML이 기본적으로 선택되어 있습니다. XML user/group 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_ugxmlsettings.png" src="../../_images/ugr_ugxmlsettings.png" />
+<p class="caption"><em>XML user/group 서비스 추가하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>user/group 서비스명입니다.</td>
+</tr>
+<tr class="row-odd"><td>Password encryption</td>
+<td><a class="reference internal" href="../../security/passwd.html#sec-passwd-encryption"><em>Password encryption</em></a> 방식을 설정합니다.
+<em class="guilabel">Plain text</em>, <em class="guilabel">Weak PBE</em>, <em class="guilabel">Strong PBE</em>, <em class="guilabel">Digest</em> 4가지 옵션이 있습니다.</td>
+</tr>
+<tr class="row-even"><td>Password policy</td>
+<td><a class="reference internal" href="../../security/passwd.html#sec-passwd-policy"><em>Password policy</em></a>를 설정합니다.
+<a class="reference internal" href="passwords.html#webadmin-sec-passwd"><em>Passwords</em></a> 섹션에서 활성화한 비밀번호 정책을 선택할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>XML filename</td>
+<td>사용자 및 그룹 정보를 담을 파일명을 뜻합니다.
+기본값은 <tt class="docutils literal"><span class="pre">security/usergroup/&lt;name_of_usergroupservice&gt;</span></tt> 디렉터리의 <tt class="file docutils literal"><span class="pre">users.xml</span></tt>입니다.</td>
+</tr>
+<tr class="row-even"><td>Enable schema validation</td>
+<td>이 옵션을 선택하면 XML 파일을 읽을 때마다 스키마 확인 작업(schema validation)을 하게 됩니다.
+이 옵션은 XML 파일을 수동으로 편집할 때 유용합니다.</td>
+</tr>
+<tr class="row-odd"><td>File reload interval</td>
+<td>GeoServer가 XML 파일이 변경되었는지 확인하는 주기(1/000초 단위)를 정의합니다.
+파일이 변경되었다면 GeoServer가 현재 파일의 내용을 바탕으로 user/group 데이터베이스를 재생성합니다.
+웹 관리자 인터페이스(web admin interface)를 통해 직접 파일을 변경하지 않고, 즉 &#8220;정식 절차를 거치지 않고&#8221; XML 파일을  변경하는 일이 있는 경우에 이 값을 설정하십시오.
+이 값은 1/1000초 단위로 지정해야 합니다. 0을 입력하면 파일을 확인하지 않습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="add-new-jdbc-user-group-service">
+<h2>Add new JDBC user/group service<a class="headerlink" href="#add-new-jdbc-user-group-service" title="Permalink to this headline">¶</a></h2>
+<p>새로운 JDBC user/group 서비스를 추가하려면 <em class="guilabel">Add new</em> 링크를 클릭한 다음, 앞의 그림 상단의 <em class="guilabel">JDBC</em> 옵션을 클릭하십시오.
+JDBC user/group 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_ugjdbcsettings.png" src="../../_images/ugr_ugjdbcsettings.png" />
+<p class="caption"><em>JDBC user/group 서비스 추가하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>GeoServer에서 사용할 JDBC user/group 서비스명입니다.</td>
+</tr>
+<tr class="row-odd"><td>Password encryption</td>
+<td><a class="reference internal" href="../../security/passwd.html#sec-passwd-encryption"><em>사용자 비밀번호를 암호화하는 데</em></a> 사용할 방식을 설정합니다.</td>
+</tr>
+<tr class="row-even"><td>Password policy</td>
+<td>사용자 비밀번호에 제약을 걸기 위해 사용할 <a class="reference internal" href="../../security/passwd.html#sec-passwd-policy"><em>정책</em></a>을 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td>JNDI</td>
+<td>선택을 해제할 경우 데이터베이스에 직접 연결하도록 지정합니다.
+선택할 경우 <a class="reference internal" href="../../data/database/jndi.html#data-jndi"><em>JNDI</em></a>에 위치한 기존 연결을 사용하도록 합니다.</td>
+</tr>
+<tr class="row-even"><td>Driver class name</td>
+<td>데이터베이스 연결에 사용할 JDBC driver를 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td>Connection URL</td>
+<td>데이터베이스 연결을 생성할 경우 사용할 JDBC URL을 설정합니다.</td>
+</tr>
+<tr class="row-even"><td>Username</td>
+<td>데이터베이스에 연결할 때 사용할 사용자명을 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td>Password</td>
+<td>데이터베이스에 연결할 때 사용할 비밀번호를 설정합니다.</td>
+</tr>
+<tr class="row-even"><td>Create database tables</td>
+<td>기본(underlying) 데이터베이스 안에 필요한 모든 테이블을 생성할지 말지 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td>Data Definition Language (DDL) file</td>
+<td>기본 데이터베이스가 기본(default) DDL을 선언하는 데 실패할 경우, 해당 데이터베이스 안에 테이블을 생성하는 데 사용할 사용자 정의 DDL 파일을 지정합니다.
+입력하지 않을 경우 내부 기본 파일을 이용합니다.</td>
+</tr>
+<tr class="row-even"><td>Data Manipulation Language (DML) file</td>
+<td>기본 데이터베이스가 기본(default) DML을 선언하는 데 실패할 경우, 해당 데이터베이스의 테이블에 접근하는 데 사용할 사용자 정의 DML 파일을 지정합니다.
+입력하지 않을 경우 내부 기본 파일을 이용합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>이런 파라미터 외에도, <a class="reference internal" href="../../data/database/jndi.html#data-jndi"><em>JNDI</em></a> 옵션을 선택했을 경우 다음 추가 파라미터가 적용됩니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_ugjdbcjndisettings.png" src="../../_images/ugr_ugjdbcjndisettings.png" />
+<p class="caption"><em>JNDI를 사용해서 JDBC user/group 서비스 추가하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>JNDI resource name</td>
+<td>데이터베이스 연결의 위치를 찾기 위한 JNDI 명칭을 설정합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="edit-user-group-service">
+<h2>Edit user/group service<a class="headerlink" href="#edit-user-group-service" title="Permalink to this headline">¶</a></h2>
+<p>새로운 (XML 혹은 JDBC) user/group 서비스를 추가한 다음, user/group 서비스 목록에서 추가된 서비스를 클릭하면 해당 서비스와 연결된 사용자 및 그룹에 대한 추가 옵션을 설정할 수 있습니다.</p>
+<p>추가 메뉴에는 <em class="guilabel">Settings</em>, <em class="guilabel">Users</em>, <em class="guilabel">Groups</em> 3가지 탭이 있습니다.
+Settings 탭의 내용은 새 user/group 서비스를 생성했을 때의 탭과 동일하며, 다른 2개의 탭의 내용은 다음과 같습니다.</p>
+<p>Users 탭에서 user/group 서비스의 사용자를 설정할 수 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_ugusers.png" src="../../_images/ugr_ugusers.png" />
+<p class="caption"><em>Users 탭</em></p>
+</div>
+<p>사용자명을 클릭하면 해당 파라미터를 변경할 수 있으며, <em class="guilabel">Add new user</em> 링크를 클릭하면 새 사용자를 생성할 수 있습니다.</p>
+<div class="section" id="add-user">
+<span id="webadmin-sec-users"></span><h3>Add user<a class="headerlink" href="#add-user" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center">
+<img alt="../../_images/ugr_newuser.png" src="../../_images/ugr_newuser.png" />
+<p class="caption"><em>사용자를 생성하거나 편집하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>User name</td>
+<td>사용자명을 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td>Enabled</td>
+<td>이 옵션을 체크하면 사용자 인증이 활성화됩니다.</td>
+</tr>
+<tr class="row-even"><td>Password</td>
+<td>해당 사용자의 비밀번호를 설정합니다. 조회할 경우 기존 비밀번호는 가려집니다.</td>
+</tr>
+<tr class="row-odd"><td>Confirm password</td>
+<td>비밀번호를 설정하거나 변경하기 위해서는 비밀번호를 2번 입력해야 합니다.</td>
+</tr>
+<tr class="row-even"><td>User properties</td>
+<td>해당 사용자와 연결될 Key/Value 쌍을 설정합니다. 사용자에게 추가 정보를 연결하기 위해 사용됩니다.</td>
+</tr>
+<tr class="row-odd"><td>Group list</td>
+<td>사용자가 멤버로 속해 있는 그룹 목록을 포함한 전체 그룹 목록입니다. 화살표 버튼으로 멤버십을 전환(toggle)할 수 있습니다.</td>
+</tr>
+<tr class="row-even"><td>Add a new group</td>
+<td>새로운 그룹을 추가하기 위한 링크입니다. Groups 탭에서도 사용할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>Role list</td>
+<td>사용자에게 할당된 롤 목록을 포함한 전체 롤 목록입니다. 화살표 버튼으로 롤 할당을 전환(toggle)할 수 있습니다.</td>
+</tr>
+<tr class="row-even"><td>Add a new role</td>
+<td>새로운 롤을 추가하기 위한 링크입니다.</td>
+</tr>
+<tr class="row-odd"><td>List of current roles for the user</td>
+<td>현재 사용자에게 할당돼 있는 롤 목록입니다. 롤을 클릭해서 편집할 수 있습니다.</td>
+</tr>
+</tbody>
+</table>
+<p>Groups 탭에서 user/group 서비스의 그룹을 설정할 수 있습니다.
+그룹을 추가하거나 제거할 수 있는 옵션이 있으며, 선택한 그룹 및 해당 그룹과 연결된 롤을 함께 제거할 수 있는 추가 옵션도 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_uggroups.png" src="../../_images/ugr_uggroups.png" />
+<p class="caption"><em>Groups 탭</em></p>
+</div>
+</div>
+<div class="section" id="add-group">
+<span id="webadmin-sec-groups"></span><h3>Add group<a class="headerlink" href="#add-group" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center">
+<img alt="../../_images/ugr_newgroup.png" src="../../_images/ugr_newgroup.png" />
+<p class="caption"><em>그룹을 생성하거나 편집하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Group name</td>
+<td>그룹명을 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td>Enabled</td>
+<td>이 옵션을 체크하면 그룹이 활성화됩니다.</td>
+</tr>
+<tr class="row-even"><td>Role list</td>
+<td>그룹에 할당된 롤 목록을 포함한 전체 롤 목록입니다. 화살표 버튼으로 롤 할당을 전환(toggle)할 수 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>Add a new role</td>
+<td>새로운 롤을 추가하기 위한 링크입니다.</td>
+</tr>
+</tbody>
+</table>
+<p>이 메뉴에서 user/group 서비스를 추가·제거·편집할 수 있습니다.
+GeoServer는 기본적으로 user/group 서비스 하나를 가지고 있는데, 바로 <a class="reference internal" href="../../security/usergrouprole/usergroupservices.html#sec-rolesystem-usergroupxml"><em>XML 기반</em></a> 서비스입니다.
+이 서비스는 <a class="reference internal" href="../../security/passwd.html#sec-passwd-encryption"><em>Weak PBE</em></a> 방식으로 암호화돼 있으며 기본 <a class="reference internal" href="../../security/passwd.html#sec-passwd-policy"><em>password policy</em></a>를 사용합니다.
+JNDI를 사용하거나 사용하지 않거나 상관없이 <a class="reference internal" href="../../security/usergrouprole/usergroupservices.html#sec-rolesystem-usergroupjdbc"><em>JDBC</em></a>에 기반한 user/group 서비스를 사용할 수도 있습니다.</p>
+</div>
+</div>
+<div class="section" id="role-services">
+<span id="webadmin-sec-roleservices"></span><h2>Role services<a class="headerlink" href="#role-services" title="Permalink to this headline">¶</a></h2>
+<p>이 메뉴에서 롤 서비스를 추가·제거·편집할 수 있습니다.
+GeoServer에서 기본적으로 활성화된 롤 서비스는 <a class="reference internal" href="../../security/usergrouprole/roleservices.html#sec-rolesystem-rolexml"><em>XML 기반</em></a> 서비스지만, JNDI를 사용하거나 사용하지 않거나 상관없이 <a class="reference internal" href="../../security/usergrouprole/roleservices.html#sec-rolesystem-rolejdbc"><em>JDBC</em></a>에 기반한 서비스를 사용할 수도 있습니다.</p>
+<p>관리자 롤(Administrator role)은 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>입니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_roleservices.png" src="../../_images/ugr_roleservices.png" />
+<p class="caption"><em>롤 서비스</em></p>
+</div>
+<p>기존 롤 서비스를 클릭해서 편집할 수 있으며, <em class="guilabel">Add new</em> 링크를 클릭해서 새로운 롤 서비스를 설정할 수도 있습니다.</p>
+<p>Settings와 Roles 2개의 설정 페이지가 있습니다.</p>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">새 롤 서비스 생성 시 Settings 탭에서 초기값이 입력된 양식을 볼 수 있습니다.</p>
+</div>
+</div>
+<div class="section" id="add-new-xml-role-service">
+<h2>Add new XML role service<a class="headerlink" href="#add-new-xml-role-service" title="Permalink to this headline">¶</a></h2>
+<p>새로운 XML 롤 서비스를 추가하려면 <em class="guilabel">Add new</em> 링크를 클릭하십시오. 기본적으로 XML 옵션이 선택되어 있습니다.
+XML 롤 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_rolexmlsettings.png" src="../../_images/ugr_rolexmlsettings.png" />
+<p class="caption"><em>XML 롤 서비스 추가하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>롤 서비스명을 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td>Administrator role</td>
+<td>관리자 기능을 수행하는 롤 명칭을 설정합니다.</td>
+</tr>
+<tr class="row-even"><td>XML filename</td>
+<td>롤 정보를 담고 있는 파일명을 설정합니다. 기본적으로 <tt class="docutils literal"><span class="pre">security/role/&lt;name_of_roleservice&gt;</span></tt> 디렉터리의 <tt class="file docutils literal"><span class="pre">roles.xml</span></tt> 파일로 설정되어 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>File reload interval</td>
+<td>GeoServer가 XML 파일이 변경되었는지 확인하는 주기(1/000초 단위)를 정의합니다.
+파일이 변경되었다면 GeoServer가 현재 파일의 내용을 바탕으로 롤 데이터베이스를 재생성합니다.
+웹 관리자 인터페이스(web admin interface)를 통해 직접 파일을 변경하지 않고, 즉 &#8220;정식 절차를 거치지 않고&#8221; XML 파일을 변경하는 일이 있는 경우에 이 값을 설정하십시오.
+이 값은 1/1000초 단위로 지정해야 합니다. 0을 입력하면 파일을 확인하지 않습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="add-new-jdbc-role-service">
+<h2>Add new JDBC role service<a class="headerlink" href="#add-new-jdbc-role-service" title="Permalink to this headline">¶</a></h2>
+<p>새로운 JDBC 롤 서비스를 추가하려면 <em class="guilabel">Add new</em> 링크를 클릭한 다음, 앞의 그림 상단의 <em class="guilabel">JDBC</em> 옵션을 클릭하십시오.
+JDBC 롤 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_rolejdbcsettings.png" src="../../_images/ugr_rolejdbcsettings.png" />
+<p class="caption"><em>JDBC 롤 서비스 추가하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>GeoServer에서 사용할 JDBC 롤 서비스명입니다.</td>
+</tr>
+<tr class="row-odd"><td>Administrator role</td>
+<td>관리자 기능을 수행하는 롤 명칭을 설정합니다.</td>
+</tr>
+<tr class="row-even"><td>JNDI</td>
+<td>선택을 해제할 경우 데이터베이스에 직접 연결하도록 지정합니다.
+선택할 경우 <a class="reference internal" href="../../data/database/jndi.html#data-jndi"><em>JNDI</em></a>에 위치한 기존 연결을 사용하도록 합니다.</td>
+</tr>
+<tr class="row-odd"><td>Driver class name</td>
+<td>데이터베이스 연결에 사용할 JDBC driver를 설정합니다.</td>
+</tr>
+<tr class="row-even"><td>Connection URL</td>
+<td>데이터베이스 연결을 생성할 경우 사용할 JDBC URL을 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td>Username</td>
+<td>데이터베이스에 연결할 때 사용할 사용자명을 설정합니다.</td>
+</tr>
+<tr class="row-even"><td>Password</td>
+<td>데이터베이스에 연결할 때 사용할 비밀번호를 설정합니다.</td>
+</tr>
+<tr class="row-odd"><td>Create database tables</td>
+<td>기본(underlying) 데이터베이스 안에 필요한 모든 테이블을 생성할지 말지 설정합니다.</td>
+</tr>
+<tr class="row-even"><td>Data Definition Language (DDL) file</td>
+<td>기본 데이터베이스가 기본(default) DDL을 선언하는 데 실패할 경우, 해당 데이터베이스 안에 테이블을 생성하는 데 사용할 사용자 정의 DDL 파일을 지정합니다.
+입력하지 않을 경우 내부 기본 파일을 이용합니다.</td>
+</tr>
+<tr class="row-odd"><td>Data Manipulation Language (DML) file</td>
+<td>기본 데이터베이스가 기본(default) DML을 선언하는 데 실패할 경우, 해당 데이터베이스의 테이블에 접근하는 데 사용할 사용자 정의 DML 파일을 지정합니다.
+입력하지 않을 경우 내부 기본 파일을 이용합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>이런 파라미터 외에도, <a class="reference internal" href="../../data/database/jndi.html#data-jndi"><em>JNDI</em></a> 옵션을 선택했을 경우 다음 추가 파라미터가 적용됩니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_rolejdbcjndisettings.png" src="../../_images/ugr_rolejdbcjndisettings.png" />
+<p class="caption"><em>JNDI를 사용해서 JDBC 롤 서비스 추가하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>JNDI resource name</td>
+<td>데이터베이스 연결의 위치를 찾기 위한 JNDI 명칭을 설정합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="edit-role-service">
+<h2>Edit role service<a class="headerlink" href="#edit-role-service" title="Permalink to this headline">¶</a></h2>
+<p>새로운 (XML 혹은 JDBC) 롤 서비스를 추가한 다음, user/group 서비스 목록에서 추가된 서비스를 클릭하면 해당 서비스와 연결된 롤에 대한 추가 옵션을 설정할 수 있습니다.</p>
+<p>추가 메뉴에는 <em class="guilabel">Settings</em>, <em class="guilabel">Roles</em> 2가지 탭이 있습니다.
+Settings 탭의 내용은 새 롤 서비스를 생성했을 때의 탭과 동일하며, Roles 탭의 내용은 다음과 같습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/ugr_roleroles.png" src="../../_images/ugr_roleroles.png" />
+<p class="caption"><em>Roles 탭</em></p>
+</div>
+<p>롤을 클릭해서 해당 롤의 파라미터를 변경할 수 있으며, <em class="guilabel">Add new</em> 링크를 클릭해서 새로운 롤을 생성할 수도 있습니다.</p>
+<div class="section" id="add-role">
+<span id="webadmin-sec-roles"></span><h3>Add role<a class="headerlink" href="#add-role" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center">
+<img alt="../../_images/ugr_newrole.png" src="../../_images/ugr_newrole.png" />
+<p class="caption"><em>롤을 생성하거나 편집하기</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">옵션</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Role name</td>
+<td>롤 명칭을 설정합니다. 일반적으로 대문자를 사용하지만, 소문자를 사용해도 됩니다.</td>
+</tr>
+<tr class="row-odd"><td>Parent roles</td>
+<td>해당 롤이 상속(inherit)하는 롤입니다. 상속에 대해 더 자세히 알고 싶다면 <a class="reference internal" href="../../security/usergrouprole/roles.html#sec-rolesystem-roles"><em>Roles</em></a> 섹션을 참조하십시오.</td>
+</tr>
+<tr class="row-even"><td>Role parameters</td>
+<td>해당 롤과 연결될 Key/Value 쌍을 설정합니다. 롤에 추가 정보를 연결하기 위해 사용됩니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="passwords.html" title="previous chapter">Passwords</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="data.html" title="next chapter">Data</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Users, Groups, Roles</a><ul>
+<li><a class="reference internal" href="#user-group-services">User Group Services</a></li>
+<li><a class="reference internal" href="#add-new-xml-user-group-service">Add new XML user/group service</a></li>
+<li><a class="reference internal" href="#add-new-jdbc-user-group-service">Add new JDBC user/group service</a></li>
+<li><a class="reference internal" href="#edit-user-group-service">Edit user/group service</a><ul>
+<li><a class="reference internal" href="#add-user">Add user</a></li>
+<li><a class="reference internal" href="#add-group">Add group</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#role-services">Role services</a></li>
+<li><a class="reference internal" href="#add-new-xml-role-service">Add new XML role service</a></li>
+<li><a class="reference internal" href="#add-new-jdbc-role-service">Add new JDBC role service</a></li>
+<li><a class="reference internal" href="#edit-role-service">Edit role service</a><ul>
+<li><a class="reference internal" href="#add-role">Add role</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="passwords.html" title="previous chapter">Passwords</a></li>
+            <li>다음: <a href="data.html" title="next chapter">Data</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/security/ugr.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

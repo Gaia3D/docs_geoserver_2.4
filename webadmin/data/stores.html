@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Stores &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Data" href="index.html" />
+      <link rel="next" title="Layers" href="layers.html" />
+      <link rel="prev" title="Workspaces" href="workspaces.html" />
+</head>
+<body class="webadmin/data/stores">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Data</a> &raquo;</li>
+  <li>Stores</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="layers.html" title="Layers"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="workspaces.html" title="Workspaces"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="stores">
+<span id="webadmin-stores"></span><h1>Stores<a class="headerlink" href="#stores" title="Permalink to this headline">¶</a></h1>
+<p>저장소(store)는 래스터 또는 벡터 데이터를 담고 있는 데이터 소스(data source)로 연결됩니다.
+데이터 소스는 파일 하나일 수도 혹은 파일들일 수도 있으며, DB의 테이블일 수도, 래스터 파일 하나일 수도, 디렉터리일 수도 있습니다. 예를 들자면 Vector Product Format 라이브러리처럼 말입니다.
+저장소 구조를 사용한다는 건 접속 파라미터를 저장소에 있는 데이터들 각각에 대해 설정하기보다 한번에 설정할 수 있다는 의미입니다. 그러므로 저장소에 데이터를 로딩하기 전에 먼저 저장소를 등록해야만 합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores.png" src="../../_images/data_stores.png" />
+<p class="caption"><em>Stores View 페이지</em></p>
+</div>
+<p>데이터 소스는 많은 포맷들을 지원하지만, 저장소(store)는 4가지 데이터형만 지원합니다. 래스터 데이터의 경우 저장소는 파일이 됩니다. 벡터 데이터의 경우 저장소는 파일, 데이터, 서버 가운데 하나가 됩니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>데이터형 아이콘</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/data_stores_type1.png" class="first last" src="../../_images/data_stores_type1.png" />
+</td>
+<td>파일 형식 래스터 데이터</td>
+</tr>
+<tr class="row-odd"><td><img alt="../../_images/data_stores_type3.png" class="first last" src="../../_images/data_stores_type3.png" />
+</td>
+<td>파일 형식 벡터 데이터</td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/data_stores_type2.png" class="first last" src="../../_images/data_stores_type2.png" />
+</td>
+<td>데이터베이스 형식 벡터 데이터</td>
+</tr>
+<tr class="row-odd"><td><img alt="../../_images/data_stores_type5.png" class="first last" src="../../_images/data_stores_type5.png" />
+</td>
+<td>벡터 서버(web feature server)</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="editing-a-store">
+<h2>Editing a Store<a class="headerlink" href="#editing-a-store" title="Permalink to this headline">¶</a></h2>
+<p>저장소 정보를 보거나 편집하려면 Store Name을 클릭하십시오. 이 페이지의 정확한 내용은 선택한 특정 포맷에 따라 달라집니다.
+(특정 데이터 포맷에 대한 정보는 <a class="reference internal" href="../../data/vector/index.html#data-vector"><em>Working with Vector Data</em></a>, <a class="reference internal" href="../../data/raster/index.html#data-raster"><em>Working with Raster Data</em></a>, <a class="reference internal" href="../../data/database/index.html#data-database"><em>Working with Databases</em></a> 섹션을 참조하십시오.)
+이번 예제에서는 <tt class="docutils literal"><span class="pre">nurc:ArcGridSample</span></tt> 저장소의 내용을 보여주고 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_edit.png" src="../../_images/data_stores_edit.png" />
+<p class="caption"><em>래스터 데이터 소스 편집 페이지</em></p>
+</div>
+<p>데이터 포맷에 따라 접속 파라미가 달라지지만, 몇몇 기본적인 정보는 포맷에 상관없이 같습니다. Workspace 메뉴는 등록된 모든 작업공간을 보여줍니다.
+작업공간(<tt class="docutils literal"><span class="pre">nurc</span></tt>)을 선택하면 해당 작업공간에 할당된 저장소가 선택됩니다. <em class="guilabel">Data Source Name</em>은 이 페이지에 표출되는 데이터 소스명입니다.
+<em class="guilabel">Description</em>은 관리자 인터페이스(administration interface)에서만 표출됩니다. <em class="guilabel">Enabled</em>를 선택하면 저장소로 접속할 수 있고, 저장소 내부에 정의된 모든 데이터에도 접속할 수 있습니다.</p>
+</div>
+<div class="section" id="adding-a-store">
+<h2>Adding a Store<a class="headerlink" href="#adding-a-store" title="Permalink to this headline">¶</a></h2>
+<p>작업공간을 추가하거나 제거하는 버튼은 Workspaces View 페이지의 최상단에 위치합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_add_remove1.png" src="../../_images/data_stores_add_remove1.png" />
+<p class="caption"><em>작업공간 추가·제거 버튼</em></p>
+</div>
+<p>새로운 작업공간을 생성하려면 <em class="guilabel">Add new workspace</em> 버튼을 클릭하십시오. 데이터 소스를 선택하라는 창이 뜰 것입니다.
+GeoServer는 자체적으로 많은 포맷을 지원하며, 확장 플러그인(extensions)을 이용하면 더 많은 포맷을 사용할 수 있습니다. 원하는 데이터 소스를 클릭하여 진행하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_chooser.png" src="../../_images/data_stores_chooser.png" />
+<p class="caption"><em>새로운 저장소에 연결할 데이터 소스 선택 페이지</em></p>
+</div>
+<p>다음 페이지에서 저장소를 설정합니다. (다음 예제는 ArcGrid 래스터 설정 페이지입니다.)
+하지만 데이터 소스에 따라 접속 파라미터가 달라지므로, 이 페이지의 정확한 내용은 해당 저장소의 포맷에 따라 달라집니다.
+특정 데이터 포맷에 대한 정보는 <a class="reference internal" href="../../data/vector/index.html#data-vector"><em>Working with Vector Data</em></a>, <a class="reference internal" href="../../data/raster/index.html#data-raster"><em>Working with Raster Data</em></a>, <a class="reference internal" href="../../data/database/index.html#data-database"><em>Working with Databases</em></a> 섹션을 참조하십시오.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_add.png" src="../../_images/data_stores_add.png" />
+<p class="caption"><em>ArcGrid 래스터 데이터 소스 설정 페이지</em></p>
+</div>
+</div>
+<div class="section" id="removing-a-store">
+<h2>Removing a Store<a class="headerlink" href="#removing-a-store" title="Permalink to this headline">¶</a></h2>
+<p>작업공간을 제거하려면 해당 작업공간의 체크박스를 선택하십시오. 여러 작업공간을 중복 선택한 다음 한번에 제거할 수도 있습니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_delete1.png" src="../../_images/data_stores_delete1.png" />
+<p class="caption"><em>삭제할 저장소 선택</em></p>
+</div>
+<p><em class="guilabel">Remove selected Stores</em> 버튼을 클릭하십시오. 각 저장소 내부의 데이터를 삭제할 것인지 확인하는 창이 뜰 것입니다.
+<em class="guilabel">OK</em>를 클릭하면 저장소를 삭제한 다음, Stores 페이지로 이동합니다.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_delete_confirm.png" src="../../_images/data_stores_delete_confirm.png" />
+<p class="caption"><em>작업공간 제거 확인</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="workspaces.html" title="previous chapter">Workspaces</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="layers.html" title="next chapter">Layers</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Stores</a><ul>
+<li><a class="reference internal" href="#editing-a-store">Editing a Store</a></li>
+<li><a class="reference internal" href="#adding-a-store">Adding a Store</a></li>
+<li><a class="reference internal" href="#removing-a-store">Removing a Store</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="workspaces.html" title="previous chapter">Workspaces</a></li>
+            <li>다음: <a href="layers.html" title="next chapter">Layers</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/data/stores.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

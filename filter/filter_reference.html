@@ -1,0 +1,553 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Filter Encoding Reference &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Filtering in GeoServer" href="index.html" />
+      <link rel="next" title="ECQL Reference" href="ecql_reference.html" />
+      <link rel="prev" title="Supported filter languages" href="syntax.html" />
+</head>
+<body class="filter/filter_reference">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Filtering in GeoServer</a> &raquo;</li>
+  <li>Filter Encoding Reference</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="ecql_reference.html" title="ECQL Reference"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="syntax.html" title="Supported filter languages"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="filter-encoding-reference">
+<span id="filter-fe-reference"></span><h1>Filter Encoding Reference<a class="headerlink" href="#filter-encoding-reference" title="Permalink to this headline">¶</a></h1>
+<p>이 페이지에서 GeoServer에서 실행되는 <strong>Filter Encoding</strong> 언어를 위한 참조 정보(reference)를 설명합니다.
+Filter Encoding 언어는 <a class="reference external" href="http://www.opengeospatial.org/standards/filter">OGC Filter Encoding standard</a>가 정의하는 XML 기반 문법(syntax)을 사용합니다.</p>
+<p>필터는 특정 조건을 만족하는 피처 혹은 다른 오브젝트를 선택하는 데 사용됩니다.
+이때 필터는 SQL의 &#8220;WHERE&#8221; 구문과 유사한 기능을 수행합니다.
+필터를 설정하는 데 <strong>조건(condition)</strong>을 사용합니다.</p>
+<div class="section" id="condition">
+<span id="filter-condition"></span><h2>Condition<a class="headerlink" href="#condition" title="Permalink to this headline">¶</a></h2>
+<p>조건(condition)은 단일 <a class="reference internal" href="#filter-predicate"><em>술어(Predicate)</em></a> 요소거나,
+<a class="reference internal" href="#filter-logical"><em>논리 연산자(Logical operators)</em></a>를 통해 조합된 조건들을 말합니다.</p>
+</div>
+<div class="section" id="predicate">
+<span id="filter-predicate"></span><h2>Predicate<a class="headerlink" href="#predicate" title="Permalink to this headline">¶</a></h2>
+<p>술어(predicate)란 값 사이의 관계를 계산하는 불 값 연산식(boolean-valued expression)입니다.
+술어를 설정하는 데 <strong>비교 연산자(comparison operator)</strong> 또는 <strong>공간 연산자(spatial operator)</strong>를 사용합니다.
+이 연산자들은 어떤 피처의 속성을 다른 피처 속성이나 상수 데이터(literal data)와 비교하는 데 쓰입니다.</p>
+<div class="section" id="comparison-operators">
+<h3>Comparison operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">¶</a></h3>
+<p>비교 연산자는 비(非)공간 속성(non-spatial attribute)에 대한 조건을 설정하는 데 쓰입니다.</p>
+<div class="section" id="binary-comparison-operators">
+<h4>Binary Comparison operators<a class="headerlink" href="#binary-comparison-operators" title="Permalink to this headline">¶</a></h4>
+<p><strong>2항(binary) 비교 연산자</strong>는 다음과 같습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&lt;PropertyIsEqualTo&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&lt;PropertyIsNotEqualTo&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&lt;PropertyIsLessThan&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&lt;PropertyIsLessThanOrEqualTo&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&lt;PropertyIsGreaterThan&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&lt;PropertyIsGreaterThanOrEqualTo&gt;</span></tt></li>
+</ul>
+</div></blockquote>
+<p>이 연산자들은 다음과 같은 요소를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>요소</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#filter-expression"><em>연산식(expression)</em></a></td>
+<td>○</td>
+<td>비교할 첫번째 값입니다.
+주로 <tt class="docutils literal"><span class="pre">&lt;PropertyName&gt;</span></tt>이 됩니다.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#filter-expression"><em>연산식</em></a></td>
+<td>○</td>
+<td>비교할 두번째 값입니다.</td>
+</tr>
+</tbody>
+</table>
+<p>2항 비교 연산자 요소는 <tt class="docutils literal"><span class="pre">true</span></tt> 또는 <tt class="docutils literal"><span class="pre">false</span></tt> 값을 가지는,
+필수는 아닌 <tt class="docutils literal"><span class="pre">matchCase</span></tt> 속성을 포함할 수 있습니다.
+이 속성이 (기본값인) <tt class="docutils literal"><span class="pre">true</span></tt>일 경우, 문자열 비교 시 대소문자를 구분합니다.
+이 속성이 <tt class="docutils literal"><span class="pre">false</span></tt>라면 문자열 비교 시 대소문자를 구분하지 않습니다.</p>
+</div>
+<div class="section" id="propertyislike-operator">
+<h4>PropertyIsLike operator<a class="headerlink" href="#propertyislike-operator" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">&lt;PropertyIsLike&gt;</span></tt> 연산자는 문자열 속성값을 텍스트 <strong>패턴(pattern)</strong>과 맞춰봅니다.
+이 연산자는 다음과 같은 요소를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>요소</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&lt;PropertyName&gt;</span></tt></td>
+<td>○</td>
+<td>검사할 속성의 명칭을 지정하는 문자열을 담고 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">&lt;Literal&gt;</span></tt></td>
+<td>○</td>
+<td>맞춰볼 패턴 문자열을 담고 있습니다.</td>
+</tr>
+</tbody>
+</table>
+<p>이 패턴은 일반 문자(regular character)의 배열과 특수 패턴 문자 3개로 설정됩니다.
+패턴 문자는 <tt class="docutils literal"><span class="pre">&lt;PropertyIsLike&gt;</span></tt> 요소의 <em>필수적인</em> 다음 속성들을 통해 정의됩니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">wildCard</span></tt> —문자열에서 0개 이상의 문자 배열을 맞춰볼 패턴 문자를 설정합니다.</li>
+<li><tt class="docutils literal"><span class="pre">singleChar</span></tt> —문자열에서 문자 1개를 맞춰볼 패턴 문자를 설정합니다.</li>
+<li><tt class="docutils literal"><span class="pre">escapeChar</span></tt> —패턴 문자에서 배제할 배제(escape) 문자를 설정합니다.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="propertyisnull-operator">
+<h4>PropertyIsNull operator<a class="headerlink" href="#propertyisnull-operator" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">&lt;PropertyIsNull&gt;</span></tt> 연산자는 속성값이 널(null)인지 아닌지 검사합니다.
+이 연산자는 다음과 같은 요소를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>요소</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&lt;PropertyName&gt;</span></tt></td>
+<td>○</td>
+<td>검사할 속성의 명칭을 지정하는 문자열을 담고 있습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="propertyisbetweeen-operator">
+<h4>PropertyIsBetweeen operator<a class="headerlink" href="#propertyisbetweeen-operator" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">&lt;PropertyIsBetween&gt;</span></tt> 연산자는 연산식의 값이 (내포하고 있는) 범위의 하한과 상한 사이에 있는지 검사합니다.
+이 연산자는 다음과 같은 요소를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>요소</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#filter-expression"><em>연산식</em></a></td>
+<td>○</td>
+<td>검사할 값입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">&lt;LowerBoundary&gt;</span></tt></td>
+<td>○</td>
+<td>범위의 하한을 지정하는 <a class="reference internal" href="#filter-expression"><em>연산식</em></a>을 담고 있습니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&lt;UpperBoundary&gt;</span></tt></td>
+<td>○</td>
+<td>범위의 상한을 지정하는 <a class="reference internal" href="#filter-expression"><em>연산식</em></a>을 담고 있습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="spatial-operators">
+<h3>Spatial operators<a class="headerlink" href="#spatial-operators" title="Permalink to this headline">¶</a></h3>
+<p>공간 연산자는 피처의 도형(geometry) 속성에 대한 조건을 설정하는 데 쓰입니다.
+다음과 같은 공간 연산자를 사용할 수 있습니다.</p>
+<div class="section" id="topological-operators">
+<h4>Topological operators<a class="headerlink" href="#topological-operators" title="Permalink to this headline">¶</a></h4>
+<p>위상(位相) 연산자는 표준 OGC 단순 피처 술어를 이용해 위상 공간 관계(topological spatial relationship)를 검사합니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&lt;Intersects&gt;</span></tt> —2개의 도형이 교차(intersect)하는지 검사합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Disjoint&gt;</span></tt> —2개의 도형에 공통 요소가 없는지(disjoint) 검사합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Contains&gt;</span></tt> —도형이 다른 도형을 포함(contain)하는지 검사합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Within&gt;</span></tt> —도형이 다른 도형 내부에 있는지(within) 검사합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Touches&gt;</span></tt> —2개의 도형이 맞닿아 있는지(touch) 검사합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Crosses&gt;</span></tt> —2개의 도형이 서로 횡단하는지(cross) 검사합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Overlaps&gt;</span></tt> —2개의 도형이 서로 겹치는지(overlap) 검사합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Equals&gt;</span></tt> —2개의 도형이 위상적으로 동일한지(topologically equal) 검사합니다.</li>
+</ul>
+</div></blockquote>
+<p>이 연산자들은 다음과 같은 요소를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>요소</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&lt;PropertyName&gt;</span></tt></td>
+<td>○</td>
+<td>검사할 도형 값 속성의 명칭을 지정하는 문자열을 담고 있습니다.</td>
+</tr>
+<tr class="row-odd"><td><em>GML Geometry</em></td>
+<td>○</td>
+<td>비교할 도형을 설정하는 GML 상수(literal) 값입니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="distance-operators">
+<h4>Distance operators<a class="headerlink" href="#distance-operators" title="Permalink to this headline">¶</a></h4>
+<p>다음 거리 연산자는 도형 속성과 도형 상수 사이의 거리 관계를 검사합니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&lt;DWithin&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&lt;Beyond&gt;</span></tt></li>
+</ul>
+</div></blockquote>
+<p>이 연산자들은 다음과 같은 요소를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>요소</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&lt;PropertyName&gt;</span></tt></td>
+<td>○</td>
+<td>검사할 속성의 명칭을 지정하는 문자열을 담고 있습니다.
+설정하지 않으면 <em>기본 도형 속성(default geometry attribute)</em>의 값을 사용합니다.</td>
+</tr>
+<tr class="row-odd"><td><em>GML Geometry</em></td>
+<td>○</td>
+<td>거리를 계산할 도형을 설정하는 상수값입니다.
+이 값은 도형이거나, GML3 포맷으로 포장된 도형입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&lt;Distance&gt;</span></tt></td>
+<td>○</td>
+<td>거리 허용 오차(tolerance)를 설정하는 숫자값을 담고 있습니다.
+이 요소는 <tt class="docutils literal"><span class="pre">units</span></tt> 속성을 포함할 수 있습니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="bounding-box-operator">
+<h4>Bounding Box operator<a class="headerlink" href="#bounding-box-operator" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">&lt;BBOX&gt;</span></tt> 연산자는 도형 값 속성(geometry-valued property)이 고정 범위(fixed bounding box)와 교차하는지 검사합니다.
+이 연산자는 다음과 같은 요소를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>요소</strong></td>
+<td><strong>필수 여부</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&lt;PropertyName&gt;</span></tt></td>
+<td>Χ</td>
+<td>검사할 속성의 명칭을 지정하는 문자열을 담고 있습니다.
+설정하지 않으면 <em>기본 도형 속성</em> 값을 사용합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">&lt;gml:Box&gt;</span></tt></td>
+<td>○</td>
+<td>비교할 범위를 설정하는 GML Box 상수값입니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="examples">
+<h4>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>다음 필터는 (1,1) 점(point)과 교차하는(intersect) 도형을 가진 피처를 골라냅니다.</li>
+</ul>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Intersects&gt;</span>
+  <span class="nt">&lt;PropertyName&gt;</span>GEOMETRY<span class="nt">&lt;/PropertyName&gt;</span>
+  <span class="nt">&lt;gml:Point&gt;</span>
+    <span class="nt">&lt;gml:coordinates&gt;</span>1 1<span class="nt">&lt;/gml:coordinates&gt;</span>
+  <span class="nt">&lt;/gml:Point&gt;</span>
+<span class="nt">&lt;/Intersects&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>다음 필터는 어떤 폴리곤과 겹치는(overlap) 도형을 가진 피처를 골라냅니다.</li>
+</ul>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Overlaps&gt;</span>
+  <span class="nt">&lt;PropertyName&gt;</span>Geometry<span class="nt">&lt;/PropertyName&gt;</span>
+  <span class="nt">&lt;gml:Polygon</span> <span class="na">srsName=</span><span class="s">&quot;http://www.opengis.net/gml/srs/epsg.xml#63266405&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;gml:outerBoundaryIs&gt;</span>
+      <span class="nt">&lt;gml:LinearRing&gt;</span>
+         <span class="nt">&lt;gml:posList&gt;</span> ... <span class="nt">&lt;/gml:posList&gt;</span>
+      <span class="nt">&lt;/gml:LinearRing&gt;</span>
+    <span class="nt">&lt;/gml:outerBoundaryIs&gt;</span>
+  <span class="nt">&lt;/gml:Polygon&gt;</span>
+ <span class="nt">&lt;/Overlaps&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>다음 필터는 지리적 범위(geographic extent)인 [-10,0 : 10,10]과 교차하는 도형을 가진 피처를 골라냅니다.</li>
+</ul>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;BBOX&gt;</span>
+  <span class="nt">&lt;PropertyName&gt;</span>GEOMETRY<span class="nt">&lt;/PropertyName&gt;</span>
+  <span class="nt">&lt;gml:Box</span> <span class="na">srsName=</span><span class="s">&quot;urn:x-ogc:def:crs:EPSG:4326&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;gml:coord&gt;</span>
+      <span class="nt">&lt;gml:X&gt;</span>-10<span class="nt">&lt;/gml:X&gt;</span> <span class="nt">&lt;gml:Y&gt;</span>0<span class="nt">&lt;/gml:Y&gt;</span>
+    <span class="nt">&lt;/gml:coord&gt;</span>
+    <span class="nt">&lt;gml:coord&gt;</span>
+      <span class="nt">&lt;gml:X&gt;</span>10<span class="nt">&lt;/gml:X&gt;</span> <span class="nt">&lt;gml:Y&gt;</span>10<span class="nt">&lt;/gml:Y&gt;</span>
+    <span class="nt">&lt;/gml:coord&gt;</span>
+  <span class="nt">&lt;/gml:Box&gt;</span>
+<span class="nt">&lt;/BBOX&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="logical-operators">
+<span id="filter-logical"></span><h2>Logical operators<a class="headerlink" href="#logical-operators" title="Permalink to this headline">¶</a></h2>
+<p>논리 연산자는 <a class="reference internal" href="#filter-condition"><em>조건(condition)</em></a> 요소의 논리적 조합을 설정하는 데 쓰입니다.
+(이때 조건은 <a class="reference internal" href="#filter-predicate"><em>술어</em></a>가 될 수도 있고 다른 <strong>논리 연산자</strong>가 될 수도 있습니다.)
+논리 연산자는 어떤 심도(depth)에도 내포될 수 있습니다.</p>
+<p>다음 논리 연산자를 사용할 수 있습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&lt;And&gt;</span></tt> —피연산자(operand)들의 논리적 교집합(logical conjunction)을 계산합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Or&gt;</span></tt> —피연산자들의 논리적 차집합(disjunction)을 계산합니다.</li>
+</ul>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">&lt;And&gt;</span></tt> 및 <tt class="docutils literal"><span class="pre">&lt;Or&gt;</span></tt> 연산자는
+<a class="reference internal" href="#filter-condition"><em>조건</em></a> 요소가 제공하는 피연산자 2개를 담고 있습니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&lt;Not&gt;</span></tt> —피연산자의 논리적 여집합(negation)을 계산합니다.</li>
+</ul>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">&lt;Not&gt;</span></tt> 연산자는 <a class="reference internal" href="#filter-condition"><em>조건</em></a> 요소가 제공하는 피연산자 1개를 담고 있습니다.</p>
+<div class="section" id="id1">
+<h3>Examples<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>다음 필터는 비교 술어와 공간 술어를 조합하는 데 <tt class="docutils literal"><span class="pre">&lt;And&gt;</span></tt>를 사용합니다.</li>
+</ul>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;And&gt;</span>
+   <span class="nt">&lt;PropertyIsEqualTo&gt;</span>
+      <span class="nt">&lt;PropertyName&gt;</span>NAME<span class="nt">&lt;/PropertyName&gt;</span>
+      <span class="nt">&lt;Literal&gt;</span>New York<span class="nt">&lt;/Literal&gt;</span>
+   <span class="nt">&lt;/PropertyIsEqualTo&gt;</span>
+   <span class="nt">&lt;Intersects&gt;</span>
+      <span class="nt">&lt;PropertyName&gt;</span>GEOMETRY<span class="nt">&lt;/PropertyName&gt;</span>
+      <span class="nt">&lt;Literal&gt;</span>
+         <span class="nt">&lt;gml:Point&gt;</span>
+             <span class="nt">&lt;gml:coordinates&gt;</span>1 1<span class="nt">&lt;/gml:coordinates&gt;</span>
+         <span class="nt">&lt;/gml:Point&gt;</span>
+      <span class="nt">&lt;/Literal&gt;</span>
+   <span class="nt">&lt;/Intersects&gt;</span>
+<span class="nt">&lt;/And&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="expression">
+<span id="filter-expression"></span><h2>Expression<a class="headerlink" href="#expression" title="Permalink to this headline">¶</a></h2>
+<p><strong>필터 연산식(filter expression)</strong>은 상수, 변수 또는 계산된 데이터 값을 설정합니다.
+이 연산식은 다음 요소 가운데 하나로 구성됩니다.
+(하위 연산식을 담고 있는 연산식도 있습니다. 즉 연산식이 임의의 심도로 구성될 수 있다는 뜻입니다.)</p>
+<div class="section" id="arithmetic-operators">
+<h3>Arithmetic operators<a class="headerlink" href="#arithmetic-operators" title="Permalink to this headline">¶</a></h3>
+<p><strong>산술 연산자(arithmetic operator)</strong> 요소는 숫자값에 대해 산술 작업을 계산합니다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&lt;Add&gt;</span></tt> —피연산자 2개를 더합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Sub&gt;</span></tt> —첫번째 피연산자에서 두번째 피연산자를 뺍니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Mul&gt;</span></tt> —피연산자 2개를 곱합니다.</li>
+<li><tt class="docutils literal"><span class="pre">&lt;Div&gt;</span></tt> —첫번째 피연산자를 두번째 피연산자로 나눕니다.</li>
+</ul>
+</div></blockquote>
+<p>각 산술 연산자 요소는 피연산자를 제공하는 <a class="reference internal" href="#filter-expression"><em>연산식</em></a> 요소 2개를 담고 있습니다.</p>
+</div>
+<div class="section" id="function">
+<h3>Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">&lt;함수(function)&gt;</span></tt> 요소는 검사해야 할 필터 함수를 설정합니다.
+함수명을 지정하는 <tt class="docutils literal"><span class="pre">name</span></tt> 속성을 가져야 합니다.
+이 요소는 함수 인수(argument)를 제공하는 0개 이상의 <a class="reference internal" href="#filter-expression"><em>연산식</em></a> 요소의 배열을 담고 있습니다.</p>
+<p>GeoServer가 제공하는 함수에 대해 자세히 알고 싶다면 <a class="reference internal" href="function_reference.html#filter-function-reference"><em>Filter Function Reference</em></a> 페이지를 참조하십시오.</p>
+</div>
+<div class="section" id="property-value">
+<h3>Property Value<a class="headerlink" href="#property-value" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">&lt;PropertyName&gt;</span></tt> 요소는 피처의 속성값을 가리킵니다.
+이 값은 속성명을 지정하는 <strong>문자열</strong>이나 <strong>XPath 표현식</strong>을 담고 있습니다.</p>
+</div>
+<div class="section" id="literal">
+<h3>Literal<a class="headerlink" href="#literal" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">&lt;상수(literal)&gt;</span></tt> 요소는 상수값을 설정합니다.
+이 요소는 다음 데이터 형식 가운데 하나를 담고 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>형식</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td>Numeric</td>
+<td>정수 혹은 소수(integer or decimal) 숫자값을 나타내는 문자열입니다.</td>
+</tr>
+<tr class="row-odd"><td>Boolean</td>
+<td><tt class="docutils literal"><span class="pre">true</span></tt> 또는 <tt class="docutils literal"><span class="pre">false</span></tt>를 나타내는 불 값(boolean value)입니다.</td>
+</tr>
+<tr class="row-even"><td>String</td>
+<td>문자열 값입니다. <strong>캐릭터 엔티티(character entities)</strong>나
+<tt class="docutils literal"><span class="pre">&lt;![CDATA[</span></tt> <tt class="docutils literal"><span class="pre">]]&gt;</span></tt> 구분 문자(delimiter)를 이용해서
+XML과 호환되지 않는 텍스트를 포함시킬 수도 있습니다.</td>
+</tr>
+<tr class="row-odd"><td>Date</td>
+<td>날짜/시간(date)을 나타내는 문자열입니다.</td>
+</tr>
+<tr class="row-even"><td>Geometry</td>
+<td>GML3 포맷 도형을 설정하는 요소입니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="syntax.html" title="previous chapter">Supported filter languages</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="ecql_reference.html" title="next chapter">ECQL Reference</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Filter Encoding Reference</a><ul>
+<li><a class="reference internal" href="#condition">Condition</a></li>
+<li><a class="reference internal" href="#predicate">Predicate</a><ul>
+<li><a class="reference internal" href="#comparison-operators">Comparison operators</a><ul>
+<li><a class="reference internal" href="#binary-comparison-operators">Binary Comparison operators</a></li>
+<li><a class="reference internal" href="#propertyislike-operator">PropertyIsLike operator</a></li>
+<li><a class="reference internal" href="#propertyisnull-operator">PropertyIsNull operator</a></li>
+<li><a class="reference internal" href="#propertyisbetweeen-operator">PropertyIsBetweeen operator</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spatial-operators">Spatial operators</a><ul>
+<li><a class="reference internal" href="#topological-operators">Topological operators</a></li>
+<li><a class="reference internal" href="#distance-operators">Distance operators</a></li>
+<li><a class="reference internal" href="#bounding-box-operator">Bounding Box operator</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logical-operators">Logical operators</a><ul>
+<li><a class="reference internal" href="#id1">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#expression">Expression</a><ul>
+<li><a class="reference internal" href="#arithmetic-operators">Arithmetic operators</a></li>
+<li><a class="reference internal" href="#function">Function</a></li>
+<li><a class="reference internal" href="#property-value">Property Value</a></li>
+<li><a class="reference internal" href="#literal">Literal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="syntax.html" title="previous chapter">Supported filter languages</a></li>
+            <li>다음: <a href="ecql_reference.html" title="next chapter">ECQL Reference</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/filter/filter_reference.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

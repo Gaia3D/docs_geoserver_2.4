@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Configuring X.509 Certificate Authentication &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../../index.html" />
+      <link rel="up" title="Tutorials" href="../index.html" />
+      <link rel="next" title="Configuring J2EE Authentication" href="../j2ee/index.html" />
+      <link rel="prev" title="Configuring Digest Authentication" href="../digest/index.html" />
+</head>
+<body class="security/tutorials/cert/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Tutorials</a> &raquo;</li>
+  <li>Configuring X.509 Certificate Authentication</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../j2ee/index.html" title="Configuring J2EE Authentication"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="../digest/index.html" title="Configuring Digest Authentication"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="configuring-x-509-certificate-authentication">
+<span id="sec-tutorials-cert"></span><h1>Configuring X.509 Certificate Authentication<a class="headerlink" href="#configuring-x-509-certificate-authentication" title="Permalink to this headline">¶</a></h1>
+<p>인증서 인증(certificate authentication)은 기본적인 사용자명/비밀번호 체계를 이용하는 대신 신원을 확인해주는 공공/민간 키(key)를 사용하는 훨씬 안전한 방식을 제공합니다.
+ <a class="reference external" href="http://en.wikipedia.org/wiki/X.509">X.509</a>는 잘 정의된 공공 키 인증서 형식 표준입니다.</p>
+<p>이 예제에서 X.509 인증서 인증을 설정하는 과정을 단계별로 설명합니다.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>이 예제에 다음과 같은 것들이 필요합니다.</p>
+<ul class="simple">
+<li>인증 작업에 클라이언트 인증서를 이용할 수 있는 — &#8220;양 방향(two way) SSL&#8221;을 지원하는 — 웹 브라우저가 필요합니다. 이 예제에서는 Firefox를 사용합니다.</li>
+<li>SSL을 다룰 수 있는 서블렛 컨테이너가 필요합니다. 이 예제에서는 Tomcat을 사용합니다.</li>
+</ul>
+<p>예제를 진행하기 전에 Tomcat에서 GeoServer를 실행하십시오.</p>
+</div>
+<div class="section" id="configure-the-user-group-service">
+<h2>Configure the user group service<a class="headerlink" href="#configure-the-user-group-service" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer가 X.509 인증서로 인증받는 사용자를 설정해야 합니다. 이를 위해 새로운 사용자 그룹 서비스를 추가합니다.</p>
+<ol class="arabic">
+<li><p class="first"><tt class="docutils literal"><span class="pre">admin</span></tt> 사용자로 웹 관리자 인터페이스에 로그인합니다.</p>
+</li>
+<li><p class="first">사이드 메뉴의 <tt class="docutils literal"><span class="pre">Security</span></tt> 섹션 아래 있는 <tt class="docutils literal"><span class="pre">Users, Groups, and Roles</span></tt> 링크를 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../../_images/cert1.jpg" src="../../../_images/cert1.jpg" />
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">User Group Services</span></tt> 패널로 스크롤해서 <tt class="docutils literal"><span class="pre">Add new</span></tt> 링크를 클릭하십시오.</p>
+</li>
+<li><p class="first">&#8220;cert-ugs&#8221;라는 명칭으로 새로운 사용자 그룹 서비스를 생성하고, 설정 서식의 항목에 다음과 같이 입력하십시오.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Password encryption</span></tt>에 &#8220;Empty&#8221;를 입력합니다. 비밀번호를 통해 인증받는 사용자가 아니기 때문입니다.</li>
+<li><tt class="docutils literal"><span class="pre">Password policy</span></tt>에 &#8220;default&#8221;를 입력합니다.</li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/cert2.jpg" src="../../../_images/cert2.jpg" />
+</div>
+</li>
+<li><p class="first">저장하십시오.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Users, Groups, and Roles</span></tt> 페이지로 돌아와 <tt class="docutils literal"><span class="pre">cert-ugs</span></tt> 링크를 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../../_images/cert3.jpg" src="../../../_images/cert3.jpg" />
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Users</span></tt> 탭으로 이동해서 <tt class="docutils literal"><span class="pre">Add new user</span></tt> 링크를 클릭하십시오.</p>
+<div class="figure align-center">
+<img alt="../../../_images/cert4.jpg" src="../../../_images/cert4.jpg" />
+</div>
+</li>
+<li><p class="first">&#8220;rod&#8221;라는 새로운 사용자를 추가한 다음 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> 롤을 할당합니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/cert5.jpg" src="../../../_images/cert5.jpg" />
+</div>
+</li>
+<li><p class="first">저장하십시오.</p>
+</li>
+<li><p class="first">사이드 메뉴의 <tt class="docutils literal"><span class="pre">Security</span></tt> 섹션 아래 있는 <tt class="docutils literal"><span class="pre">Authentication</span></tt> 링크를 클릭하십시오.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/cert6.jpg" src="../../../_images/cert6.jpg" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Authentication Filters</span></tt> 패널로 스크롤해서 <tt class="docutils literal"><span class="pre">Add new</span></tt> 링크를 클릭하십시오.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/cert7.jpg" src="../../../_images/cert7.jpg" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">X.509</span></tt> 링크를 클릭한 다음, 설정 서식의 항목에 다음과 같이 입력하십시오.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Name</span></tt>에 &#8220;cert&#8221;를 입력합니다.</li>
+<li><tt class="docutils literal"><span class="pre">Role source</span></tt>에 &#8220;User group service&#8221;를 입력하고 연계된 드롭다운 메뉴에서 &#8220;cert-ugs&#8221;를 선택합니다.</li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/cert8.jpg" src="../../../_images/cert8.jpg" />
+</div>
+</li>
+<li><p class="first">저장하십시오.</p>
+</li>
+<li><p class="first">다시 <tt class="docutils literal"><span class="pre">Authentication</span></tt> 페이지로 돌아와 <tt class="docutils literal"><span class="pre">Filter Chain</span></tt> 패널로 스크롤합니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Request type</span></tt> 드롭다운 메뉴에서 &#8220;Web UI&#8221;를 선택합니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">cert</span></tt> 필터를 선택한 다음 <tt class="docutils literal"><span class="pre">remeberme</span></tt> 필터 뒤로 옮깁니다.</p>
+<div class="figure align-center">
+<img alt="../../../_images/cert9.jpg" src="../../../_images/cert9.jpg" />
+</div>
+</li>
+<li><p class="first">저장하십시오.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="download-sample-certificate-files">
+<h2>Download sample certificate files<a class="headerlink" href="#download-sample-certificate-files" title="Permalink to this headline">¶</a></h2>
+<p>유효한 인증서를 생성하거나 얻어오는 방법은 이 예제의 범위를 넘어섭니다.
+대신 Spring Security의 <a class="reference external" href="https://github.com/SpringSource/spring-security/tree/master/samples/certificates">Sample applications</a>에서
+찾을 수 있는 샘플 파일을 사용합니다.</p>
+<p><a class="reference download internal" href="../../../_downloads/sample_certs.zip"><tt class="xref download docutils literal"><span class="pre">샘플 인증서 파일</span></tt></a>을 다운로드한 다음 압축을 풉니다.
+이 ZIP 파일의 내용물은 다음과 같습니다.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ca.pem</span></tt> —&#8220;Spring Security Test CA&#8221;가 발행한 인증기관(certificate authority, CA) 인증서입니다.
+서버와 클라이언트 인증서에 서명하는 데 이 파일을 사용합니다.</li>
+<li><tt class="docutils literal"><span class="pre">server.jks</span></tt> —Tomcat이 사용하는 서버 인증서 및 민간 키를 담고 있는 Java 키 저장소(keystore)로 SSL 연결 설정 시 사용자에게 제출됩니다.</li>
+<li><tt class="docutils literal"><span class="pre">rod.p12</span></tt> —웹 브라우저를 통해 클라이언트 인증 작업을 수행하는 데 쓰이는 클라이언트 인증서/키 조합을 담고 있습니다.</li>
+</ul>
+</div>
+<div class="section" id="configure-tomcat-for-ssl">
+<h2>Configure Tomcat for SSL<a class="headerlink" href="#configure-tomcat-for-ssl" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Tomcat 루트 디렉터리의 <tt class="docutils literal"><span class="pre">conf</span></tt> 디렉터리로 <tt class="docutils literal"><span class="pre">server.jks</span></tt> 파일을 복사합니다.</p>
+</li>
+<li><p class="first">Tomcat의 <tt class="docutils literal"><span class="pre">conf/server.xml</span></tt> 파일을 열어 다음과 같이 SSL 연결자(connector)를 추가합니다.</p>
+<div class="highlight-python"><pre>&lt;Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true" scheme="https" secure="true"
+     clientAuth="true" sslProtocol="TLS"
+     keystoreFile="${catalina.home}/conf/server.jks"
+     keystoreType="JKS" keystorePass="password"
+     truststoreFile="${catalina.home}/conf/server.jks"
+     truststoreType="JKS" truststorePass="password" /&gt;</pre>
+</div>
+<p>이렇게 하면 8443 포트에 SSL을 활성화시킵니다.</p>
+</li>
+<li><p class="first">Tomcat을 재시작하십시오.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="install-the-client-certificate">
+<h2>Install the client certificate<a class="headerlink" href="#install-the-client-certificate" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Firefox 메뉴에서 <tt class="docutils literal"><span class="pre">Preferences</span></tt>를 선택한 다음 <tt class="docutils literal"><span class="pre">Advanced</span></tt> 패널로 이동합니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Encryption</span></tt> 탭으로 이동해서 <tt class="docutils literal"><span class="pre">View Certificates</span></tt> 버튼을 클릭합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/cert10.jpg" src="../../../_images/cert10.jpg" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Your Certificates</span></tt> 패널에서 <tt class="docutils literal"><span class="pre">Import...</span></tt> 버튼을 클릭한 다음
+파일 탐색기에서 <tt class="docutils literal"><span class="pre">rod.p12</span></tt> 파일을 선택합니다.</p>
+</li>
+<li><p class="first">비밀번호 입력창이 뜨면 &#8220;password&#8221;를 입력합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/cert11.jpg" src="../../../_images/cert11.jpg" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">OK</span></tt> 버튼을 클릭한 다음 <tt class="docutils literal"><span class="pre">Preferences</span></tt> 창을 닫습니다.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="test-certificate-login">
+<h2>Test certificate login<a class="headerlink" href="#test-certificate-login" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Firefox에서 &#8220;HTTPS&#8221;를 이용해 &#8220;8443&#8221; 포트 상의 GeoServer 웹 관리자 인터페이스 <a class="reference external" href="https://localhost:8443/geoserver/web">https://localhost:8443/geoserver/web</a> 으로 이동합니다.</p>
+</li>
+<li><p class="first">신원 확인창이 뜨면 &#8220;rod&#8221; 인증서를 선택합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/cert12.jpg" src="../../../_images/cert12.jpg" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">자기 서명한(self-signed) 서버 인증서라는 경고가 뜨면 <tt class="docutils literal"><span class="pre">Add Exception...</span></tt> 버튼을 클릭해서 보안 예외 사항으로 추가합니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/cert13.jpg" src="../../../_images/cert13.jpg" />
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p><tt class="docutils literal"><span class="pre">rod</span></tt> 사용자가 GeoServer 웹 관리자 인터페이스에 로그인되었습니다.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/cert14.jpg" src="../../../_images/cert14.jpg" />
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="../digest/index.html" title="previous chapter">Configuring Digest Authentication</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../j2ee/index.html" title="next chapter">Configuring J2EE Authentication</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Configuring X.509 Certificate Authentication</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#configure-the-user-group-service">Configure the user group service</a></li>
+<li><a class="reference internal" href="#download-sample-certificate-files">Download sample certificate files</a></li>
+<li><a class="reference internal" href="#configure-tomcat-for-ssl">Configure Tomcat for SSL</a></li>
+<li><a class="reference internal" href="#install-the-client-certificate">Install the client certificate</a></li>
+<li><a class="reference internal" href="#test-certificate-login">Test certificate login</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="../digest/index.html" title="previous chapter">Configuring Digest Authentication</a></li>
+            <li>다음: <a href="../j2ee/index.html" title="next chapter">Configuring J2EE Authentication</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/security/tutorials/cert/index.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

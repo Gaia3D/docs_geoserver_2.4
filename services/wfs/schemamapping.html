@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WFS schema mapping &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Web Feature Service" href="index.html" />
+      <link rel="next" title="Web Map Service" href="../wms/index.html" />
+      <link rel="prev" title="WFS vendor parameters" href="vendor.html" />
+</head>
+<body class="services/wfs/schemamapping">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Feature Service</a> &raquo;</li>
+  <li>WFS schema mapping</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../wms/index.html" title="Web Map Service"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="vendor.html" title="WFS vendor parameters"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="wfs-schema-mapping">
+<span id="id1"></span><h1>WFS schema mapping<a class="headerlink" href="#wfs-schema-mapping" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer WFS의 기능 가운데 하나는 데이터셋의 내부 스키마를 자동적으로 피처형 스키마에 매핑하는 기능입니다. 이 매핑 작업은 자음과 같은 규칙에 따라 실행됩니다.</p>
+<ul class="simple">
+<li>피처 요소명이 데이터셋 명칭에 매핑됩니다.</li>
+<li>&#8220;Type&#8221; 문자열이 붙은 피처형 명칭이 데이터셋 명칭에 매핑됩니다.</li>
+<li>데이터셋의 각 속성명이 피처형에 담긴 요소의 접사(particle)에 매핑됩니다.</li>
+<li>데이터셋의 각 속성형이 적합한 XML 스키마형(<tt class="docutils literal"><span class="pre">xsd:int</span></tt>, <tt class="docutils literal"><span class="pre">xsd:double</span></tt>, 등등)에 매핑됩니다.</li>
+</ul>
+<p>예를 들어 다음과 같은 스키마를 가진 데이셋이 있다고 하면,</p>
+<div class="highlight-python"><pre>myDataset(intProperty:Integer, stringProperty:String, floatProperty:Float, geometry:Point)</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">topp:myDataset</span></tt> 피처형에 대한 <tt class="docutils literal"><span class="pre">DescribeFeatureType</span></tt> 요청을 통해
+이 스키마를 다음 XML 스키마에 매핑할 수 있습니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;xsd:schema</span> <span class="na">xmlns:xsd=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>
+ <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+ <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+ <span class="na">targetNamespace=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+ <span class="na">elementFormDefault=</span><span class="s">&quot;qualified&quot;</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;xsd:import</span> <span class="na">namespace=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+   <span class="na">schemaLocation=</span><span class="s">&quot;http://localhost:8080/geoserver/schemas/gml/3.1.1/base/gml.xsd&quot;</span><span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;myDatasetType&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:complexContent&gt;</span>
+      <span class="nt">&lt;xsd:extension</span> <span class="na">base=</span><span class="s">&quot;gml:AbstractFeatureType&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;xsd:sequence&gt;</span>
+          <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;intProperty&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;stringProperty&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;floatProperty&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:double&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;geometry&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;gml:PointPropertyType&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/xsd:sequence&gt;</span>
+      <span class="nt">&lt;/xsd:extension&gt;</span>
+    <span class="nt">&lt;/xsd:complexContent&gt;</span>
+  <span class="nt">&lt;/xsd:complexType&gt;</span>
+
+  <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;myDataset&quot;</span> <span class="na">substitutionGroup=</span><span class="s">&quot;gml:_Feature&quot;</span> <span class="na">type=</span><span class="s">&quot;topp:myDatasetType&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/xsd:schema&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="schema-customization">
+<h2>Schema customization<a class="headerlink" href="#schema-customization" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer WFS는 사용자 정의 스키마 산출물을 제한적으로 지원합니다. 사용자 정의 스키마는 다음과 같은 경우 유용할 수도 있습니다.</p>
+<ul class="simple">
+<li>피처형 스키마에 표출되는 속성을 제한하는 경우</li>
+<li>스키마의 속성형을 <a class="reference internal" href="#wfs-schema-type-changing"><em>변경</em></a>하는 경우</li>
+<li>스키마의 구조를 변경하는 경우 (예를 들어 기본 피처형을 변경하는 경우)</li>
+</ul>
+<p>예를 들면 앞에 나온 데이터셋 예시에 표출되는 속성을 제한하는 편이 유용할 수도 있습니다.
+전체 스키마의 벤치마크(benchmark)로서 기본 산출물을 받아오는 것으로 시작하십시오.
+앞에 나온 피처형 스키마를 이용할 경우 <tt class="docutils literal"><span class="pre">GetFeature</span></tt> 요청은 다음과 같이 변합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;topp:myDataset</span> <span class="na">gml:id=</span><span class="s">&quot;myDataset.1&quot;</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;topp:intProperty&gt;</span>1<span class="nt">&lt;/topp:intProperty&gt;</span>
+  <span class="nt">&lt;topp:stringProperty&gt;</span>one<span class="nt">&lt;/topp:stringProperty&gt;</span>
+  <span class="nt">&lt;topp:floatProperty&gt;</span>1.1<span class="nt">&lt;/topp:floatProperty&gt;</span>
+  <span class="nt">&lt;topp:geometry&gt;</span>
+    <span class="nt">&lt;gml:Point</span> <span class="na">srsName=</span><span class="s">&quot;urn:x-ogc:def:crs:EPSG:4326&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;gml:pos&gt;</span>1.0 1.0<span class="nt">&lt;/gml:pos&gt;</span>
+    <span class="nt">&lt;/gml:Point&gt;</span>
+  <span class="nt">&lt;/topp:geometry&gt;</span>
+<span class="nt">&lt;/topp:myDataset&gt;</span>
+</pre></div>
+</div>
+<p>속성 목록에서 <tt class="docutils literal"><span class="pre">floatProperty</span></tt>를 제거하려면 다음과 같은 단계를 거쳐야 합니다.</p>
+<ol class="arabic">
+<li><p class="first"><tt class="docutils literal"><span class="pre">floatProperty</span></tt>를 제거하기 위해 원래 스키마를 다음 피처형 정의로 변경합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;myDatasetType&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:complexContent&gt;</span>
+    <span class="nt">&lt;xsd:extension</span> <span class="na">base=</span><span class="s">&quot;gml:AbstractFeatureType&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:sequence&gt;</span>
+        <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;intProperty&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;stringProperty&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- remove the floatProperty element</span>
+<span class="c">        &lt;xsd:element maxOccurs=&quot;1&quot; minOccurs=&quot;0&quot; name=&quot;floatProperty&quot; nillable=&quot;true&quot; type=&quot;xsd:double&quot;/&gt;</span>
+<span class="c">        --&gt;</span>
+        <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;geometry&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;gml:PointPropertyType&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/xsd:sequence&gt;</span>
+    <span class="nt">&lt;/xsd:extension&gt;</span>
+    <span class="nt">&lt;/xsd:complexContent&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">변경 사항을 <tt class="docutils literal"><span class="pre">schema.xsd</span></tt> 파일에 저장합니다.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">schema.xsd</span></tt> 파일을 다음 <tt class="docutils literal"><span class="pre">topp:myDataset</span></tt> 피처형 디렉터리에 복사합니다.</p>
+<div class="highlight-python"><pre>$GEOSERVER_DATA_DIR/workspaces/&lt;workspace&gt;/&lt;datastore&gt;/myDataset/</pre>
+</div>
+<p>이때 <tt class="docutils literal"><span class="pre">&lt;workspace&gt;</span></tt> 자리에 데이터 저장소를 담고 있는 작업공간명을 입력하고
+<tt class="docutils literal"><span class="pre">&lt;datastore&gt;</span></tt> 자리에 <tt class="docutils literal"><span class="pre">myDataset</span></tt>을 담고 있는 데이터 저장소명을 입력합니다.</p>
+</li>
+</ol>
+<p>설정을 다시 읽어오거나 GeoServer를 재시작할 경우에만 GeoServer가 변경된 스키마를 사용할 수 있습니다.</p>
+<p>이어서 <tt class="docutils literal"><span class="pre">topp:myDataset</span></tt>에 대한 <tt class="docutils literal"><span class="pre">DescribeFeatureType</span></tt> 요청을 실행하면
+<tt class="docutils literal"><span class="pre">floatProperty</span></tt> 요소가 사라진 것을 확인할 수 있습니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;xsd:schema</span> <span class="na">xmlns:xsd=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>
+ <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+ <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+ <span class="na">targetNamespace=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+ <span class="na">elementFormDefault=</span><span class="s">&quot;qualified&quot;</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;xsd:import</span> <span class="na">namespace=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+   <span class="na">schemaLocation=</span><span class="s">&quot;http://localhost:8080/geoserver/schemas/gml/3.1.1/base/gml.xsd&quot;</span><span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;myDatasetType&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:complexContent&gt;</span>
+      <span class="nt">&lt;xsd:extension</span> <span class="na">base=</span><span class="s">&quot;gml:AbstractFeatureType&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;xsd:sequence&gt;</span>
+          <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;intProperty&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;stringProperty&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;geometry&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;gml:PointPropertyType&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/xsd:sequence&gt;</span>
+      <span class="nt">&lt;/xsd:extension&gt;</span>
+    <span class="nt">&lt;/xsd:complexContent&gt;</span>
+  <span class="nt">&lt;/xsd:complexType&gt;</span>
+
+  <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;myDataset&quot;</span> <span class="na">substitutionGroup=</span><span class="s">&quot;gml:_Feature&quot;</span> <span class="na">type=</span><span class="s">&quot;topp:myDatasetType&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/xsd:schema&gt;</span>
+</pre></div>
+</div>
+<p>이제 <tt class="docutils literal"><span class="pre">GetFeature</span></tt> 요청을 실행하면 <tt class="docutils literal"><span class="pre">floatProperty</span></tt> 속성을 포함하지 않은 피처를 반환합니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;topp:myDataset</span> <span class="na">gml:id=</span><span class="s">&quot;myDataset.1&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;topp:intProperty&gt;</span>1<span class="nt">&lt;/topp:intProperty&gt;</span>
+  <span class="nt">&lt;topp:stringProperty&gt;</span>one<span class="nt">&lt;/topp:stringProperty&gt;</span>
+  <span class="nt">&lt;topp:geometry&gt;</span>
+    <span class="nt">&lt;gml:Point</span> <span class="na">srsName=</span><span class="s">&quot;urn:x-ogc:def:crs:EPSG:4326&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;gml:pos&gt;</span>1.0 1.0<span class="nt">&lt;/gml:pos&gt;</span>
+    <span class="nt">&lt;/gml:Point&gt;</span>
+  <span class="nt">&lt;/topp:geometry&gt;</span>
+<span class="nt">&lt;/topp:myDataset&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="type-changing">
+<span id="wfs-schema-type-changing"></span><h2>Type changing<a class="headerlink" href="#type-changing" title="Permalink to this headline">¶</a></h2>
+<p>사용자 정의 스키마를 일부 <strong>자료형 변경 작업(type changing)</strong>을 실행하는 데 이용할 수 있지만, 변경되는 자료형이 원래 자료형과 동일한 <em>영역(domain)</em>일 경우에만 가능합니다.
+예를 들어 정수형(integer type)은 다른 정수형으로만 변경할 수 있고 시계열형(temporal type)은 다른 시계열형으로만 변경할 수 있습니다.</p>
+<p>자료형 변경 작업은 도형 속성에 대해 가장 많이 쓰입니다. 기저(underlying) 데이터셋이 도형 속성의 특정 도형 종류를 보고하는 데 필요한 메타데이터를 갖추고 있지 않은 경우가 많습니다.
+자동 스키마 매핑 작업으로 다음과 유사한 요소 정의를 얻을 수 있습니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;geometry&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;gml:GeometryPropertyType&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>그러나 특정 종류의 도형일 경우 이 요소 정의를 변경할 수 있습니다. 포인트 도형이라면 요소 정의를 다음과 같이 고칠 수 있습니다.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;xsd:element</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;geometry&quot;</span> <span class="na">nillable=</span><span class="s">&quot;true&quot;</span> <span class="na">type=</span><span class="s">&quot;gml:PointPropertyType&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="vendor.html" title="previous chapter">WFS vendor parameters</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="../wms/index.html" title="next chapter">Web Map Service</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">WFS schema mapping</a><ul>
+<li><a class="reference internal" href="#schema-customization">Schema customization</a></li>
+<li><a class="reference internal" href="#type-changing">Type changing</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="vendor.html" title="previous chapter">WFS vendor parameters</a></li>
+            <li>다음: <a href="../wms/index.html" title="next chapter">Web Map Service</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wfs/schemamapping.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

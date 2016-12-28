@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Custom CRS Definitions &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
+      <link rel="up" title="Coordinate Reference System Handling" href="index.html" />
+      <link rel="next" title="Coordinate Operations" href="coordtransforms.html" />
+      <link rel="prev" title="Coordinate Reference System Configuration" href="configurecrs.html" />
+</head>
+<body class="advanced/crshandling/customcrs">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Advanced GeoServer Configuration</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Coordinate Reference System Handling</a> &raquo;</li>
+  <li>Custom CRS Definitions</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="coordtransforms.html" title="Coordinate Operations"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="configurecrs.html" title="Coordinate Reference System Configuration"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="custom-crs-definitions">
+<span id="crs-custom"></span><h1>Custom CRS Definitions<a class="headerlink" href="#custom-crs-definitions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="add-a-custom-crs">
+<h2>Add a custom CRS<a class="headerlink" href="#add-a-custom-crs" title="Permalink to this headline">¶</a></h2>
+<p>이 예시에서 사용자 지정 투영체를 GeoServer에 추가하는 방법을 설명합니다.</p>
+<ol class="arabic">
+<li><p class="first">투영체 파라미터를 WKT((well known text) 정의로 보내야 합니다. 다음 코드 샘플이 바로 그런 예시입니다.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">PROJCS</span><span class="p">[</span><span class="s">&quot;NAD83 / Austin&quot;</span><span class="p">,</span>
+  <span class="n">GEOGCS</span><span class="p">[</span><span class="s">&quot;NAD83&quot;</span><span class="p">,</span>
+    <span class="n">DATUM</span><span class="p">[</span><span class="s">&quot;North_American_Datum_1983&quot;</span><span class="p">,</span>
+      <span class="n">SPHEROID</span><span class="p">[</span><span class="s">&quot;GRS 1980&quot;</span><span class="p">,</span> <span class="mf">6378137.0</span><span class="p">,</span> <span class="mf">298.257222101</span><span class="p">],</span>
+      <span class="n">TOWGS84</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]],</span>
+    <span class="n">PRIMEM</span><span class="p">[</span><span class="s">&quot;Greenwich&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+    <span class="n">UNIT</span><span class="p">[</span><span class="s">&quot;degree&quot;</span><span class="p">,</span> <span class="mf">0.017453292519943295</span><span class="p">],</span>
+    <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;Lon&quot;</span><span class="p">,</span> <span class="n">EAST</span><span class="p">],</span>
+    <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;Lat&quot;</span><span class="p">,</span> <span class="n">NORTH</span><span class="p">]],</span>
+  <span class="n">PROJECTION</span><span class="p">[</span><span class="s">&quot;Lambert_Conformal_Conic_2SP&quot;</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;central_meridian&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mf">100.333333333333</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;latitude_of_origin&quot;</span><span class="p">,</span> <span class="mf">29.6666666666667</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;standard_parallel_1&quot;</span><span class="p">,</span> <span class="mf">31.883333333333297</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;false_easting&quot;</span><span class="p">,</span> <span class="mf">2296583.333333</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;false_northing&quot;</span><span class="p">,</span> <span class="mf">9842500.0</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;standard_parallel_2&quot;</span><span class="p">,</span> <span class="mf">30.1166666666667</span><span class="p">],</span>
+  <span class="n">UNIT</span><span class="p">[</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+  <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">EAST</span><span class="p">],</span>
+  <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">NORTH</span><span class="p">],</span>
+  <span class="n">AUTHORITY</span><span class="p">[</span><span class="s">&quot;EPSG&quot;</span><span class="p">,</span><span class="s">&quot;100002&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">이 코드 샘플은 가독성을 위해 편집된 것입니다. 이 정보는 한 줄로 보내어야 하며, 아니면 각 행의 끝에 역슬래시(backslash) 문자를 (마지막 행만 빼고) 붙여야 합니다.</p>
+</div>
+</li>
+<li><p class="first">사용자 데이터 디렉터리의 <tt class="file docutils literal"><span class="pre">user_projections</span></tt> 디렉터리로 가서
+<tt class="file docutils literal"><span class="pre">epsg.properties</span></tt> 파일을 여십시오. 이 파일이 없을 경우 사용자가 생성할 수 있습니다.</p>
+</li>
+<li><p class="first">파일 마지막에 다음과 같은 (한줄로, 또는 행마다 역슬래시 문자를 붙여서) 투영체 WKT 코드를 붙여넣으십시오.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">100002</span><span class="o">=</span><span class="n">PROJCS</span><span class="p">[</span><span class="s">&quot;NAD83 / Austin&quot;</span><span class="p">,</span> \
+  <span class="n">GEOGCS</span><span class="p">[</span><span class="s">&quot;NAD83&quot;</span><span class="p">,</span> \
+    <span class="n">DATUM</span><span class="p">[</span><span class="s">&quot;North_American_Datum_1983&quot;</span><span class="p">,</span> \
+      <span class="n">SPHEROID</span><span class="p">[</span><span class="s">&quot;GRS 1980&quot;</span><span class="p">,</span> <span class="mf">6378137.0</span><span class="p">,</span> <span class="mf">298.257222101</span><span class="p">],</span> \
+      <span class="n">TOWGS84</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]],</span> \
+    <span class="n">PRIMEM</span><span class="p">[</span><span class="s">&quot;Greenwich&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> \
+    <span class="n">UNIT</span><span class="p">[</span><span class="s">&quot;degree&quot;</span><span class="p">,</span> <span class="mf">0.017453292519943295</span><span class="p">],</span> \
+    <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;Lon&quot;</span><span class="p">,</span> <span class="n">EAST</span><span class="p">],</span> \
+    <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;Lat&quot;</span><span class="p">,</span> <span class="n">NORTH</span><span class="p">]],</span> \
+  <span class="n">PROJECTION</span><span class="p">[</span><span class="s">&quot;Lambert_Conformal_Conic_2SP&quot;</span><span class="p">],</span> \
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;central_meridian&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mf">100.333333333333</span><span class="p">],</span> \
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;latitude_of_origin&quot;</span><span class="p">,</span> <span class="mf">29.6666666666667</span><span class="p">],</span> \
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;standard_parallel_1&quot;</span><span class="p">,</span> <span class="mf">31.883333333333297</span><span class="p">],</span> \
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;false_easting&quot;</span><span class="p">,</span> <span class="mf">2296583.333333</span><span class="p">],</span> \
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;false_northing&quot;</span><span class="p">,</span> <span class="mf">9842500.0</span><span class="p">],</span> \
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;standard_parallel_2&quot;</span><span class="p">,</span> <span class="mf">30.1166666666667</span><span class="p">],</span> \
+  <span class="n">UNIT</span><span class="p">[</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> \
+  <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">EAST</span><span class="p">],</span> \
+  <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">NORTH</span><span class="p">],</span> \
+  <span class="n">AUTHORITY</span><span class="p">[</span><span class="s">&quot;EPSG&quot;</span><span class="p">,</span><span class="s">&quot;100002&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">주석</p>
+<p class="last">WKT 이전에 나오는 숫자에 유의합시오. EPSG 코드를 정의하는 숫자입니다. 따라서 이 예시에서 EPSG 코드는 100002입니다.</p>
+</div>
+<ol class="arabic simple">
+<li>파일을 저장하십시오.</li>
+<li>GeoServer를 재시작하십시오.</li>
+<li><a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>의 <a class="reference internal" href="../../webadmin/demos/index.html#srs-list"><em>SRS</em></a>
+페이지에서 CRS 정보가 제대로 파싱되었는지 확인하십시오.</li>
+<li>투영체가 목록에 없을 경우, 어떤 오류가 발생했는지 로그를 확인하십시오.</li>
+</ol>
+</div>
+<div class="section" id="override-an-official-epsg-code">
+<h2>Override an official EPSG code<a class="headerlink" href="#override-an-official-epsg-code" title="Permalink to this headline">¶</a></h2>
+<p>어떤 상황 하에서 공식 ESPG 코드를 무시하고 사용자 지정 정의를 사용해야 할 경우가 있습니다. 특정 지역에서 재투영 정확도를 올리기 위해 TOWGS84 파라미터를 변경해야 하는 경우가 그렇습니다.</p>
+<p>GeoServer의 참조 하위 시스템(referencing subsystem)은 또다른 속성 파일 <tt class="file docutils literal"><span class="pre">epsg_overrides.properties</span></tt>가 존재하는지 확인합니다.
+이 파일의 형식은 <tt class="file docutils literal"><span class="pre">epsg.properties</span></tt> 파일의 형식과 동일합니다.
+<tt class="file docutils literal"><span class="pre">epsg_overrides.properties</span></tt>에 담긴 모든 정의가 EPSG 코드를 <strong>무시하고 적용됩니다(override)</strong>.
+반면에 <tt class="file docutils literal"><span class="pre">epsg.proeprties</span></tt>에 저장된 정의는 데이터베이스에 <strong>추가(add)</strong>될 수 있을 뿐입니다.</p>
+<p>측지원점(Datum) 파라미터, 특히 <strong>TOWGS84</strong> 파라미터를 무시하려 할 때 특히 주의해야 합니다.
+무시하는 파라미터가 실제로 사용되도록 하려면 측지원점 코드를 반드시 제거해야 합니다.
+이렇게 하지 않으면 참조 하위 시스템이 최적 측지원점 이동(shift) 방법(그리드, 7개 혹은 5개 파라미터 변환, 평면 아핀(affine) 변환을 찾기 위해 공식 데이터베이스를 계속 검색할 것입니다.</p>
+<p>예를 들어 다음 EPSG:23031의 <strong>TOWGS84</strong> 파라미터를 무시하려면,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">PROJCS</span><span class="p">[</span><span class="s">&quot;ED50 / UTM zone 31N&quot;</span><span class="p">,</span>
+  <span class="n">GEOGCS</span><span class="p">[</span><span class="s">&quot;ED50&quot;</span><span class="p">,</span>
+    <span class="n">DATUM</span><span class="p">[</span><span class="s">&quot;European Datum 1950&quot;</span><span class="p">,</span>
+      <span class="n">SPHEROID</span><span class="p">[</span><span class="s">&quot;International 1924&quot;</span><span class="p">,</span> <span class="mf">6378388.0</span><span class="p">,</span> <span class="mf">297.0</span><span class="p">,</span> <span class="n">AUTHORITY</span><span class="p">[</span><span class="s">&quot;EPSG&quot;</span><span class="p">,</span><span class="s">&quot;7022&quot;</span><span class="p">]],</span>
+      <span class="n">TOWGS84</span><span class="p">[</span><span class="o">-</span><span class="mf">157.89</span><span class="p">,</span> <span class="o">-</span><span class="mf">17.16</span><span class="p">,</span> <span class="o">-</span><span class="mf">78.41</span><span class="p">,</span> <span class="mf">2.118</span><span class="p">,</span> <span class="mf">2.697</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.434</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1097046576093785</span><span class="p">],</span>
+      <span class="n">AUTHORITY</span><span class="p">[</span><span class="s">&quot;EPSG&quot;</span><span class="p">,</span><span class="s">&quot;6230&quot;</span><span class="p">]],</span>
+    <span class="n">PRIMEM</span><span class="p">[</span><span class="s">&quot;Greenwich&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">AUTHORITY</span><span class="p">[</span><span class="s">&quot;EPSG&quot;</span><span class="p">,</span><span class="s">&quot;8901&quot;</span><span class="p">]],</span>
+    <span class="n">UNIT</span><span class="p">[</span><span class="s">&quot;degree&quot;</span><span class="p">,</span> <span class="mf">0.017453292519943295</span><span class="p">],</span>
+    <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;Geodetic longitude&quot;</span><span class="p">,</span> <span class="n">EAST</span><span class="p">],</span>
+    <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;Geodetic latitude&quot;</span><span class="p">,</span> <span class="n">NORTH</span><span class="p">],</span>
+    <span class="n">AUTHORITY</span><span class="p">[</span><span class="s">&quot;EPSG&quot;</span><span class="p">,</span><span class="s">&quot;4230&quot;</span><span class="p">]],</span>
+ <span class="n">PROJECTION</span><span class="p">[</span><span class="s">&quot;Transverse_Mercator&quot;</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;central_meridian&quot;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;latitude_of_origin&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;scale_factor&quot;</span><span class="p">,</span> <span class="mf">0.9996</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;false_easting&quot;</span><span class="p">,</span> <span class="mf">500000.0</span><span class="p">],</span>
+  <span class="n">PARAMETER</span><span class="p">[</span><span class="s">&quot;false_northing&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+  <span class="n">UNIT</span><span class="p">[</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+  <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;Easting&quot;</span><span class="p">,</span> <span class="n">EAST</span><span class="p">],</span>
+  <span class="n">AXIS</span><span class="p">[</span><span class="s">&quot;Northing&quot;</span><span class="p">,</span> <span class="n">NORTH</span><span class="p">],</span>
+  <span class="n">AUTHORITY</span><span class="p">[</span><span class="s">&quot;EPSG&quot;</span><span class="p">,</span><span class="s">&quot;23031&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>다음 내용을 써야 합니다. (한 줄로 써야 합니다. 이 예시에서는 가독성을 위해 여러 줄로 나눈 것입니다.)</p>
+<div class="highlight-python"><pre>23031=
+ PROJCS["ED50 / UTM zone 31N",
+   GEOGCS["ED50",
+     DATUM["European Datum 1950",
+       SPHEROID["International 1924", 6378388.0, 297.0, AUTHORITY["EPSG","7022"]],
+       TOWGS84[-136.65549, -141.4658, -167.29848, 2.093088, 0.001405, 0.107709, 11.54611],
+       AUTHORITY["EPSG","6230"]],
+     PRIMEM["Greenwich", 0.0, AUTHORITY["EPSG","8901"]],
+     UNIT["degree", 0.017453292519943295],
+     AXIS["Geodetic longitude", EAST],
+     AXIS["Geodetic latitude", NORTH]],
+  PROJECTION["Transverse_Mercator"],
+   PARAMETER["central_meridian", 3.0],
+   PARAMETER["latitude_of_origin", 0.0],
+   PARAMETER["scale_factor", 0.9996],
+   PARAMETER["false_easting", 500000.0],
+   PARAMETER["false_northing", 0.0],
+   UNIT["m", 1.0],
+   AXIS["Easting", EAST],
+   AXIS["Northing", NORTH],
+   AUTHORITY["EPSG","23031"]]</pre>
+</div>
+<p><strong>TOWGS84</strong> 파라미터의 정의가 2군데에서 변경되었고, 측지원점 코드인 <tt class="docutils literal"><span class="pre">AUTHORITY[&quot;EPSG&quot;,&quot;4230&quot;]</span></tt>가 제거되었습니다.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="configurecrs.html" title="previous chapter">Coordinate Reference System Configuration</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="coordtransforms.html" title="next chapter">Coordinate Operations</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">Custom CRS Definitions</a><ul>
+<li><a class="reference internal" href="#add-a-custom-crs">Add a custom CRS</a></li>
+<li><a class="reference internal" href="#override-an-official-epsg-code">Override an official EPSG code</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>이전: <a href="configurecrs.html" title="previous chapter">Coordinate Reference System Configuration</a></li>
+            <li>다음: <a href="coordtransforms.html" title="next chapter">Coordinate Operations</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/advanced/crshandling/customcrs.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

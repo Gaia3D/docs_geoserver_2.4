@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>ECQL Reference &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
+      <link rel="up" title="Filtering in GeoServer" href="index.html" />
+      <link rel="next" title="Filter functions" href="function.html" />
+      <link rel="prev" title="Filter Encoding Reference" href="filter_reference.html" />
+</head>
+<body class="filter/ecql_reference">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.4.0 사용자 매뉴얼</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Filtering in GeoServer</a> &raquo;</li>
+  <li>ECQL Reference</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="function.html" title="Filter functions"
+       accesskey="N">다음</a></li>
+  <li>
+    <a href="filter_reference.html" title="Filter Encoding Reference"
+       accesskey="P">이전</a>|</li>
+</ul>
+        
+  <div class="section" id="ecql-reference">
+<span id="filter-ecql-reference"></span><h1>ECQL Reference<a class="headerlink" href="#ecql-reference" title="Permalink to this headline">¶</a></h1>
+<p>이 페이지에서 ECQL 언어의 문법에 대한 참조 정보를 설명합니다.
+ECQL 언어의 전체 문법은 GeoTools의 <a class="reference external" href="http://docs.codehaus.org/display/GEOTOOLS/ECQL+Parser+Design">ECQL BNF definition</a>에 정리되어 있습니다.</p>
+<div class="section" id="syntax-notes">
+<h2>Syntax Notes<a class="headerlink" href="#syntax-notes" title="Permalink to this headline">¶</a></h2>
+<p>다음 섹션에서 주요 언어 구조를 각각 설명합니다.
+각 구조 목록은 해당 문법 옵션들을 나열합니다.
+각 옵션은 다른 구조들의 배열 또는 자체 완결적으로 정의됩니다.</p>
+<ul class="simple">
+<li>ECQL 언어의 일부인 심볼들은 <tt class="docutils literal"><span class="pre">code font</span></tt>에서 볼 수 있습니다.
+다른 모든 심볼들은 문법 설명에 포함되어 있습니다.</li>
+<li>ECQL 키워드(keyword)는 대소문자를 구분하지 않습니다.</li>
+<li>세로 막대 심볼인 &#8216;<strong>|</strong>&#8216;은 키워드를 선택할 수 있다는 의미입니다.</li>
+<li>대괄호 &#8216;<strong>[</strong> ... <strong>]</strong>&#8216;는 선택할 수 있는 문법 요소를 구분합니다.</li>
+<li>중괄호 &#8216;<strong>{</strong> ... <strong>}</strong>&#8216;는 0번 이상 나타날 수 있는 문법 요소를 구분합니다.</li>
+</ul>
+</div>
+<div class="section" id="condition">
+<span id="ecql-cond"></span><h2>Condition<a class="headerlink" href="#condition" title="Permalink to this headline">¶</a></h2>
+<p>필터 조건(filter condition)은 단일 술어(single predicate) 혹은 다른 조건들의 논리적 조합입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>문법</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-pred"><em>Predicate</em></a></td>
+<td>단일 술어 연산식</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#ecql-cond"><em>Condition</em></a> <tt class="docutils literal"><span class="pre">AND | OR</span></tt> <a class="reference internal" href="#ecql-cond"><em>Condition</em></a></td>
+<td>조건들의 교집합 또는 차집합</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">NOT</span></tt> <a class="reference internal" href="#ecql-cond"><em>Condition</em></a></td>
+<td>조건의 여집합</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">(</span></tt> | <tt class="docutils literal"><span class="pre">[</span></tt> <a class="reference internal" href="#ecql-cond"><em>Condition</em></a> <tt class="docutils literal"><span class="pre">]</span></tt> | <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>괄호 <tt class="docutils literal"><span class="pre">(</span></tt> 혹은 <tt class="docutils literal"><span class="pre">[</span></tt>를 사용해서 검사 순서를 제어합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="predicate">
+<span id="ecql-pred"></span><h2>Predicate<a class="headerlink" href="#predicate" title="Permalink to this headline">¶</a></h2>
+<p>술어(predicate)란 값 사이의 관계를 계산하는 불 값 연산식(boolean-valued expression)입니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>문법</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a>  <tt class="docutils literal"><span class="pre">=</span></tt> | <tt class="docutils literal"><span class="pre">&lt;&gt;</span></tt> | <tt class="docutils literal"><span class="pre">&lt;</span></tt> | <tt class="docutils literal"><span class="pre">&lt;=</span></tt> | <tt class="docutils literal"><span class="pre">&gt;</span></tt> | <tt class="docutils literal"><span class="pre">&gt;=</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a></td>
+<td>비교 연산자입니다.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <strong>[</strong> <tt class="docutils literal"><span class="pre">NOT</span></tt> <strong>]</strong> <tt class="docutils literal"><span class="pre">BETWEEN</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">AND</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a></td>
+<td>연산식의 값이 (내포하고 있는) 범위의 하한과 상한 사이에 있는지 검사합니다.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <strong>[</strong> <tt class="docutils literal"><span class="pre">NOT</span></tt> <strong>]</strong> <tt class="docutils literal"><span class="pre">LIKE</span></tt> | <tt class="docutils literal"><span class="pre">ILIKE</span></tt> <em>like-pattern</em></td>
+<td>단순 패턴 매칭(simple pattern matching)입니다.
+<em>like-pattern</em>의 경우 <tt class="docutils literal"><span class="pre">%</span></tt> 문자를 임의의 길이의 문자열을 나타내는 임의 문자 기호(wild-card)로 사용합니다.
+<tt class="docutils literal"><span class="pre">ILIKE</span></tt>는 대소문자를 구분하지 않는 매칭 작업을 의미합니다.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <strong>[</strong> <tt class="docutils literal"><span class="pre">NOT</span></tt> <strong>]</strong> <tt class="docutils literal"><span class="pre">IN</span> <span class="pre">(</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a>  <strong>{</strong> <tt class="docutils literal"><span class="pre">,</span></tt><a class="reference internal" href="#ecql-expr"><em>Expression</em></a>  <strong>}</strong>  <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>연산식의 값이 나열한 값 가운데 하나와 일치하는지 [일치하지 않는지] 검사합니다.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">IN</span> <span class="pre">(</span></tt> <a class="reference internal" href="#ecql-literal"><em>Literal</em></a>  <strong>{</strong> <tt class="docutils literal"><span class="pre">,</span></tt><a class="reference internal" href="#ecql-literal"><em>Literal</em></a>  <strong>}</strong>  <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>피처 ID 값이 나열한 값 가운데 하나와 일치하는지 검사합니다. ID 값은 정수 혹은 문자열 상수입니다.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">IS</span></tt> <strong>[</strong> <tt class="docutils literal"><span class="pre">NOT</span></tt> <strong>]</strong> <tt class="docutils literal"><span class="pre">NULL</span></tt></td>
+<td>해당 값이 [비(非)] 널(null) 값인지 검사합니다.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-attr"><em>Attribute</em></a> <tt class="docutils literal"><span class="pre">EXISTS</span></tt> <strong>|</strong> <tt class="docutils literal"><span class="pre">DOES-NOT-EXIST</span></tt></td>
+<td>피처형이 주어진 속성을 가지고 있는지 [가지고 있지 않은지] 검사합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">INCLUDE</span></tt> | <tt class="docutils literal"><span class="pre">EXCLUDE</span></tt></td>
+<td>현재 필터가 적용되는 피처를 언제나 포함[제외]합니다.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="temporal-predicate">
+<span id="ecql-temp"></span><h3>Temporal Predicate<a class="headerlink" href="#temporal-predicate" title="Permalink to this headline">¶</a></h3>
+<p>시간 술어(temporal predicate)는 시간 값 연산식과 시간 혹은 기간의 관계를 설정합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>문법</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a>  <tt class="docutils literal"><span class="pre">BEFORE</span></tt> <a class="reference internal" href="#ecql-literal"><em>Time</em></a></td>
+<td>시간 값이 특정 시간 이전인지 검사합니다.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a>  <tt class="docutils literal"><span class="pre">BEFORE</span> <span class="pre">OR</span> <span class="pre">DURING</span></tt> <a class="reference internal" href="#ecql-period"><em>Time Period</em></a></td>
+<td>시간 값이 특정 기간 이전 또는 도중인지 검사합니다.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a>  <tt class="docutils literal"><span class="pre">DURING</span></tt> <a class="reference internal" href="#ecql-period"><em>Time Period</em></a></td>
+<td>시간 값이 특정 기간 도중인지 검사합니다.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a>  <tt class="docutils literal"><span class="pre">DURING</span> <span class="pre">OR</span> <span class="pre">AFTER</span></tt> <a class="reference internal" href="#ecql-period"><em>Time Period</em></a></td>
+<td>시간 값이 특정 기간 도중 또는 이후인지 검사합니다.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a>  <tt class="docutils literal"><span class="pre">AFTER</span></tt> <a class="reference internal" href="#ecql-literal"><em>Time</em></a></td>
+<td>시간 값이 특정 시간 이후인지 검사합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="spatial-predicate">
+<span id="ecql-spat"></span><h3>Spatial Predicate<a class="headerlink" href="#spatial-predicate" title="Permalink to this headline">¶</a></h3>
+<p>공간 술어(spatial predicate)는 도형 값 사이의 관계를 설정합니다.
+위상 공간 술어(topological spatial predicate)인
+<tt class="docutils literal"><span class="pre">INTERSECTS</span></tt>, <tt class="docutils literal"><span class="pre">DISJOINT</span></tt>, <tt class="docutils literal"><span class="pre">CONTAINS</span></tt>, <tt class="docutils literal"><span class="pre">WITHIN</span></tt>,
+<tt class="docutils literal"><span class="pre">TOUCHES</span></tt> <tt class="docutils literal"><span class="pre">CROSSES</span></tt>, <tt class="docutils literal"><span class="pre">OVERLAPS</span></tt>, <tt class="docutils literal"><span class="pre">RELATE</span></tt>는
+OGC의 <a class="reference external" href="http://www.opengeospatial.org/standards/sfs">Simple Features for SQL</a> 사양에 DE-9IM 모델의 측면에서 정의되어 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>문법</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">INTERSECTS(</span></tt><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>2개의 도형이 서로 교차(intersect)하는지 검사합니다.
+<tt class="docutils literal"><span class="pre">DISJOINT</span></tt>의 반대입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">DISJOINT(</span></tt><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>2개의 도형에 서로 분리(disjoint)되어 있는지 검사합니다.
+<tt class="docutils literal"><span class="pre">INTERSECTS</span></tt>의 반대입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">CONTAINS(</span></tt><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>첫번째 도형이 위상학적으로 두번째 도형을 담고 있는지 검사합니다.
+<tt class="docutils literal"><span class="pre">WITHIN</span></tt>의 반대입니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">WITHIN(</span></tt><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>첫번째 도형이 위상학적으로 두번째 도형 안에 있는지 검사합니다.
+<tt class="docutils literal"><span class="pre">CONTAINS</span></tt>의 반대입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">TOUCHES(</span></tt><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>2개의 도형이 서로 맞닿아(touch) 있는지 검사합니다.
+도형이 맞닿아 있다는 것은 2개의 도형이 적어도 공통 포인트(point) 1개를 가지고 있지만, 도형 내부가 교차하지는 않는 상태를 말합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">CROSSES(</span></tt><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>2개의 도형이 서로 횡단(cross)하는지 검사합니다.
+도형이 횡단한다는 것은 2개의 도형이 내부의 전체가 아닌 일부 포인트를 공유하고 있는 상태를 말합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">OVERLAPS(</span></tt><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>2개의 도형이 서로 겹치는지(overlap) 검사합니다.
+도형이 겹친다는 것은 서로 동일한 차원이며, 각각 적어도 하나 이상의 공통되지 않은 포인트를 가지고, 2개 도형의 내부 교차점(intersection)의 차원이 도형 자체의 차원과 동일한 상태를 말합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">EQUALS(</span></tt><a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>2개의 도형이 위상학적으로 동일(equal)한지 검사합니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">RELATE(</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <em>pattern</em> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>2개의 도형들이 DE-9IM 매트릭스 <em>pattern</em>이 지정하는 공간 관계인지 검사합니다.
+DE-9IM 패턴이란 <tt class="docutils literal"><span class="pre">*TF012</span></tt> 문자를 사용하여 지정된 9글자 길이의 문자열을 말합니다.
+예시: <tt class="docutils literal"><span class="pre">'1*T***T**'</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">DWITHIN(</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <em>distance</em> <tt class="docutils literal"><span class="pre">,</span></tt> <em>units</em> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>2개의 도형 사이의 거리가 지정된 거리 이하인지 검사합니다.
+<em>distance</em>는 거리 허용 오차(tolerance)를 위한 양의 실수값(unsigned numeric value)입니다.
+<em>units</em>는 <tt class="docutils literal"><span class="pre">feet</span></tt>, <tt class="docutils literal"><span class="pre">meters</span></tt>, <tt class="docutils literal"><span class="pre">statute miles</span></tt>, <tt class="docutils literal"><span class="pre">nautical miles</span></tt>, <tt class="docutils literal"><span class="pre">kilometers</span></tt> 가운데 하나입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">BEYOND(</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <em>distance</em> <tt class="docutils literal"><span class="pre">,</span></tt> <em>units</em> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">DWITHIN</span></tt>과 유사하지만, 2개의 도형 사이의 거리가 지정된 거리 이상인지 검사합니다.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">BBOX</span> <span class="pre">(</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt>
+<a class="reference internal" href="#ecql-literal"><em>Number</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-literal"><em>Number</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-literal"><em>Number</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-literal"><em>Number</em></a>
+[ <tt class="docutils literal"><span class="pre">,</span></tt> <em>CRS</em> ] <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>어떤 도형이 최대최소 X, Y 값으로 지정된 범위(bounding box)와 교차하는지 검사합니다.
+<em>CRS</em>로 (예를 들면 <tt class="docutils literal"><span class="pre">'EPSG:1234'</span></tt> 같은) SRS 코드를 설정할 수도 있습니다.
+기본값은 쿼리하는 레이어의 CRS를 이용하는 것입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">BBOX</span> <span class="pre">(</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <strong>|</strong> <a class="reference internal" href="#ecql-literal"><em>Geometry</em></a> <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>어떤 도형이 주어진 도형 상수 또는 함수가 계산한 도형 값으로 설정된 범위와 교차하는지 검사합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="expression">
+<span id="ecql-expr"></span><h2>Expression<a class="headerlink" href="#expression" title="Permalink to this headline">¶</a></h2>
+<p>연산식은 속성, 상수, 계산 값을 지정합니다.
+값의 형식은 연산식의 유형에 따라 달라집니다.
+표준 <a class="reference external" href="http://en.wikipedia.org/wiki/Order_of_operations#Mnemonics">PEMDAS</a> 계산 순서를 씁니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>문법</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-attr"><em>Attribute</em></a></td>
+<td>피처 속성의 명칭입니다.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#ecql-literal"><em>Literal</em></a></td>
+<td>상수값입니다.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-expr"><em>Expression</em></a>  <tt class="docutils literal"><span class="pre">+</span></tt> | <tt class="docutils literal"><span class="pre">-</span></tt> | <tt class="docutils literal"><span class="pre">*</span></tt> | <tt class="docutils literal"><span class="pre">/</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a></td>
+<td>산술 연산입니다.</td>
+</tr>
+<tr class="row-odd"><td><em>function</em>  <tt class="docutils literal"><span class="pre">(</span></tt> [ <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> { <tt class="docutils literal"><span class="pre">,</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> } ] <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td>0개 이상의 인수를 가진 <a class="reference internal" href="function_reference.html#filter-function-reference"><em>필터 함수(filter function)</em></a>가 계산한 값입니다.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">(</span></tt> | <tt class="docutils literal"><span class="pre">[</span></tt> <a class="reference internal" href="#ecql-expr"><em>Expression</em></a> <tt class="docutils literal"><span class="pre">]</span></tt> | <tt class="docutils literal"><span class="pre">)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">(</span></tt>나 <tt class="docutils literal"><span class="pre">[</span></tt> 괄호를 사용해 계산 순서를 제어합니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="attribute">
+<span id="ecql-attr"></span><h2>Attribute<a class="headerlink" href="#attribute" title="Permalink to this headline">¶</a></h2>
+<p>피처 속성의 값을 나타내는 속성명입니다.</p>
+<ul class="simple">
+<li>단순 속성명은 문자와 숫자의 배열이며,</li>
+<li>쌍따옴표로 둘러싸면 어떤 문자의 배열도 속성명이 될 수 있습니다.</li>
+</ul>
+</div>
+<div class="section" id="literal">
+<span id="ecql-literal"></span><h2>Literal<a class="headerlink" href="#literal" title="Permalink to this headline">¶</a></h2>
+<p>상수(literal)는 여러 가지 형식의 상수값을 지정합니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>형식</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><em>Number</em></td>
+<td>정수 또는 실수(floating-point number)입니다. 과학적 기수법(scientific notation)을 지원합니다.</td>
+</tr>
+<tr class="row-odd"><td><em>Boolean</em></td>
+<td><tt class="docutils literal"><span class="pre">TRUE</span></tt> 또는 <tt class="docutils literal"><span class="pre">FALSE</span></tt> 값을 가집니다.</td>
+</tr>
+<tr class="row-even"><td><em>String</em></td>
+<td>작은따옴표로 구분되는 문자열 상수입니다. 문자열 안에 작은따옴표를 넣으려면 <tt class="docutils literal"><span class="pre">''</span></tt>처럼 작은 따옴표 2개를 쓰십시오.</td>
+</tr>
+<tr class="row-odd"><td><em>Geometry</em></td>
+<td>WKT 포맷의 도형입니다.
+OGC <a class="reference external" href="http://www.opengeospatial.org/standards/sfs">Simple Features for SQL</a> 사양에 WKT가 정의되어 있습니다.
+<tt class="docutils literal"><span class="pre">POINT</span></tt>, <tt class="docutils literal"><span class="pre">LINESTRING</span></tt>, <tt class="docutils literal"><span class="pre">POLYGON</span></tt>,
+<tt class="docutils literal"><span class="pre">MULTIPOINT</span></tt>, <tt class="docutils literal"><span class="pre">MULTILINESTRING</span></tt>, <tt class="docutils literal"><span class="pre">MULTIPOLYGON</span></tt>, <tt class="docutils literal"><span class="pre">GEOMETRYCOLLECTION</span></tt>과 같은 모든 표준 도형 형식을 지원합니다.
+<tt class="docutils literal"><span class="pre">ENVELOPE</span> <span class="pre">(</span></tt> <em>x1</em> <em>x2</em> <em>y1</em> <em>y2</em> <tt class="docutils literal"><span class="pre">)</span></tt> 구문으로 된 사용자 지정 외피(envelope) 형식도 지원합니다.</td>
+</tr>
+<tr class="row-even"><td><em>Time</em></td>
+<td><tt class="docutils literal"><span class="pre">yyyy-mm-hhThh:mm:ss</span></tt> 포맷의 UTC 날짜/시간 값입니다.
+두번째 값은 소수(decimal fraction)로 표현될 수도 있습니다.
+시간대(time zone)는 <tt class="docutils literal"><span class="pre">Z</span></tt> 혹은 <tt class="docutils literal"><span class="pre">+/-hh:mm</span></tt>으로 설정합니다.
+예시: <tt class="docutils literal"><span class="pre">2006-11-30T00:30:00Z</span></tt></td>
+</tr>
+<tr class="row-odd"><td><em>Duration</em></td>
+<td><tt class="docutils literal"><span class="pre">P</span></tt> <strong>[</strong> y <tt class="docutils literal"><span class="pre">Y</span></tt> m <tt class="docutils literal"><span class="pre">M</span></tt> d <tt class="docutils literal"><span class="pre">D</span></tt> <strong>]</strong> <tt class="docutils literal"><span class="pre">T</span></tt> <strong>[</strong> h <tt class="docutils literal"><span class="pre">H</span></tt> m <tt class="docutils literal"><span class="pre">M</span></tt> s <tt class="docutils literal"><span class="pre">S</span></tt> <strong>]</strong> 형식으로 설정된 기간입니다.
+년, 월, 일, 시, 분, 초 가운데 필요한 항목만 넣어서 어떤 정확도로도 기간을 설정할 수 있습니다.
+예시:
+<tt class="docutils literal"><span class="pre">P1Y2M</span></tt>,
+<tt class="docutils literal"><span class="pre">P4Y2M20D</span></tt>,
+<tt class="docutils literal"><span class="pre">P4Y2M1DT20H3M36S</span></tt></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="time-period">
+<span id="ecql-period"></span><h3>Time Period<a class="headerlink" href="#time-period" title="Permalink to this headline">¶</a></h3>
+<p>기간(period of time)을 지정합니다. 몇 가지 포맷을 쓸 수 있습니다.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>문법</strong></td>
+<td><strong>설명</strong></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-literal"><em>Time</em></a> <tt class="docutils literal"><span class="pre">/</span></tt> <a class="reference internal" href="#ecql-literal"><em>Time</em></a></td>
+<td>시작 시간, 완료 시간으로 설정된 기간입니다.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#ecql-literal"><em>Duration</em></a> <tt class="docutils literal"><span class="pre">/</span></tt> <a class="reference internal" href="#ecql-literal"><em>Time</em></a></td>
+<td>주어진 시간 이전의 기간으로 설정된 기간입니다.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#ecql-literal"><em>Time</em></a> <tt class="docutils literal"><span class="pre">/</span></tt> <a class="reference internal" href="#ecql-literal"><em>Duration</em></a></td>
+<td>주어진 시간 이후의 기간으로 설정된 기간입니다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>이전</strong>: <a href="filter_reference.html" title="previous chapter">Filter Encoding Reference</a></div>
+          <div class="rightwise"><strong>다음</strong>: <a href="function.html" title="next chapter">Filter functions</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">차례</h3>
+        <ul>
+<li><a class="reference internal" href="#">ECQL Reference</a><ul>
+<li><a class="reference internal" href="#syntax-notes">Syntax Notes</a></li>
+<li><a class="reference internal" href="#condition">Condition</a></li>
+<li><a class="reference internal" href="#predicate">Predicate</a><ul>
+<li><a class="reference internal" href="#temporal-predicate">Temporal Predicate</a></li>
+<li><a class="reference internal" href="#spatial-predicate">Spatial Predicate</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#expression">Expression</a></li>
+<li><a class="reference internal" href="#attribute">Attribute</a></li>
+<li><a class="reference internal" href="#literal">Literal</a><ul>
+<li><a class="reference internal" href="#time-period">Time Period</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>계속 읽기</h3>
+          <ul>
+            <li>이전: <a href="filter_reference.html" title="previous chapter">Filter Encoding Reference</a></li>
+            <li>다음: <a href="function.html" title="next chapter">Filter functions</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>현재 페이지</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/filter/ecql_reference.txt">원본 보기</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2013, OpenPlans. License <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>.
+    Last updated on Sep 18, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>
