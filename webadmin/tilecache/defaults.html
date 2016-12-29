@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Caching defaults &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Tile Caching" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -85,7 +85,7 @@
 <div class="highlight-python"><pre>http://GEOSERVER_URL/gwc/service/wms?...</pre>
 </div>
 <div class="figure">
-<img alt="../../_images/defaults_services.png" src="../../_images/defaults_services.png" />
+<img alt="../../images/defaults_services.png" src="../../images/defaults_services.png" />
 <p class="caption"><em>제공되는 서비스들</em></p>
 </div>
 <p>다음 설정들은 GeoWebCache가 활성화할 수 있는 각각의 서비스들을 설명합니다.</p>
@@ -123,7 +123,7 @@
 <h2>Default Caching Options for GeoServer Layers<a class="headerlink" href="#default-caching-options-for-geoserver-layers" title="Permalink to this headline">¶</a></h2>
 <p>이 섹션에서 GeoServer의 타일 캐시에 대한 여러 기본값 및 다른 공통 옵션의 설정에 대해 설명합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/defaults_options.png" src="../../_images/defaults_options.png" />
+<img alt="../../images/defaults_options.png" src="../../images/defaults_options.png" />
 <p class="caption"><em>Default Caching 옵션</em></p>
 </div>
 <div class="section" id="automatically-configure-a-geowebcache-layer-for-each-new-layer-or-layer-group">
@@ -169,7 +169,7 @@ GeoServer는 초기값으로 메타 타일의 크기를 <strong>4x4</strong>로 
 GeoServer를 통해 이 레이어/이미지 포맷 조합에 해당되지 않는 요청이 들어왔을 경우 캐시되지 않고, GeoWebCache 종말점으로 들어왔을 경우 에러 메시지를 반환합니다.</p>
 <p><a class="reference internal" href="../data/layers.html#webadmin-layers"><em>레이어 속성을 편집하면</em></a> 이 기본값들을 레이어별로 재설정할 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/defaults_formats.png" src="../../_images/defaults_formats.png" />
+<img alt="../../images/defaults_formats.png" src="../../images/defaults_formats.png" />
 <p class="caption"><em>이미지 포맷 기본값</em></p>
 </div>
 </div>
@@ -182,12 +182,12 @@ GeoServer를 통해 이 레이어/이미지 포맷 조합에 해당되지 않는
 <li>EPSG:900913 (spherical Mercator) : 31개의 최대 줌 레벨 및 256x256 픽셀 타일 크기</li>
 </ul>
 <div class="figure align-center">
-<img alt="../../_images/defaults_gridsets.png" src="../../_images/defaults_gridsets.png" />
+<img alt="../../images/defaults_gridsets.png" src="../../images/defaults_gridsets.png" />
 <p class="caption"><em>기본 그리드셋</em></p>
 </div>
 <p>그리드셋을 기본 그리드셋 목록에 추가하려면 <em class="guilabel">Add default grid set</em> 메뉴를 고른 다음 Add 아이콘(더하기 표시가 있는 녹색 원 모양)을 클릭합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/addexistinggridset.png" src="../../_images/addexistinggridset.png" />
+<img alt="../../images/addexistinggridset.png" src="../../images/addexistinggridset.png" />
 <p class="caption"><em>기본 그리드셋 목록에 그리드셋을 추가하기</em></p>
 </div>
 <p>그리드셋은 <a class="reference internal" href="gridsets.html#webadmin-tilecaching-gridsets"><em>Gridsets</em></a> 페이지에서 더 자세히 설명하고 있습니다.</p>
@@ -238,7 +238,7 @@ GeoServer를 통해 이 레이어/이미지 포맷 조합에 해당되지 않는
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/webadmin/tilecache/defaults.txt">원본 보기</a></li>
+          <li><a href="../../sources/webadmin/tilecache/defaults.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Using the ImageMosaic plugin for raster with time and elevation data &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="Tutorials" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -77,7 +77,7 @@
 <p>This tutorial explains just how to configure the <strong>elevationregex.properties</strong> that is an additional configuration file needed, and how to modify the <strong>indexer.properties</strong>.</p>
 <p>The dataset used is different so also a fix to the <strong>timeregex.properties</strong> used in the previous tutorial is needed.</p>
 <p>Will be shown also how query geoserver asking for layers specifying both time and elevation dimensions.</p>
-<p>The dataset used in the tutorial can be downloaded <a class="reference download internal" href="../../_downloads/temperatureLZWdataset.zip"><tt class="xref download docutils literal"><span class="pre">Here</span></tt></a></p>
+<p>The dataset used in the tutorial can be downloaded <a class="reference download internal" href="../../downloads/temperatureLZWdataset.zip"><tt class="xref download docutils literal"><span class="pre">Here</span></tt></a></p>
 </div>
 <div class="section" id="configuration-examples">
 <h2>Configuration examples<a class="headerlink" href="#configuration-examples" title="Permalink to this headline">¶</a></h2>
@@ -141,7 +141,7 @@ PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion),DoubleFil
 <h3>The table on postgres<a class="headerlink" href="#the-table-on-postgres" title="Permalink to this headline">¶</a></h3>
 <p>With the elevation support enabled the table on postgres has, for each image, the field <strong>elevation</strong> filled with the elevation value.</p>
 <div class="figure align-center">
-<img alt="../../_images/elevationTable.png" src="../../_images/elevationTable.png" />
+<img alt="../../images/elevationTable.png" src="../../images/elevationTable.png" />
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -158,13 +158,13 @@ PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion),DoubleFil
 <div class="highlight-python"><pre>&amp;time=2013-03-10T00:00:00.000Z&amp;elevation=200.0</pre>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/temperature1.png" src="../../_images/temperature1.png" />
+<img alt="../../images/temperature1.png" src="../../images/temperature1.png" />
 </div>
 <p>Same day at elevation <strong>300.0 meters</strong>:</p>
 <div class="highlight-python"><pre>&amp;time=2013-03-10T00:00:00.000Z&amp;elevation=300.0</pre>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/temperature2.png" src="../../_images/temperature2.png" />
+<img alt="../../images/temperature2.png" src="../../images/temperature2.png" />
 </div>
 <p>Note that if just the time dimension is append to the request will be displayed the elevation <strong>200 meters</strong> (if present) because of the <strong>default</strong> attribute of the tag <tt class="docutils literal"><span class="pre">&lt;Dimension</span> <span class="pre">name=&quot;elevation&quot;</span> <span class="pre">...</span></tt> in the WMS Capabilities document is set to <strong>200</strong></p>
 </div>
@@ -214,7 +214,7 @@ PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion),DoubleFil
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/tutorials/imagemosaic_timeseries/imagemosaic_time-elevationseries.txt">Show Source</a></li>
+          <li><a href="../../sources/tutorials/imagemosaic_timeseries/imagemosaic_time-elevationseries.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

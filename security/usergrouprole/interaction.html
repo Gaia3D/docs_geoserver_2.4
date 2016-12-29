@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Interaction between user/group and role services &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Role system" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -76,7 +76,7 @@
 <h2>Calculating the roles of a user<a class="headerlink" href="#calculating-the-roles-of-a-user" title="Permalink to this headline">¶</a></h2>
 <p>다음은 사용자/그룹 서비스와 롤 서비스가 사용자 롤을 계산하기 위해 어떻게 상호작용하는지 보여주는 다이어그램입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/usergrouprole1.png" src="../../_images/usergrouprole1.png" />
+<img alt="../../images/usergrouprole1.png" src="../../images/usergrouprole1.png" />
 <p class="caption"><em>사용자 롤 계산을 위해 상호작용하는 사용자/그룹 서비스와 롤 서비스</em></p>
 </div>
 <p>사용자/그룹 서비스에서 활성화된 사용자를 불러올 때, 해당 사용자에게 할당된 롤(들)을 식별해야만 합니다. 이 식별 과정은 다음과 같습니다.</p>
@@ -100,7 +100,7 @@
 <p>사용자/그룹 서비스는 인증 작업 시 주로 쓰입니다.
 <a class="reference internal" href="../auth/chain.html#sec-auth-chain"><em>인증 사슬(Authentication chain)</em></a>의 인증 제공자는 사용자 자격(user credentials)을 인증하기 위해 사용자/그룹 서비스를 이용할 수도 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/usergrouprole2.png" src="../../_images/usergrouprole2.png" />
+<img alt="../../images/usergrouprole2.png" src="../../images/usergrouprole2.png" />
 <p class="caption"><em>인증을 위해 사용자/그룹 서비스 이용하기</em></p>
 </div>
 </div>
@@ -108,7 +108,7 @@
 <h2>GeoServer defaults<a class="headerlink" href="#geoserver-defaults" title="Permalink to this headline">¶</a></h2>
 <p>다음은 GeoServer의 기본 사용자/그룹 서비스, 롤 서비스, 인증 제공자를 보여주는 다이어그램입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/usergrouprole3.png" src="../../_images/usergrouprole3.png" />
+<img alt="../../images/usergrouprole3.png" src="../../images/usergrouprole3.png" />
 <p class="caption"><em>GeoServer의 기본 보안 설정</em></p>
 </div>
 <p><em>루트(root)</em> 제공자와 <em>사용자명/비밀번호(username/password)</em> 제공자, 2개의 인증 제공자가 설정되어 있습니다.
@@ -153,7 +153,7 @@
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/security/usergrouprole/interaction.txt">원본 보기</a></li>
+          <li><a href="../../sources/security/usergrouprole/interaction.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

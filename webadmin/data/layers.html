@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Layers &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Data" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -76,7 +76,7 @@
 이전 페이지에서 설명한 바와 같이 작업공간 내의 저장소 내의 레이어라는 관계에 따라, Layer View 페이지에 표출되는 내용들도 달라질 수 있습니다.
 레이어 Status 및 Native SRS 정보도 View 페이지에 표출됩니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers1.png" src="../../_images/data_layers1.png" />
+<img alt="../../images/data_layers1.png" src="../../images/data_layers1.png" />
 <p class="caption"><em>Layers View 페이지</em></p>
 </div>
 <div class="section" id="layer-types">
@@ -93,11 +93,11 @@
 <tr class="row-odd"><td><strong>데이터형 아이콘</strong></td>
 <td><strong>설명</strong></td>
 </tr>
-<tr class="row-even"><td><img alt="../../_images/data_layers_type1.png" class="first last" src="../../_images/data_layers_type1.png" />
+<tr class="row-even"><td><img alt="../../images/data_layers_type1.png" class="first last" src="../../images/data_layers_type1.png" />
 </td>
 <td>래스터 (그리드)</td>
 </tr>
-<tr class="row-odd"><td><img alt="../../_images/data_layers_type2.png" class="first last" src="../../_images/data_layers_type2.png" />
+<tr class="row-odd"><td><img alt="../../images/data_layers_type2.png" class="first last" src="../../images/data_layers_type2.png" />
 </td>
 <td>벡터 (피처)</td>
 </tr>
@@ -108,7 +108,7 @@
 <span id="id1"></span><h2>Edit Layer Data<a class="headerlink" href="#edit-layer-data" title="Permalink to this headline">¶</a></h2>
 <p>레이어명을 클릭하면 레이어 설정 패널이 열립니다. 첫 페이지는 기본적으로 <em class="guilabel">Data</em> 탭인데, 이 탭에서 레이어의 데이터 파라미터를 설정·변경할 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_edit_data.png" src="../../_images/data_layers_edit_data.png" />
+<img alt="../../images/data_layers_edit_data.png" src="../../images/data_layers_edit_data.png" />
 <p class="caption"><em>Layers Data View 페이지</em></p>
 </div>
 <div class="section" id="basic-info">
@@ -122,7 +122,7 @@
 <p><strong>Metadata Link</strong>—데이터 레이어를 설명해주는 외부 문서로 링크됩니다. 사용할 수 있는 표준 포맷은 현재, TC211과 FGDC 2가지입니다.
 TC211은 <a class="reference external" href="http://www.isotc211.org/">ISO Technical Committee for Geographic Information/Geomatics</a>(ISO/TC211)가 제정한 메타데이터 구조이며, FGDC는 미국 <a class="reference external" href="http://www.fgdc.gov/">Federal Geographic Data Committee</a>(FGDC)가 제정한 메타데이터 구조입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_meta.png" src="../../_images/data_layers_meta.png" />
+<img alt="../../images/data_layers_meta.png" src="../../images/data_layers_meta.png" />
 <p class="caption"><em>FGDC 포맷으로 메타데이터 링크 추가하기</em></p>
 </div>
 </div>
@@ -133,7 +133,7 @@ CRS는 Spatial Reference System(SRS)라는 좀 더 일반적인 모델 안에 �
 Geoserver는 사용자의 데이터가 어떤 CRS를 사용하는지 알아야만 합니다.
 이 정보는 Bounding Box의 위도/경도를 계산하거나 WMS나 WFS 요청을 처리해서 데이터를 다시 투영할 때 사용됩니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_CRS.png" src="../../_images/data_layers_CRS.png" />
+<img alt="../../images/data_layers_CRS.png" src="../../images/data_layers_CRS.png" />
 <p class="caption"><em>Coordinate Reference Systems 설정</em></p>
 </div>
 <p><strong>Native SRS</strong>—레이어가 저장되어 있는 투영체(projection)를 말합니다. Projection 링크를 클릭하면 해당 SRS의 설명을 볼 수 있습니다.</p>
@@ -147,7 +147,7 @@ Geoserver는 사용자의 데이터가 어떤 CRS를 사용하는지 알아야�
 <em class="guilabel">Lat/Long Bounding Box</em>는 표준 위도/경도를 기준으로 범위를 게산합니다.
 <em class="guilabel">Compute from native bounds</em> 버튼을 클릭해서 이 범위를 생성할 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_BB.png" src="../../_images/data_layers_BB.png" />
+<img alt="../../images/data_layers_BB.png" src="../../images/data_layers_BB.png" />
 <p class="caption"><em>sf:archsites 레이어의 Bounding Box</em></p>
 </div>
 </div>
@@ -162,7 +162,7 @@ ImageMosaic 포맷의 경우, Thresholding 및 Transparency 설정으로 모자�
 <p>벡터 레이어는 커버리지 파라미터 대신 <em class="guilabel">Feature Type Details</em> 목록을 사용하는데, 데이터 소스의 <em class="guilabel">Property</em> 및 <em class="guilabel">Type</em> 항목이 포함됩니다.
 예를 들어 다음 <tt class="docutils literal"><span class="pre">sf:archsites</span></tt> 레이어는 Type에 point, Property에 <tt class="docutils literal"><span class="pre">the_geom</span></tt>이라는 기하 구조를 포함하고 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_feature.png" src="../../_images/data_layers_feature.png" />
+<img alt="../../images/data_layers_feature.png" src="../../images/data_layers_feature.png" />
 <p class="caption"><em>sf:archsites 레이어의 Feature Type Details</em></p>
 </div>
 <p><em class="guilabel">Nillable</em> 항목은 Property 항목에 값(value)이 필요한지, 아니면 null 값으로 표시될 수 있는지를 나타냅니다.
@@ -174,7 +174,7 @@ ImageMosaic 포맷의 경우, Thresholding 및 Transparency 설정으로 모자�
 <h2>Edit Publishing Information<a class="headerlink" href="#edit-publishing-information" title="Permalink to this headline">¶</a></h2>
 <p>Publishing 탭에서 HTTP 및 WCS 세팅을 설정합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_edit_publish.png" src="../../_images/data_layers_edit_publish.png" />
+<img alt="../../images/data_layers_edit_publish.png" src="../../images/data_layers_edit_publish.png" />
 <p class="caption"><em>Publishing Data 편집하기</em></p>
 </div>
 <ul class="simple">
@@ -187,7 +187,7 @@ ImageMosaic 포맷의 경우, Thresholding 및 Transparency 설정으로 모자�
 <em class="guilabel">Cache Time</em> 항목의 기본값은 1시간으로, 초 단위(3600초)로 입력합니다.</p>
 <p><strong>WMS Settings</strong>—WMS에 특화된 Publishing 파라미터를 설정합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/wms_settings.png" src="../../_images/wms_settings.png" />
+<img alt="../../images/wms_settings.png" src="../../images/wms_settings.png" />
 <p class="caption"><em>WMS Settings 페이지</em></p>
 </div>
 <ul class="simple">
@@ -199,7 +199,7 @@ ImageMosaic 포맷의 경우, Thresholding 및 Transparency 설정으로 모자�
 </ul>
 <p><strong>WMS Attribution</strong>—데이터 제공자(data providers)에 대한 publishing 정보를 설정합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_WMS.png" src="../../_images/data_layers_WMS.png" />
+<img alt="../../images/data_layers_WMS.png" src="../../images/data_layers_WMS.png" />
 <p class="caption"><em>WMS Attribution 섹션</em></p>
 </div>
 <ul class="simple">
@@ -235,31 +235,31 @@ ImageMosaic 포맷의 경우, Thresholding 및 Transparency 설정으로 모자�
 녹색 더하기 버튼으로 새 레이어를 추가할 수 있는데, 레이어를 Resource라고 표현하고 있습니다.
 빨간색 빼기 버튼으로 선택한 레이어를 제거할 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_add_remove.png" src="../../_images/data_layers_add_remove.png" />
+<img alt="../../images/data_layers_add_remove.png" src="../../images/data_layers_add_remove.png" />
 <p class="caption"><em>레이어 추가·삭제 버튼</em></p>
 </div>
 <p><em class="guilabel">Add a new resource</em> 버튼을 클릭하면 <em class="guilabel">New Layer Chooser</em> 패널이 뜹니다.
 메뉴에 현재 사용 가능한 모든 저장소가 표출됩니다. 이 메뉴에서 레이어를 추가할 저장소를 선택하십시오.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_add_chooser.png" src="../../_images/data_layers_add_chooser.png" />
+<img alt="../../images/data_layers_add_chooser.png" src="../../images/data_layers_add_chooser.png" />
 <p class="caption"><em>현재 사용 가능한 모든 저장소 목록</em></p>
 </div>
 <p>저장소를 선택하면, 선택한 저장소 내에 있는 레이어들을 볼 수 있는 표가 뜹니다.
 이번 예제에서는 NYC 저장소 내에 <tt class="docutils literal"><span class="pre">giant_polygon</span></tt>, <tt class="docutils literal"><span class="pre">poi</span></tt>, <tt class="docutils literal"><span class="pre">poly_landmarks</span></tt>, <tt class="docutils literal"><span class="pre">tiger_roads</span></tt> 레이어가 존재합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_add_view.png" src="../../_images/data_layers_add_view.png" />
+<img alt="../../images/data_layers_add_view.png" src="../../images/data_layers_add_view.png" />
 <p class="caption"><em>저장소 내의 레이어 표</em></p>
 </div>
 <p>레이어명을 선택하면, 해당 레이어를 편집할 수 있는 <a class="reference internal" href="#edit-layer-data"><em>Edit Layer Data</em></a> 페이지로 이동합니다.</p>
 <p>레이어를 삭제하려면 각 레이어 행의 왼편에 있는 체크박스를 클릭합니다. 다음 그림에서처럼 한 페이지 안에서 여러 레이어를 중복 선택하여 제거할 수 있습니다.
 하지만 다음 페이지로 넘어갈 경우 현재 페이지에서 선택한 체크박스는 모두 취소된다는 점에 유의하십시오.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_delete.png" src="../../_images/data_layers_delete.png" />
+<img alt="../../images/data_layers_delete.png" src="../../images/data_layers_delete.png" />
 <p class="caption"><em>삭제를 위해 nurc:Img_Sample, sf:restricted, sf:streams 레이어 선택</em></p>
 </div>
 <p>머리부 행에 있는 체크박스를 클릭하면 모든 레이어를 한번에 선택할 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layers_delete_all.png" src="../../_images/data_layers_delete_all.png" />
+<img alt="../../images/data_layers_delete_all.png" src="../../images/data_layers_delete_all.png" />
 <p class="caption"><em>삭제를 위해 모든 레이어 선택</em></p>
 </div>
 <p>레이어(들)을 선택해야 <em class="guilabel">Remove selected resources</em> 링크가 활성화됩니다.
@@ -305,7 +305,7 @@ ImageMosaic 포맷의 경우, Thresholding 및 Transparency 설정으로 모자�
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/webadmin/data/layers.txt">원본 보기</a></li>
+          <li><a href="../../sources/webadmin/data/layers.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

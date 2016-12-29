@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Authenticating to the Web Admin Interface &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Authentication" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -85,7 +85,7 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <p>다음은 웹 관리자를 위한 인증 사슬의 기본 설정입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_chain_web1.png" src="../../_images/auth_chain_web1.png" />
+<img alt="../../images/auth_chain_web1.png" src="../../images/auth_chain_web1.png" />
 <p class="caption"><em>필터 및 제공자 사슬을 갖춘 GeoServer 인증 사슬</em></p>
 </div>
 <p>이 예시에서 필터 사슬은 다음 필터들로 이루어집니다.</p>
@@ -107,7 +107,7 @@
 <h3>First time visit<a class="headerlink" href="#first-time-visit" title="Permalink to this headline">¶</a></h3>
 <p>이 예시에서 사용자가 처음으로 웹 관리자 홈페이지를 방문했을 때 호출되는 처리 과정을 설명합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_chain_web2.png" src="../../_images/auth_chain_web2.png" />
+<img alt="../../images/auth_chain_web2.png" src="../../images/auth_chain_web2.png" />
 <p class="caption"><em>사용자가 처음 방문했을 경우의 인증 사슬</em></p>
 </div>
 <p>처음 실행되는 필터는 <em>Session</em> 필터입니다. 기존 세션을 확인하지만 세션이 없기 때문에 사슬의 다음 필터 과정으로 넘어갑니다.
@@ -123,7 +123,7 @@
 <h3>User logs on<a class="headerlink" href="#user-logs-on" title="Permalink to this headline">¶</a></h3>
 <p>이 예시에서 사용자가 로그인 서식을 통해 웹 관리자에 로그인했을 경우 호출되는 처리 과정을 설명합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_chain_web3.png" src="../../_images/auth_chain_web3.png" />
+<img alt="../../images/auth_chain_web3.png" src="../../images/auth_chain_web3.png" />
 <p class="caption"><em>사용자가 로그인했을 경우의 인증 사슬</em></p>
 </div>
 <p><em>Session</em>가 기존 세션을 찾을 수 없기 때문에 다음 과정으로 넘어갑니다.
@@ -139,7 +139,7 @@
 <h3>User visits another page<a class="headerlink" href="#user-visits-another-page" title="Permalink to this headline">¶</a></h3>
 <p>이 예시에서 이미 로그인한 사용자가 웹 관리자의 또다른 페이지를 방문할 경우 호출되는 처리 과정을 설명합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_chain_web4.png" src="../../_images/auth_chain_web4.png" />
+<img alt="../../images/auth_chain_web4.png" src="../../images/auth_chain_web4.png" />
 <p class="caption"><em>로그인 후 사용자가 또다른 페이지를 방문했을 경우의 인증 사슬</em></p>
 </div>
 <p><em>Session</em> 필터가 실행되어 아직 유효한 기존 세션을 발견합니다.
@@ -164,7 +164,7 @@
 <h3>User returns after session time out (with &#8220;Remember Me&#8221;)<a class="headerlink" href="#user-returns-after-session-time-out-with-remember-me" title="Permalink to this headline">¶</a></h3>
 <p>이 예시에서 &#8220;Remember Me&#8221; 플래그가 설정된 상태에서 세션이 종료된 후 사용자가 웹 관리자 페이지로 돌아왔을 경우 호출되는 처리 과정을 설명합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_chain_web5.png" src="../../_images/auth_chain_web5.png" />
+<img alt="../../images/auth_chain_web5.png" src="../../images/auth_chain_web5.png" />
 <p class="caption"><em>&#8220;Remember Me&#8221; 플래그가 선 상태에서 세션이 종료된 후 사용자가 돌아왔을 경우의 인증 사슬</em></p>
 </div>
 <p>&#8220;Remember Me&#8221; 플래그가 설정된 상태라고 해도, 서버 상의 사용자 세션은 정상적으로 종료(time out)됩니다.
@@ -211,7 +211,7 @@
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/security/auth/web.txt">원본 보기</a></li>
+          <li><a href="../../sources/security/auth/web.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

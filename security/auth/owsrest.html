@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Authentication to OWS and REST services &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Authentication" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -96,7 +96,7 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <p>다음은 OWS 서비스를 위한 인증 사슬을 설명하는 그림입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_chain_ogc1.png" src="../../_images/auth_chain_ogc1.png" />
+<img alt="../../images/auth_chain_ogc1.png" src="../../images/auth_chain_ogc1.png" />
 <p class="caption"><em>OWS 서비스 인증 사슬</em></p>
 </div>
 <p>이 예시의 필터 사슬은 다음 3가지 필터로 이루어져 있습니다.</p>
@@ -116,7 +116,7 @@
 <h3>Anonymous WMS GetCapabilities request<a class="headerlink" href="#anonymous-wms-getcapabilities-request" title="Permalink to this headline">¶</a></h3>
 <p>이 예시에서 WMS 클라이언트가 익명 GetCapabilities 요청을 할 경우 호출되는 처리 과정을 설명합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_chain_ogc2.png" src="../../_images/auth_chain_ogc2.png" />
+<img alt="../../images/auth_chain_ogc2.png" src="../../images/auth_chain_ogc2.png" />
 <p class="caption"><em>WMS 클라이언트가 익명 GetCapabilities 요청을 할 경우의 인증 사슬</em></p>
 </div>
 <p><em>Session</em> 필터가 기존 세션을 확인하지만 세션이 없기 때문에 다음 과정으로 넘어갑니다.
@@ -138,7 +138,7 @@ GetCapabilities 요청이 &#8220;발견(discovery)&#8221; 작업이기 때문에
 <h3>WMS GetMap request with user-supplied credentials<a class="headerlink" href="#wms-getmap-request-with-user-supplied-credentials" title="Permalink to this headline">¶</a></h3>
 <p>이 예시에서 WMS 클라이언트가 사용자로부터 자격 증명을 받아 보안된 레이어에 대한 이전 요청을 다시 보낼 경우 호출되는 처리 과정을 설명합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_chain_ogc3.png" src="../../_images/auth_chain_ogc3.png" />
+<img alt="../../images/auth_chain_ogc3.png" src="../../images/auth_chain_ogc3.png" />
 <p class="caption"><em>WMS 클라이언트가 사용자 자격 증명을 받아 보안된 레이어에 대한 요청을 할 경우의 인증 사슬</em></p>
 </div>
 <p><em>Session</em> 필터가 앞에서 설명한대로 실행되고, 넘어갑니다.
@@ -183,7 +183,7 @@ GetCapabilities 요청이 &#8220;발견(discovery)&#8221; 작업이기 때문에
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/security/auth/owsrest.txt">원본 보기</a></li>
+          <li><a href="../../sources/security/auth/owsrest.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>WPS Request Builder &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="Web Processing Service" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -80,7 +80,7 @@
 <li>Select <em class="guilabel">WPS Request Builder</em> from the list of demos.</li>
 </ol>
 <div class="figure align-center">
-<img alt="../../_images/demospage.png" src="../../_images/demospage.png" />
+<img alt="../../images/demospage.png" src="../../images/demospage.png" />
 <p class="caption"><em>WPS request builder in the list of demos</em></p>
 </div>
 </div>
@@ -88,23 +88,23 @@
 <h2>Using the request builder<a class="headerlink" href="#using-the-request-builder" title="Permalink to this headline">¶</a></h2>
 <p>The WPS Request Builder primarily consists of a selection box listing all of the available processes, and two buttons, one to submit the WPS request, and another to display what the POST request looks like.</p>
 <div class="figure align-center">
-<img alt="../../_images/requestbuilderblank.png" src="../../_images/requestbuilderblank.png" />
+<img alt="../../images/requestbuilderblank.png" src="../../images/requestbuilderblank.png" />
 <p class="caption"><em>Blank WPS request builder form</em></p>
 </div>
 <p>The display changes depending on the process and input selected.  JTS processes have available as inputs any of a GML/WKT-based feature collection, URL reference, or subprocess.  GeoServer-specific processes have all these as options and also includes the ability to choose a GeoServer layer as input.</p>
 <p>For each process, a form will display based on the required and optional parameters associated with that process, if any.</p>
 <div class="figure align-center">
-<img alt="../../_images/requestbuildertoppstates.png" src="../../_images/requestbuildertoppstates.png" />
+<img alt="../../images/requestbuildertoppstates.png" src="../../images/requestbuildertoppstates.png" />
 <p class="caption"><em>WPS request builder form to determine the bounds of topp:states</em></p>
 </div>
 <p>To see the process as a POST request, click the <em class="guilabel">Generate XML from process inputs/outputs</em> button.</p>
 <div class="figure align-center">
-<img alt="../../_images/requestbuilderrequest.png" src="../../_images/requestbuilderrequest.png" />
+<img alt="../../images/requestbuilderrequest.png" src="../../images/requestbuilderrequest.png" />
 <p class="caption"><em>Raw WPS POST request for the above process</em></p>
 </div>
 <p>To execute the process, click the <em class="guilabel">Execute Process</em> button.  The response will be displayed in a window or</p>
 <div class="figure align-center">
-<img alt="../../_images/requestbuilderresponse.png" src="../../_images/requestbuilderresponse.png" />
+<img alt="../../images/requestbuilderresponse.png" src="../../images/requestbuilderresponse.png" />
 <p class="caption"><em>WPS server response</em></p>
 </div>
 </div>
@@ -139,7 +139,7 @@
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/extensions/wps/requestbuilder.txt">Show Source</a></li>
+          <li><a href="../../sources/extensions/wps/requestbuilder.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Rasters &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="CSS Cookbook" href="cookbook.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -75,18 +75,18 @@
 <p>One example of a raster is a Digital Elevation Model (DEM) layer, which has elevation data encoded numerically at each georeferenced data point.</p>
 <div class="section" id="example-raster">
 <h2>Example raster<a class="headerlink" href="#example-raster" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference download internal" href="../../_downloads/sld_cookbook_raster.zip"><tt class="xref download docutils literal"><span class="pre">raster</span> <span class="pre">layer</span></tt></a> that is used in the examples below contains elevation data for a fictional world.  The data is stored in EPSG:4326 (longitude/latitude) and has a data range from 70 to 256.  If rendered in grayscale, where minimum values are colored black and maximum values are colored white, the raster would look like this:</p>
+<p>The <a class="reference download internal" href="../../downloads/sld_cookbook_raster.zip"><tt class="xref download docutils literal"><span class="pre">raster</span> <span class="pre">layer</span></tt></a> that is used in the examples below contains elevation data for a fictional world.  The data is stored in EPSG:4326 (longitude/latitude) and has a data range from 70 to 256.  If rendered in grayscale, where minimum values are colored black and maximum values are colored white, the raster would look like this:</p>
 <div class="figure align-center">
-<img alt="../../_images/raster.png" src="../../_images/raster.png" />
+<img alt="../../images/raster.png" src="../../images/raster.png" />
 <p class="caption"><em>Raster file as rendered in grayscale</em></p>
 </div>
-<p><a class="reference download internal" href="../../_downloads/sld_cookbook_raster.zip"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">raster</span> <span class="pre">file</span></tt></a></p>
+<p><a class="reference download internal" href="../../downloads/sld_cookbook_raster.zip"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">raster</span> <span class="pre">file</span></tt></a></p>
 </div>
 <div class="section" id="two-color-gradient">
 <span id="css-cookbook-raster-twocolorgradient"></span><h2>Two-color gradient<a class="headerlink" href="#two-color-gradient" title="Permalink to this headline">¶</a></h2>
 <p>This example shows a two-color style with green at lower elevations and brown at higher elevations.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_twocolorgradient.png" src="../../_images/raster_twocolorgradient.png" />
+<img alt="../../images/raster_twocolorgradient.png" src="../../images/raster_twocolorgradient.png" />
 <p class="caption"><em>Two-color gradient</em></p>
 </div>
 <div class="section" id="code">
@@ -124,7 +124,7 @@
 <h2>Transparent gradient<a class="headerlink" href="#transparent-gradient" title="Permalink to this headline">¶</a></h2>
 <p>This example creates the same two-color gradient as in the <a class="reference internal" href="../../styling/sld-cookbook/rasters.html#sld-cookbook-raster-twocolorgradient"><em>Two-color gradient</em></a> as in the example above but makes the entire layer mostly transparent by setting a 30% opacity.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_transparentgradient.png" src="../../_images/raster_transparentgradient.png" />
+<img alt="../../images/raster_transparentgradient.png" src="../../images/raster_transparentgradient.png" />
 <p class="caption"><em>Transparent gradient</em></p>
 </div>
 <div class="section" id="id1">
@@ -152,7 +152,7 @@
 <h2>Brightness and contrast<a class="headerlink" href="#brightness-and-contrast" title="Permalink to this headline">¶</a></h2>
 <p>This example normalizes the color output and then increases the brightness by a factor of 2.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_brightnessandcontrast.png" src="../../_images/raster_brightnessandcontrast.png" />
+<img alt="../../images/raster_brightnessandcontrast.png" src="../../images/raster_brightnessandcontrast.png" />
 <p class="caption"><em>Brightness and contrast</em></p>
 </div>
 <div class="section" id="id3">
@@ -182,7 +182,7 @@
 <h2>Three-color gradient<a class="headerlink" href="#three-color-gradient" title="Permalink to this headline">¶</a></h2>
 <p>This example creates a three-color gradient in primary colors.  In addition, we want to avoid displaying data outside of the chosen range, leading some data not to be rendered at all.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_threecolorgradient.png" src="../../_images/raster_threecolorgradient.png" />
+<img alt="../../images/raster_threecolorgradient.png" src="../../images/raster_threecolorgradient.png" />
 <p class="caption"><em>Three-color gradient</em></p>
 </div>
 <div class="section" id="id5">
@@ -218,7 +218,7 @@ The lines in the middle create a gradient going from blue, to yellow, to red.</p
 <h2>Alpha channel<a class="headerlink" href="#alpha-channel" title="Permalink to this headline">¶</a></h2>
 <p>This example creates an &#8220;alpha channel&#8221; effect such that higher values are increasingly transparent.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_alphachannel.png" src="../../_images/raster_alphachannel.png" />
+<img alt="../../images/raster_alphachannel.png" src="../../images/raster_alphachannel.png" />
 <p class="caption"><em>Alpha channel</em></p>
 </div>
 <div class="section" id="id7">
@@ -245,7 +245,7 @@ The lines in the middle create a gradient going from blue, to yellow, to red.</p
 <h2>Discrete colors<a class="headerlink" href="#discrete-colors" title="Permalink to this headline">¶</a></h2>
 <p>This example shows a gradient that is not linearly interpolated but instead has values mapped precisely to one of three specific colors.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_discretecolors.png" src="../../_images/raster_discretecolors.png" />
+<img alt="../../images/raster_discretecolors.png" src="../../images/raster_discretecolors.png" />
 <p class="caption"><em>Discrete colors</em></p>
 </div>
 <div class="section" id="id9">
@@ -274,7 +274,7 @@ band such that colors are mapped to values less than the value of one entry but 
 <h2>Many color gradient<a class="headerlink" href="#many-color-gradient" title="Permalink to this headline">¶</a></h2>
 <p>This example shows a gradient interpolated across eight different colors.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_manycolorgradient.png" src="../../_images/raster_manycolorgradient.png" />
+<img alt="../../images/raster_manycolorgradient.png" src="../../images/raster_manycolorgradient.png" />
 <p class="caption"><em>Many color gradient</em></p>
 </div>
 <div class="section" id="id11">
@@ -420,7 +420,7 @@ band such that colors are mapped to values less than the value of one entry but 
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/extensions/css/cookbook_raster.txt">Show Source</a></li>
+          <li><a href="../../sources/extensions/css/cookbook_raster.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>GetFeatureInfo Templates &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="Tutorials" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -75,7 +75,7 @@
 <p>GetFeatureInfo is a WMS standard call that allows one to retrieve information about features and coverages displayed in a map. The map can be composed of various layers, and GetFeatureInfo can be instructed to return multiple feature descriptions, which may be of different types. GetFeatureInfo can generate output in various formats: GML2, plain text and HTML. Templating is concerned with the HTML one.</p>
 <p>The default HTML output is a sequence of titled tables, each one for a different layer. The following example shows the default output for the tiger-ny basemap (included in the above cited releases, and onwards).</p>
 <div class="figure align-center">
-<img alt="../../_images/default1.png" src="../../_images/default1.png" />
+<img alt="../../images/default1.png" src="../../images/default1.png" />
 <p class="caption"><em>Default Output</em></p>
 </div>
 </div>
@@ -194,7 +194,7 @@ will be called multiple times if there are various feature collections
 </div>
 <p>With this template in place, the output would be:</p>
 <div class="figure align-center">
-<img alt="../../_images/ul.png" src="../../_images/ul.png" />
+<img alt="../../images/ul.png" src="../../images/ul.png" />
 <p class="caption"><em>Bulleted List Output</em></p>
 </div>
 <p>Looking at the output we notice that point of interest features refer to image files, which we know are stored inside the default GeoServer distribution in the <tt class="docutils literal"><span class="pre">demo_app/pics</span></tt> path. So, we could provide a POI specific override that actually loads the images.</p>
@@ -209,7 +209,7 @@ will be called multiple times if there are various feature collections
 </div>
 <p>With this additional template, the output is:</p>
 <div class="figure align-center">
-<img alt="../../_images/thumb.png" src="../../_images/thumb.png" />
+<img alt="../../images/thumb.png" src="../../images/thumb.png" />
 <p class="caption"><em>Output with Thumbnail Image</em></p>
 </div>
 <p>As you can see, roads are still using the generic template, whilst POI is using its own custom template.</p>
@@ -251,7 +251,7 @@ will be called multiple times if there are various feature collections
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/tutorials/GetFeatureInfo/index.txt">Show Source</a></li>
+          <li><a href="../../sources/tutorials/GetFeatureInfo/index.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

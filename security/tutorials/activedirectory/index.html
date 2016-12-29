@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Authentication with LDAP against ActiveDirectory &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../../index.html" />
       <link rel="up" title="Tutorials" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -102,21 +102,21 @@
 <li><p class="first">사이드 메뉴의 <tt class="docutils literal"><span class="pre">Security</span></tt> 섹션 아래 있는 <tt class="docutils literal"><span class="pre">Authentication</span></tt> 링크를 클릭하십시오.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../../_images/ldap1.jpg" src="../../../_images/ldap1.jpg" />
+<img alt="../../../images/ldap1.jpg" src="../../../images/ldap1.jpg" />
 </div>
 </div></blockquote>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">Authentication Providers</span></tt> 패널로 스크롤해서 <tt class="docutils literal"><span class="pre">Add new</span></tt> 링크를 클릭하십시오.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../../_images/ldap2.jpg" src="../../../_images/ldap2.jpg" />
+<img alt="../../../images/ldap2.jpg" src="../../../images/ldap2.jpg" />
 </div>
 </div></blockquote>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">LDAP</span></tt> 링크를 클릭하십시오.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../../_images/ldap3.jpg" src="../../../_images/ldap3.jpg" />
+<img alt="../../../images/ldap3.jpg" src="../../../images/ldap3.jpg" />
 </div>
 </div></blockquote>
 </li>
@@ -136,7 +136,7 @@
 <li><p class="first">오른쪽에 있는 연결 테스트 서식에 사용자명 &#8220;GISADMIN&#8221;, &#8220;secret&#8221;을 입력하고
 <tt class="docutils literal"><span class="pre">Test Connection</span></tt> 버튼을 클릭해서 LDAP 연결을 검사합니다.</p>
 <div class="figure align-center">
-<img alt="../../../_images/ad1.jpg" src="../../../_images/ad1.jpg" />
+<img alt="../../../images/ad1.jpg" src="../../../images/ad1.jpg" />
 </div>
 <p>페이지 상단에 연결 성공 메시지가 표출되어야 합니다.</p>
 </li>
@@ -145,7 +145,7 @@
 <li><p class="first">다시 <tt class="docutils literal"><span class="pre">Authentication</span></tt> 페이지로 돌아와 <tt class="docutils literal"><span class="pre">Provider Chain</span></tt> 패널로 스크롤한 다음,
 <tt class="docutils literal"><span class="pre">ad-ldap</span></tt> 제공자를 <tt class="docutils literal"><span class="pre">Available</span></tt>에서 <tt class="docutils literal"><span class="pre">Selected</span></tt>로 옮깁니다.</p>
 <div class="figure align-center">
-<img alt="../../../_images/ad2.jpg" src="../../../_images/ad2.jpg" />
+<img alt="../../../images/ad2.jpg" src="../../../images/ad2.jpg" />
 </div>
 </li>
 <li><p class="first">저장하십시오.</p>
@@ -159,7 +159,7 @@
 </li>
 <li><p class="first">비밀번호 &#8220;secret&#8221;를 써서 &#8220;GISUSER&#8221; 사용자로 로그인하십시오.</p>
 <div class="figure align-center">
-<img alt="../../../_images/ad3.jpg" src="../../../_images/ad3.jpg" />
+<img alt="../../../images/ad3.jpg" src="../../../images/ad3.jpg" />
 </div>
 </li>
 </ol>
@@ -204,7 +204,7 @@
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../../_sources/security/tutorials/activedirectory/index.txt">원본 보기</a></li>
+          <li><a href="../../../sources/security/tutorials/activedirectory/index.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

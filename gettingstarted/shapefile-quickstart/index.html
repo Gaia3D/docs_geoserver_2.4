@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Publishing a Shapefile &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Getting Started" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -77,7 +77,7 @@
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p class="first"><a class="reference download internal" href="../../_downloads/nyc_roads.zip"><tt class="xref download docutils literal"><span class="pre">nyc_roads.zip</span></tt></a> 파일을 다운로드합니다. 이 문서 아카이브는 이번 예제에서 사용할 뉴욕 시 도로 shapefile을 포함하고 있습니다.</p>
+<li><p class="first"><a class="reference download internal" href="../../downloads/nyc_roads.zip"><tt class="xref download docutils literal"><span class="pre">nyc_roads.zip</span></tt></a> 파일을 다운로드합니다. 이 문서 아카이브는 이번 예제에서 사용할 뉴욕 시 도로 shapefile을 포함하고 있습니다.</p>
 </li>
 <li><p class="first"><cite>nyc_roads.zip</cite> 파일의 압축을 풉니다. 압축이 풀린 <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 폴더에는 다음 4개 파일이 있습니다.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">nyc_roads</span><span class="o">.</span><span class="n">shp</span>
@@ -102,7 +102,7 @@
 <li><p class="first">왼쪽 메뉴에서 <em class="menuselection">Data‣Workspaces</em> 를 클릭합니다.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/data_workspaces.png" src="../../_images/data_workspaces.png" />
+<img alt="../../images/data_workspaces.png" src="../../images/data_workspaces.png" />
 <p class="caption"><em>Workspaces 페이지</em></p>
 </div>
 </div></blockquote>
@@ -110,7 +110,7 @@
 <li><p class="first">새로운 작업공간을 생성하려면 <em class="guilabel">Add new workspace</em> 버튼을 클릭한 다음, 작업공간의 <em class="guilabel">Name</em> 및 <em class="guilabel">Namespace URI</em>를 입력해야 합니다.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/new_workspace.png" src="../../_images/new_workspace.png" />
+<img alt="../../images/new_workspace.png" src="../../images/new_workspace.png" />
 <p class="caption"><em>새로운 작업공간 설정</em></p>
 </div>
 </div></blockquote>
@@ -118,7 +118,7 @@
 <li><p class="first"><em class="guilabel">Name</em> 란에 <tt class="docutils literal"><span class="pre">nyc_roads</span></tt>를 입력하고, <em class="guilabel">Namespace URI</em>란에 <tt class="docutils literal"><span class="pre">http://opengeo.org/nyc_roads</span></tt> 라고 입력하십시오. 작업공간의 명칭은 사용자 프로젝트를 설명해주는 식별자(identifier) 역할을 하는데, 10자를 넘거나 공백을 포함할 수 없습니다. Namespace URI(Uniform Resource Identifier)는 일반적으로 사용자 프로젝트와 관련된 URL로 해당 작업공간을 표시하는, 추적 가능한 추가적인 식별자 역할을 할 수도 있습니다.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/workspace_nycroads.png" src="../../_images/workspace_nycroads.png" />
+<img alt="../../images/workspace_nycroads.png" src="../../images/workspace_nycroads.png" />
 <p class="caption"><em>NYC Roads 작업공간</em></p>
 </div>
 </div></blockquote>
@@ -137,7 +137,7 @@
 <li><p class="first">nyc_roads Shapefile을 추가하려면 새로운 Store를 만들어야 합니다. <em class="guilabel">Add new store</em> 버튼을 클릭하십시오. GeoServer가 지원하는 데이터 소스 목록이 표시됩니다.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/stores_nycroads.png" src="../../_images/stores_nycroads.png" />
+<img alt="../../images/stores_nycroads.png" src="../../images/stores_nycroads.png" />
 <p class="caption"><em>데이터 소스 목록</em></p>
 </div>
 </div></blockquote>
@@ -149,7 +149,7 @@
 <li><p class="first"><em class="guilabel">Connection Parameters</em>의 <em class="guilabel">URL</em> 란에 Shapefile의 정확한 경로를 <tt class="docutils literal"><span class="pre">file:data/nyc_roads/nyc_roads.shp</span></tt> 와 같이 입력합니다.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/new_shapefile.png" src="../../_images/new_shapefile.png" />
+<img alt="../../images/new_shapefile.png" src="../../images/new_shapefile.png" />
 <p class="caption"><em>Basic Store Info 및 Connection Parameters 페이지</em></p>
 </div>
 </div></blockquote>
@@ -166,7 +166,7 @@
 <li><p class="first"><em class="guilabel">New Layer chooser</em> 페이지에서 <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 레이어를 선택합니다.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/new_layer.png" src="../../_images/new_layer.png" />
+<img alt="../../images/new_layer.png" src="../../images/new_layer.png" />
 <p class="caption"><em>New Layer chooser 페이지</em></p>
 </div>
 </div></blockquote>
@@ -174,7 +174,7 @@
 <li><p class="first"><em class="guilabel">Edit Layer</em> 페이지에서 레이어의 Data 및 Publishing 파라미터를 정의합니다. <em class="guilabel">Title</em> 란 및 <em class="guilabel">Abstract</em> 란에 <tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 레이어에 대해 짧게 입력합니다.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/new_data.png" src="../../_images/new_data.png" />
+<img alt="../../images/new_data.png" src="../../images/new_data.png" />
 <p class="caption"><em>Basic Resource Information 페이지</em></p>
 </div>
 </div></blockquote>
@@ -182,7 +182,7 @@
 <li><p class="first">레이어의 <em>bounding boxes</em>를 생성하기 위해 먼저 <em class="guilabel">Compute from data</em>를 클릭한 다음 <em class="guilabel">Compute from Native bounds</em>를 클릭합니다.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/boundingbox1.png" src="../../_images/boundingbox1.png" />
+<img alt="../../images/boundingbox1.png" src="../../images/boundingbox1.png" />
 <p class="caption"><em>Bounding Boxes 생성</em></p>
 </div>
 </div></blockquote>
@@ -192,7 +192,7 @@
 <li><p class="first"><em class="guilabel">Default Style</em> 드롭다운 목록에서 <em class="guilabel">line</em> 스타일을 선택하십시오.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/style1.png" src="../../_images/style1.png" />
+<img alt="../../images/style1.png" src="../../images/style1.png" />
 <p class="caption"><em>기본 스타일 선택</em></p>
 </div>
 </div></blockquote>
@@ -209,7 +209,7 @@
 <li><p class="first"><tt class="docutils literal"><span class="pre">nyc_roads</span></tt> 레이어가 정확히 생산됐는지 확인하려면 레이어 미리보기를 할 수 있습니다. <em class="guilabel">Layer Preview</em> 화면으로 이동해서 <tt class="docutils literal"><span class="pre">nyc_roads:nyc_roads</span></tt> 레이어를 찾아보십시오.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/layer_preview.png" src="../../_images/layer_preview.png" />
+<img alt="../../images/layer_preview.png" src="../../images/layer_preview.png" />
 <p class="caption"><em>레이어 미리보기</em></p>
 </div>
 </div></blockquote>
@@ -219,7 +219,7 @@
 <li><p class="first">성공입니다! 새 페이지에 OpenLayers 맵이 로드되어 기본 line 스타일로 shapefile 데이터를 표시했습니다. 미리보기 맵에서 데이터셋을 줌인·줌아웃하거나 이동(pan)시켜볼 수 있으며, 피처(feature)의 속성(attribute)들을 표시해볼 수도 있습니다.</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="../../_images/openlayers1.png" src="../../_images/openlayers1.png" />
+<img alt="../../images/openlayers1.png" src="../../images/openlayers1.png" />
 <p class="caption"><em>nyc_roads 레이어의 미리보기 맵</em></p>
 </div>
 </div></blockquote>
@@ -261,7 +261,7 @@
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/gettingstarted/shapefile-quickstart/index.txt">원본 보기</a></li>
+          <li><a href="../../sources/gettingstarted/shapefile-quickstart/index.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

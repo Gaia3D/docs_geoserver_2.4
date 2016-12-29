@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Polygons &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="CSS Cookbook" href="cookbook.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -74,7 +74,7 @@
 <p>Polygons are two dimensional shapes that contain both an outer edge (or &#8220;stroke&#8221;) and an inside (or &#8220;fill&#8221;).  A polygon can be thought of as an irregularly-shaped point and is styled in similar ways to points.</p>
 <div class="section" id="example-polygons-layer">
 <span id="css-cookbook-polygons-attributes"></span><h2>Example polygons layer<a class="headerlink" href="#example-polygons-layer" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference download internal" href="../../_downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">polygons</span> <span class="pre">layer</span></tt></a> used below contains county information for a fictional country. For reference, the attribute table for the polygons is included below.</p>
+<p>The <a class="reference download internal" href="../../downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">polygons</span> <span class="pre">layer</span></tt></a> used below contains county information for a fictional country. For reference, the attribute table for the polygons is included below.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="30%" />
@@ -120,13 +120,13 @@
 </tr>
 </tbody>
 </table>
-<p><a class="reference download internal" href="../../_downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">polygons</span> <span class="pre">shapefile</span></tt></a></p>
+<p><a class="reference download internal" href="../../downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">polygons</span> <span class="pre">shapefile</span></tt></a></p>
 </div>
 <div class="section" id="simple-polygon">
 <span id="css-cookbook-polygons-simplepolygon"></span><h2>Simple polygon<a class="headerlink" href="#simple-polygon" title="Permalink to this headline">¶</a></h2>
 <p>This example shows a polygon filled in blue.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_simplepolygon.png" src="../../_images/polygon_simplepolygon.png" />
+<img alt="../../images/polygon_simplepolygon.png" src="../../images/polygon_simplepolygon.png" />
 <p class="caption"><em>Simple polygon</em></p>
 </div>
 <div class="section" id="code">
@@ -152,7 +152,7 @@
 <span id="css-cookbook-polygons-simplepolygonwithstroke"></span><h2>Simple polygon with stroke<a class="headerlink" href="#simple-polygon-with-stroke" title="Permalink to this headline">¶</a></h2>
 <p>This example adds a 2 pixel white stroke to the <a class="reference internal" href="#css-cookbook-polygons-simplepolygon"><em>Simple polygon</em></a> example.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_simplepolygonwithstroke.png" src="../../_images/polygon_simplepolygonwithstroke.png" />
+<img alt="../../images/polygon_simplepolygonwithstroke.png" src="../../images/polygon_simplepolygonwithstroke.png" />
 <p class="caption"><em>Simple polygon with stroke</em></p>
 </div>
 <div class="section" id="id1">
@@ -178,7 +178,7 @@
 <h2>Transparent polygon<a class="headerlink" href="#transparent-polygon" title="Permalink to this headline">¶</a></h2>
 <p>This example builds on the <a class="reference internal" href="#css-cookbook-polygons-simplepolygonwithstroke"><em>Simple polygon with stroke</em></a> example and makes the fill partially transparent by setting the opacity to 50%.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_transparentpolygon.png" src="../../_images/polygon_transparentpolygon.png" />
+<img alt="../../images/polygon_transparentpolygon.png" src="../../images/polygon_transparentpolygon.png" />
 <p class="caption"><em>Transparent polygon</em></p>
 </div>
 <div class="section" id="id3">
@@ -206,7 +206,7 @@
 <span id="css-cookbook-polygons-graphicfill"></span><h2>Graphic fill<a class="headerlink" href="#graphic-fill" title="Permalink to this headline">¶</a></h2>
 <p>This example fills the polygons with a tiled graphic.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_graphicfill.png" src="../../_images/polygon_graphicfill.png" />
+<img alt="../../images/polygon_graphicfill.png" src="../../images/polygon_graphicfill.png" />
 <p class="caption"><em>Graphic fill</em></p>
 </div>
 <div class="section" id="id5">
@@ -227,7 +227,7 @@
 The graphic is selected providing a url for the fill, which in this case is meant to the relative to the <tt class="docutils literal"><span class="pre">styles</span></tt> directory contained within the data directory (an absolute path could have been provided, as well as a internet reference). <strong>Line 3</strong> specifies that the image itself is a png (by default the code assumes jpegs are used and will fail to parse the file unless we specify its mime type).
 The size of the image is not specified, meaning the native size is going to be used. In case a rescale is desired, the &#8220;fill-size&#8221; attribute can be used to force a different size.</p>
 <div class="figure align-center">
-<img alt="../../_images/colorblocks.png" src="../../_images/colorblocks.png" />
+<img alt="../../images/colorblocks.png" src="../../images/colorblocks.png" />
 <p class="caption"><em>Graphic used for fill</em></p>
 </div>
 </div>
@@ -236,7 +236,7 @@ The size of the image is not specified, meaning the native size is going to be u
 <h2>Hatching fill<a class="headerlink" href="#hatching-fill" title="Permalink to this headline">¶</a></h2>
 <p>This example fills the polygons with a hatching pattern.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_hatchingfill.png" src="../../_images/polygon_hatchingfill.png" />
+<img alt="../../images/polygon_hatchingfill.png" src="../../images/polygon_hatchingfill.png" />
 <p class="caption"><em>Hatching fill</em></p>
 </div>
 <div class="section" id="id7">
@@ -271,7 +271,7 @@ The size of the image is not specified, meaning the native size is going to be u
 <span id="css-cookbook-polygons-polygonwithdefaultlabel"></span><h2>Polygon with default label<a class="headerlink" href="#polygon-with-default-label" title="Permalink to this headline">¶</a></h2>
 <p>This example shows a text label on the polygon.  In the absence of any other customization, this is how a label will be displayed.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_polygonwithdefaultlabel.png" src="../../_images/polygon_polygonwithdefaultlabel.png" />
+<img alt="../../images/polygon_polygonwithdefaultlabel.png" src="../../images/polygon_polygonwithdefaultlabel.png" />
 <p class="caption"><em>Polygon with default label</em></p>
 </div>
 <div class="section" id="id9">
@@ -301,7 +301,7 @@ The size of the image is not specified, meaning the native size is going to be u
 <h2>Label halo<a class="headerlink" href="#label-halo" title="Permalink to this headline">¶</a></h2>
 <p>This example alters the look of the <a class="reference internal" href="#css-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a> by adding a white halo to the label.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_labelhalo.png" src="../../_images/polygon_labelhalo.png" />
+<img alt="../../images/polygon_labelhalo.png" src="../../images/polygon_labelhalo.png" />
 <p class="caption"><em>Label halo</em></p>
 </div>
 <div class="section" id="id11">
@@ -335,7 +335,7 @@ The size of the image is not specified, meaning the native size is going to be u
 <span id="css-cookbook-polygons-polygonwithstyledlabel"></span><h2>Polygon with styled label<a class="headerlink" href="#polygon-with-styled-label" title="Permalink to this headline">¶</a></h2>
 <p>This example improves the label style from the <a class="reference internal" href="#css-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a> example by centering the label on the polygon, specifying a different font name and size, and setting additional label placement optimizations.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_polygonwithstyledlabel.png" src="../../_images/polygon_polygonwithstyledlabel.png" />
+<img alt="../../images/polygon_polygonwithstyledlabel.png" src="../../images/polygon_polygonwithstyledlabel.png" />
 <p class="caption"><em>Polygon with styled label</em></p>
 </div>
 <div class="section" id="id13">
@@ -382,7 +382,7 @@ The size of the image is not specified, meaning the native size is going to be u
 <h2>Attribute-based polygon<a class="headerlink" href="#attribute-based-polygon" title="Permalink to this headline">¶</a></h2>
 <p>This example styles the polygons differently based on the &#8220;pop&#8221; (Population) attribute.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_attributebasedpolygon.png" src="../../_images/polygon_attributebasedpolygon.png" />
+<img alt="../../images/polygon_attributebasedpolygon.png" src="../../images/polygon_attributebasedpolygon.png" />
 <p class="caption"><em>Attribute-based polygon</em></p>
 </div>
 <div class="section" id="id15">
@@ -458,15 +458,15 @@ The size of the image is not specified, meaning the native size is going to be u
 <h2>Zoom-based polygon<a class="headerlink" href="#zoom-based-polygon" title="Permalink to this headline">¶</a></h2>
 <p>This example alters the style of the polygon at different zoom levels.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_zoombasedpolygonlarge.png" src="../../_images/polygon_zoombasedpolygonlarge.png" />
+<img alt="../../images/polygon_zoombasedpolygonlarge.png" src="../../images/polygon_zoombasedpolygonlarge.png" />
 <p class="caption"><em>Zoom-based polygon: Zoomed in</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/polygon_zoombasedpolygonmedium.png" src="../../_images/polygon_zoombasedpolygonmedium.png" />
+<img alt="../../images/polygon_zoombasedpolygonmedium.png" src="../../images/polygon_zoombasedpolygonmedium.png" />
 <p class="caption"><em>Zoom-based polygon: Partially zoomed</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/polygon_zoombasedpolygonsmall.png" src="../../_images/polygon_zoombasedpolygonsmall.png" />
+<img alt="../../images/polygon_zoombasedpolygonsmall.png" src="../../images/polygon_zoombasedpolygonsmall.png" />
 <p class="caption"><em>Zoom-based polygon: Zoomed out</em></p>
 </div>
 <div class="section" id="id17">
@@ -647,7 +647,7 @@ The size of the image is not specified, meaning the native size is going to be u
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/extensions/css/cookbook_polygon.txt">Show Source</a></li>
+          <li><a href="../../sources/extensions/css/cookbook_polygon.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

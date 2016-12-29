@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Labeling &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="SLD Reference" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -123,23 +123,23 @@
 범위의 좌하단은 (0, 0), 우상단은 (1, 1), 중심점은 (0.5, 0.5)입니다.
 레이블 범위 안에 있는 고정 포인트의 (X, Y) 위치가 레이블 포인트에 정렬됩니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/label_bbox.png" src="../../_images/label_bbox.png" />
+<img alt="../../images/label_bbox.png" src="../../images/label_bbox.png" />
 </div>
 <p>다음은 고정 포인트를 변경하면 레이블 위치가 어떻게 바뀌는지 보여주는 예시입니다.</p>
 <div class="figure">
-<img alt="../../_images/point_x0y0_5.png" src="../../_images/point_x0y0_5.png" />
+<img alt="../../images/point_x0y0_5.png" src="../../images/point_x0y0_5.png" />
 </div>
 <p><em>X=0, Y=0.5 —(기본값) 레이블 포인트의 오른쪽에 레이블을 배치</em></p>
 <div class="figure">
-<img alt="../../_images/point_x0_5y0_5.png" src="../../_images/point_x0_5y0_5.png" />
+<img alt="../../images/point_x0_5y0_5.png" src="../../images/point_x0_5y0_5.png" />
 </div>
 <p><em>X=0.5, Y=0.5 —레이블 포인트에 레이블의 중심점을 정렬</em></p>
 <div class="figure">
-<img alt="../../_images/point_x15y0_5.png" src="../../_images/point_x15y0_5.png" />
+<img alt="../../images/point_x15y0_5.png" src="../../images/point_x15y0_5.png" />
 </div>
 <p><em>X=1, Y=0.5 —레이블 포인트의 왼쪽에 레이블을 배치</em></p>
 <div class="figure">
-<img alt="../../_images/point_x0_5y0.png" src="../../_images/point_x0_5y0.png" />
+<img alt="../../images/point_x0_5y0.png" src="../../images/point_x0_5y0.png" />
 </div>
 <p><em>X=0.5, Y=0 —레이블 포인트의 위쪽에 레이블을 수평으로 가운데 정렬</em></p>
 </div>
@@ -158,11 +158,11 @@
 </div>
 <p>다음은 예시입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_x0y0_5_displacex10.png" src="../../_images/point_x0y0_5_displacex10.png" />
+<img alt="../../images/point_x0y0_5_displacex10.png" src="../../images/point_x0y0_5_displacex10.png" />
 </div>
 <p><em>X축 방향으로 10픽셀만큼 이동 (앞에 나온 기본 고정 포인트 (X=0, Y=0.5)와 비교)</em></p>
 <div class="figure align-center">
-<img alt="../../_images/point_x0y1_displacey10.png" src="../../_images/point_x0y1_displacey10.png" />
+<img alt="../../images/point_x0y1_displacey10.png" src="../../images/point_x0y1_displacey10.png" />
 </div>
 <p><em>Y축 방향으로 -10픽셀만큼 이동 (예시로 나오지는 않았지만 고정 포인트 (X= 0.5, Y=1.0)과 비교)</em></p>
 </div>
@@ -176,19 +176,19 @@
 </div>
 <p>다음은 기울기가 어떻게 고정 포인트 및 이동과 연동되는지 보여주는 예시입니다.</p>
 <div class="figure">
-<img alt="../../_images/rot1.png" src="../../_images/rot1.png" />
+<img alt="../../images/rot1.png" src="../../images/rot1.png" />
 </div>
 <p><em>45도 기울기</em></p>
 <div class="figure">
-<img alt="../../_images/rot2.png" src="../../_images/rot2.png" />
+<img alt="../../images/rot2.png" src="../../images/rot2.png" />
 </div>
 <p><em>고정 포인트가 (X=0.5, Y=0.5)일 경우 45도 기울기</em></p>
 <div class="figure">
-<img alt="../../_images/rot3.png" src="../../_images/rot3.png" />
+<img alt="../../images/rot3.png" src="../../images/rot3.png" />
 </div>
 <p><em>45도 기울기에서 X축 방향으로 40픽셀만큼 이동</em></p>
 <div class="figure">
-<img alt="../../_images/rot4.png" src="../../_images/rot4.png" />
+<img alt="../../images/rot4.png" src="../../images/rot4.png" />
 </div>
 <p><em>고정 포인트가 (X=0.5, Y=0.5)일 경우 45도 기울기에서 Y축 방향으로 40픽셀만큼 이동</em></p>
 </div>
@@ -215,11 +215,11 @@ GeoServer는 특화된 옵션을 통해 라인 레이블 배치를 더 상세하
 </div>
 <p>다음은 예시입니다.</p>
 <div class="figure">
-<img alt="../../_images/lp_1.png" src="../../_images/lp_1.png" />
+<img alt="../../images/lp_1.png" src="../../images/lp_1.png" />
 </div>
 <p><em>PerpendicularOffset = 0 (기본값)</em></p>
 <div class="figure">
-<img alt="../../_images/lp_2.png" src="../../_images/lp_2.png" />
+<img alt="../../images/lp_2.png" src="../../images/lp_2.png" />
 </div>
 <p><em>PerpendicularOffset = 10</em></p>
 </div>
@@ -276,7 +276,7 @@ Newark      |     280,123
 New York    |   8,107,916</pre>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/priority_all.png" src="../../_images/priority_all.png" />
+<img alt="../../images/priority_all.png" src="../../images/priority_all.png" />
 </div>
 <p><em>도시 위치 (대축척 맵)</em></p>
 <p>저지 시(Jersey City) 위치를 아는 사람보다 뉴욕(New York) 시를 아는 사람이 더 많습니다.
@@ -289,12 +289,12 @@ New York    |   8,107,916</pre>
 </div>
 <p>이렇게 하면 소축척 맵에서 인구가 적은 다른 도시보다 뉴욕 시의 레이블이 먼저 표출됩니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/priority_some.png" src="../../_images/priority_some.png" />
+<img alt="../../images/priority_some.png" src="../../images/priority_some.png" />
 </div>
 <p><em>도시 위치 (소축척 맵)</em></p>
 <p>레이블에 우선순위를 부여하지 않았다면 저지 시의 레이블이 뉴욕 시 위에 겹쳐져 지도를 보기 어려웠을 것입니다. 많은 피처가 보이는 축척에서 대도시가 소도시보다 잘 보이게 하는 레이블 우선순위 작업은 꼭 필요합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/priority_lots.png" src="../../_images/priority_lots.png" />
+<img alt="../../images/priority_lots.png" src="../../images/priority_lots.png" />
 </div>
 </div>
 <div class="section" id="grouping-features-group">
@@ -332,11 +332,11 @@ New York    |   8,107,916</pre>
 <p>도로 데이터는 무리짓기 기능이 왜 유용한지 보여주는 전통적인 예시입니다. 보통 &#8220;Main Street&#8221;의 각 블록마다 레이블을 표출하는 대신 전체 &#8220;Main Street&#8221;에 단일 레이블을 표출하는 편이 낫기 때문입니다.</p>
 <p><tt class="docutils literal"><span class="pre">group</span></tt> 옵션이 (기본값대로) 꺼져 있을 경우, 무리짓기 작업이 실행되지 않아 다음과 같이 (레이블 충돌이 일어나지 않을 경우) 모든 블록 피처에 레이블이 표출됩니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/group_not.png" src="../../_images/group_not.png" />
+<img alt="../../images/group_not.png" src="../../images/group_not.png" />
 </div>
 <p><tt class="docutils literal"><span class="pre">group</span></tt> 옵션을 사용할 경우, 동일 레이블을 가진 도형을 한 무리로 묶어 전체 무리를 바탕으로 레이블 위치를 결정합니다. 이렇게 하면 훨씬 보기 좋은 맵을 생산할 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/group_yes.png" src="../../_images/group_yes.png" />
+<img alt="../../images/group_yes.png" src="../../images/group_yes.png" />
 </div>
 </div>
 <div class="section" id="labelallgroup">
@@ -358,15 +358,15 @@ New York    |   8,107,916</pre>
 </div>
 <p>기본값인 0의 경우, 레이블의 범위(bounding box)는 다른 레이블의 범위를 침범하지 못 합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/space_0.png" src="../../_images/space_0.png" />
+<img alt="../../images/space_0.png" src="../../images/space_0.png" />
 </div>
 <p><tt class="docutils literal"><span class="pre">spaceAround</span></tt> 값이 음수일 경우, 레이블이 서로 겹쳐질 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/space_neg.png" src="../../_images/space_neg.png" />
+<img alt="../../images/space_neg.png" src="../../images/space_neg.png" />
 </div>
 <p><tt class="docutils literal"><span class="pre">spaceAround</span></tt> 값이 10일 경우, 각 레이블이 서로 적어도 20픽셀만큼은 떨어져야 합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/space_10.png" src="../../_images/space_10.png" />
+<img alt="../../images/space_10.png" src="../../images/space_10.png" />
 </div>
 <p>양의 <tt class="docutils literal"><span class="pre">spaceAround</span></tt> 값은 사용자의 기대보다 2배 넓은 여백을 만듭니다.
 어떤 레이블의 spaceAround 값을 5로 설정하고, (다른 TextSymbolizer에서) 다른 레이블의 spaceAround 값을 3으로 설정하면, 이 둘의 거리는 8이 되어야 하기 때문입니다.
@@ -432,7 +432,7 @@ New York    |   8,107,916</pre>
 </pre></div>
 </div>
 <div class="figure">
-<img alt="../../_images/label_autoWrap.png" src="../../_images/label_autoWrap.png" />
+<img alt="../../images/label_autoWrap.png" src="../../images/label_autoWrap.png" />
 </div>
 <p><em>autoWrap 옵션을 활성화한 레이블</em></p>
 </div>
@@ -547,11 +547,11 @@ New York    |   8,107,916</pre>
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><div class="first last figure">
-<img alt="../../_images/label_graphic-resize_none.png" src="../../_images/label_graphic-resize_none.png" />
+<img alt="../../images/label_graphic-resize_none.png" src="../../images/label_graphic-resize_none.png" />
 </div>
 </td>
 <td><div class="first last figure">
-<img alt="../../_images/label_graphic-resize_stretch.png" src="../../_images/label_graphic-resize_stretch.png" />
+<img alt="../../images/label_graphic-resize_stretch.png" src="../../images/label_graphic-resize_stretch.png" />
 </div>
 </td>
 </tr>
@@ -628,7 +628,7 @@ New York    |   8,107,916</pre>
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/styling/sld-reference/labeling.txt">원본 보기</a></li>
+          <li><a href="../../sources/styling/sld-reference/labeling.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

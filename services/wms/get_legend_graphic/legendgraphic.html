@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>GetLegendGraphic &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../../index.html" />
       <link rel="up" title="Web Map Service" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -82,7 +82,7 @@ GetLegendGraphic 요청에 벤터에 특화된 파라미터를 추가해서 일�
 </div>
 <p>이 요청으로 <tt class="docutils literal"><span class="pre">topp:states</span></tt> 레이어의 기본 스타일 규칙을 그래픽으로 표현하는 4개의 20x20 픽셀 크기의 아이콘을 생성합니다.</p>
 <div class="figure align-center">
-<img alt="../../../_images/samplelegend.png" src="../../../_images/samplelegend.png" />
+<img alt="../../../images/samplelegend.png" src="../../../images/samplelegend.png" />
 <p class="caption"><em>범례 예시</em></p>
 </div>
 <p>다음은 사용 가능한 모든 <tt class="docutils literal"><span class="pre">GetLegendGraphic</span></tt> 파라미터를 담고 있는 표입니다.</p>
@@ -175,7 +175,7 @@ GetLegendGraphic 요청에 벤터에 특화된 파라미터를 추가해서 일�
 <div class="highlight-python"><pre>http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&amp;VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=topp:states&amp;legend_options=fontName:Times%20New%20Roman;fontAntiAliasing:true;fontColor:0x000033;fontSize:14;bgColor:0xFFFFEE;dpi:180</pre>
 </div>
 <div class="figure align-center">
-<img alt="../../../_images/legendoptions.png" src="../../../_images/legendoptions.png" />
+<img alt="../../../images/legendoptions.png" src="../../../images/legendoptions.png" />
 <p class="caption"><em>산출물 제어를 위해 LEGEND_OPTIONS 이용하기</em></p>
 </div>
 </div>
@@ -189,7 +189,7 @@ GetLegendGraphic 요청에 벤터에 특화된 파라미터를 추가해서 일�
 <h3>What&#8217;s a raster legend<a class="headerlink" href="#what-s-a-raster-legend" title="Permalink to this headline">¶</a></h3>
 <p>다음은 일반적인 범례의 구조를 보여주는 그림으로, 주목해야 할 몇몇 요소들을 파라미터화했습니다.</p>
 <div class="figure align-center">
-<img alt="../../../_images/rasterlegend1.png" src="../../../_images/rasterlegend1.png" />
+<img alt="../../../images/rasterlegend1.png" src="../../../images/rasterlegend1.png" />
 <p class="caption"><em>일반적인 범례의 구조</em></p>
 </div>
 <p>이 페이지에 첨부된 SLD 파일을 예로 들어보자면, 다음 그림에서 각 행은 다음과 같은 <tt class="docutils literal"><span class="pre">ColorMapEntry</span></tt> 요소에 따라 그려집니다.</p>
@@ -216,7 +216,7 @@ GetLegendGraphic 요청에 벤터에 특화된 파라미터를 추가해서 일�
 <p>이 요청을 잘 해석할 수 없더라도 너무 걱정하지 마십시오. 여기 사용된 다양한 파라미터들을 곧 설명할 것입니다.
 이 파라미터들을 생성하고 설정하는 방법에 대한 기본적인 정보를 이 <a class="reference external" href="http://geoserver.org/display/GEOSDOC/GetLegendGraphic+Improvements">페이지</a>에서 찾아볼 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../../_images/rasterlegend2.png" src="../../../_images/rasterlegend2.png" />
+<img alt="../../../images/rasterlegend2.png" src="../../../images/rasterlegend2.png" />
 <p class="caption"><em>래스터 범례의 예시</em></p>
 </div>
 </div>
@@ -236,7 +236,7 @@ GetLegendGraphic 요청에 벤터에 특화된 파라미터를 추가해서 일�
 <h3>ColorMap type is VALUES<a class="headerlink" href="#colormap-type-is-values" title="Permalink to this headline">¶</a></h3>
 <p>첨부된 rainfall.sld SLD 파일을 참조하십시오.</p>
 <div class="figure align-center">
-<img alt="../../../_images/rasterlegend3.png" src="../../../_images/rasterlegend3.png" />
+<img alt="../../../images/rasterlegend3.png" src="../../../images/rasterlegend3.png" />
 <p class="caption"><em>래스터 범례: VALUES 유형</em></p>
 </div>
 </div>
@@ -244,7 +244,7 @@ GetLegendGraphic 요청에 벤터에 특화된 파라미터를 추가해서 일�
 <h3>ColorMap type is CLASSES<a class="headerlink" href="#colormap-type-is-classes" title="Permalink to this headline">¶</a></h3>
 <p>첨부된 rainfall_classes.sld SLD 파일을 참조하십시오.</p>
 <div class="figure align-center">
-<img alt="../../../_images/rasterlegend4.png" src="../../../_images/rasterlegend4.png" />
+<img alt="../../../images/rasterlegend4.png" src="../../../images/rasterlegend4.png" />
 <p class="caption"><em>래스터 범례: CLASSES 유형</em></p>
 </div>
 </div>
@@ -256,7 +256,7 @@ GetLegendGraphic 요청에 벤터에 특화된 파라미터를 추가해서 일�
 각 색상 요소가 그리고 있는 <tt class="docutils literal"><span class="pre">ColorMapEntry</span></tt>에서 나온 고정 색상을 보여주는 부분(두번째 범례에서 경계선으로 구분된 최하단)을 가지고 있는 반면
 해당 요소의 상단은 선형 보간법을 사용하고 있다는 사싷실을 드러내주도록 각 요소와 이전 요소를 이어주는 그레이디언트를 가지고 있다는 점을 유의하십시오.</p>
 <div class="figure align-center">
-<img alt="../../../_images/rasterlegend5.png" src="../../../_images/rasterlegend5.png" />
+<img alt="../../../images/rasterlegend5.png" src="../../../images/rasterlegend5.png" />
 <p class="caption"><em>래스터 범례: RAMP 유형</em></p>
 </div>
 </div>
@@ -321,7 +321,7 @@ GetLegendGraphic 요청에 벤터에 특화된 파라미터를 추가해서 일�
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../../_sources/services/wms/get_legend_graphic/legendgraphic.txt">원본 보기</a></li>
+          <li><a href="../../../sources/services/wms/get_legend_graphic/legendgraphic.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

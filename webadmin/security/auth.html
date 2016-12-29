@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Authentication &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Security" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -82,7 +82,7 @@ GeoServer 페이지로 이동하려는 익명 사용자는 HTTP 401 status code�
 <p class="last"><a class="reference internal" href="../../security/auth/web.html#sec-auth-webadmin"><em>Authenticating to the Web Admin Interface</em></a> 페이지를 참조하십시오.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/auth_anonymous.png" src="../../_images/auth_anonymous.png" />
+<img alt="../../images/auth_anonymous.png" src="../../images/auth_anonymous.png" />
 <p class="caption"><em>Anonymous authentication checkbox</em></p>
 </div>
 </div>
@@ -93,14 +93,14 @@ GeoServer 페이지로 이동하려는 익명 사용자는 HTTP 401 status code�
 <a class="reference internal" href="../../security/auth/providers.html#sec-auth-provider-jdbc"><em>JDBC</em></a> 및 <a class="reference internal" href="../../security/auth/providers.html#sec-auth-provider-ldap"><em>LDAP</em></a> 인증도 사용할 수 있습니다.</p>
 <p>새로운 제공자를 생성하려면 <em class="guilabel">Add new</em>를 클릭하십시오. 기존 제공자를 클릭하면 해당 제공자의 파라미터를 편집할 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_providers.png" src="../../_images/auth_providers.png" />
+<img alt="../../images/auth_providers.png" src="../../images/auth_providers.png" />
 <p class="caption"><em>인증 제공자 목록</em></p>
 </div>
 <div class="section" id="username-password-provider">
 <h3>Username/password provider<a class="headerlink" href="#username-password-provider" title="Permalink to this headline">¶</a></h3>
 <p>새로운 인증 제공자는 기본 인증 방법으로 user/group 서비스를 사용합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_userpass.png" src="../../_images/auth_userpass.png" />
+<img alt="../../images/auth_userpass.png" src="../../images/auth_userpass.png" />
 <p class="caption"><em>사용자명과 비밀번호를 사용하는 새로운 인증 제공자 생성하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -127,7 +127,7 @@ GeoServer 페이지로 이동하려는 익명 사용자는 HTTP 401 status code�
 <h3>JDBC provider<a class="headerlink" href="#jdbc-provider" title="Permalink to this headline">¶</a></h3>
 <p>JDBC 인증 제공자의 설정 옵션은 다음 그림과 같습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_jdbc.png" src="../../_images/auth_jdbc.png" />
+<img alt="../../images/auth_jdbc.png" src="../../images/auth_jdbc.png" />
 <p class="caption"><em>JDBC 인증 제공자 설정하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -162,11 +162,11 @@ GeoServer 페이지로 이동하려는 익명 사용자는 HTTP 401 status code�
 롤 할당(role assignment) 작업에 기본적으로 LDAP groups를 사용하도록 되어 있지만, user/group 서비스를 사용할 수 있는 옵션도 있습니다.
 이 옵션을 선택하느냐 마느냐에 따라 이 페이지의 옵션들도 달라집니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_ldap1.png" src="../../_images/auth_ldap1.png" />
+<img alt="../../images/auth_ldap1.png" src="../../images/auth_ldap1.png" />
 <p class="caption"><em>롤 할당 작업에 LDAP groups를 이용하는 LDAP 인증 제공자 설정하기</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/auth_ldap2.png" src="../../_images/auth_ldap2.png" />
+<img alt="../../images/auth_ldap2.png" src="../../images/auth_ldap2.png" />
 <p class="caption"><em>롤 할당 작업에 user/group 서비스를 이용하는 LDAP 인증 제공자 설정하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -250,7 +250,7 @@ User DN 패턴에 대신 사용되며 User Filter와 연계하여 괄호(bind)�
 <p>이 섹션에서 인증 절차를 선택합니다. 현재 버전에서는 기본(default) 인증 절차만 사용할 수 있습니다.
 기본 인증 절차에 대해 자세히 알고 싶다면 <a class="reference internal" href="../../security/auth/chain.html#sec-auth-chain"><em>Authentication chain</em></a> 페이지를 참조하십시오.</p>
 <div class="figure align-center">
-<img alt="../../_images/auth_chain.png" src="../../_images/auth_chain.png" />
+<img alt="../../images/auth_chain.png" src="../../images/auth_chain.png" />
 <p class="caption"><em>인증 절차 선택하기</em></p>
 </div>
 </div>
@@ -291,7 +291,7 @@ User DN 패턴에 대신 사용되며 User Filter와 연계하여 괄호(bind)�
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/webadmin/security/auth.txt">원본 보기</a></li>
+          <li><a href="../../sources/webadmin/security/auth.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

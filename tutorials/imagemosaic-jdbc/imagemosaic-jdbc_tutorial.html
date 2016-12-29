@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Storing a coverage in a JDBC database &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="Tutorials" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -82,7 +82,7 @@
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p>We use postgis/postgres as database engine, a database named &#8220;gis&#8221; and start with an image from openstreetmap. We also need this utility  <a class="reference external" href="http://www.gdal.org/gdal_retile.html">http://www.gdal.org/gdal_retile.html</a> . The best way to install with all dependencies is downloading from here <a class="reference external" href="http://fwtools.maptools.org/">http://fwtools.maptools.org/</a></p>
-<img alt="../../_images/start.png" src="../../_images/start.png" />
+<img alt="../../images/start.png" src="../../images/start.png" />
 <p>Create a working directory, lets call it <tt class="file docutils literal"><span class="pre">working</span></tt> ,download this image with a right mouse click (Image save as ...) and save it as <tt class="file docutils literal"><span class="pre">start_rgb.png</span></tt></p>
 <p>Check your image with:</p>
 <div class="highlight-python"><pre>gdalinfo start_rgb.png</pre>
@@ -306,19 +306,19 @@ psql -U postgres -d gis  -f add_osm.sql</pre>
 <div class="section" id="configuring-geoserver">
 <h2>Configuring GeoServer<a class="headerlink" href="#configuring-geoserver" title="Permalink to this headline">¶</a></h2>
 <p>Start GeoServer and log in.Under <em class="menuselection">Config ‣ WCS ‣ CoveragePlugins</em> you should see</p>
-<img alt="../../_images/snapshot1.png" src="../../_images/snapshot1.png" />
+<img alt="../../images/snapshot1.png" src="../../images/snapshot1.png" />
 <p>If there is no line starting with &#8220;ImageMosaicJDBC&#8221;, the <tt class="file docutils literal"><span class="pre">gt-imagemosiac-jdbc-</span><em><span class="pre">version</span></em><span class="pre">.jar</span></tt> file is not in your <tt class="file docutils literal"><span class="pre">WEB-INF/lib</span></tt> folder.
 Go to <em class="menuselection">Config‣Data‣CoverageStores‣New</em> and fill in the formular</p>
-<img alt="../../_images/snapshot2.png" src="../../_images/snapshot2.png" />
+<img alt="../../images/snapshot2.png" src="../../images/snapshot2.png" />
 <p>Press <em class="guilabel">New</em> and fill in the formular</p>
-<img alt="../../_images/snapshot3.png" src="../../_images/snapshot3.png" />
+<img alt="../../images/snapshot3.png" src="../../images/snapshot3.png" />
 <p>Press <em class="guilabel">Submit</em>.</p>
 <p>Press <em class="guilabel">Apply</em>, then <em class="guilabel">Save</em> to save your changes.</p>
 <p>Next select <em class="menuselection">Config‣Data‣Coverages‣New</em> and select &#8220;osm&#8221;.</p>
-<img alt="../../_images/snapshot4.png" src="../../_images/snapshot4.png" />
+<img alt="../../images/snapshot4.png" src="../../images/snapshot4.png" />
 <p>Press <em class="guilabel">New</em> and you will enter the Coverage Editor. Press <em class="guilabel">Submit</em>, <em class="guilabel">Apply</em> and <em class="guilabel">Save</em>.</p>
 <p>Under <em class="menuselection">Welcome‣Demo‣Map Preview</em> you will find a new layer &#8220;topp:osm&#8221;. Select it and see the results</p>
-<img alt="../../_images/snapshot5.png" src="../../_images/snapshot5.png" />
+<img alt="../../images/snapshot5.png" src="../../images/snapshot5.png" />
 <p>If you think the image is stretched, you are right. The reason is that the original image is georeferenced with EPSG:900913, but there is no support for this CRS in postigs (at the time of this writing). So I used EPSG:4326. For the purpose of this tutorial, this is ok.</p>
 </div>
 <div class="section" id="conclusion">
@@ -365,7 +365,7 @@ Go to <em class="menuselection">Config‣Data‣CoverageStores‣New</em> and fi
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/tutorials/imagemosaic-jdbc/imagemosaic-jdbc_tutorial.txt">Show Source</a></li>
+          <li><a href="../../sources/tutorials/imagemosaic-jdbc/imagemosaic-jdbc_tutorial.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

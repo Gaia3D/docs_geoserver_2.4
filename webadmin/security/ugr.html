@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Users, Groups, Roles &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Security" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -79,7 +79,7 @@ GeoServer는 user/group 서비스 하나를 기본적으로 사용하는데, 바
 이 서비스는 <a class="reference internal" href="../../security/passwd.html#sec-passwd-encryption"><em>Weak PBE</em></a> 방식으로 암호화돼 있으며 기본 <a class="reference internal" href="../../security/passwd.html#sec-passwd-policy"><em>password policy</em></a>를 사용합니다.
 JNDI를 사용하거나 사용하지 않거나 상관없이 <a class="reference internal" href="../../security/usergrouprole/usergroupservices.html#sec-rolesystem-usergroupjdbc"><em>JDBC</em></a>에 기반한 user/group 서비스를 사용할 수도 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_usergroup.png" src="../../_images/ugr_usergroup.png" />
+<img alt="../../images/ugr_usergroup.png" src="../../images/ugr_usergroup.png" />
 <p class="caption"><em>User/group 서비스</em></p>
 </div>
 <p>기존 user/group 서비스를 클릭하면 서비스를 편집할 수 있고, <em class="guilabel">Add new</em> 링크를 클릭하면 새 user/group 서비스를 설정할 수 있습니다.</p>
@@ -94,7 +94,7 @@ JNDI를 사용하거나 사용하지 않거나 상관없이 <a class="reference 
 <p>새로운 XML user/group 서비스를 생성하려면 <em class="guilabel">Add new</em> 링크를 클릭하십시오.
 XML이 기본적으로 선택되어 있습니다. XML user/group 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_ugxmlsettings.png" src="../../_images/ugr_ugxmlsettings.png" />
+<img alt="../../images/ugr_ugxmlsettings.png" src="../../images/ugr_ugxmlsettings.png" />
 <p class="caption"><em>XML user/group 서비스 추가하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -141,7 +141,7 @@ XML이 기본적으로 선택되어 있습니다. XML user/group 서비스에 �
 <p>새로운 JDBC user/group 서비스를 추가하려면 <em class="guilabel">Add new</em> 링크를 클릭한 다음, 앞의 그림 상단의 <em class="guilabel">JDBC</em> 옵션을 클릭하십시오.
 JDBC user/group 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_ugjdbcsettings.png" src="../../_images/ugr_ugjdbcsettings.png" />
+<img alt="../../images/ugr_ugjdbcsettings.png" src="../../images/ugr_ugjdbcsettings.png" />
 <p class="caption"><em>JDBC user/group 서비스 추가하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -195,7 +195,7 @@ JDBC user/group 서비스에 대한 설정 옵션은 다음 그림과 같습니�
 </table>
 <p>이런 파라미터 외에도, <a class="reference internal" href="../../data/database/jndi.html#data-jndi"><em>JNDI</em></a> 옵션을 선택했을 경우 다음 추가 파라미터가 적용됩니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_ugjdbcjndisettings.png" src="../../_images/ugr_ugjdbcjndisettings.png" />
+<img alt="../../images/ugr_ugjdbcjndisettings.png" src="../../images/ugr_ugjdbcjndisettings.png" />
 <p class="caption"><em>JNDI를 사용해서 JDBC user/group 서비스 추가하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -222,14 +222,14 @@ JDBC user/group 서비스에 대한 설정 옵션은 다음 그림과 같습니�
 Settings 탭의 내용은 새 user/group 서비스를 생성했을 때의 탭과 동일하며, 다른 2개의 탭의 내용은 다음과 같습니다.</p>
 <p>Users 탭에서 user/group 서비스의 사용자를 설정할 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_ugusers.png" src="../../_images/ugr_ugusers.png" />
+<img alt="../../images/ugr_ugusers.png" src="../../images/ugr_ugusers.png" />
 <p class="caption"><em>Users 탭</em></p>
 </div>
 <p>사용자명을 클릭하면 해당 파라미터를 변경할 수 있으며, <em class="guilabel">Add new user</em> 링크를 클릭하면 새 사용자를 생성할 수 있습니다.</p>
 <div class="section" id="add-user">
 <span id="webadmin-sec-users"></span><h3>Add user<a class="headerlink" href="#add-user" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
-<img alt="../../_images/ugr_newuser.png" src="../../_images/ugr_newuser.png" />
+<img alt="../../images/ugr_newuser.png" src="../../images/ugr_newuser.png" />
 <p class="caption"><em>사용자를 생성하거나 편집하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -278,14 +278,14 @@ Settings 탭의 내용은 새 user/group 서비스를 생성했을 때의 탭과
 <p>Groups 탭에서 user/group 서비스의 그룹을 설정할 수 있습니다.
 그룹을 추가하거나 제거할 수 있는 옵션이 있으며, 선택한 그룹 및 해당 그룹과 연결된 롤을 함께 제거할 수 있는 추가 옵션도 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_uggroups.png" src="../../_images/ugr_uggroups.png" />
+<img alt="../../images/ugr_uggroups.png" src="../../images/ugr_uggroups.png" />
 <p class="caption"><em>Groups 탭</em></p>
 </div>
 </div>
 <div class="section" id="add-group">
 <span id="webadmin-sec-groups"></span><h3>Add group<a class="headerlink" href="#add-group" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
-<img alt="../../_images/ugr_newgroup.png" src="../../_images/ugr_newgroup.png" />
+<img alt="../../images/ugr_newgroup.png" src="../../images/ugr_newgroup.png" />
 <p class="caption"><em>그룹을 생성하거나 편집하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -325,7 +325,7 @@ JNDI를 사용하거나 사용하지 않거나 상관없이 <a class="reference 
 GeoServer에서 기본적으로 활성화된 롤 서비스는 <a class="reference internal" href="../../security/usergrouprole/roleservices.html#sec-rolesystem-rolexml"><em>XML 기반</em></a> 서비스지만, JNDI를 사용하거나 사용하지 않거나 상관없이 <a class="reference internal" href="../../security/usergrouprole/roleservices.html#sec-rolesystem-rolejdbc"><em>JDBC</em></a>에 기반한 서비스를 사용할 수도 있습니다.</p>
 <p>관리자 롤(Administrator role)은 <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_roleservices.png" src="../../_images/ugr_roleservices.png" />
+<img alt="../../images/ugr_roleservices.png" src="../../images/ugr_roleservices.png" />
 <p class="caption"><em>롤 서비스</em></p>
 </div>
 <p>기존 롤 서비스를 클릭해서 편집할 수 있으며, <em class="guilabel">Add new</em> 링크를 클릭해서 새로운 롤 서비스를 설정할 수도 있습니다.</p>
@@ -340,7 +340,7 @@ GeoServer에서 기본적으로 활성화된 롤 서비스는 <a class="referenc
 <p>새로운 XML 롤 서비스를 추가하려면 <em class="guilabel">Add new</em> 링크를 클릭하십시오. 기본적으로 XML 옵션이 선택되어 있습니다.
 XML 롤 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_rolexmlsettings.png" src="../../_images/ugr_rolexmlsettings.png" />
+<img alt="../../images/ugr_rolexmlsettings.png" src="../../images/ugr_rolexmlsettings.png" />
 <p class="caption"><em>XML 롤 서비스 추가하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -377,7 +377,7 @@ XML 롤 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
 <p>새로운 JDBC 롤 서비스를 추가하려면 <em class="guilabel">Add new</em> 링크를 클릭한 다음, 앞의 그림 상단의 <em class="guilabel">JDBC</em> 옵션을 클릭하십시오.
 JDBC 롤 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_rolejdbcsettings.png" src="../../_images/ugr_rolejdbcsettings.png" />
+<img alt="../../images/ugr_rolejdbcsettings.png" src="../../images/ugr_rolejdbcsettings.png" />
 <p class="caption"><em>JDBC 롤 서비스 추가하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -428,7 +428,7 @@ JDBC 롤 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
 </table>
 <p>이런 파라미터 외에도, <a class="reference internal" href="../../data/database/jndi.html#data-jndi"><em>JNDI</em></a> 옵션을 선택했을 경우 다음 추가 파라미터가 적용됩니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_rolejdbcjndisettings.png" src="../../_images/ugr_rolejdbcjndisettings.png" />
+<img alt="../../images/ugr_rolejdbcjndisettings.png" src="../../images/ugr_rolejdbcjndisettings.png" />
 <p class="caption"><em>JNDI를 사용해서 JDBC 롤 서비스 추가하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -454,14 +454,14 @@ JDBC 롤 서비스에 대한 설정 옵션은 다음 그림과 같습니다.</p>
 <p>추가 메뉴에는 <em class="guilabel">Settings</em>, <em class="guilabel">Roles</em> 2가지 탭이 있습니다.
 Settings 탭의 내용은 새 롤 서비스를 생성했을 때의 탭과 동일하며, Roles 탭의 내용은 다음과 같습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/ugr_roleroles.png" src="../../_images/ugr_roleroles.png" />
+<img alt="../../images/ugr_roleroles.png" src="../../images/ugr_roleroles.png" />
 <p class="caption"><em>Roles 탭</em></p>
 </div>
 <p>롤을 클릭해서 해당 롤의 파라미터를 변경할 수 있으며, <em class="guilabel">Add new</em> 링크를 클릭해서 새로운 롤을 생성할 수도 있습니다.</p>
 <div class="section" id="add-role">
 <span id="webadmin-sec-roles"></span><h3>Add role<a class="headerlink" href="#add-role" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
-<img alt="../../_images/ugr_newrole.png" src="../../_images/ugr_newrole.png" />
+<img alt="../../images/ugr_newrole.png" src="../../images/ugr_newrole.png" />
 <p class="caption"><em>롤을 생성하거나 편집하기</em></p>
 </div>
 <table border="1" class="docutils">
@@ -532,7 +532,7 @@ Settings 탭의 내용은 새 롤 서비스를 생성했을 때의 탭과 동일
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/webadmin/security/ugr.txt">원본 보기</a></li>
+          <li><a href="../../sources/webadmin/security/ugr.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

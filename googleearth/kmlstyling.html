@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>KML Styling &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../_static/jquery.js"></script>
-  <script type="text/javascript" src="../_static/doctools.js"></script>
-  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../static/jquery.js"></script>
+  <script type="text/javascript" src="../static/doctools.js"></script>
+  <script type="text/javascript" src="../static/searchtools.js"></script>
   <script type="text/javascript" src="../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../index.html" />
       <link rel="up" title="Google Earth" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -140,7 +140,7 @@ SLD 파일을 보거나, 편집하거나, GeoServer에 추가하려면 웹 관�
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/pointDefault.png" src="../_images/pointDefault.png" />
+<img alt="../images/pointDefault.png" src="../images/pointDefault.png" />
 <p class="caption"><em>그림 2: 기본 포인트</em></p>
 </div>
 <p>포인트에 대해 <em>색상(color)</em>, <em>불투명도(opacity)</em>, <em>아이콘(icon)</em> 3가지 측면을 설정할 수 있습니다.</p>
@@ -160,7 +160,7 @@ SLD 파일을 보거나, 편집하거나, GeoServer에 추가하려면 웹 관�
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/pointColor.png" src="../_images/pointColor.png" />
+<img alt="../images/pointColor.png" src="../images/pointColor.png" />
 <p class="caption"><em>그림 3: 포인트 색상 설정하기 (#FF0000 = 100% 빨강)</em></p>
 </div>
 </div>
@@ -180,7 +180,7 @@ SLD 파일을 보거나, 편집하거나, GeoServer에 추가하려면 웹 관�
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/pointOpacity.png" src="../_images/pointOpacity.png" />
+<img alt="../images/pointOpacity.png" src="../images/pointOpacity.png" />
 <p class="caption"><em>그림 4: 포인트 불투명도 설정하기 (0.5 = 50% 불투명)</em></p>
 </div>
 </div>
@@ -199,7 +199,7 @@ SLD 파일을 보거나, 편집하거나, GeoServer에 추가하려면 웹 관�
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/pointCustomIcon.png" src="../_images/pointCustomIcon.png" />
+<img alt="../images/pointCustomIcon.png" src="../images/pointCustomIcon.png" />
 <p class="caption"><em>그림 5: 포인트에 대한 사용자 지정 아이콘</em></p>
 </div>
 <p>그림 5에서 사용자 지정 아이콘을 원격 URL로 설정했습니다.
@@ -225,7 +225,7 @@ GeoServer의 <tt class="docutils literal"><span class="pre">styles</span></tt> �
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/lineDefault.png" src="../_images/lineDefault.png" />
+<img alt="../images/lineDefault.png" src="../images/lineDefault.png" />
 <p class="caption"><em>그림 7: 기본 라인</em></p>
 </div>
 <p>라인에 대해 <em>색상(color)</em>, <em>폭(width)</em>, <em>불투명도(opacity)</em> 3가지 측면을 설정할 수 있습니다.</p>
@@ -241,7 +241,7 @@ GeoServer의 <tt class="docutils literal"><span class="pre">styles</span></tt> �
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/lineColor.png" src="../_images/lineColor.png" />
+<img alt="../images/lineColor.png" src="../images/lineColor.png" />
 <p class="caption"><em>그림 8: #FF0000(100% 빨강)으로 렌더링된 라인</em></p>
 </div>
 </div>
@@ -257,7 +257,7 @@ GeoServer의 <tt class="docutils literal"><span class="pre">styles</span></tt> �
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/lineWidth.png" src="../_images/lineWidth.png" />
+<img alt="../images/lineWidth.png" src="../images/lineWidth.png" />
 <p class="caption"><em>그림 9: 5픽셀 폭으로 렌더링된 라인</em></p>
 </div>
 </div>
@@ -273,7 +273,7 @@ GeoServer의 <tt class="docutils literal"><span class="pre">styles</span></tt> �
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/lineOpacity.png" src="../_images/lineOpacity.png" />
+<img alt="../images/lineOpacity.png" src="../images/lineOpacity.png" />
 <p class="caption"><em>그림 10: 불투명도 50%로 렌더링된 라인</em></p>
 </div>
 </div>
@@ -299,7 +299,7 @@ GeoServer의 <tt class="docutils literal"><span class="pre">styles</span></tt> �
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/polygonOutlineColor.png" src="../_images/polygonOutlineColor.png" />
+<img alt="../images/polygonOutlineColor.png" src="../images/polygonOutlineColor.png" />
 <p class="caption"><em>그림 11: 폴리곤의 외곽선 (#FF0000 = 100% 빨강)</em></p>
 </div>
 </div>
@@ -315,7 +315,7 @@ GeoServer의 <tt class="docutils literal"><span class="pre">styles</span></tt> �
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/polygonOutlineWidth.png" src="../_images/polygonOutlineWidth.png" />
+<img alt="../images/polygonOutlineWidth.png" src="../images/polygonOutlineWidth.png" />
 </div>
 <p><em>그림 12: 5픽셀 폭의 외곽선을 갖춘 폴리곤</em></p>
 </div>
@@ -332,7 +332,7 @@ GeoServer의 <tt class="docutils literal"><span class="pre">styles</span></tt> �
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/polygonOutlineOpacity.png" src="../_images/polygonOutlineOpacity.png" />
+<img alt="../images/polygonOutlineOpacity.png" src="../images/polygonOutlineOpacity.png" />
 <p class="caption"><em>그림 13: 불투명도 50%인 폴리곤의 획</em></p>
 </div>
 </div>
@@ -348,7 +348,7 @@ GeoServer의 <tt class="docutils literal"><span class="pre">styles</span></tt> �
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/polygonFillColor.png" src="../_images/polygonFillColor.png" />
+<img alt="../images/polygonFillColor.png" src="../images/polygonFillColor.png" />
 <p class="caption"><em>그림 14: 면 색상이 #0000FF(100% 파랑)인 폴리곤</em></p>
 </div>
 </div>
@@ -365,7 +365,7 @@ GeoServer의 <tt class="docutils literal"><span class="pre">styles</span></tt> �
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/polygonFillOpacity.png" src="../_images/polygonFillOpacity.png" />
+<img alt="../images/polygonFillOpacity.png" src="../images/polygonFillOpacity.png" />
 <p class="caption"><em>그림 15: 면의 불투명도가 50%(0.5)인 폴리곤</em></p>
 </div>
 </div>
@@ -385,7 +385,7 @@ GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pr
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/labelTemplate.png" src="../_images/labelTemplate.png" />
+<img alt="../images/labelTemplate.png" src="../images/labelTemplate.png" />
 <p class="caption"><em>그림 16: Freemarker 템플릿을 이용해 STATE_NAME의 값을 표출하기</em></p>
 </div>
 <p>Placemark 템플릿에 대해 더 자세히 알고 싶다면 <a class="reference internal" href="tutorials/kmlplacemark/index.html#kml-placemark-templates"><em>KML Placemark Templates</em></a> 예제를 참조하십시오.</p>
@@ -402,7 +402,7 @@ GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pr
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/labelSymbolizer.png" src="../_images/labelSymbolizer.png" />
+<img alt="../images/labelSymbolizer.png" src="../images/labelSymbolizer.png" />
 <p class="caption"><em>그림 17: TextSymbolizer를 이용해 STATE_NAME의 값을 표출하기</em></p>
 </div>
 <p>레이블에 대해 <em>색상(color)</em>과 <em>불투명도(opacity)</em> 2가지 측면을 설정할 수 있습니다.</p>
@@ -422,7 +422,7 @@ GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pr
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/labelColor.png" src="../_images/labelColor.png" />
+<img alt="../images/labelColor.png" src="../images/labelColor.png" />
 <p class="caption"><em>그림 18: TextSymbolizer로 텍스트를 검정(#000000)으로 설정</em></p>
 </div>
 </div>
@@ -442,7 +442,7 @@ GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pr
 </pre></div>
 </div>
 <div class="figure align-center">
-<img alt="../_images/labelOpacity.png" src="../_images/labelOpacity.png" />
+<img alt="../images/labelOpacity.png" src="../images/labelOpacity.png" />
 <p class="caption"><em>그림 19: TextSymbolizer로 텍스트를 불투명도 0.5(50% 투명)으로 설정</em></p>
 </div>
 </div>
@@ -452,7 +452,7 @@ GeoServer 데이터 디렉터리의 <tt class="docutils literal"><span class="pr
 <p>KML으로 작업 시, 각 피처는 해당 피처를 클릭했을 경우 접근할 수 있는 설명(description)과 링크됩니다.
 GeoServer는 기본적으로 특정 피처에 대한 모든 속성 및 속성값의 목록을 생성합니다.</p>
 <div class="figure align-center">
-<img alt="../_images/descriptionDefault.png" src="../_images/descriptionDefault.png" />
+<img alt="../images/descriptionDefault.png" src="../images/descriptionDefault.png" />
 <p class="caption"><em>그림 20: 피처에 대한 기본 설명</em></p>
 </div>
 <p>이 기본 동작을 변경할 수 있습니다. <tt class="docutils literal"><span class="pre">title.ftl</span></tt> 템플릿을 생성해서 편집하는 피처형 제목(title)과 마찬가지로,
@@ -464,7 +464,7 @@ GeoServer는 기본적으로 특정 피처에 대한 모든 속성 및 속성값
 </div>
 <p>표출되는 설명은 다음과 같이 보입니다.</p>
 <div class="figure align-center">
-<img alt="../_images/descriptionTemplate.png" src="../_images/descriptionTemplate.png" />
+<img alt="../images/descriptionTemplate.png" src="../images/descriptionTemplate.png" />
 <p class="caption"><em>그림 21: 사용자 지정 설명</em></p>
 </div>
 <p>설정된 명칭공간에 속한 모든 피처형에 대해 하나의 설명 템플릿을 생성할 수도 있습니다.
@@ -545,7 +545,7 @@ GeoServer는 기본적으로 특정 피처에 대한 모든 속성 및 속성값
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../_sources/googleearth/kmlstyling.txt">원본 보기</a></li>
+          <li><a href="../sources/googleearth/kmlstyling.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

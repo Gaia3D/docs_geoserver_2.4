@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>CQL and ECQL &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="Tutorials" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -87,7 +87,7 @@ The easiest way to follow the tutorial is to open the GeoServer Map Preview for 
 Click on the <em>Options</em> button at the top of the map preview to open the advanced options toolbar.
 The example filters can be entered in the <em>Filter: CQL</em> box.</p>
 <div class="figure align-center">
-<img alt="../../_images/gettingStarted1.png" src="../../_images/gettingStarted1.png" />
+<img alt="../../images/gettingStarted1.png" src="../../images/gettingStarted1.png" />
 <p class="caption"><em>topp:states preview with advanced toolbar open.</em></p>
 </div>
 <p>The attributes used in the filter examples are those included in the layer.
@@ -176,32 +176,32 @@ For example, the following are the attribute names and values for the Colorado f
 are expressed using plain text. The filter <tt class="docutils literal"><span class="pre">PERSONS</span> <span class="pre">&gt;</span> <span class="pre">15000000</span></tt> will select states that
 have more than 15 million inhabitants:</p>
 <div class="figure align-center">
-<img alt="../../_images/more15M.png" src="../../_images/more15M.png" />
+<img alt="../../images/more15M.png" src="../../images/more15M.png" />
 <p class="caption"><em>PERSONS &gt; 15000000</em></p>
 </div>
 <p>The full list of comparison operators is: <tt class="docutils literal"><span class="pre">=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;&gt;</span></tt>, <tt class="docutils literal"><span class="pre">&gt;</span></tt>, <tt class="docutils literal"><span class="pre">&gt;=</span></tt>,  <tt class="docutils literal"><span class="pre">&lt;</span></tt>, <tt class="docutils literal"><span class="pre">&lt;=</span></tt>.</p>
 <p>To select a range of values the BETWEEN operator can be used: <tt class="docutils literal"><span class="pre">PERSONS</span> <span class="pre">BETWEEN</span> <span class="pre">1000000</span> <span class="pre">AND</span> <span class="pre">3000000</span></tt>:</p>
 <div class="figure align-center">
-<img alt="../../_images/between.png" src="../../_images/between.png" />
+<img alt="../../images/between.png" src="../../images/between.png" />
 <p class="caption"><em>PERSONS BETWEEN 1000000 AND 3000000</em></p>
 </div>
 <p>Comparison operators also support text values. For instance, to select only the state of California, the filter is
 <tt class="docutils literal"><span class="pre">STATE_NAME</span> <span class="pre">=</span> <span class="pre">'California'</span></tt>.
 More general text comparisons can be made using the <tt class="docutils literal"><span class="pre">LIKE</span></tt> operator. <tt class="docutils literal"><span class="pre">STATE_NAME</span> <span class="pre">LIKE</span> <span class="pre">'N%'</span></tt> will extract all states starting with an &#8220;N&#8221;:</p>
 <div class="figure align-center">
-<img alt="../../_images/startn.png" src="../../_images/startn.png" />
+<img alt="../../images/startn.png" src="../../images/startn.png" />
 <p class="caption"><em>STATE_NAME LIKE &#8216;N%&#8217;</em></p>
 </div>
 <p>It is also possible to compare two attributes with each other. <tt class="docutils literal"><span class="pre">MALE</span> <span class="pre">&gt;</span> <span class="pre">FEMALE</span></tt> selects the
 states in which the male population surpasses the female one (a rare occurrence):</p>
 <div class="figure align-center">
-<img alt="../../_images/malefemale.png" src="../../_images/malefemale.png" />
+<img alt="../../images/malefemale.png" src="../../images/malefemale.png" />
 <p class="caption"><em>MALE &gt; FEMALE</em></p>
 </div>
 <p>Arithmetic expressions can be computed using the <tt class="docutils literal"><span class="pre">+,</span> <span class="pre">-,</span> <span class="pre">*,</span> <span class="pre">/</span></tt> operators.
 The filter <tt class="docutils literal"><span class="pre">UNEMPLOY</span> <span class="pre">/</span> <span class="pre">(EMPLOYED</span> <span class="pre">+</span> <span class="pre">UNEMPLOY)</span> <span class="pre">&gt;</span> <span class="pre">0.07</span></tt> selects all states whose unemployment ratio is above 7% (remember the sample data is very old, so don&#8217;t draw any conclusion from the results!)</p>
 <div class="figure align-center">
-<img alt="../../_images/employ.png" src="../../_images/employ.png" />
+<img alt="../../images/employ.png" src="../../images/employ.png" />
 <p class="caption"><em>UNEMPLOY / (EMPLOYED + UNEMPLOY) &gt; 0.07</em></p>
 </div>
 </div>
@@ -209,12 +209,12 @@ The filter <tt class="docutils literal"><span class="pre">UNEMPLOY</span> <span 
 <h2>Id and list comparisons<a class="headerlink" href="#id-and-list-comparisons" title="Permalink to this headline">¶</a></h2>
 <p>If we want to extract only the states with specific feature ids we can use the <tt class="docutils literal"><span class="pre">IN</span></tt> operator without specifying any attribute, as in <tt class="docutils literal"><span class="pre">IN</span> <span class="pre">('states.1',</span> <span class="pre">'states.12')</span></tt>:</p>
 <div class="figure align-center">
-<img alt="../../_images/idfilter.png" src="../../_images/idfilter.png" />
+<img alt="../../images/idfilter.png" src="../../images/idfilter.png" />
 <p class="caption"><em>IN (&#8216;states.1&#8217;, &#8216;states.12&#8217;)</em></p>
 </div>
 <p>If instead we want to extract the states whose name is in a given list we can use the <tt class="docutils literal"><span class="pre">IN</span></tt> operator specifying an attribute name, as in <tt class="docutils literal"><span class="pre">STATE_NAME</span> <span class="pre">IN</span> <span class="pre">('New</span> <span class="pre">York',</span> <span class="pre">'California',</span> <span class="pre">'Montana',</span> <span class="pre">'Texas')</span></tt>:</p>
 <div class="figure align-center">
-<img alt="../../_images/statenames.png" src="../../_images/statenames.png" />
+<img alt="../../images/statenames.png" src="../../images/statenames.png" />
 <p class="caption"><em>STATE_NAME IN (&#8216;New York&#8217;, &#8216;California&#8217;, &#8216;Montana&#8217;, &#8216;Texas&#8217;)</em></p>
 </div>
 </div>
@@ -224,7 +224,7 @@ The filter <tt class="docutils literal"><span class="pre">UNEMPLOY</span> <span 
 This greatly increases the power of CQL expressions.</p>
 <p>For example, suppose we want to find all states whose name contains an &#8220;m&#8221;, regardless of letter case. We can use the <tt class="docutils literal"><span class="pre">strToLowerCase</span></tt> to turn all the state names to lowercase and then use a like comparison: <tt class="docutils literal"><span class="pre">strToLowerCase(STATE_NAME)</span> <span class="pre">like</span> <span class="pre">'%m%'</span></tt>:</p>
 <div class="figure align-center">
-<img alt="../../_images/mstates.png" src="../../_images/mstates.png" />
+<img alt="../../images/mstates.png" src="../../images/mstates.png" />
 <p class="caption"><em>strToLowerCase(STATE_NAME) like &#8216;%m%&#8217;</em></p>
 </div>
 </div>
@@ -233,12 +233,12 @@ This greatly increases the power of CQL expressions.</p>
 <p>CQL provides a full set of geometric filter capabilities. Say, for example, you want to display only the states that intersect the (-90,40,-60,45) bounding box.
 The filter will be <tt class="docutils literal"><span class="pre">BBOX(the_geom,</span> <span class="pre">-90,</span> <span class="pre">40,</span> <span class="pre">-60,</span> <span class="pre">45)</span></tt></p>
 <div class="figure align-center">
-<img alt="../../_images/bbox.png" src="../../_images/bbox.png" />
+<img alt="../../images/bbox.png" src="../../images/bbox.png" />
 <p class="caption"><em>BBOX(the_geom, -90, 40, -60, 45)</em></p>
 </div>
 <p>Conversely, you can select the states that do <em>not</em> intersect the bounding box with the filter: <tt class="docutils literal"><span class="pre">DISJOINT(the_geom,</span> <span class="pre">POLYGON((-90</span> <span class="pre">40,</span> <span class="pre">-90</span> <span class="pre">45,</span> <span class="pre">-60</span> <span class="pre">45,</span> <span class="pre">-60</span> <span class="pre">40,</span> <span class="pre">-90</span> <span class="pre">40)))</span></tt>:</p>
 <div class="figure align-center">
-<img alt="../../_images/disjoint.png" src="../../_images/disjoint.png" />
+<img alt="../../images/disjoint.png" src="../../images/disjoint.png" />
 <p class="caption"><em>DISJOINT(the_geom, POLYGON((-90 40, -90 45, -60 45, -60 40, -90 40)))</em></p>
 </div>
 <p>The full list of geometric predicates is: <tt class="docutils literal"><span class="pre">EQUALS</span></tt>, <tt class="docutils literal"><span class="pre">DISJOINT</span></tt>, <tt class="docutils literal"><span class="pre">INTERSECTS</span></tt>, <tt class="docutils literal"><span class="pre">TOUCHES</span></tt>, <tt class="docutils literal"><span class="pre">CROSSES</span></tt>, <tt class="docutils literal"><span class="pre">WITHIN</span></tt>, <tt class="docutils literal"><span class="pre">CONTAINS</span></tt>, <tt class="docutils literal"><span class="pre">OVERLAPS</span></tt>, <tt class="docutils literal"><span class="pre">RELATE</span></tt>, <tt class="docutils literal"><span class="pre">DWITHIN</span></tt>, <tt class="docutils literal"><span class="pre">BEYOND</span></tt>.</p>
@@ -277,7 +277,7 @@ The filter will be <tt class="docutils literal"><span class="pre">BBOX(the_geom,
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/tutorials/cql/cql_tutorial.txt">Show Source</a></li>
+          <li><a href="../../sources/tutorials/cql/cql_tutorial.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

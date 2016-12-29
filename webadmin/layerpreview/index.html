@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Layer Preview &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Web Administration Interface" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -71,7 +71,7 @@
 <span id="layerpreview"></span><h1>Layer Preview<a class="headerlink" href="#layer-preview" title="Permalink to this headline">¶</a></h1>
 <p>이 섹션에서 다양한 산출물 포맷으로 레이어를 보는 방법을 소개합니다. 미리 보기(preview)가 가능하도록 해당 레이어를 설정해두어야 합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/preview_list2.png" src="../../_images/preview_list2.png" />
+<img alt="../../images/preview_list2.png" src="../../images/preview_list2.png" />
 <p class="caption"><em>Layer Preview 페이지</em></p>
 </div>
 <p>각 레이어행은 레이어의 데이터형(type), 레이어명(name), 제목(title), 미리 보기가 가능한 포맷을 보여줍니다.</p>
@@ -84,15 +84,15 @@
 <tr class="row-odd"><td><strong>데이터형 아이콘</strong></td>
 <td><strong>설명</strong></td>
 </tr>
-<tr class="row-even"><td><img alt="../../_images/data_layers_type11.png" class="first last" src="../../_images/data_layers_type11.png" />
+<tr class="row-even"><td><img alt="../../images/data_layers_type11.png" class="first last" src="../../images/data_layers_type11.png" />
 </td>
 <td>래스터 (그리드) 레이어</td>
 </tr>
-<tr class="row-odd"><td><img alt="../../_images/data_layers_type21.png" class="first last" src="../../_images/data_layers_type21.png" />
+<tr class="row-odd"><td><img alt="../../images/data_layers_type21.png" class="first last" src="../../images/data_layers_type21.png" />
 </td>
 <td>벡터 (피처) 레이어</td>
 </tr>
-<tr class="row-even"><td><img alt="../../_images/preview_layergroup.png" class="first last" src="../../_images/preview_layergroup.png" />
+<tr class="row-even"><td><img alt="../../images/preview_layergroup.png" class="first last" src="../../images/preview_layergroup.png" />
 </td>
 <td>레이어 그룹</td>
 </tr>
@@ -101,7 +101,7 @@
 <p>레이어명은 작업공간 및 레이어의 명칭을 의미하며, 제목은 <a class="reference internal" href="../data/layers.html#edit-layer-data"><em>Edit Layer Data</em></a> 패널에서 설정한 간단한 설명을 가리킵니다.
 다음 예제에서 nurc는 작업공간을, Arc_Sample은 레이어 명칭을 뜻하며, &#8220;A sample ArcGrid field&#8221;는 Edit Later Data 패널에서 설정된 제목입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/preview_row1.png" src="../../_images/preview_row1.png" />
+<img alt="../../images/preview_row1.png" src="../../images/preview_row1.png" />
 <p class="caption"><em>레이어 미리 보기 단일 행</em></p>
 </div>
 <div class="section" id="output-formats">
@@ -160,7 +160,7 @@ PNG 파일은 단일 색상의 넓은 면으로 이루어진 이미지인 경우
 </tbody>
 </table>
 <div class="figure align-left">
-<img alt="../../_images/preview_openlayers.png" src="../../_images/preview_openlayers.png" />
+<img alt="../../images/preview_openlayers.png" src="../../images/preview_openlayers.png" />
 <p class="caption"><em>이미지 산출물의 예 - nurc:Pk50095 레이어의 OpenLayers 미리 보기</em></p>
 </div>
 </div>
@@ -277,7 +277,7 @@ GeoServer는 zip 파일 형태로 shapefile을 생산하는데, 이 zip 파일�
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/webadmin/layerpreview/index.txt">원본 보기</a></li>
+          <li><a href="../../sources/webadmin/layerpreview/index.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Using the ImageMosaic plugin &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="Tutorials" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -156,7 +156,7 @@ The table below describes the various elements in this configuration file.</p>
 <li>Go to &#8220;Data Panel | Stores&#8221; via the web interface and click &#8216;Add new Store&#8217;. Finally click &#8220;ImageMosaic - Image mosaicking plugin&#8221; from &#8220;Raster Data Source&#8221;:</li>
 </ol>
 <div class="figure align-center">
-<img alt="../../_images/imagemosaiccreate1.png" src="../../_images/imagemosaiccreate1.png" />
+<img alt="../../images/imagemosaiccreate1.png" src="../../images/imagemosaiccreate1.png" />
 <p class="caption"><em>ImageMosaic in the list of raster data stores</em></p>
 </div>
 <ol class="arabic simple" start="2">
@@ -179,7 +179,7 @@ The table below describes the various elements in this configuration file.</p>
 </ul>
 <p>Finally click the &#8220;Save&#8221; button:</p>
 <div class="figure align-center">
-<img alt="../../_images/imagemosaicconfigure1.png" src="../../_images/imagemosaicconfigure1.png" />
+<img alt="../../images/imagemosaicconfigure1.png" src="../../images/imagemosaicconfigure1.png" />
 <p class="caption"><em>Configuring an ImageMosaic data store</em></p>
 </div>
 </div>
@@ -189,14 +189,14 @@ The table below describes the various elements in this configuration file.</p>
 <li>Go to &#8220;Data Panel | Layers&#8221; via the web interface and click &#8216;Add a new resource&#8217;. Finally choose the name of the Store you just created:</li>
 </ol>
 <div class="figure align-center">
-<img alt="../../_images/newlayerchoser.png" src="../../_images/newlayerchoser.png" />
+<img alt="../../images/newlayerchoser.png" src="../../images/newlayerchoser.png" />
 </div>
 <p><em>Layer Chooser</em></p>
 <ol class="arabic simple" start="2">
 <li>Click on the layer you wish to configure and you will be presented with the Coverage Editor:</li>
 </ol>
 <div class="figure align-left">
-<img alt="../../_images/coverageeditor.png" src="../../_images/coverageeditor.png" />
+<img alt="../../images/coverageeditor.png" src="../../images/coverageeditor.png" />
 </div>
 <p><em>Coverage Editor</em></p>
 <ol class="arabic simple" start="3">
@@ -244,11 +244,11 @@ The table below describes the various elements in this configuration file.</p>
 </ul>
 </div>
 <div class="figure align-left">
-<img alt="../../_images/output_color.png" src="../../_images/output_color.png" />
+<img alt="../../images/output_color.png" src="../../images/output_color.png" />
 </div>
 <p><em>OutputTransparentColor parameter configured with &#8216;no color&#8217;</em></p>
 <div class="figure align-left">
-<img alt="../../_images/output_color2.png" src="../../_images/output_color2.png" />
+<img alt="../../images/output_color2.png" src="../../images/output_color2.png" />
 </div>
 <p><em>OutputTransparentColor parameter configured with &#8216;no data&#8217; color</em></p>
 <table border="1" class="docutils">
@@ -263,11 +263,11 @@ The table below describes the various elements in this configuration file.</p>
 </tbody>
 </table>
 <div class="figure align-left">
-<img alt="../../_images/input_color.png" src="../../_images/input_color.png" />
+<img alt="../../images/input_color.png" src="../../images/input_color.png" />
 </div>
 <p><em>InputTransparentColor parameter not configured</em></p>
 <div class="figure align-left">
-<img alt="../../_images/input_color2.png" src="../../_images/input_color2.png" />
+<img alt="../../images/input_color2.png" src="../../images/input_color2.png" />
 </div>
 <p><em>InputTransparentColor parameter configured</em></p>
 <table border="1" class="docutils">
@@ -339,7 +339,7 @@ Inside the Coverage Editor, Publishing tab - Default Title section, you can spec
 </div>
 <p>In this way you have a clear distinction between the different intervals of the dataset that compose the mosaic, like the background and the &#8216;no data&#8217; area.</p>
 <div class="figure align-left">
-<img alt="../../_images/vito_config_1.png" src="../../_images/vito_config_1.png" />
+<img alt="../../images/vito_config_1.png" src="../../images/vito_config_1.png" />
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -347,7 +347,7 @@ Inside the Coverage Editor, Publishing tab - Default Title section, you can spec
 </div>
 <p>The result is the following.</p>
 <div class="figure align-left">
-<img alt="../../_images/vito_1.png" src="../../_images/vito_1.png" />
+<img alt="../../images/vito_1.png" src="../../images/vito_1.png" />
 <p class="caption"><em>Basic configuration</em></p>
 </div>
 <p>By setting in opportune  ways the other configuration parameters, it is possible to improve at the same time both the appearance of the mosaic as well as the its performances. As an instance we could:</p>
@@ -355,7 +355,7 @@ Inside the Coverage Editor, Publishing tab - Default Title section, you can spec
 <li>Make the &#8216;no data&#8217; areas transparent and coherent with the real data. To achieve this we need to change the opacity of the &#8216;no data&#8217; ColorMapEntry in the &#8216;dem&#8217; style to &#8216;0.0&#8217; and set &#8216;BackgroundValues&#8217; parameter at &#8216;-9999&#8217; so that empty areas will be filled with this value. The result is as follows:</li>
 </ol>
 <div class="figure align-left">
-<img alt="../../_images/vito_2.png" src="../../_images/vito_2.png" />
+<img alt="../../images/vito_2.png" src="../../images/vito_2.png" />
 <p class="caption"><em>Advanced configuration</em></p>
 </div>
 <ol class="arabic simple" start="2">
@@ -402,7 +402,7 @@ Inside the Coverage Editor, Publishing tab - Default Title section, you can spec
 </div>
 <p>The result is the following.</p>
 <div class="figure align-left">
-<img alt="../../_images/prato_1.png" src="../../_images/prato_1.png" />
+<img alt="../../images/prato_1.png" src="../../images/prato_1.png" />
 <p class="caption"><em>Basic configuration</em></p>
 </div>
 <div class="admonition note">
@@ -422,7 +422,7 @@ Inside the Coverage Editor, Publishing tab - Default Title section, you can spec
 </ol>
 <p>The results is the following:</p>
 <div class="figure align-left">
-<img alt="../../_images/prato_2.png" src="../../_images/prato_2.png" />
+<img alt="../../images/prato_2.png" src="../../images/prato_2.png" />
 <p class="caption"><em>Advanced configuration</em></p>
 </div>
 </div>
@@ -432,14 +432,14 @@ Inside the Coverage Editor, Publishing tab - Default Title section, you can spec
 <p>In the Coverage Editor you can use the basic &#8216;raster&#8217; style as shown above since there is not need to use any of the advanced RasterSymbolizer capabilities.</p>
 <p>The result is the following.</p>
 <div class="figure align-left">
-<img alt="../../_images/iacovella_1.png" src="../../_images/iacovella_1.png" />
+<img alt="../../images/iacovella_1.png" src="../../images/iacovella_1.png" />
 <p class="caption"><em>Basic configuration</em></p>
 </div>
 <p>This mosaic, formed by two single granules,  shows a typical case where the &#8216;no data&#8217; collar areas of the granules overlap, as it is shown in the picture above.
 In this case we can use the &#8216;InputTrasparentColor&#8217; parameter at  to make the collar areas disappear during the superimposition process, as instance, in this case, by using the &#8216;#FFFFFF&#8217; &#8216;InputTrasparentColor&#8217;.</p>
 <p>This is the result:</p>
 <div class="figure align-left">
-<img alt="../../_images/iacovella_2.png" src="../../_images/iacovella_2.png" />
+<img alt="../../images/iacovella_2.png" src="../../images/iacovella_2.png" />
 <p class="caption"><em>Advanced configuration</em></p>
 </div>
 <p>The final configuration parameters are the followings:</p>
@@ -500,7 +500,7 @@ In this case we can use the &#8216;InputTrasparentColor&#8217; parameter at  to 
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/tutorials/image_mosaic_plugin/imagemosaic.txt">Show Source</a></li>
+          <li><a href="../../sources/tutorials/image_mosaic_plugin/imagemosaic.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

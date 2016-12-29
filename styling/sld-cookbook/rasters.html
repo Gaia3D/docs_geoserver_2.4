@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Rasters &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="SLD Cookbook" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -80,25 +80,25 @@
 </div>
 <div class="section" id="example-raster">
 <h2>Example raster<a class="headerlink" href="#example-raster" title="Permalink to this headline">¶</a></h2>
-<p>각 예시에 사용되는 <a class="reference download internal" href="../../_downloads/sld_cookbook_raster.zip"><tt class="xref download docutils literal"><span class="pre">래스터 레이어</span></tt></a>는
+<p>각 예시에 사용되는 <a class="reference download internal" href="../../downloads/sld_cookbook_raster.zip"><tt class="xref download docutils literal"><span class="pre">래스터 레이어</span></tt></a>는
 가상 세계의 표고 데이터를 담고 있습니다. 이 데이터는 EPSG:4326(경도/위도)를 사용하며 범위는 70에서 256 사이입니다.
 최소값이 검정이고 최대값이 하양인 회색 톤(grayscale)으로 렌더링하면 이 래스터는 다음과 같이 보입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster2.png" src="../../_images/raster2.png" />
+<img alt="../../images/raster2.png" src="../../images/raster2.png" />
 <p class="caption"><em>회색 톤으로 렌더링한 래스터 파일</em></p>
 </div>
-<p><a class="reference download internal" href="../../_downloads/sld_cookbook_raster.zip"><tt class="xref download docutils literal"><span class="pre">래스터 shapefile을 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/sld_cookbook_raster.zip"><tt class="xref download docutils literal"><span class="pre">래스터 shapefile을 다운로드하십시오</span></tt></a>.</p>
 </div>
 <div class="section" id="two-color-gradient">
 <span id="sld-cookbook-raster-twocolorgradient"></span><h2>Two-color gradient<a class="headerlink" href="#two-color-gradient" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 낮은 표고에 녹색, 높은 표고에 갈색을 사용한 2색 그레이디언트(gradient) 스타일을 보여줍니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_twocolorgradient1.png" src="../../_images/raster_twocolorgradient1.png" />
+<img alt="../../images/raster_twocolorgradient1.png" src="../../images/raster_twocolorgradient1.png" />
 <p class="caption"><em>2색 그레이디언트</em></p>
 </div>
 <div class="section" id="code">
 <h3>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/raster_twocolorgradient.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Two-color gradient&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/raster_twocolorgradient.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Two-color gradient&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -139,12 +139,12 @@
 <h2>Transparent gradient<a class="headerlink" href="#transparent-gradient" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 앞의 <a class="reference internal" href="#sld-cookbook-raster-twocolorgradient"><em>Two-color gradient</em></a>와 마찬가지로 2색 그레이디언트를 생성하고, 불투명도 30%를 설정해서 전체 레이어를 거의 투명하게 합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_transparentgradient1.png" src="../../_images/raster_transparentgradient1.png" />
+<img alt="../../images/raster_transparentgradient1.png" src="../../images/raster_transparentgradient1.png" />
 <p class="caption"><em>투명 그레이디언트</em></p>
 </div>
 <div class="section" id="id1">
 <h3>Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/raster_transparentgradient.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Transparent gradient&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/raster_transparentgradient.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Transparent gradient&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -183,12 +183,12 @@
 <h2>Brightness and contrast<a class="headerlink" href="#brightness-and-contrast" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 산출물의 색상을 정규화(normalize)하고 밝기(brightness)를 2배 올립니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_brightnessandcontrast1.png" src="../../_images/raster_brightnessandcontrast1.png" />
+<img alt="../../images/raster_brightnessandcontrast1.png" src="../../images/raster_brightnessandcontrast1.png" />
 <p class="caption"><em>밝기와 대비</em></p>
 </div>
 <div class="section" id="id3">
 <h3>Code<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/raster_brightnessandcontrast.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Brightness and contrast&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/raster_brightnessandcontrast.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Brightness and contrast&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -234,12 +234,12 @@
 <h2>Three-color gradient<a class="headerlink" href="#three-color-gradient" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 3원색 그레이디언트를 생성합니다. 또 그레이디언트가 데이터 값의 전체 범위를 처리하지 않고, 일부 데이터가 전혀 렌더링되지 않도록 합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_threecolorgradient1.png" src="../../_images/raster_threecolorgradient1.png" />
+<img alt="../../images/raster_threecolorgradient1.png" src="../../images/raster_threecolorgradient1.png" />
 <p class="caption"><em>3색 그레이디언트</em></p>
 </div>
 <div class="section" id="id5">
 <h3>Code<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/raster_threecolorgradient.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Three-color gradient&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/raster_threecolorgradient.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Three-color gradient&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -279,12 +279,12 @@
 <h2>Alpha channel<a class="headerlink" href="#alpha-channel" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 &#8220;알파 채널(alpha channel)&#8221;을 생성해서 높은 값일수록 더 투명해지는 효과를 냅니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_alphachannel1.png" src="../../_images/raster_alphachannel1.png" />
+<img alt="../../images/raster_alphachannel1.png" src="../../images/raster_alphachannel1.png" />
 <p class="caption"><em>알파 채널</em></p>
 </div>
 <div class="section" id="id7">
 <h3>Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/raster_alphachannel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Alpha channel&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/raster_alphachannel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Alpha channel&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -326,12 +326,12 @@
 <p class="last">이 예시는 GeoServer의 SLD 확장 모듈이 필요합니다. 표준 SLD 1.0 사양은 불연속 색상(discrete colors)을 포함하지 않습니다.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/raster_discretecolors1.png" src="../../_images/raster_discretecolors1.png" />
+<img alt="../../images/raster_discretecolors1.png" src="../../images/raster_discretecolors1.png" />
 <p class="caption"><em>불연속 색상</em></p>
 </div>
 <div class="section" id="id9">
 <h3>Code<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/raster_discretecolors.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Discrete colors&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/raster_discretecolors.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Discrete colors&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -368,12 +368,12 @@
 <h2>Many color gradient<a class="headerlink" href="#many-color-gradient" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 8가지 다른 색상에 걸쳐 보간되는 그레이디언트를 보여줍니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/raster_manycolorgradient1.png" src="../../_images/raster_manycolorgradient1.png" />
+<img alt="../../images/raster_manycolorgradient1.png" src="../../images/raster_manycolorgradient1.png" />
 <p class="caption"><em>다색(多色) 그레이디언트</em></p>
 </div>
 <div class="section" id="id11">
 <h3>Code<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/raster_manycolorgradient.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Many color gradient&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/raster_manycolorgradient.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Many color gradient&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -534,7 +534,7 @@
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/styling/sld-cookbook/rasters.txt">원본 보기</a></li>
+          <li><a href="../../sources/styling/sld-cookbook/rasters.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

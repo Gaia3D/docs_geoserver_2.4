@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Lines &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="SLD Cookbook" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -77,7 +77,7 @@
 </div>
 <div class="section" id="example-lines-layer">
 <span id="sld-cookbook-lines-attributes"></span><h2>Example lines layer<a class="headerlink" href="#example-lines-layer" title="Permalink to this headline">¶</a></h2>
-<p>각 예시에 사용되는 <a class="reference download internal" href="../../_downloads/sld_cookbook_line.zip"><tt class="xref download docutils literal"><span class="pre">라인 레이어</span></tt></a>는
+<p>각 예시에 사용되는 <a class="reference download internal" href="../../downloads/sld_cookbook_line.zip"><tt class="xref download docutils literal"><span class="pre">라인 레이어</span></tt></a>는
 가상 국가의 도로 정보를 담고 있습니다. 이 레이어의 다음 속성 테이블을 참조하십시오.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -192,18 +192,18 @@
 </tr>
 </tbody>
 </table>
-<p><a class="reference download internal" href="../../_downloads/sld_cookbook_line.zip"><tt class="xref download docutils literal"><span class="pre">라인 shapefile을 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/sld_cookbook_line.zip"><tt class="xref download docutils literal"><span class="pre">라인 shapefile을 다운로드하십시오</span></tt></a>.</p>
 </div>
 <div class="section" id="simple-line">
 <span id="sld-cookbook-lines-simpleline"></span><h2>Simple line<a class="headerlink" href="#simple-line" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 라인의 색상을 검정으로, 굵기를 3픽셀로 설정합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/line_simpleline1.png" src="../../_images/line_simpleline1.png" />
+<img alt="../../images/line_simpleline1.png" src="../../images/line_simpleline1.png" />
 <p class="caption"><em>단순 라인</em></p>
 </div>
 <div class="section" id="code">
 <h3>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_simpleline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_simpleline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -239,12 +239,12 @@
 <p>이 예시에서 경계선(border)을 가진 라인(&#8220;윤곽선 라인(cased line)&#8221;이라고도 합니다)을 설정하는 방법을 설명합니다.
 이 예시의 경우, 라인은 굵기 3픽셀의 파란 중심선과 굵기 1픽셀의 회색 경계선을 갖추고 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/line_linewithborder1.png" src="../../_images/line_linewithborder1.png" />
+<img alt="../../images/line_linewithborder1.png" src="../../images/line_linewithborder1.png" />
 <p class="caption"><em>경계선을 가진 라인</em></p>
 </div>
 <div class="section" id="id1">
 <h3>Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_linewithborder.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Line with border&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_linewithborder.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Line with border&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -315,12 +315,12 @@ GeoServer는 <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle
 <h2>Dashed line<a class="headerlink" href="#dashed-line" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 <a class="reference internal" href="#sld-cookbook-lines-simpleline"><em>Simple line</em></a>을 변경해서 5픽셀 길이의 라인 사이에 2픽셀 길이의 공백을 두어 점선 라인(dashed line)을 생성합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/line_dashedline1.png" src="../../_images/line_dashedline1.png" />
+<img alt="../../images/line_dashedline1.png" src="../../images/line_dashedline1.png" />
 <p class="caption"><em>점선 라인</em></p>
 </div>
 <div class="section" id="id3">
 <h3>Code<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_dashedline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Dashed line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_dashedline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Dashed line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -359,12 +359,12 @@ GeoServer는 <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle
 <p class="last">표준 SLD 1.0 사양이 해칭을 포함하지 않기 때문에 이 예시에 GeoServer의 SLD 확장 모듈이 필요합니다.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/line_railroad1.png" src="../../_images/line_railroad1.png" />
+<img alt="../../images/line_railroad1.png" src="../../images/line_railroad1.png" />
 <p class="caption"><em>철도 (해칭)</em></p>
 </div>
 <div class="section" id="id5">
 <h3>Code<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_railroad.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Railroad (hatching)&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_railroad.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Railroad (hatching)&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -441,12 +441,12 @@ GeoServer는 <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle
 이 스타일은 사양을 준수하고 있지만, SLD 사양은 이 2개의 조합이 어떤 산출물을 생산해야 하는지 명시하지 않고 있기 때문입니다.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/line_dashspace1.png" src="../../_images/line_dashspace1.png" />
+<img alt="../../images/line_dashspace1.png" src="../../images/line_dashspace1.png" />
 <p class="caption"><em>라인을 따라 띄엄띄엄 놓인 심볼들</em></p>
 </div>
 <div class="section" id="id7">
 <h3>Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_dashspace.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Spaced symbols&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_dashspace.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Spaced symbols&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -526,12 +526,12 @@ GeoServer는 <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle
 이 스타일은 사양을 준수하고 있지만, SLD 사양은 이 2개의 조합이 어떤 산출물을 생산해야 하는지 명시하지 않고 있기 때문입니다.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/line_dashdot1.png" src="../../_images/line_dashdot1.png" />
+<img alt="../../images/line_dashdot1.png" src="../../images/line_dashdot1.png" />
 <p class="caption"><em>점선과 심볼 교대하기</em></p>
 </div>
 <div class="section" id="id9">
 <h3>Code<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_dashdot.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Spaced symbols&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_dashdot.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Spaced symbols&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -608,12 +608,12 @@ GeoServer는 <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle
 <h2>Line with default label<a class="headerlink" href="#line-with-default-label" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 단순한 라인에 텍스트 레이블이 표출됩니다. 사용자가 따로 지정하지 않을 경우 레이블이 어떻게 표출되는지 보여줍니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/line_linewithdefaultlabel1.png" src="../../_images/line_linewithdefaultlabel1.png" />
+<img alt="../../images/line_linewithdefaultlabel1.png" src="../../images/line_linewithdefaultlabel1.png" />
 <p class="caption"><em>기본 레이블이 표출된 라인</em></p>
 </div>
 <div class="section" id="id11">
 <h3>Code<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_linewithdefaultlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Line with default label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_linewithdefaultlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Line with default label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -675,12 +675,12 @@ GeoServer는 <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle
 <p class="last">라인을 따라 레이블을 표출하는 작업은 GeoServer에 특화된 SLD 확장 모듈에서 가능합니다. 표준 SLD 1.0 사양에 포함되지 않았습니다.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/line_labelfollowingline1.png" src="../../_images/line_labelfollowingline1.png" />
+<img alt="../../images/line_labelfollowingline1.png" src="../../images/line_labelfollowingline1.png" />
 <p class="caption"><em>라인을 따라 표출된 레이블</em></p>
 </div>
 <div class="section" id="id13">
 <h3>Code<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_labelfollowingline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Label following line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_labelfollowingline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Label following line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -748,12 +748,12 @@ SLD에 <tt class="docutils literal"><span class="pre">&lt;LinePlacement /&gt;</s
 <p class="last">이 예시는 GeoServer에 특화된 옵션을 이용합니다. 표준 SLD 1.0 사양에 포함되지 않았습니다.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/line_optimizedlabel1.png" src="../../_images/line_optimizedlabel1.png" />
+<img alt="../../images/line_optimizedlabel1.png" src="../../images/line_optimizedlabel1.png" />
 <p class="caption"><em>최적화된 레이블</em></p>
 </div>
 <div class="section" id="id15">
 <h3>Code<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_optimizedlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Optimized label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_optimizedlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Optimized label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -821,12 +821,12 @@ SLD에 <tt class="docutils literal"><span class="pre">&lt;LinePlacement /&gt;</s
 <span id="sld-cookbook-lines-optimizedstyledlabel"></span><h2>Optimized and styled label<a class="headerlink" href="#optimized-and-styled-label" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 <a class="reference internal" href="#sld-cookbook-lines-optimizedlabel"><em>Optimized label placement</em></a> 예시에서 본 레이블 스타일을 향상시킵니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/line_optimizedstyledlabel.png" src="../../_images/line_optimizedstyledlabel.png" />
+<img alt="../../images/line_optimizedstyledlabel.png" src="../../images/line_optimizedstyledlabel.png" />
 <p class="caption"><em>최적화 스타일을 적용한 레이블</em></p>
 </div>
 <div class="section" id="id17">
 <h3>Code<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_optimizedstyledlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Optimized and styled label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_optimizedstyledlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Optimized and styled label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -900,12 +900,12 @@ SLD에 <tt class="docutils literal"><span class="pre">&lt;LinePlacement /&gt;</s
 <h2>Attribute-based line<a class="headerlink" href="#attribute-based-line" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 &#8220;type&#8221;(도로 종류) 속성에 따라 다른 스타일을 라인에 적용합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/line_attributebasedline1.png" src="../../_images/line_attributebasedline1.png" />
+<img alt="../../images/line_attributebasedline1.png" src="../../images/line_attributebasedline1.png" />
 <p class="caption"><em>속성 기반 라인</em></p>
 </div>
 <div class="section" id="id19">
 <h3>Code<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_attributebasedline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Attribute-based line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_attributebasedline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Attribute-based line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1073,20 +1073,20 @@ SLD에 <tt class="docutils literal"><span class="pre">&lt;LinePlacement /&gt;</s
 <h2>Zoom-based line<a class="headerlink" href="#zoom-based-line" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 서로 다른 줌 레벨에서 <a class="reference internal" href="#sld-cookbook-lines-simpleline"><em>Simple line</em></a>의 스타일을 변경합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/line_zoombasedlinelarge1.png" src="../../_images/line_zoombasedlinelarge1.png" />
+<img alt="../../images/line_zoombasedlinelarge1.png" src="../../images/line_zoombasedlinelarge1.png" />
 <p class="caption"><em>줌 기반 라인: Zoomed in</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/line_zoombasedlinemedium1.png" src="../../_images/line_zoombasedlinemedium1.png" />
+<img alt="../../images/line_zoombasedlinemedium1.png" src="../../images/line_zoombasedlinemedium1.png" />
 <p class="caption"><em>줌 기반 라인: Partially zoomed</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/line_zoombasedlinesmall1.png" src="../../_images/line_zoombasedlinesmall1.png" />
+<img alt="../../images/line_zoombasedlinesmall1.png" src="../../images/line_zoombasedlinesmall1.png" />
 <p class="caption"><em>줌 기반 라인: Zoomed out</em></p>
 </div>
 <div class="section" id="id21">
 <h3>Code<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/line_zoombasedline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Zoom-based line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/line_zoombasedline.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Zoom-based line&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1300,7 +1300,7 @@ SLD에 <tt class="docutils literal"><span class="pre">&lt;LinePlacement /&gt;</s
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/styling/sld-cookbook/lines.txt">원본 보기</a></li>
+          <li><a href="../../sources/styling/sld-cookbook/lines.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Points &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="CSS Cookbook" href="cookbook.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -74,7 +74,7 @@
 <p>While points are seemingly the simplest type of shape, possessing only position and no other dimensions, there are many different ways that a point can be styled in CSS.</p>
 <div class="section" id="example-points-layer">
 <span id="css-cookbook-points-attributes"></span><h2>Example points layer<a class="headerlink" href="#example-points-layer" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference download internal" href="../../_downloads/sld_cookbook_point.zip"><tt class="xref download docutils literal"><span class="pre">points</span> <span class="pre">layer</span></tt></a> used for the examples below contains name and population information for the major cities of a fictional country. For reference, the attribute table for the points in this layer is included below.</p>
+<p>The <a class="reference download internal" href="../../downloads/sld_cookbook_point.zip"><tt class="xref download docutils literal"><span class="pre">points</span> <span class="pre">layer</span></tt></a> used for the examples below contains name and population information for the major cities of a fictional country. For reference, the attribute table for the points in this layer is included below.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="30%" />
@@ -116,13 +116,13 @@
 </tr>
 </tbody>
 </table>
-<p><a class="reference download internal" href="../../_downloads/sld_cookbook_point.zip"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">points</span> <span class="pre">shapefile</span></tt></a></p>
+<p><a class="reference download internal" href="../../downloads/sld_cookbook_point.zip"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">points</span> <span class="pre">shapefile</span></tt></a></p>
 </div>
 <div class="section" id="simple-point">
 <span id="css-cookbook-points-simplepoint"></span><h2>Simple point<a class="headerlink" href="#simple-point" title="Permalink to this headline">¶</a></h2>
 <p>This example specifies points be styled as red circles with a diameter of 6 pixels.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_simplepoint.png" src="../../_images/point_simplepoint.png" />
+<img alt="../../images/point_simplepoint.png" src="../../images/point_simplepoint.png" />
 <p class="caption"><em>Simple point</em></p>
 </div>
 <div class="section" id="code">
@@ -154,7 +154,7 @@
 <span id="css-cookbook-points-simplepointwithstroke"></span><h2>Simple point with stroke<a class="headerlink" href="#simple-point-with-stroke" title="Permalink to this headline">¶</a></h2>
 <p>This example adds a stroke (or border) around the <a class="reference internal" href="#css-cookbook-points-simplepoint"><em>Simple point</em></a>, with the stroke colored black and given a thickness of 2 pixels.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_simplepointwithstroke.png" src="../../_images/point_simplepointwithstroke.png" />
+<img alt="../../images/point_simplepointwithstroke.png" src="../../images/point_simplepointwithstroke.png" />
 <p class="caption"><em>Simple point with stroke</em></p>
 </div>
 <div class="section" id="id1">
@@ -190,7 +190,7 @@
 <h2>Rotated square<a class="headerlink" href="#rotated-square" title="Permalink to this headline">¶</a></h2>
 <p>This example creates a square instead of a circle, colors it green, sizes it to 12 pixels, and rotates it by 45 degrees.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_rotatedsquare.png" src="../../_images/point_rotatedsquare.png" />
+<img alt="../../images/point_rotatedsquare.png" src="../../images/point_rotatedsquare.png" />
 <p class="caption"><em>Rotated square</em></p>
 </div>
 <div class="section" id="id3">
@@ -224,7 +224,7 @@
 <h2>Transparent triangle<a class="headerlink" href="#transparent-triangle" title="Permalink to this headline">¶</a></h2>
 <p>This example draws a triangle, creates a black stroke identical to the <a class="reference internal" href="#css-cookbook-points-simplepointwithstroke"><em>Simple point with stroke</em></a> example, and sets the fill of the triangle to 20% opacity (mostly transparent).</p>
 <div class="figure align-center">
-<img alt="../../_images/point_transparenttriangle.png" src="../../_images/point_transparenttriangle.png" />
+<img alt="../../images/point_transparenttriangle.png" src="../../images/point_transparenttriangle.png" />
 <p class="caption"><em>Transparent triangle</em></p>
 </div>
 <div class="section" id="id5">
@@ -262,7 +262,7 @@
 <h2>Point as graphic<a class="headerlink" href="#point-as-graphic" title="Permalink to this headline">¶</a></h2>
 <p>This example styles each point as a graphic instead of as a simple shape.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_pointasgraphic.png" src="../../_images/point_pointasgraphic.png" />
+<img alt="../../images/point_pointasgraphic.png" src="../../images/point_pointasgraphic.png" />
 <p class="caption"><em>Point as graphic</em></p>
 </div>
 <div class="section" id="id7">
@@ -281,7 +281,7 @@
 <h3>Details<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>This style uses a graphic instead of a simple shape to render the points.  <strong>Line 2</strong> sets the path and file name of the graphic, while <strong>line 3</strong> indicates the format (MIME type) of the graphic (image/png). In this example, the graphic is contained in the same directory as the SLD, so no path information is necessary,  although a full URL could be used if desired.</p>
 <div class="figure align-center">
-<img alt="../../_images/smileyface.png" src="../../_images/smileyface.png" />
+<img alt="../../images/smileyface.png" src="../../images/smileyface.png" />
 <p class="caption"><em>Graphic used for points</em></p>
 </div>
 </div>
@@ -290,7 +290,7 @@
 <span id="css-cookbook-points-pointwithdefaultlabel"></span><h2>Point with default label<a class="headerlink" href="#point-with-default-label" title="Permalink to this headline">¶</a></h2>
 <p>This example shows a text label on the <a class="reference internal" href="#css-cookbook-points-simplepoint"><em>Simple point</em></a> that displays the &#8220;name&#8221; attribute of the point. This is how a label will be displayed in the absence of any other customization.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_pointwithdefaultlabel.png" src="../../_images/point_pointwithdefaultlabel.png" />
+<img alt="../../images/point_pointwithdefaultlabel.png" src="../../images/point_pointwithdefaultlabel.png" />
 <p class="caption"><em>Point with default label</em></p>
 </div>
 <div class="section" id="id9">
@@ -326,7 +326,7 @@
 <span id="css-cookbook-points-pointwithstyledlabel"></span><h2>Point with styled label<a class="headerlink" href="#point-with-styled-label" title="Permalink to this headline">¶</a></h2>
 <p>This example improves the label style from the <a class="reference internal" href="#css-cookbook-points-pointwithdefaultlabel"><em>Point with default label</em></a> example by centering the label above the point and providing a different font name and size.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_pointwithstyledlabel.png" src="../../_images/point_pointwithstyledlabel.png" />
+<img alt="../../images/point_pointwithstyledlabel.png" src="../../images/point_pointwithstyledlabel.png" />
 <p class="caption"><em>Point with styled label</em></p>
 </div>
 <div class="section" id="id11">
@@ -373,7 +373,7 @@
 <h2>Point with rotated label<a class="headerlink" href="#point-with-rotated-label" title="Permalink to this headline">¶</a></h2>
 <p>This example builds on the previous example, <a class="reference internal" href="#css-cookbook-points-pointwithstyledlabel"><em>Point with styled label</em></a>, by rotating the label by 45 degrees, positioning the labels farther away from the points, and changing the color of the label to purple.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_pointwithrotatedlabel.png" src="../../_images/point_pointwithrotatedlabel.png" />
+<img alt="../../images/point_pointwithrotatedlabel.png" src="../../images/point_pointwithrotatedlabel.png" />
 <p class="caption"><em>Point with rotated label</em></p>
 </div>
 <div class="section" id="id13">
@@ -422,7 +422,7 @@
 <h2>Attribute-based point<a class="headerlink" href="#attribute-based-point" title="Permalink to this headline">¶</a></h2>
 <p>This example alters the size of the symbol based on the value of the population (&#8220;pop&#8221;) attribute.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_attributebasedpoint.png" src="../../_images/point_attributebasedpoint.png" />
+<img alt="../../images/point_attributebasedpoint.png" src="../../images/point_attributebasedpoint.png" />
 <p class="caption"><em>Attribute-based point</em></p>
 </div>
 <div class="section" id="id15">
@@ -512,15 +512,15 @@
 <h2>Zoom-based point<a class="headerlink" href="#zoom-based-point" title="Permalink to this headline">¶</a></h2>
 <p>This example alters the style of the points at different zoom levels.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_zoombasedpointlarge.png" src="../../_images/point_zoombasedpointlarge.png" />
+<img alt="../../images/point_zoombasedpointlarge.png" src="../../images/point_zoombasedpointlarge.png" />
 <p class="caption"><em>Zoom-based point: Zoomed in</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/point_zoombasedpointmedium.png" src="../../_images/point_zoombasedpointmedium.png" />
+<img alt="../../images/point_zoombasedpointmedium.png" src="../../images/point_zoombasedpointmedium.png" />
 <p class="caption"><em>Zoom-based point: Partially zoomed</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/point_zoombasedpointsmall.png" src="../../_images/point_zoombasedpointsmall.png" />
+<img alt="../../images/point_zoombasedpointsmall.png" src="../../images/point_zoombasedpointsmall.png" />
 <p class="caption"><em>Zoom-based point: Zoomed out</em></p>
 </div>
 <div class="section" id="id17">
@@ -688,7 +688,7 @@
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/extensions/css/cookbook_point.txt">Show Source</a></li>
+          <li><a href="../../sources/extensions/css/cookbook_point.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

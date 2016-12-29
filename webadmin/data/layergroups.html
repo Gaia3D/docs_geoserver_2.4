@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Layer Groups &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Data" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -82,7 +82,7 @@
 </ul>
 <p>레이어가 <em>단일(single)</em> 그룹이 아닌 그룹에 포함될 경우 일반 레이어 목록에서는 빠지게 되지만, 그래도 해당 레이어를 다른 레이어 그룹에 포함시키는 작업은 가능합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups.png" src="../../_images/data_layergroups.png" />
+<img alt="../../images/data_layergroups.png" src="../../images/data_layergroups.png" />
 <p class="caption"><em>Layer Groups 페이지</em></p>
 </div>
 <div class="section" id="edit-layer-group">
@@ -95,7 +95,7 @@ Bounding Box를 자동으로 설정하려면, <em class="guilabel">Generate Boun
 <p class="last">레이어 그룹은 서로 다른 경계 및 투영체를 가진 레이어들로 이루어질 수도 있습니다. GeoServer는 레이어 그룹의 투영체에 맞춰 모든 레이어들을 자동적으로 재투영합니다.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups_edit.png" src="../../_images/data_layergroups_edit.png" />
+<img alt="../../images/data_layergroups_edit.png" src="../../images/data_layergroups_edit.png" />
 <p class="caption"><em>Layer Groups Edit 페이지</em></p>
 </div>
 <p>페이지 하단의 표에 현재 레이어 그룹 내부의 레이어, 그룹 목록이 표시됩니다.
@@ -105,25 +105,25 @@ Bounding Box를 자동으로 설정하려면, <em class="guilabel">Generate Boun
 <p><em class="guilabel">Style</em> 열은 각 레이어에 지정된 스타일을 보여줍니다. 레이어에 지정된 스타일을 바꾸려면 해당 스타일 링크를 클릭하십시오.
 사용 가능한 스타일 목록이 표출됩니다. 목록에서 스타일명을 클릭하면 레이어에 새로운 스타일이 적용됩니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups_edit_styles.png" src="../../_images/data_layergroups_edit_styles.png" />
+<img alt="../../images/data_layergroups_edit_styles.png" src="../../images/data_layergroups_edit_styles.png" />
 <p class="caption"><em>레이어 그룹 내부의 레이어 스타일 편집</em></p>
 </div>
 <p>레이어 그룹에서 <em class="guilabel">publishable element</em>를 제거하려면 <em class="guilabel">Remove</em> 열에서 해당 버튼을 클릭하십시오. 삭제 확인·취소를 물어볼 것입니다.</p>
 <p>표 상단의 <em class="guilabel">Add Layer...</em> 버튼을 클릭하면 목록에 레이어를 추가할 수 있습니다. 레이어 목록에서 레이어명을 클릭하면 추가할 레이어가 선택됩니다.
 선택한 레이어는 <em class="guilabel">publishable elements</em> 목록의 하단에 추가될 것입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups_add_layer.png" src="../../_images/data_layergroups_add_layer.png" />
+<img alt="../../images/data_layergroups_add_layer.png" src="../../images/data_layergroups_add_layer.png" />
 <p class="caption"><em>레이어 그룹에 레이어를 추가하는 대화창</em></p>
 </div>
 <p>표 상단의 <em class="guilabel">Add Layer Group...</em> 버튼을 클릭하면 목록에 레이어 그룹을 추가할 수 있습니다. 레이어 그룹 목록에서 레이어 그룹명을 클릭하면 추가할 레이어 그룹이 선택됩니다.
 선택한 레이어 그룹은 <em class="guilabel">publishable elements</em> 목록의 하단에 추가될 것입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups_add_layergroup.png" src="../../_images/data_layergroups_add_layergroup.png" />
+<img alt="../../images/data_layergroups_add_layergroup.png" src="../../images/data_layergroups_add_layergroup.png" />
 <p class="caption"><em>레이어 그룹에 레이어 그룹을 추가하는 대화창</em></p>
 </div>
 <p>웹 관리자의 <a class="reference internal" href="../layerpreview/index.html#layerpreview"><em>Layer Preview</em></a> 섹션에서 레이어 그룹을 볼 수 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups_tasmania.png" src="../../_images/data_layergroups_tasmania.png" />
+<img alt="../../images/data_layergroups_tasmania.png" src="../../images/data_layergroups_tasmania.png" />
 <p class="caption"><em>&#8220;tasmania&#8221; 레이어 그룹의 Openlayers 미리 보기</em></p>
 </div>
 </div>
@@ -131,12 +131,12 @@ Bounding Box를 자동으로 설정하려면, <em class="guilabel">Generate Boun
 <h2>Add a Layer Group<a class="headerlink" href="#add-a-layer-group" title="Permalink to this headline">¶</a></h2>
 <p>레이어 그룹을 추가·삭제하는 버튼은 <em class="guilabel">Layer Groups</em> 페이지 상단에 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups_add.png" src="../../_images/data_layergroups_add.png" />
+<img alt="../../images/data_layergroups_add.png" src="../../images/data_layergroups_add.png" />
 <p class="caption"><em>레이어 그룹 추가·삭제 버튼</em></p>
 </div>
 <p>새 레이어 그룹을 추가하려면 &#8220;Add a new layer group&#8221; 버튼을 클릭하십시오. 레이어 그룹명을 물어올 것입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups_name.png" src="../../_images/data_layergroups_name.png" />
+<img alt="../../images/data_layergroups_name.png" src="../../images/data_layergroups_name.png" />
 <p class="caption"><em>새 레이어 그룹 추가 대화창</em></p>
 </div>
 <p>이름을 입력하고 <em class="guilabel">Submit</em>을 클릭하십시오. 비어 있는 레이어 그룹 설정 페이지로 이동할 것입니다.
@@ -144,7 +144,7 @@ Bounding Box를 자동으로 설정하려면, <em class="guilabel">Generate Boun
 바라는 대로 레이어들을 추가하고 순서를 정한 다음, <em class="guilabel">Generate Bounds</em> 버튼을 클릭해서 bounding box 및 투영체를 자동으로 생성하십시오.
 <em class="guilabel">Save</em> 버튼을 클릭해서 새 레이어 그룹을 저장합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups_add_edit.png" src="../../_images/data_layergroups_add_edit.png" />
+<img alt="../../images/data_layergroups_add_edit.png" src="../../images/data_layergroups_add_edit.png" />
 <p class="caption"><em>새 레이어 그룹 설정 페이지</em></p>
 </div>
 </div>
@@ -153,7 +153,7 @@ Bounding Box를 자동으로 설정하려면, <em class="guilabel">Generate Boun
 <p>레이어 그룹을 제거하려면, 레이어 그룹 옆의 체크박스를 클릭하십시오. 다수의 레이어 그룹을 중복 선택해서 한번에 삭제할 수도 있습니다.
 <em class="guilabel">Remove selected layer group(s)</em> 링크를 클릭하십시오. 삭제 확인·취소를 물어볼 것입니다. <em class="guilabel">OK</em> 버튼을 클릭해서 레이어 그룹을 삭제합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/data_layergroups_delete.png" src="../../_images/data_layergroups_delete.png" />
+<img alt="../../images/data_layergroups_delete.png" src="../../images/data_layergroups_delete.png" />
 <p class="caption"><em>레이어 그룹 제거하기</em></p>
 </div>
 </div>
@@ -189,7 +189,7 @@ Bounding Box를 자동으로 설정하려면, <em class="guilabel">Generate Boun
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/webadmin/data/layergroups.txt">원본 보기</a></li>
+          <li><a href="../../sources/webadmin/data/layergroups.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

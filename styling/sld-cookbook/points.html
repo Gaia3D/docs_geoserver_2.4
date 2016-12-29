@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Points &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="SLD Cookbook" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -78,7 +78,7 @@
 </div>
 <div class="section" id="example-points-layer">
 <span id="sld-cookbook-points-attributes"></span><h2>Example points layer<a class="headerlink" href="#example-points-layer" title="Permalink to this headline">¶</a></h2>
-<p>각 예시에 사용되는 <a class="reference download internal" href="../../_downloads/sld_cookbook_point.zip"><tt class="xref download docutils literal"><span class="pre">포인트 레이어</span></tt></a>는
+<p>각 예시에 사용되는 <a class="reference download internal" href="../../downloads/sld_cookbook_point.zip"><tt class="xref download docutils literal"><span class="pre">포인트 레이어</span></tt></a>는
 가상 국가에 있는 주요 도시들의 명칭 및 인구 정보를 담고 있습니다. 이 레이어의 다음 속성 테이블을 참조하십시오.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -121,18 +121,18 @@
 </tr>
 </tbody>
 </table>
-<p><a class="reference download internal" href="../../_downloads/sld_cookbook_point.zip"><tt class="xref download docutils literal"><span class="pre">포인트 shapefile을 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/sld_cookbook_point.zip"><tt class="xref download docutils literal"><span class="pre">포인트 shapefile을 다운로드하십시오</span></tt></a>.</p>
 </div>
 <div class="section" id="simple-point">
 <span id="sld-cookbook-points-simplepoint"></span><h2>Simple point<a class="headerlink" href="#simple-point" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 포인트를 지름 6픽셀의 빨간 원 스타일로 설정합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_simplepoint1.png" src="../../_images/point_simplepoint1.png" />
+<img alt="../../images/point_simplepoint1.png" src="../../images/point_simplepoint1.png" />
 <p class="caption"><em>단순 포인트</em></p>
 </div>
 <div class="section" id="code">
 <h3>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_simplepoint.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple point&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_simplepoint.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple point&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -178,12 +178,12 @@
 <span id="sld-cookbook-points-simplepointwithstroke"></span><h2>Simple point with stroke<a class="headerlink" href="#simple-point-with-stroke" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 <a class="reference internal" href="#sld-cookbook-points-simplepoint"><em>Simple point</em></a>에 획(또는 윤곽선)을 추가합니다. 획의 색상은 검정, 굵기는 2픽셀입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_simplepointwithstroke1.png" src="../../_images/point_simplepointwithstroke1.png" />
+<img alt="../../images/point_simplepointwithstroke1.png" src="../../images/point_simplepointwithstroke1.png" />
 <p class="caption"><em>획을 추가한 단순 포인트</em></p>
 </div>
 <div class="section" id="id1">
 <h3>Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_simplepointwithstroke.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple point with stroke&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_simplepointwithstroke.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple point with stroke&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -234,12 +234,12 @@
 <h2>Rotated square<a class="headerlink" href="#rotated-square" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 원 대신 정사각형으로, 색상은 초록으로, 크기는 12픽셀로 설정하고, 45도 기울입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_rotatedsquare1.png" src="../../_images/point_rotatedsquare1.png" />
+<img alt="../../images/point_rotatedsquare1.png" src="../../images/point_rotatedsquare1.png" />
 <p class="caption"><em>기울인 정사각형</em></p>
 </div>
 <div class="section" id="id3">
 <h3>Code<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_rotatedsquare.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Rotated square&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_rotatedsquare.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Rotated square&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -286,12 +286,12 @@
 <p>이 예시에서 형태를 삼각형으로 설정하고 <a class="reference internal" href="#sld-cookbook-points-simplepointwithstroke"><em>Simple point with stroke</em></a> 예시와 동일하게 검은 획을 추가한 다음,
 삼각형의 면을 (거의 투명한) 불투명도(opacity) 20%로 설정합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_transparenttriangle1.png" src="../../_images/point_transparenttriangle1.png" />
+<img alt="../../images/point_transparenttriangle1.png" src="../../images/point_transparenttriangle1.png" />
 <p class="caption"><em>투명한 삼각형</em></p>
 </div>
 <div class="section" id="id5">
 <h3>Code<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_transparenttriangle.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Transparent triangle&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_transparenttriangle.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Transparent triangle&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -349,12 +349,12 @@
 <h2>Point as graphic<a class="headerlink" href="#point-as-graphic" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 각 포인트에 단순한 형태 대신 그래픽으로 스타일을 적용합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_pointasgraphic1.png" src="../../_images/point_pointasgraphic1.png" />
+<img alt="../../images/point_pointasgraphic1.png" src="../../images/point_pointasgraphic1.png" />
 <p class="caption"><em>그래픽 포인트</em></p>
 </div>
 <div class="section" id="id7">
 <h3>Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_pointasgraphic.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Point as graphic&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_pointasgraphic.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Point as graphic&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -397,7 +397,7 @@
 <strong>11행</strong>에서 표출되는 그래픽의 크기를 설정합니다. 이 크기는 그래픽의 실제 크기와 상관없이 설정할 수 있지만, 이 예시의 경우 둘 다 32픽셀로 동일합니다.
 그래픽이 사각형인 경우 <tt class="docutils literal"><span class="pre">&lt;Size&gt;</span></tt> 값이 그래픽의 <em>높이(height)</em>에만 적용되며, 너비(width)는 비율에 맞춰 조정됩니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/smileyface1.png" src="../../_images/smileyface1.png" />
+<img alt="../../images/smileyface1.png" src="../../images/smileyface1.png" />
 <p class="caption"><em>포인트에 사용된 그래픽</em></p>
 </div>
 </div>
@@ -407,12 +407,12 @@
 <p>이 예시에서 포인트의 &#8220;name&#8221; 속성을 표출하는 텍스트 레이블을 <a class="reference internal" href="#sld-cookbook-points-simplepoint"><em>Simple point</em></a>에 적용하는 방법을 설명합니다.
 사용자가 따로 지정하지 않을 경우 레이블이 어떻게 표출되는지 보여줍니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_pointwithdefaultlabel1.png" src="../../_images/point_pointwithdefaultlabel1.png" />
+<img alt="../../images/point_pointwithdefaultlabel1.png" src="../../images/point_pointwithdefaultlabel1.png" />
 <p class="caption"><em>기본 레이블이 표출된 포인트</em></p>
 </div>
 <div class="section" id="id9">
 <h3>Code<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_pointwithdefaultlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Point with default label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_pointwithdefaultlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Point with default label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -476,12 +476,12 @@
 <p>이 예시에서 레이블을 포인트 위쪽에 가운데 정렬시키고 폰트명 및 크기를 달리 설정함으로써
 <a class="reference internal" href="#sld-cookbook-points-pointwithdefaultlabel"><em>Point with default label</em></a> 예시보다 나은 레이블 스타일을 만듭니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_pointwithstyledlabel1.png" src="../../_images/point_pointwithstyledlabel1.png" />
+<img alt="../../images/point_pointwithstyledlabel1.png" src="../../images/point_pointwithstyledlabel1.png" />
 <p class="caption"><em>스타일 적용 레이블이 표출된 포인트</em></p>
 </div>
 <div class="section" id="id11">
 <h3>Code<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_pointwithstyledlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Point with styled label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_pointwithstyledlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Point with styled label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -589,12 +589,12 @@
 <p>이 예시에서 이전 <a class="reference internal" href="#sld-cookbook-points-pointwithstyledlabel"><em>Point with styled label</em></a> 예시를 바탕으로,
 레이블을 45도 기울이고 포인트로부터 더 멀리 이동시키며 레이블 색상을 보라색으로 변경해, 새로운 스타일을 생성합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_pointwithrotatedlabel1.png" src="../../_images/point_pointwithrotatedlabel1.png" />
+<img alt="../../images/point_pointwithrotatedlabel1.png" src="../../images/point_pointwithrotatedlabel1.png" />
 <p class="caption"><em>기울어진 레이블이 표출된 포인트</em></p>
 </div>
 <div class="section" id="id13">
 <h3>Code<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_pointwithrotatedlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Point with rotated label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_pointwithrotatedlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Point with rotated label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -693,12 +693,12 @@
 <h2>Attribute-based point<a class="headerlink" href="#attribute-based-point" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 인구(&#8220;pop&#8221;) 속성값에 기반해 심볼의 크기를 변경합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_attributebasedpoint1.png" src="../../_images/point_attributebasedpoint1.png" />
+<img alt="../../images/point_attributebasedpoint1.png" src="../../images/point_attributebasedpoint1.png" />
 <p class="caption"><em>속성 기반 포인트</em></p>
 </div>
 <div class="section" id="id15">
 <h3>Code<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_attribute.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Attribute-based point&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_attribute.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Attribute-based point&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -902,20 +902,20 @@
 <h2>Zoom-based point<a class="headerlink" href="#zoom-based-point" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 서로 다른 줌 레벨에서 포인트의 스타일을 변경합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/point_zoombasedpointlarge1.png" src="../../_images/point_zoombasedpointlarge1.png" />
+<img alt="../../images/point_zoombasedpointlarge1.png" src="../../images/point_zoombasedpointlarge1.png" />
 <p class="caption"><em>줌 기반 포인트: Zoomed in</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/point_zoombasedpointmedium1.png" src="../../_images/point_zoombasedpointmedium1.png" />
+<img alt="../../images/point_zoombasedpointmedium1.png" src="../../images/point_zoombasedpointmedium1.png" />
 <p class="caption"><em>줌 기반 포인트: Partially zoomed</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/point_zoombasedpointsmall1.png" src="../../_images/point_zoombasedpointsmall1.png" />
+<img alt="../../images/point_zoombasedpointsmall1.png" src="../../images/point_zoombasedpointsmall1.png" />
 <p class="caption"><em>줌 기반 포인트: Zoomed out</em></p>
 </div>
 <div class="section" id="id17">
 <h3>Code<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/point_zoom.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Zoom-based point&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/point_zoom.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Zoom-based point&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1149,7 +1149,7 @@
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/styling/sld-cookbook/points.txt">원본 보기</a></li>
+          <li><a href="../../sources/styling/sld-cookbook/points.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

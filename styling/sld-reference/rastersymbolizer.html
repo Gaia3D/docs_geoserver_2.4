@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>RasterSymbolizer &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="SLD Reference" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -131,7 +131,7 @@
 </pre></div>
 </div>
 <div class="figure align-left">
-<img alt="../../_images/colormap1.png" src="../../_images/colormap1.png" />
+<img alt="../../images/colormap1.png" src="../../images/colormap1.png" />
 </div>
 <p>다음 예시에서 색상 #FFCC32에서 #BBBBBB 사이에 색상 #3645CC와 #CC3636을 삽입, 좀 더 개선된 색상 그레이디언트를 정의합니다. 하단 색상인 #FFCC32를 투명하게 설정했습니다.
 이렇게 하면 -300 값 이하의 픽셀이 렌더링되지 않도록 하는 가상 알파 채널을 만듭니다. 따로 설정하지 않는 한 기본 불투명도는 1(완전히 불투명)이란 것에 유의하십시오.</p>
@@ -144,7 +144,7 @@
 </pre></div>
 </div>
 <div class="figure align-left">
-<img alt="../../_images/colormap2.png" src="../../_images/colormap2.png" />
+<img alt="../../images/colormap2.png" src="../../images/colormap2.png" />
 </div>
 <p>GeoServer는 <tt class="docutils literal"><span class="pre">&lt;ColorMap&gt;</span></tt> 요소를 확장하여 <tt class="docutils literal"><span class="pre">type</span></tt>과
 <tt class="docutils literal"><span class="pre">extended</span></tt> 요소를 사용할 수 있도록 했습니다.</p>
@@ -171,7 +171,7 @@
 </pre></div>
 </div>
 <div class="figure align-left">
-<img alt="../../_images/colormap3.png" src="../../_images/colormap3.png" />
+<img alt="../../images/colormap3.png" src="../../images/colormap3.png" />
 </div>
 <p><tt class="docutils literal"><span class="pre">type=&quot;values&quot;</span></tt>는 설정된 항목의 quantity 값에 해당하는 픽셀들만 렌더링합니다. 다른 값을 가진 픽셀은 렌더링하지 않습니다.
 앞의 예시를 그대로 사용하면 다음과 같이 됩니다.</p>
@@ -184,7 +184,7 @@
 </div>
 <p>그 결과 산출되는 이미지는 다음과 같습니다.</p>
 <div class="figure align-left">
-<img alt="../../_images/colormap4.png" src="../../_images/colormap4.png" />
+<img alt="../../images/colormap4.png" src="../../images/colormap4.png" />
 </div>
 <p><tt class="docutils literal"><span class="pre">type=&quot;intervals&quot;</span></tt>는 2개 항목으로 정의되는 각 간격 사이의 값에 해당하는 픽셀들을 앞의 항목(낮은 값)의 색상으로 렌더링합니다.
 간격 사이의 색상을 보간하지 않습니다. 앞의 예시를 그대로 사용하면 다음과 같이 됩니다.</p>
@@ -197,7 +197,7 @@
 </div>
 <p>그 결과 산출되는 이미지는 다음과 같습니다.</p>
 <div class="figure align-left">
-<img alt="../../_images/colormap5.png" src="../../_images/colormap5.png" />
+<img alt="../../images/colormap5.png" src="../../images/colormap5.png" />
 </div>
 <p>이 색상표 형식은 범례 그래픽에도 그대로 반영됩니다. 일반적으로 래스터 범례를 다음과 같이 호출합니다.
 (<tt class="docutils literal"><span class="pre">forceRule:true</span></tt> 옵션을 사용하면 산출물에 색상표도 함께 표출됩니다.)</p>
@@ -205,7 +205,7 @@
 </div>
 <p>각 형식들의 범례가 다음과 같이 반환됩니다.</p>
 <div class="figure align-left">
-<img alt="../../_images/rasterlegend.png" src="../../_images/rasterlegend.png" />
+<img alt="../../images/rasterlegend.png" src="../../images/rasterlegend.png" />
 </div>
 </div>
 <div class="section" id="extended">
@@ -233,7 +233,7 @@
 </pre></div>
 </div>
 <div class="figure align-left">
-<img alt="../../_images/channelselection.png" src="../../_images/channelselection.png" />
+<img alt="../../images/channelselection.png" src="../../images/channelselection.png" />
 </div>
 <p>다음은 RGB 이미지의 단일 밴드를 회색톤 채널로 선택해서, <tt class="docutils literal"><span class="pre">&lt;ColorMap&gt;</span></tt>을 통해 다시 색상을 부여하는 예시입니다.</p>
 <div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;RasterSymbolizer&gt;</span>
@@ -253,7 +253,7 @@
 </pre></div>
 </div>
 <div class="figure align-left">
-<img alt="../../_images/channelselection2.png" src="../../_images/channelselection2.png" />
+<img alt="../../images/channelselection2.png" src="../../images/channelselection2.png" />
 </div>
 </div>
 <div class="section" id="contrastenhancement">
@@ -405,7 +405,7 @@ OGC의 SLD 사양에 따르면, 55 전후의 값이 지표면(Earth-based) 데�
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/styling/sld-reference/rastersymbolizer.txt">원본 보기</a></li>
+          <li><a href="../../sources/styling/sld-reference/rastersymbolizer.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

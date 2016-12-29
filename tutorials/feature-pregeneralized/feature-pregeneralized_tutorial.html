@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Using the GeoTools feature-pregeneralized module &mdash; GeoServer 2.4.0 User Manual</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 User Manual" href="../../index.html" />
       <link rel="up" title="Tutorials" href="../index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -94,7 +94,7 @@
 <p>Within this directory, we have to place the shape files. There is already a sub directory <tt class="file docutils literal"><span class="pre">data</span></tt> which will be used.
 Within this sub directory, create a directory <tt class="file docutils literal"><span class="pre">streams</span></tt>.</p>
 <p>Within <tt class="file docutils literal"><em><span class="pre">GEOSERVER_DATA_DIR</span></em><span class="pre">/data/streams</span></tt> create another sub directory called <tt class="file docutils literal"><span class="pre">0</span></tt>. ( 0 meaning &#8220;no generalized geometries&#8221;).</p>
-<p>This tutorial is based on on a shape file, which you can download from here <a class="reference download internal" href="../../_downloads/streams.zip"><tt class="xref download docutils literal"><span class="pre">Streams</span></tt></a>.
+<p>This tutorial is based on on a shape file, which you can download from here <a class="reference download internal" href="../../downloads/streams.zip"><tt class="xref download docutils literal"><span class="pre">Streams</span></tt></a>.
 Unzip this file into <tt class="file docutils literal"><em><span class="pre">GEOSERVER_DATA_DIR</span></em><span class="pre">/data/streams/0</span></tt>.</p>
 <p>Look for the <tt class="file docutils literal"><span class="pre">WEB-INF/lib/</span></tt> directory of your GeoServer installation. There must be a file called <tt class="file docutils literal"><span class="pre">gt-feature-pregeneralized-</span><em><span class="pre">version</span></em><span class="pre">-jar</span></tt>. This jar file includes a tool for generalizing shape files. Open a cmd line and execute the following:</p>
 <div class="highlight-python"><pre>cd &lt;GEOSERVER_DATA_DIR&gt;/data/streams/0
@@ -138,22 +138,22 @@ Mixed variations are also possible. Since we are working with shape files we hav
 <p class="last">The <strong>dataSourceName</strong> attribute in the XML config is not interpreted as a name, it could be the URL for a shape file or for a property file containing properties for data store creation (e. g. jdbc connect parameters). Remember, this is a hidden deployment and no names are needed. The only <em>official</em> name is the value of the attribute <strong>featureName</strong> in the <strong>GeneralizationInfo</strong> Element.</p>
 </div>
 <p>Start GeoServer and   go to <em class="menuselection">Config‣Data‣DataStores‣New</em> and fill in the form</p>
-<img alt="../../_images/createdatastore.png" src="../../_images/createdatastore.png" />
+<img alt="../../images/createdatastore.png" src="../../images/createdatastore.png" />
 <p>Press <em class="guilabel">Submit</em>.</p>
 <p>The next form you see is</p>
-<img alt="../../_images/editdatastore1.png" src="../../_images/editdatastore1.png" />
+<img alt="../../images/editdatastore1.png" src="../../images/editdatastore1.png" />
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last"><strong>RepositoryClassName</strong> and  <strong>GeneralizationInfosProviderClassName</strong> have default values which suit for GeoTools, not for GeoServer. Change <strong>GeoTools</strong> to <strong>GeoServer</strong> in the package names to instantiate the correct objects for GeoServer. <strong>GeneralizationInfosProviderParam</strong> could be an URL or a datastore from the Geoserver catalog. A datastore is referenced by using <em>workspacename:datastorename</em>. This makes sense if you have your own implementation for the <strong>GeneralizationInfosProvider</strong> interface and this implementation reads the infos from a database.</p>
 </div>
 <p>The configuration should look like this</p>
-<img alt="../../_images/editdatastore2.png" src="../../_images/editdatastore2.png" />
+<img alt="../../images/editdatastore2.png" src="../../images/editdatastore2.png" />
 <p>Press <em class="guilabel">Submit</em>, afterward a form for the feature type opens.</p>
 <p>Alter the <strong>Style</strong> to <em>line</em>, <strong>SRS</strong> is <em>26713</em> and press the <em class="guilabel">Generate</em> button labeled by <strong>Bounding Box</strong>.</p>
-<img alt="../../_images/editfeaturestore1.png" src="../../_images/editfeaturestore1.png" />
+<img alt="../../images/editfeaturestore1.png" src="../../images/editfeaturestore1.png" />
 <p>Afterward, press <em class="guilabel">Submit</em>, <em class="guilabel">Apply</em> and <em class="guilabel">Save</em>.</p>
 <p>Examine the result by pressing &#8220;<strong>My GeoServer</strong>, <strong>Demo</strong> and <strong>Map Preview</strong>. In this list there must be an entry <strong>topp:GenStreams</strong>. Press it and you will see</p>
-<img alt="../../_images/streams.png" src="../../_images/streams.png" />
+<img alt="../../images/streams.png" src="../../images/streams.png" />
 <p>Now start zooming in and out and look at the log file of GeoServer. If the deployment is correct you should see something like this:</p>
 <div class="highlight-python"><pre>May 20, 2009 4:53:05 PM org.geotools.data.gen.PreGeneralizedFeatureSource logDistanceInfo
 INFO: Using generalizsation: file:data/streams/20.0/streams.shp streams the_geom 20.0
@@ -168,7 +168,7 @@ INFO: Using generalizsation: file:data/streams/20.0/streams.shp streams the_geom
 <div class="section" id="public-deployment">
 <h2>Public Deployment<a class="headerlink" href="#public-deployment" title="Permalink to this headline">¶</a></h2>
 <p>First we have to configure all our shape files</p>
-<img alt="../../_images/streams_0_ds.png" src="../../_images/streams_0_ds.png" />
+<img alt="../../images/streams_0_ds.png" src="../../images/streams_0_ds.png" />
 <p>The <strong>Feature Data Set ID</strong> for the other  shape files is</p>
 <ol class="arabic simple">
 <li>Streams_5</li>
@@ -176,7 +176,7 @@ INFO: Using generalizsation: file:data/streams/20.0/streams.shp streams the_geom
 <li>Streams_20</li>
 <li>Streams_50</li>
 </ol>
-<img alt="../../_images/streams_0_ds2.png" src="../../_images/streams_0_ds2.png" />
+<img alt="../../images/streams_0_ds2.png" src="../../images/streams_0_ds2.png" />
 <p>The <strong>URL</strong>  needed for the other  shape files</p>
 <ol class="arabic simple">
 <li><tt class="docutils literal"><span class="pre">file:data/streams/5.0/streams.shp</span></tt></li>
@@ -184,7 +184,7 @@ INFO: Using generalizsation: file:data/streams/20.0/streams.shp streams the_geom
 <li><tt class="docutils literal"><span class="pre">file:data/streams/20.0/streams.shp</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">file:data/streams/50.0/streams.shp</span></tt></li>
 </ol>
-<img alt="../../_images/streams_0_ds4.png" src="../../_images/streams_0_ds4.png" />
+<img alt="../../images/streams_0_ds4.png" src="../../images/streams_0_ds4.png" />
 <p>Each feature needs an <strong>Alias</strong>, here it is <em>streams_0</em>. For the other shape files use</p>
 <ol class="arabic simple">
 <li>streams_5</li>
@@ -207,11 +207,11 @@ INFO: Using generalizsation: file:data/streams/20.0/streams.shp streams the_geom
 </div>
 <p>Save this file as <tt class="file docutils literal"><span class="pre">geninfo_shapefile2.xml</span></tt> into  <tt class="file docutils literal"><em><span class="pre">GEOSERVER_DATA_DIR</span></em><span class="pre">/data/streams</span></tt>.</p>
 <p>Create the pregeneralized datastore</p>
-<img alt="../../_images/createdatastore2.png" src="../../_images/createdatastore2.png" />
+<img alt="../../images/createdatastore2.png" src="../../images/createdatastore2.png" />
 <p>Now we use the <strong>CatalogRepository</strong> class to find our needed data stores</p>
-<img alt="../../_images/editdatastore3.png" src="../../_images/editdatastore3.png" />
+<img alt="../../images/editdatastore3.png" src="../../images/editdatastore3.png" />
 <p>Last step</p>
-<img alt="../../_images/editfeaturestore2.png" src="../../_images/editfeaturestore2.png" />
+<img alt="../../images/editfeaturestore2.png" src="../../images/editfeaturestore2.png" />
 <p>In the <em class="guilabel">Map Preview</em> you should find <strong>topp:GenStreams2</strong> and all other generalizations. Test in the same manner we
 discussed in the hidden deployment and you should see something like this in the GeoServer log:</p>
 <div class="highlight-python"><pre>May 20, 2009 6:11:06 PM org.geotools.data.gen.PreGeneralizedFeatureSource logDistanceInfo
@@ -260,7 +260,7 @@ INFO: Using generalizsation: Streams_10 streams the_geom 10.0</pre>
         <div class="section">
         <h3>This Page</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/tutorials/feature-pregeneralized/feature-pregeneralized_tutorial.txt">Show Source</a></li>
+          <li><a href="../../sources/tutorials/feature-pregeneralized/feature-pregeneralized_tutorial.txt">Show Source</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

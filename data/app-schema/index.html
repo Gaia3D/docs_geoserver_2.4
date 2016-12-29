@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Working with Application Schemas &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="next" title="Complex Features" href="complex-features.html" />
@@ -43,7 +43,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -75,7 +75,7 @@
 <p>GeoServer는 PostGIS나 Oracle Spatial과 같은 JDBC 데이터 저장소를 포함하는 단순(simple) 피처 데이터 저장소와 속성 파일, shapefile을 폭넓게 지원하고 있습니다.
 app-schema 모듈은 이런 단순 피처 데이터 저장소 하나 혹은 그 이상을 가지고, 단순 피처형을 GML 응용 프로그램 스키마를 만족하는 복잡 피처형 하나 혹은 그 이상으로 변환하는 매핑 작업을 합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/app-schema.png" src="../../_images/app-schema.png" />
+<img alt="../../images/app-schema.png" src="../../images/app-schema.png" />
 <p class="caption"><em>GeoServer의 단순 피처 지원 기능을 이용해 데이터베이스의 테이블 3개에 접근하여 복잡 피처형 2개로 변환</em></p>
 </div>
 <p>GeoServer는 app-schema 모듈을 다른 데이터 저장소와 똑같이 인식하기 때문에 로드해서 WFS 요청을 서비스하는 데 사용할 수 있습니다.
@@ -230,7 +230,7 @@ app-schema 모듈은 이런 단순 피처 데이터 저장소 하나 혹은 그 
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/data/app-schema/index.txt">원본 보기</a></li>
+          <li><a href="../../sources/data/app-schema/index.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

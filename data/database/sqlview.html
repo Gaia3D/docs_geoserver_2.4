@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>SQL Views &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="Working with Databases" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -82,11 +82,11 @@ WMS와 WFS 양쪽 요청을 통해 파라미터값을 받을 수 있습니다.
 <p>SQL View를 생성하려면 관리자 권한으로 <em class="guilabel">Create new layer</em> 페이지를 호출해야 합니다.
 DB 저장소를 선택하면 레이어 생산이 가능한 테이블 및 뷰 목록이 뜨는데 이 가운데 <em class="guilabel">Configure new SQL View...</em> 링크가 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/createsqlview.png" src="../../_images/createsqlview.png" />
+<img alt="../../images/createsqlview.png" src="../../images/createsqlview.png" />
 </div>
 <p><em class="guilabel">Configure new SQL View...</em> 링크를 클릭하면 SQL View 쿼리를 설정할 수 있는 페이지가 열립니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/createsql.png" src="../../_images/createsql.png" />
+<img alt="../../images/createsql.png" src="../../images/createsql.png" />
 </div>
 <div class="admonition note">
 <p class="first admonition-title">주석</p>
@@ -97,7 +97,7 @@ SQL문 대부분이 이런 경우지만, 몇몇 데이터베이스에서는 저�
 </div>
 <p>유효한 SQL 쿼리를 입력한 다음, <strong>Attributes</strong> 테이블의 <em class="guilabel">Refresh</em> 링크를 클릭해서 쿼리를 통해 나온 속성 열(attribute column) 목록을 부르십시오.</p>
 <div class="figure align-center">
-<img alt="../../_images/sqlview-attributes.png" src="../../_images/sqlview-attributes.png" />
+<img alt="../../images/sqlview-attributes.png" src="../../images/sqlview-attributes.png" />
 </div>
 <p>GeoServer가 도형 열 형식(geometry column type) 및 native SRID를 알아내려 할 테지만, 필요한 경우 이 값들을 확인·수정해야 합니다.</p>
 <div class="admonition note">
@@ -112,7 +112,7 @@ SQL문 대부분이 이런 경우지만, 몇몇 데이터베이스에서는 저�
 일반적인 <em class="guilabel">New Layer</em> 설정 페이지가 표출됩니다.
 뷰를 더 수정해야 할 경우, 이 페이지의 <em class="guilabel">Data</em> 탭 하단에 SQL View 편집기의 링크가 있습니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/sqlview-edit.png" src="../../_images/sqlview-edit.png" />
+<img alt="../../images/sqlview-edit.png" src="../../images/sqlview-edit.png" />
 </div>
 <p>생성이 끝난 다음, 읽기 전용이라는 한 가지 제약을 제외하면 일반 테이블 기반 레이어처럼 SQL View 레이어를 사용할 수 있습니다.</p>
 </div>
@@ -135,20 +135,20 @@ SQL문 대부분이 이런 경우지만, 몇몇 데이터베이스에서는 저�
 파라미터는 SQL 문자열 내부 상수, SQL 키워드 위치, SQL 절 전체를 나타내는 쓰임새를 포함, 쿼리 문자열 어디에든 위치할 수 있습니다.</p>
 <p>다음은 SQL View가 <tt class="docutils literal"><span class="pre">pgstates</span></tt>라는 레이어를 <tt class="docutils literal"><span class="pre">low</span></tt>와 <tt class="docutils literal"><span class="pre">high</span></tt> 2개 파라미터와 함께 쿼리하는 예시입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/sqlview-parametricsql.png" src="../../_images/sqlview-parametricsql.png" />
+<img alt="../../images/sqlview-parametricsql.png" src="../../images/sqlview-parametricsql.png" />
 </div>
 <p>각 파라미터는 명칭, 선택적인 기본값, 검증을 위한 표현식으로 정의되어야 합니다.
 <em class="guilabel">Guess parameters from SQL</em> 링크를 클릭하면 자동적으로 쿼리 파라미터를 추정할 수 있으며, 물론 직접 입력할 수도 있습니다.
 다음은 링크를 클릭해서 나온 파라미터 명칭, 기본값, 검증 표현식이 담긴 표입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/sqlview-paramdefault.png" src="../../_images/sqlview-paramdefault.png" />
+<img alt="../../images/sqlview-paramdefault.png" src="../../images/sqlview-paramdefault.png" />
 </div>
 <p>이 경우 파라미터값 없이 쿼리를 실행할 수 없기 때문에 기본값을 지정해줘야 합니다.
 (파라미터값이 없는 쿼리 <tt class="docutils literal"><span class="pre">select gid, state_name, the_geom from pgstates where persons between and </span></tt> 는 유효하지 않은 SQL이기 때문입니다.)
 SQL 쿼리에 파라미터를 사용할 경우 파라미터값이 양의 정수여야 하기 때문에, 검증을 위한 정규 표현식은 숫자만 입력할 수 있도록 지정해야 합니다.
 (예시: <tt class="docutils literal"><span class="pre">^[\d]+$</span></tt>)</p>
 <div class="figure align-center">
-<img alt="../../_images/sqlview-paramcustom.png" src="../../_images/sqlview-paramcustom.png" />
+<img alt="../../images/sqlview-paramcustom.png" src="../../images/sqlview-paramcustom.png" />
 </div>
 <p>파라미터 정의가 끝난 다음, <strong>Attributes</strong> 테이블의 <em class="guilabel">Refresh</em> 링크를 클릭해서 쿼리를 파싱(parse)하고 속성 열을 받아옵니다.
 필요한 경우 계산된 도형 형식 및 열 식별자(column identifier)의 세부 사항을 수정할 수 있습니다.
@@ -165,11 +165,11 @@ SQL 쿼리에 파라미터를 사용할 경우 파라미터값이 양의 정수�
 처음에는 파라미터값을 받지 못 했기 때문에 기본값을 사용해서 모든 주들이 표출됩니다.</p>
 <p>주민이 2천만 명 이상인 주를 모두 표출하려면 <tt class="docutils literal"><span class="pre">GetMap</span></tt> 요청에 <tt class="docutils literal"><span class="pre">&amp;viewparams=low:20000000</span></tt> 파라미터를 추가하십시오.</p>
 <div class="figure align-center">
-<img alt="../../_images/sqlview-20millions.png" src="../../_images/sqlview-20millions.png" />
+<img alt="../../images/sqlview-20millions.png" src="../../images/sqlview-20millions.png" />
 </div>
 <p>주민이 2백만에서 5백만 명 사이인 주를 모두 표출하려면 <tt class="docutils literal"><span class="pre">&amp;viewparams=low:2000000;high:5000000</span></tt> 뷰 파라미터를 추가하십시오.</p>
 <div class="figure align-center">
-<img alt="../../_images/sqlview-2m-5m.png" src="../../_images/sqlview-2m-5m.png" />
+<img alt="../../images/sqlview-2m-5m.png" src="../../images/sqlview-2m-5m.png" />
 </div>
 <p>각 파라미터 맵을 쉼표로 구분하면 여러 레이어에 동시에 파라미터를 보낼 수 있습니다.</p>
 <blockquote>
@@ -247,7 +247,7 @@ SQL 쿼리에 파라미터를 사용할 경우 파라미터값이 양의 정수�
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/data/database/sqlview.txt">원본 보기</a></li>
+          <li><a href="../../sources/data/database/sqlview.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->

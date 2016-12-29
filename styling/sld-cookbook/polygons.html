@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>Polygons &mdash; GeoServer 2.4.0 사용자 매뉴얼</title>
-  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <link rel="stylesheet" href="../../static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/print.css" type="text/css" media="print" /> 
   <!--[if IE]>
-  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../static/blueprint/ie.css" type="text/css" media="screen, projection" />
   <![endif]-->
-  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -20,9 +20,9 @@
         FILE_SUFFIX: '.html'
     };
   </script>
-  <script type="text/javascript" src="../../_static/jquery.js"></script>
-  <script type="text/javascript" src="../../_static/doctools.js"></script>
-  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../static/jquery.js"></script>
+  <script type="text/javascript" src="../../static/doctools.js"></script>
+  <script type="text/javascript" src="../../static/searchtools.js"></script>
   <script type="text/javascript" src="../../searchindex.js"></script>
       <link rel="top" title="GeoServer 2.4.0 사용자 매뉴얼" href="../../index.html" />
       <link rel="up" title="SLD Cookbook" href="index.html" />
@@ -44,7 +44,7 @@
             <input type="hidden" name="check_keywords" value="yes" />
             <input type="hidden" name="area" value="default" />
             <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
-            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../static/chrome/search_icon_green.png" />
           </fieldset>
         </form>
     </div><!-- /.wrap -->
@@ -79,7 +79,7 @@
 </div>
 <div class="section" id="example-polygons-layer">
 <span id="sld-cookbook-polygons-attributes"></span><h2>Example polygons layer<a class="headerlink" href="#example-polygons-layer" title="Permalink to this headline">¶</a></h2>
-<p>각 예시에 사용되는 <a class="reference download internal" href="../../_downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">폴리곤 레이어</span></tt></a>는
+<p>각 예시에 사용되는 <a class="reference download internal" href="../../downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">폴리곤 레이어</span></tt></a>는
 가상 국가의 군(county) 정보를 담고 있습니다. 이 레이어의 다음 속성 테이블을 참조하십시오.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -126,18 +126,18 @@
 </tr>
 </tbody>
 </table>
-<p><a class="reference download internal" href="../../_downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">폴리곤 shapefile을 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">폴리곤 shapefile을 다운로드하십시오</span></tt></a>.</p>
 </div>
 <div class="section" id="simple-polygon">
 <span id="sld-cookbook-polygons-simplepolygon"></span><h2>Simple polygon<a class="headerlink" href="#simple-polygon" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 폴리곤의 면을 파랑으로 설정합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_simplepolygon1.png" src="../../_images/polygon_simplepolygon1.png" />
+<img alt="../../images/polygon_simplepolygon1.png" src="../../images/polygon_simplepolygon1.png" />
 <p class="caption"><em>단순한 폴리곤</em></p>
 </div>
 <div class="section" id="code">
 <h3>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_simplepolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_simplepolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -174,12 +174,12 @@
 <span id="sld-cookbook-polygons-simplepolygonwithstroke"></span><h2>Simple polygon with stroke<a class="headerlink" href="#simple-polygon-with-stroke" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 <a class="reference internal" href="#sld-cookbook-polygons-simplepolygon"><em>Simple polygon</em></a> 예시에 하얀 색상에 2픽셀 굵기의 획을 추가합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_simplepolygonwithstroke1.png" src="../../_images/polygon_simplepolygonwithstroke1.png" />
+<img alt="../../images/polygon_simplepolygonwithstroke1.png" src="../../images/polygon_simplepolygonwithstroke1.png" />
 <p class="caption"><em>획을 추가한 단순 폴리곤</em></p>
 </div>
 <div class="section" id="id1">
 <h3>Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_simplepolygonwithstroke.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple polygon with stroke&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_simplepolygonwithstroke.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Simple polygon with stroke&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -219,12 +219,12 @@
 <h2>Transparent polygon<a class="headerlink" href="#transparent-polygon" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 <a class="reference internal" href="#sld-cookbook-polygons-simplepolygonwithstroke"><em>Simple polygon with stroke</em></a> 예시를 바탕으로 불투명도(opacity)를 50%로 설정하여 면을 반투명하게 만듭니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_transparentpolygon1.png" src="../../_images/polygon_transparentpolygon1.png" />
+<img alt="../../images/polygon_transparentpolygon1.png" src="../../images/polygon_transparentpolygon1.png" />
 <p class="caption"><em>투명한 폴리곤</em></p>
 </div>
 <div class="section" id="id3">
 <h3>Code<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_transparentpolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Transparent polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_transparentpolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Transparent polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -266,12 +266,12 @@
 <span id="sld-cookbook-polygons-graphicfill"></span><h2>Graphic fill<a class="headerlink" href="#graphic-fill" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 각 폴리곤의 면을 타일 그래픽으로 채웁니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_graphicfill1.png" src="../../_images/polygon_graphicfill1.png" />
+<img alt="../../images/polygon_graphicfill1.png" src="../../images/polygon_graphicfill1.png" />
 <p class="caption"><em>그래픽 채우기</em></p>
 </div>
 <div class="section" id="id5">
 <h3>Code<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_graphicfill.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Graphic fill&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_graphicfill.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Graphic fill&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -321,7 +321,7 @@
 이 예시에서 그래픽과 SLD가 동일한 디렉터리에 위치하기 때문에 <strong>10행</strong>에 경로 정보가 없어도 됩니다. 다만 원한다면 전체 URL을 쓸 수 있습니다.
 <strong>13행</strong>에서 표출되는 그래픽의 높이를 픽셀 값으로 설정합니다. 이 값이 그래픽의 실제 높이와 다를 경우 높이/너비 비율을 유지하면서 조정될 것입니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/colorblocks1.png" src="../../_images/colorblocks1.png" />
+<img alt="../../images/colorblocks1.png" src="../../images/colorblocks1.png" />
 <p class="caption"><em>면에 사용된 그래픽</em></p>
 </div>
 </div>
@@ -334,12 +334,12 @@
 <p class="last">표준 SLD 1.0 사양이 해칭을 포함하지 않기 때문에 이 예시에 GeoServer의 SLD 확장 모듈이 필요합니다.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/polygon_hatchingfill1.png" src="../../_images/polygon_hatchingfill1.png" />
+<img alt="../../images/polygon_hatchingfill1.png" src="../../images/polygon_hatchingfill1.png" />
 <p class="caption"><em>해칭 채우기</em></p>
 </div>
 <div class="section" id="id7">
 <h3>Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_hatchingfill.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Hatching fill&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_hatchingfill.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Hatching fill&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -395,12 +395,12 @@
 <span id="sld-cookbook-polygons-polygonwithdefaultlabel"></span><h2>Polygon with default label<a class="headerlink" href="#polygon-with-default-label" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 단순한 폴리곤에 텍스트 레이블이 표출됩니다. 사용자가 따로 지정하지 않을 경우 레이블이 어떻게 표출되는지 보여줍니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_polygonwithdefaultlabel1.png" src="../../_images/polygon_polygonwithdefaultlabel1.png" />
+<img alt="../../images/polygon_polygonwithdefaultlabel1.png" src="../../images/polygon_polygonwithdefaultlabel1.png" />
 <p class="caption"><em>기본 레이블이 표출된 폴리곤</em></p>
 </div>
 <div class="section" id="id9">
 <h3>Code<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_polygonwithdefaultlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Polygon with default label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_polygonwithdefaultlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Polygon with default label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -455,12 +455,12 @@
 <h2>Label halo<a class="headerlink" href="#label-halo" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 레이블에 하얀 배경색(halo)을 추가하여 <a class="reference internal" href="#sld-cookbook-polygons-polygonwithdefaultlabel"><em>Polygon with default label</em></a>의 스타일을 변경합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_labelhalo1.png" src="../../_images/polygon_labelhalo1.png" />
+<img alt="../../images/polygon_labelhalo1.png" src="../../images/polygon_labelhalo1.png" />
 <p class="caption"><em>레이블 배경색</em></p>
 </div>
 <div class="section" id="id11">
 <h3>Code<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_labelhalo.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Label halo&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_labelhalo.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Label halo&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -528,12 +528,12 @@
 <p class="last">GeoServer에 특화된 SLD 확장 모듈에서 다음에 설명할 배치 최적화 <tt class="docutils literal"><span class="pre">&lt;VendorOption&gt;</span></tt> 태그를 사용할 수 있습니다. 표준 SLD 1.0 사양에 포함되지 않았습니다.</p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/polygon_polygonwithstyledlabel1.png" src="../../_images/polygon_polygonwithstyledlabel1.png" />
+<img alt="../../images/polygon_polygonwithstyledlabel1.png" src="../../images/polygon_polygonwithstyledlabel1.png" />
 <p class="caption"><em>스타일 적용 레이블이 표출된 폴리곤</em></p>
 </div>
 <div class="section" id="id13">
 <h3>Code<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_polygonwithstyledlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Polygon with styled label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_polygonwithstyledlabel.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Polygon with styled label&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -628,12 +628,12 @@
 <h2>Attribute-based polygon<a class="headerlink" href="#attribute-based-polygon" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 인구(&#8220;pop&#8221;) 속성값에 따라 폴리곤에 다른 스타일을 적용합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_attributebasedpolygon1.png" src="../../_images/polygon_attributebasedpolygon1.png" />
+<img alt="../../images/polygon_attributebasedpolygon1.png" src="../../images/polygon_attributebasedpolygon1.png" />
 <p class="caption"><em>속성 기반 폴리곤</em></p>
 </div>
 <div class="section" id="id15">
 <h3>Code<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_attributebasedpolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Attribute-based polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_attributebasedpolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Attribute-based polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -799,20 +799,20 @@
 <h2>Zoom-based polygon<a class="headerlink" href="#zoom-based-polygon" title="Permalink to this headline">¶</a></h2>
 <p>이 예시에서 서로 다른 줌 레벨에서 폴리곤의 스타일을 변경합니다.</p>
 <div class="figure align-center">
-<img alt="../../_images/polygon_zoombasedpolygonlarge1.png" src="../../_images/polygon_zoombasedpolygonlarge1.png" />
+<img alt="../../images/polygon_zoombasedpolygonlarge1.png" src="../../images/polygon_zoombasedpolygonlarge1.png" />
 <p class="caption"><em>줌 기반 폴리곤: Zoomed in</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/polygon_zoombasedpolygonmedium1.png" src="../../_images/polygon_zoombasedpolygonmedium1.png" />
+<img alt="../../images/polygon_zoombasedpolygonmedium1.png" src="../../images/polygon_zoombasedpolygonmedium1.png" />
 <p class="caption"><em>줌 기반 폴리곤: Partially zoomed</em></p>
 </div>
 <div class="figure align-center">
-<img alt="../../_images/polygon_zoombasedpolygonsmall1.png" src="../../_images/polygon_zoombasedpolygonsmall1.png" />
+<img alt="../../images/polygon_zoombasedpolygonsmall1.png" src="../../images/polygon_zoombasedpolygonsmall1.png" />
 <p class="caption"><em>줌 기반 폴리곤: Zoomed out</em></p>
 </div>
 <div class="section" id="id17">
 <h3>Code<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference download internal" href="../../_downloads/polygon_zoombasedpolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Zoom-based polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
+<p><a class="reference download internal" href="../../downloads/polygon_zoombasedpolygon.sld"><tt class="xref download docutils literal"><span class="pre">&quot;Zoom-based polygon&quot;의 전체 SLD를 다운로드하십시오</span></tt></a>.</p>
 <div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1094,7 +1094,7 @@
         <div class="section">
         <h3>현재 페이지</h3>
         <ul class="this-page-menu">
-          <li><a href="../../_sources/styling/sld-cookbook/polygons.txt">원본 보기</a></li>
+          <li><a href="../../sources/styling/sld-cookbook/polygons.txt">원본 보기</a></li>
         </ul>
         </div>
   </div><!-- /#sidebar -->
